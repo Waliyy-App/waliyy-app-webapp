@@ -1,8 +1,19 @@
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import SplashScreen from './pages/SplashScreen';
 
 function App() {
   return (
     <div className="App">
-     <h1 className='text-black-500 p-10 text-4xl uppercase text-center'>hello</h1>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/sign-in" element={<Login />} />
+        <Route path="/splash" element={<SplashScreen />} />
+      </Routes>
     </div>
   );
 }
