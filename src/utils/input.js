@@ -1,9 +1,9 @@
 import { useField } from 'formik';
 
-export const TextInput = ({ label, ...props }) => {
+export const TextInput = ({ label, classname, ...props }) => {
   const [field, meta] = useField(props);
   return (
-    <div className="flex flex-col w-full relative">
+    <div className={`flex flex-col w-full relative ${classname}`}>
       <label
         className="text-sm font-medium mb-2 text-[#2D133A]"
         htmlFor={props.id || props.name}
@@ -33,6 +33,28 @@ export const MyCheckbox = ({ children, ...props }) => {
         <input className="mr-2" type="checkbox" {...field} {...props} />
         {children}
       </label>
+      {meta.touched && meta.error ? (
+        <div className="error text-red-600 text-xs">{meta.error}</div>
+      ) : null}
+    </div>
+  );
+};
+
+export const MySelect = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+  return (
+    <div className={`flex flex-col w-full relative`}>
+      <label
+        className="text-sm font-medium mb-2 text-[#2D133A]"
+        htmlFor={props.id || props.name}
+      >
+        {label}
+      </label>
+      <select
+        className="relative text-input w-full h-11 border-b border-b-[#CDD1D0] focus:outline-none focus:border-b focus:border-b-[#BA9FFE]"
+        {...field}
+        {...props}
+      />
       {meta.touched && meta.error ? (
         <div className="error text-red-600 text-xs">{meta.error}</div>
       ) : null}
