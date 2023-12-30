@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import SplashScreen from './pages/SplashScreen';
+import ProfileSetup from './pages/ProfileSetup';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/sign-in" element={<Login />} />
-        <Route path="/splash" element={<SplashScreen />} />
+        <Route path="/setup" element={<ProfileSetup />} />
       </Routes>
     </div>
   );
