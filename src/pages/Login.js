@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { TextInput } from '../utils/input';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import SplashScreen from './SplashScreen';
+import SplashScreen from '../screens/SplashScreen';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
