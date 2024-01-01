@@ -5,7 +5,7 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import { Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import UserIcon from '@mui/icons-material/Person';
 import WorldIcon from '@mui/icons-material/Public';
@@ -16,13 +16,15 @@ import StepConnector, {
   stepConnectorClasses,
 } from '@mui/material/StepConnector';
 import CongratulationsRegister from '../screens/CongratulationsRegister';
+
+import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import { Formik, Form, Field } from 'formik';
+import { TextInput, SelectInput, TextArea } from '../common/form';
 import {
-  AboutDeenForm,
-  EducationAndProfessionForm,
-  NationalityForm,
-  PersonalDetailsForm,
-  SelfSummaryForm,
-} from '../components/setupForms';
+  personalDetailsValidationSchema,
+  personalDetailsValues,
+} from '../data/inputInitialValues';
+import { heightRanges, weightRanges } from '../data/formValues';
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -118,22 +120,6 @@ const steps = [
   'Self Summary',
 ];
 
-const forms = [
-  <PersonalDetailsForm />,
-  <NationalityForm />,
-  <EducationAndProfessionForm />,
-  <AboutDeenForm />,
-  <SelfSummaryForm />,
-];
-
-const formTitle = [
-  'Personal Details',
-  'Nationality and Heritage',
-  'Education and Profession',
-  'About my Deen',
-  'Self Summary',
-];
-
 export default function ProfileSetup() {
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
@@ -157,9 +143,7 @@ export default function ProfileSetup() {
   const handleNext = () => {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
-        ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !(i in completed))
+        ? steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
@@ -168,10 +152,6 @@ export default function ProfileSetup() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  //   const handleStep = (step) => () => {
-  //     setActiveStep(step);
-  //   };
-
   const handleComplete = () => {
     const newCompleted = completed;
     newCompleted[activeStep] = true;
@@ -179,8 +159,301 @@ export default function ProfileSetup() {
     handleNext();
   };
 
+  // const forms = [
+  //   (props) => <PersonalDetailsForm {...props} />,
+  //   (props) => <NationalityForm {...props} />,
+  //   (props) => <EducationAndProfessionForm {...props} />,
+  //   (props) => <AboutDeenForm {...props} />,
+  //   (props) => <SelfSummaryForm {...props} />,
+  // ];
+
+  const PersonalDetails = (
+    <React.Fragment>
+      <div className="flex justify-between gap-12">
+        <TextInput label="First Name" name="firstName" type="text" />
+        <TextInput label="Last Name" name="lastName" type="text" />
+      </div>
+
+      <div className="flex justify-between gap-12">
+        <TextInput label="Date of Birth" name="dateOfBirth" type="date" />
+        <SelectInput label="Gender" name="gender">
+          <option value="">Select option</option>
+          <option value="female">Female</option>
+          <option value="male">Male</option>
+        </SelectInput>
+      </div>
+
+      <div className="flex justify-between gap-12">
+        <SelectInput label="Genotype" name="genotype">
+          <option value="">Select option</option>
+          <option value="AA">AA</option>
+          <option value="AC">AC</option>
+          <option value="AS">AS</option>
+          <option value="SS">SS</option>
+          <option value="CC">CC</option>
+          <option value="SC">SC</option>
+        </SelectInput>
+
+        <SelectInput label="Height" name="height">
+          <option value="">Select option</option>
+          {heightRanges.map((range) => (
+            <option key={range.value} value={range.value}>
+              {range.label}
+            </option>
+          ))}
+        </SelectInput>
+
+        <SelectInput label="Weight" name="weight">
+          <option value="">Select option</option>
+          {weightRanges.map((range) => (
+            <option key={range.value} value={range.value}>
+              {range.label}
+            </option>
+          ))}
+        </SelectInput>
+      </div>
+
+      <div className="flex justify-between gap-12">
+        <SelectInput label="Marital Status" name="maritalStatus">
+          <option value="">Select option</option>
+          <option value="single">Single</option>
+          <option value="married">Married</option>
+          <option value="divorced">Divorced</option>
+          <option value="widowed">Widowed</option>
+        </SelectInput>
+
+        <SelectInput label="Do you have children?" name="haveChildren">
+          <option value="">Select option</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </SelectInput>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <p className="text-[#665e6b] text-lg font-semibold">Do you...</p>
+        <div className="flex justify-between gap-12">
+          <SelectInput label="Smoke?" name="smoke">
+            <option value="">Select option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </SelectInput>
+          <SelectInput label="Drink?" name="drink">
+            <option value="">Select option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </SelectInput>
+          <SelectInput label="Have any addiction?" name="addiction">
+            <option value="">Select option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </SelectInput>
+        </div>
+      </div>
+    </React.Fragment>
+  );
+
+  const NationalityDetails = (
+    <React.Fragment>
+      <div className="flex justify-between gap-12">
+        <SelectInput label="Citizenship" name="citizenship">
+          <option value="">Select option</option>
+          <option value="Nigerian">Nigerian</option>
+          <option value="British">British</option>
+        </SelectInput>
+
+        <SelectInput label="State of Origin" name="stateOfOrigin">
+          <option value="">Select option</option>
+          <option value="female">Female</option>
+          <option value="male">Male</option>
+        </SelectInput>
+      </div>
+
+      <div className="flex justify-between gap-12">
+        <SelectInput label="LGA/County" name="lga">
+          <option value="">Select option</option>
+          <option value="Nigerian">Nigerian</option>
+          <option value="British">British</option>
+        </SelectInput>
+
+        <SelectInput label="Country of Residence" name="residence">
+          <option value="">Select option</option>
+          <option value="female">Female</option>
+          <option value="male">Male</option>
+        </SelectInput>
+      </div>
+
+      <div className="flex justify-between gap-12">
+        <SelectInput label="Are you mixed ethnicity" name="mixedEthnicity">
+          <option value="">Select option</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </SelectInput>
+
+        <TextInput
+          type="text"
+          label="If yes, specify"
+          name="mixedEhnicityType"
+        />
+      </div>
+    </React.Fragment>
+  );
+
+  const EducationDetails = (
+    <React.Fragment>
+      <div className="flex justify-between gap-12">
+        <SelectInput label="Level of Education" name="education">
+          <option value="">Select option</option>
+          <option value="Nigerian">Nigerian</option>
+          <option value="British">British</option>
+        </SelectInput>
+
+        <SelectInput label="Profession" name="profession">
+          <option value="">Select option</option>
+          <option value="female">Female</option>
+          <option value="male">Male</option>
+        </SelectInput>
+      </div>
+
+      <div className="flex justify-between gap-12">
+        <SelectInput label="Employment Status" name="employmentStatus">
+          <option value="">Select option</option>
+          <option value="Nigerian">Nigerian</option>
+          <option value="British">British</option>
+        </SelectInput>
+        <TextInput label="something" name="something" classname="invisible" />
+      </div>
+
+      <div className="flex justify-between gap-12">
+        <TextArea
+          label="What are you short/medium term qualification and professional plans?"
+          name="shortTermPlans"
+          placeHolder="Enter..."
+        />
+        <TextInput label="something" name="something" classname="invisible" />
+      </div>
+
+      <div className="flex justify-between gap-12">
+        <SelectInput
+          label="Are you willing to relocate?"
+          name="willingnessToRelocate"
+        >
+          <option value="">Select option</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </SelectInput>
+
+        <TextInput type="text" label="If yes, specify" name="relocationType" />
+      </div>
+    </React.Fragment>
+  );
+
+  const DeenDetails = (
+    <React.Fragment>
+      <div className="flex justify-between gap-12">
+        <SelectInput label="Are you a revert?" name="revert">
+          <option value="">Select option</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </SelectInput>
+
+        <SelectInput label="Are you Sunni or Shi'a" name="sect">
+          <option value="">Select option</option>
+          <option value="sunni">Sunni</option>
+          <option value="Shi'a">Shi'a</option>
+        </SelectInput>
+      </div>
+
+      <div className="flex justify-between gap-12">
+        <SelectInput
+          label="Do you belong to any Islamic Organization?"
+          name="islamicOrganization"
+        >
+          <option value="">Select option</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </SelectInput>
+
+        <TextInput
+          type="text"
+          label="If yes, specify"
+          name="organizationType"
+        />
+      </div>
+
+      <div className="flex justify-between gap-12">
+        <TextInput
+          type="text"
+          label="Speakers/Scholars you listen to"
+          name="speakers"
+        />
+        <SelectInput
+          label="When did you start practising?"
+          name="startPractising"
+        >
+          <option value="">Select option</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </SelectInput>
+      </div>
+
+      <div className="flex justify-between gap-12">
+        <SelectInput label="Pattern of salat" name="salat">
+          <option value="">Select option</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </SelectInput>
+
+        <TextInput
+          type="text"
+          label="If yes, specify"
+          name="relocationType"
+          classname="invisible"
+        />
+      </div>
+
+      <div className="flex justify-between gap-12">
+        <TextArea
+          label="Describe your Islamic practice"
+          name="shortTermPlans"
+          placeHolder="Tell us about your family’s relationship with Islam, upbringing, when you started practising, what are you currently learning about, how much Qur’an memorised..."
+        />
+        <TextInput label="something" name="something" classname="invisible" />
+      </div>
+    </React.Fragment>
+  );
+
+  const SummaryDetails = (
+    <div className="flex flex-col gap-10">
+      <TextArea
+        classname="w-full sm:w-[469px] "
+        label="Tell us about you"
+        name="aboutYou"
+        placeHolder="Tell us about yourself and who you would like to marry. Tell us fun things about you, your hobbies and interests, your goals and aspirations, your relationship with your family, your current lifestyle and so on..."
+      />
+
+      <TextArea
+        classname="w-full sm:w-[469px] "
+        label="Tell us about your education and job"
+        name="aboutEducationAndJob"
+      />
+
+      <TextArea
+        classname="w-full sm:w-[469px] "
+        label="Tell us how you dress"
+        name="dressing"
+      />
+    </div>
+  );
+
+  const forms = [
+    PersonalDetails,
+    NationalityDetails,
+    EducationDetails,
+    DeenDetails,
+    SummaryDetails,
+  ];
   return (
-    <>
+    <React.Fragment>
       {allStepsCompleted() ? (
         <CongratulationsRegister />
       ) : (
@@ -209,40 +482,81 @@ export default function ProfileSetup() {
               </Step>
             ))}
           </Stepper>
-          <div className="p-8 w-10/12 mx-auto">
-            {forms[activeStep]}
-            <React.Fragment>
-              <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                <Button
-                  color="inherit"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ mr: 1 }}
-                >
-                  Back
-                </Button>
-                <Box sx={{ flex: '1 1 auto' }} />
-                {activeStep !== steps.length &&
-                  (completed[activeStep] ? (
-                    <Typography
-                      variant="caption"
-                      sx={{ display: 'inline-block' }}
-                    >
-                    {formTitle[activeStep]} completed
-                      <Button onClick={handleNext}>Go to Next</Button>
-                    </Typography>
-                  ) : (
-                    <Button onClick={handleComplete}>
-                      {completedSteps() === totalSteps() - 1
-                        ? 'Finish'
-                        : 'Next'}
-                    </Button>
-                  ))}
-              </Box>
-            </React.Fragment>
+
+          <div className="p-8 w-11/12 mx-auto flex flex-col gap-10">
+            <Formik
+              initialValues={personalDetailsValues}
+              validationSchema={personalDetailsValidationSchema}
+              onSubmit={(values, { setSubmitting }) => {
+                handleComplete();
+                setTimeout(() => {
+                  alert(JSON.stringify(values, null, 2));
+                  setSubmitting(false);
+                }, 400);
+              }}
+            >
+              <Form className="flex flex-col gap-10">
+                {forms[activeStep]}
+                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                  <Button
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    sx={{
+                      color: 'black',
+                      width: '150px',
+                      paddingY: '10px',
+                      borderRadius: '8px',
+                      fontWeight: 'medium',
+                      fontFamily: 'Nunito',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '4px',
+                      border: '1px solid #BA9FFE',
+                      textTransform: 'capitalize',
+                      fontSize: '16px',
+                    }}
+                  >
+                    <FaChevronLeft /> Back
+                  </Button>
+
+                  <Box sx={{ flex: '1 1 auto' }} />
+
+                  {activeStep !== steps.length &&
+                    (completed[activeStep] ? (
+                      <Typography
+                        variant="caption"
+                        sx={{ display: 'inline-block' }}
+                      >
+                        {steps[activeStep]} completed
+                        <button
+                          onClick={() => {
+                            handleComplete();
+                            handleNext();
+                          }}
+                          className="ml-2 bg-[#BA9FFE] text-white w-auto py-[10px] px-[18px] rounded-lg font-medium"
+                          type="submit"
+                        >
+                          <FaChevronRight />
+                        </button>
+                      </Typography>
+                    ) : (
+                      <button
+                        className="bg-[#BA9FFE] text-white w-[150px] py-[10px] rounded-lg font-medium flex items-center justify-center gap-1"
+                        onClick={handleComplete}
+                      >
+                        {completedSteps() === totalSteps() - 1
+                          ? 'Finish'
+                          : 'Next'}{' '}
+                        <FaChevronRight />
+                      </button>
+                    ))}
+                </Box>
+              </Form>
+            </Formik>
           </div>
         </Box>
       )}
-    </>
+    </React.Fragment>
   );
 }
