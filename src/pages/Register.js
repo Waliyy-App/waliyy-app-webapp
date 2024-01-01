@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextInput, MyCheckbox } from '../utils/input';
+import { TextInput, CheckboxInput } from '../common/form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -118,9 +118,9 @@ const Register = () => {
               </div>
             </div>
 
-            <MyCheckbox name="acceptedTerms">
+            <CheckboxInput name="acceptedTerms">
               I accept the terms and conditions
-            </MyCheckbox>
+            </CheckboxInput>
 
             <button
               type="submit"

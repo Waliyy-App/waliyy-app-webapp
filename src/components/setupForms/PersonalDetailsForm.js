@@ -1,110 +1,107 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import { TextInput, MySelect } from '../../utils/input';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { TextInput, SelectInput } from '../../common/form';
+import {
+  personalDetailsValidationSchema,
+  personalDetailsValues,
+} from '../../data/inputInitialValues';
+import { heightRanges, weightRanges } from '../../data/formValues';
 
-export default function PersonalDetailsForm() {
-  const initialValues = {
-    firstName: '',
-    lastName: '',
-    dateOfBirth: null,
-    gender: '',
-    genotype: '',
-    height: '',
-    weight: '',
-    martialStatus: '',
-    haveChildren: '',
-    smoke: '',
-    drink: '',
-    addiction: '',
-  };
-
-  const validationSchema = Yup.object({
-    firstName: Yup.string()
-      .min(3, 'Must be 3 characters or more')
-      .required('Enter your first name'),
-    lastName: Yup.string()
-      .min(5, 'Must be 5 characters or more')
-      .required('Enter your last name'),
-    dateOfBirth: Yup.date()
-      .nullable()
-      .required('Date of Birth is required')
-      .max(new Date(), 'Date of Birth cannot be in the future'),
-    gender: Yup.string()
-      .oneOf(['female', 'male'], 'Invalid Gender')
-      .required('Select your gender'),
-    genotype: Yup.string().required('Select your genotype'),
-    height: Yup.string().required('Height is required'),
-    weight: Yup.string().required('Weight is required'),
-    martialStatus: Yup.string().required('Marital Status is required'),
-    haveChildren: Yup.string().required('This field is required'),
-    smoke: Yup.string().required('This field is required'),
-    drink: Yup.string().required('This field is required'),
-    addiction: Yup.string().required('This field is required'),
-  });
-
+export default function PersonalDetailsForm({handleComplete}) {
   return (
     <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
+      initialValues={personalDetailsValues}
+      validationSchema={personalDetailsValidationSchema}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
+          handleComplete();
           alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
         }, 400);
       }}
     >
-      {({ values, setFieldValue }) => (
-        <Form className="flex flex-col gap-10">
+      <Form className="flex flex-col gap-10">
+        <div className="flex justify-between gap-12">
+          <TextInput label="First Name" name="firstName" type="text" />
+          <TextInput label="Last Name" name="lastName" type="text" />
+        </div>
+
+        <div className="flex justify-between gap-12">
+          <TextInput label="Date of Birth" name="dateOfBirth" type="date" />
+          <SelectInput label="Gender" name="gender">
+            <option value="">Select option</option>
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+          </SelectInput>
+        </div>
+
+        <div className="flex justify-between gap-12">
+          <SelectInput label="Genotype" name="genotype">
+            <option value="">Select option</option>
+            <option value="AA">AA</option>
+            <option value="AC">AC</option>
+            <option value="AS">AS</option>
+            <option value="SS">SS</option>
+            <option value="CC">CC</option>
+            <option value="SC">SC</option>
+          </SelectInput>
+
+          <SelectInput label="Height" name="height">
+            <option value="">Select option</option>
+            {heightRanges.map((range) => (
+              <option key={range.value} value={range.value}>
+                {range.label}
+              </option>
+            ))}
+          </SelectInput>
+
+          <SelectInput label="Weight" name="weight">
+            <option value="">Select option</option>
+            {weightRanges.map((range) => (
+              <option key={range.value} value={range.value}>
+                {range.label}
+              </option>
+            ))}
+          </SelectInput>
+        </div>
+
+        <div className="flex justify-between gap-12">
+          <SelectInput label="Marital Status" name="maritalStatus">
+            <option value="">Select option</option>
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+            <option value="divorced">Divorced</option>
+            <option value="widowed">Widowed</option>
+          </SelectInput>
+
+          <SelectInput label="Do you have children?" name="haveChildren">
+            <option value="">Select option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </SelectInput>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <p className="text-[#665e6b] text-lg font-semibold">Do you...</p>
           <div className="flex justify-between gap-12">
-            <TextInput label="First Name" name="firstName" type="text" />
-            <TextInput label="Last Name" name="lastName" type="text" />
+            <SelectInput label="Smoke?" name="smoke">
+              <option value="">Select option</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </SelectInput>
+            <SelectInput label="Drink?" name="drink">
+              <option value="">Select option</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </SelectInput>
+            <SelectInput label="Have any addiction?" name="addiction">
+              <option value="">Select option</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </SelectInput>
           </div>
-
-          <div className="flex justify-between gap-12">
-            <div className="flex flex-col w-full">
-              <label className="text-sm font-medium mb-2 text-[#2D133A]">
-                Date of Birth
-              </label>
-              <DatePicker
-                selected={values.dateOfBirth}
-                onChange={(date) => setFieldValue('dateOfBirth', date)}
-                dateFormat="MM-yyyy"
-                showMonthYearPicker
-                placeholderText="mm-yyyy"
-                className="text-input w-full h-11 border-b border-b-[#CDD1D0] focus:outline-none focus:border-b focus:border-b-[#BA9FFE]"
-              />
-            </div>
-            <MySelect label="Gender" name="gender">
-              <option value="">Select option</option>
-              <option value="female">Female</option>
-              <option value="male">Male</option>
-            </MySelect>
-          </div>
-
-          <div className="flex justify-between gap-12">
-            <MySelect label="Genotype" name="genotype">
-              <option value="">Select option</option>
-              <option value="female">Female</option>
-              <option value="male">Male</option>
-            </MySelect>
-
-            <MySelect label="Height" name="height">
-              <option value="">Select option</option>
-              <option value="female">Female</option>
-              <option value="male">Male</option>
-            </MySelect>
-
-            <MySelect label="Weight" name="weight">
-              <option value="">Select option</option>
-              <option value="female">Female</option>
-              <option value="male">Male</option>
-            </MySelect>
-          </div>
-        </Form>
-      )}
+        </div>
+      </Form>
     </Formik>
   );
 }
