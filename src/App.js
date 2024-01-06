@@ -7,6 +7,7 @@ import ProfileSetup from './pages/ProfileSetup';
 import LikePage from './pages/LikePage';
 import MatchPage from './pages/MatchPage';
 import SettingsPage from './pages/SettingsPage';
+import PricingPage from './pages/PricingPage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/likes" element={<LikePage />} />
         <Route path="/match" element={<MatchPage />} />
         <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
 
         <Route path="/sign-up" element={<Register />} />
         <Route path="/sign-in" element={<Login />} />
