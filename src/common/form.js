@@ -40,6 +40,18 @@ export const CheckboxInput = ({ children, ...props }) => {
   );
 };
 
+export const CheckboxInputTwo = ({ children, ...props }) => {
+  const [field] = useField({ ...props, type: 'checkbox' });
+  return (
+    <div className="flex flex-col mt-3">
+      <label className="checkbox-input flex items-center text-sm font-medium">
+        <input className="mr-2" type="checkbox" {...field} {...props} />
+        {children}
+      </label>
+    </div>
+  );
+};
+
 export const SelectInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (

@@ -6,8 +6,18 @@ import {
   personalDetailsValues,
 } from '../../data/inputInitialValues';
 import { heightRanges, weightRanges } from '../../data/formValues';
+import ActionButton from './ActionButton';
 
-export default function PersonalDetailsForm({handleComplete}) {
+export default function PersonalDetailsForm({
+  activeStep,
+  handleBack,
+  steps,
+  handleComplete,
+  handleNext,
+  totalSteps,
+  completedSteps,
+  completed,
+}) {
   return (
     <Formik
       initialValues={personalDetailsValues}
@@ -15,7 +25,7 @@ export default function PersonalDetailsForm({handleComplete}) {
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           handleComplete();
-          alert(JSON.stringify(values, null, 2));
+          console.log(JSON.stringify(values, null, 2));
           setSubmitting(false);
         }, 400);
       }}
@@ -101,6 +111,17 @@ export default function PersonalDetailsForm({handleComplete}) {
             </SelectInput>
           </div>
         </div>
+
+        <ActionButton
+          activeStep={activeStep}
+          handleBack={handleBack}
+          steps={steps}
+          handleComplete={handleComplete}
+          handleNext={handleNext}
+          totalSteps={totalSteps}
+          completedSteps={completedSteps}
+          completed={completed}
+        />
       </Form>
     </Formik>
   );
