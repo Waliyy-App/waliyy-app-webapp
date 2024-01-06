@@ -1,7 +1,14 @@
 import React from 'react';
 import Logo from '../../assets/logo/Untitled-1-01.jpg';
+import Female from '../../assets/illustrations/female-illus.png';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { FiHeart, FiHome, FiSettings, FiThumbsUp } from 'react-icons/fi';
+import {
+  FiHeart,
+  FiHome,
+  FiLogOut,
+  FiSettings,
+  FiThumbsUp,
+} from 'react-icons/fi';
 
 const SidebarComponent = () => {
   const location = useLocation();
@@ -17,7 +24,7 @@ const SidebarComponent = () => {
           />
         </Link>
 
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-4">
           <NavLink
             to="/"
             className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md hover:text-white hover:bg-[#BA9FFE]  ${
@@ -63,7 +70,21 @@ const SidebarComponent = () => {
           </NavLink>
         </div>
       </div>
-      <div className="flex items-end">something</div>
+      <div className="flex flex-col items-end gap-6">
+        <div className="border border-[#2D133A] w-full"></div>
+        <div className="flex items-center text-[#2D133A] w-full justify-between">
+          <Link
+            to="/"
+            className="flex gap-2 items-center text-sm font-semibold"
+          >
+            <img src={Female} alt="" className="h-8 w-8" />
+            Raufah
+          </Link>
+          <Link to="/sign-in" className=" h-4 w-4">
+            <FiLogOut />
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
