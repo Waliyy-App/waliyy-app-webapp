@@ -1,7 +1,7 @@
 import React from 'react';
 import SidebarComponent from '../components/sidebar/Sidebar';
 
-const Dashboard = () => {
+const MatchPage = () => {
   return (
     <div>
       <SidebarComponent />
@@ -9,4 +9,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default MatchPage;
