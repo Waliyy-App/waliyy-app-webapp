@@ -27,7 +27,7 @@ const SidebarComponent = () => {
 
           <div className="flex flex-col gap-4">
             <NavLink
-              to="/"
+              to="/dashboard"
               className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300  ${
                 location.pathname === '/'
                   ? 'text-white bg-[#BA9FFE] box-shadow-style'
@@ -81,7 +81,7 @@ const SidebarComponent = () => {
               <img src={Female} alt="" className="h-8 w-8" />
               Raufah
             </Link>
-            <Link to="/sign-in" className=" h-4 w-4">
+            <Link to="/" className=" h-4 w-4">
               <FiLogOut />
             </Link>
           </div>
