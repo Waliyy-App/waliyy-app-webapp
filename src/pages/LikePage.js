@@ -3,6 +3,7 @@ import SidebarComponent from '../components/sidebar/Sidebar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
+import MoodIcon from '@mui/icons-material/EmojiEmotions';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import Liked from '../components/likes/Liked';
 import LikedYou from '../components/likes/LikedYou';
@@ -41,7 +42,7 @@ const LikePage = () => {
               {...a11yProps(0)}
             />
             <Tab
-              icon={<ThumbUpIcon />}
+              icon={<MoodIcon />}
               iconPosition="start"
               label="Liked You"
               {...a11yProps(1)}

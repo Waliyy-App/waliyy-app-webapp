@@ -9,6 +9,7 @@ import MatchPage from './pages/MatchPage';
 import SettingsPage from './pages/SettingsPage';
 import PricingPage from './pages/PricingPage';
 import { Filters } from './pages/Filters';
+import ProfileDetails from './components/profile/ProfileDetails';
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
         <Route path="/sign-up/setup" element={<ProfileSetup />} />
 
         <Route path="/filter" element={<Filters />} />
+
+        <Route path="/profile" element={<ProfileDetails />} />
       </Routes>
     </div>
   );
