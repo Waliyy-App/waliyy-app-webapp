@@ -31,7 +31,7 @@ const SidebarComponent = () => {
               className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300  ${
                 location.pathname === '/'
                   ? 'text-white bg-[#BA9FFE] box-shadow-style'
-                  : 'text-[#101828]'
+                  : 'text-[#2D133A]'
               }`}
             >
               <FiHome className="h-6 w-6" /> Home
@@ -42,7 +42,7 @@ const SidebarComponent = () => {
               className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300  ${
                 location.pathname === '/likes'
                   ? 'text-white bg-[#BA9FFE] box-shadow-style'
-                  : 'text-[#101828]'
+                  : 'text-[#2D133A]'
               }`}
             >
               <FiThumbsUp className="h-6 w-6" /> Likes
@@ -53,7 +53,7 @@ const SidebarComponent = () => {
               className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300  ${
                 location.pathname === '/match'
                   ? 'text-white bg-[#BA9FFE] box-shadow-style'
-                  : 'text-[#101828]'
+                  : 'text-[#2D133A]'
               }`}
             >
               <FiHeart className="h-6 w-6" /> Match
@@ -64,7 +64,7 @@ const SidebarComponent = () => {
               className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300  ${
                 location.pathname === '/settings'
                   ? 'text-white bg-[#BA9FFE] box-shadow-style'
-                  : 'text-[#101828]'
+                  : 'text-[#2D133A]'
               }`}
             >
               <FiSettings className="h-6 w-6" /> Settings

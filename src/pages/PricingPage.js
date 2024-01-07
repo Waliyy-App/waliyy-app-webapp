@@ -7,9 +7,9 @@ const PricingPage = () => {
     <div className="flex">
       <SidebarComponent />
       <main className="ml-[280px] flex-1 overflow-y-auto py-[64px] px-8">
-        <div className="flex flex-col items-center justify-center gap-3 text-center px-8 py-[64px]">
+        <div className="flex flex-col items-center justify-center gap-2 text-center px-8 pt-8 pb-[64px]">
           <p className="text-[#BA9FFE] font-bold">Pricing</p>
-          <p className="text-[#101828] font-bold text-4xl">
+          <p className="text-[#2D133A] font-bold text-4xl">
             You are a step away from finding your future spouse.
           </p>
         </div>
@@ -17,8 +17,8 @@ const PricingPage = () => {
         <div className="flex flex-wrap items-center justify-center gap-8">
           <div className="w-[400px] bg-[#F9FAFB] rounded-lg p-8">
             <div className="flex flex-col gap-2 items-center">
-              <p className="text-xl text-[#101828] font-bold">Free plan</p>
-              <p className="text-4xl text-[#101828] font-bold">₦0/annum</p>
+              <p className="text-xl text-[#2D133A] font-bold">Free plan</p>
+              <p className="text-4xl text-[#2D133A] font-bold">₦0/annum</p>
               <p className="text-[#667085]">Our most popular plan.</p>
             </div>
 
@@ -48,8 +48,8 @@ const PricingPage = () => {
 
           <div className="w-[400px] bg-[#F9FAFB] rounded-lg p-8">
             <div className="flex flex-col gap-2 items-center">
-              <p className="text-xl text-[#101828] font-bold">Premium plan</p>
-              <p className="text-4xl text-[#101828] font-bold">₦15,000/annum</p>
+              <p className="text-xl text-[#2D133A] font-bold">Premium plan</p>
+              <p className="text-4xl text-[#2D133A] font-bold">₦15,000/annum</p>
               <p className="text-[#667085]">
                 Do so much more than just browsing.
               </p>
