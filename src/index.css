@@ -12,10 +12,14 @@ body {
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 }
 
-.css-1vyamtt-MuiStepLabel-labelContainer{
+.profile-card:hover {
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+.css-1vyamtt-MuiStepLabel-labelContainer {
   color: #344054 !important;
   font-weight: 500 !important;
 }
-.css-1hv8oq8-MuiStepLabel-label.Mui-active{
-  color: #BA9FFE !important;
+.css-1hv8oq8-MuiStepLabel-label.Mui-active {
+  color: #ba9ffe !important;
 }
