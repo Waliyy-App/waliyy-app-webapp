@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Male from '../assets/illustrations/male-illus.png';
-import { LuMapPin } from 'react-icons/lu';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { BsFillDiamondFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
@@ -31,14 +31,14 @@ const ProfileCard = () => {
       </div>
 
       <div className="text-[#2D133A]">
-        <div className="flex items-center gap-2  text-xl font-bold">
+        <div className="flex items-center gap-2  text-2xl font-bold">
           <p>Muhammad</p>
           <BsFillDiamondFill className="h-2 w-2" />
           <p>27</p>
         </div>
 
-        <div className="flex items-center gap-[6px] ">
-          <LuMapPin className="w-[18px] h-[18px]" />
+        <div className="flex items-end gap-1 ">
+          <LocationOnIcon />
           <p className="text-sm font-light">Lagos, Nigeria</p>
         </div>
       </div>
