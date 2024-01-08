@@ -27,34 +27,33 @@ const LikePage = () => {
     <div className="flex">
       <SidebarComponent />
       <main className="ml-[280px] py-[64px] px-8 w-full">
-        <div className='flex justify-center'>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            textColor="inherit"
-            indicatorColor="secondary"
-            aria-label="icon position tabs example"
-          >
-            <Tab
-              icon={<ThumbUpIcon />}
-              iconPosition="start"
-              label="Liked"
-              {...a11yProps(0)}
-            />
-            <Tab
-              icon={<MoodIcon />}
-              iconPosition="start"
-              label="Liked You"
-              {...a11yProps(1)}
-            />
-            <Tab
-              icon={<ThumbDownIcon />}
-              iconPosition="start"
-              label="Passed"
-              {...a11yProps(2)}
-            />
-          </Tabs>
-        </div>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          textColor="inherit"
+          indicatorColor="secondary"
+          aria-label="icon position tabs example"
+          centered
+        >
+          <Tab
+            icon={<ThumbUpIcon />}
+            iconPosition="start"
+            label="Liked"
+            {...a11yProps(0)}
+          />
+          <Tab
+            icon={<MoodIcon />}
+            iconPosition="start"
+            label="Liked You"
+            {...a11yProps(1)}
+          />
+          <Tab
+            icon={<ThumbDownIcon />}
+            iconPosition="start"
+            label="Passed"
+            {...a11yProps(2)}
+          />
+        </Tabs>
 
         <Liked value={value} />
         <LikedYou value={value} />

@@ -25,28 +25,27 @@ const MatchPage = () => {
     <div className="flex">
       <SidebarComponent />
       <main className="ml-[280px] py-[64px] px-8 w-full">
-        <div className='flex justify-center'>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            textColor="inherit"
-            indicatorColor="secondary"
-            aria-label="icon position tabs example"
-          >
-            <Tab
-              icon={<FavoriteIcon />}
-              iconPosition="start"
-              label="Match"
-              {...a11yProps(0)}
-            />
-            <Tab
-              icon={<HeartBrokenIcon />}
-              iconPosition="start"
-              label="Unmatch"
-              {...a11yProps(1)}
-            />
-          </Tabs>
-        </div>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          textColor="inherit"
+          indicatorColor="secondary"
+          aria-label="icon position tabs example"
+          centered
+        >
+          <Tab
+            icon={<FavoriteIcon />}
+            iconPosition="start"
+            label="Match"
+            {...a11yProps(0)}
+          />
+          <Tab
+            icon={<HeartBrokenIcon />}
+            iconPosition="start"
+            label="Unmatch"
+            {...a11yProps(1)}
+          />
+        </Tabs>
 
         <Match value={value} />
         <Unmatch value={value} />
