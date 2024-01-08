@@ -10,10 +10,23 @@ import SettingsPage from './pages/SettingsPage';
 import PricingPage from './pages/PricingPage';
 import { Filters } from './pages/Filters';
 import ProfileDetails from './components/profile/ProfileDetails';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function App() {
+
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Nunito, san-serif',
+  },
+   palette: {
+    secondary: {
+      main: '#BA9FFE',
+    },
+  },
+});
+
   return (
-    <div className="App">
+    <ThemeProvider theme={theme} className="App">
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/likes" element={<LikePage />} />
@@ -30,7 +43,7 @@ function App() {
 
         <Route path="/profile" element={<ProfileDetails />} />
       </Routes>
-    </div>
+    </ThemeProvider>
   );
 }
 
