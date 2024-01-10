@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SidebarComponent from '../components/sidebar/Sidebar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -6,16 +6,14 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
 import Match from '../components/match/Match';
 import Unmatch from '../components/match/Unmatch';
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
+import { usePersistedState, a11yProps } from '../utils.js';
 
 const MatchPage = () => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -23,8 +21,8 @@ const MatchPage = () => {
 
   return (
     <div className="flex">
-      <SidebarComponent />
-      <main className="ml-[280px] py-[64px] px-8 w-full">
+      <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
+      <main className={`${isOpen ? 'ml-[100px]' : 'ml-[280px]'} py-[64px] px-8 w-full transition-all duration-300`}>
         <Tabs
           value={value}
           onChange={handleChange}

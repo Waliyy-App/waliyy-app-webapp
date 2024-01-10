@@ -30,43 +30,43 @@ const MeProfile = ({ value }) => {
         <div className='w-2/5'>
           <p className="text-lg font-semibold mb-8">My Details</p>
           <div className="flex flex-wrap gap-4">
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               AA
             </div>
             
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               5 ft 9
             </div>
 
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               180lbs
             </div>
 
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               Divoced
             </div>
 
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               Yoruba
             </div>
 
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               Nigerian
             </div>
 
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               No Children
             </div>
 
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               Doesn't smoke
             </div>
 
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               Doesn't drink
             </div>
 
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               No addictions
             </div>
 

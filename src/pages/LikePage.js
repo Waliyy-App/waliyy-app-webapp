@@ -8,16 +8,17 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import Liked from '../components/likes/Liked';
 import LikedYou from '../components/likes/LikedYou';
 import PassedProfile from '../components/likes/PassedProfile';
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
+import { usePersistedState, a11yProps } from '../utils.js';
 
 const LikePage = () => {
   const [value, setValue] = React.useState(0);
+
+  const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -25,8 +26,8 @@ const LikePage = () => {
 
   return (
     <div className="flex">
-      <SidebarComponent />
-      <main className="ml-[280px] py-[64px] px-8 w-full">
+      <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
+      <main className={`${isOpen ? 'ml-[100px]' : 'ml-[280px]'} py-[64px] px-8 w-full transition-all duration-300`}>
         <Tabs
           value={value}
           onChange={handleChange}

@@ -1,10 +1,18 @@
-import React from 'react'
-import SidebarComponent from '../components/sidebar/Sidebar'
+import React from 'react';
+import SidebarComponent from '../components/sidebar/Sidebar';
+import { usePersistedState } from '../utils.js';
 
 const SettingsPage = () => {
-  return (
-    <div><SidebarComponent /></div>
-  )
-}
+  const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
-export default SettingsPage
+  return (
+    <div>
+      <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
+    </div>
+  );
+};
+
+export default SettingsPage;

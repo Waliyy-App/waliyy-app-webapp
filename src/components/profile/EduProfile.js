@@ -34,23 +34,23 @@ const EduProfile = ({ value }) => {
         <div className="w-2/5">
           <p className="text-lg font-semibold mb-8">My Details</p>
           <div className="flex flex-wrap gap-4">
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               Master's Degree
             </div>
 
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               Self Employed
             </div>
 
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               Engineering
             </div>
 
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               Web Developer
             </div>
 
-            <div className="p-1 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-semibold">
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               Not willing to relocate
             </div>
             

@@ -1,12 +1,22 @@
 import React from 'react';
 import SidebarComponent from '../components/sidebar/Sidebar';
 import { FiCheck } from 'react-icons/fi';
+import { usePersistedState } from '../utils.js';
 
 const PricingPage = () => {
+  const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className="flex">
-      <SidebarComponent />
-      <main className="ml-[280px] flex-1 overflow-y-auto py-[64px] px-8">
+      <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
+      <main
+        className={`${
+          isOpen ? 'ml-[100px]' : 'ml-[280px]'
+        } flex-1 overflow-y-auto py-[64px] px-8 transition-all duration-300`}
+      >
         <div className="flex flex-col items-center justify-center gap-2 text-center px-8 pt-8 pb-[64px]">
           <p className="text-[#BA9FFE] font-bold">Pricing</p>
           <p className="text-[#2D133A] font-bold text-4xl">
