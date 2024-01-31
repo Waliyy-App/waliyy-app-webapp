@@ -124,7 +124,7 @@ const Register = () => {
 
             <button
               type="submit"
-              className="my-11 mb-16 hover:bg-[#9b84d3] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style"
+              className="my-11 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300"
             >
               Create account
             </button>
@@ -133,7 +133,7 @@ const Register = () => {
 
         <p className="text-center text-sm">
           Already have an account?{' '}
-          <Link to="/" className="font-bold text-[#2D133A] hover:text-[#7e26aa]">
+          <Link to="/" className="font-bold text-[#2D133A] hover:text-[#7e26aa] transition-all duration-300">
             Log in
           </Link>{' '}
         </p>

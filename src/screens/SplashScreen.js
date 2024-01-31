@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import WelcomeLogo from '../assets/logo/logo-icon-nobg.png';
+import LogoIcon from '../assets/logo/logo-icon.png';
 
 const SplashScreen = () => {
   const navigate = useNavigate();
@@ -14,8 +14,12 @@ const SplashScreen = () => {
 
   return (
     <div className="w-100 h-screen bg-white flex flex-col items-center justify-center">
-      <div className="w-[360px] mx-auto ">
-        <img src={WelcomeLogo} alt="." className="w-[200px] h-[200px] mx-auto" />
+      <div className="w-[360px] mx-auto">
+        <img
+          src={LogoIcon}
+          alt="."
+          className="w-[150px] h-[170px] mx-auto animate-spin-slow"
+        />
         <div className="flex flex-col items-center jutify-center mt-8">
           <p className="text-2xl text-[#2D133A] font-medium mb-3">
             Welcome to Waliyy App

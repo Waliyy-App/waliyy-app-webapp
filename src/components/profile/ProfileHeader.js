@@ -35,10 +35,10 @@ const ProfileHeader = ({ isUser }) => {
 
       {!isUser && (
         <div className="flex items-center gap-3">
-          <button className="hover:bg-[#9b84d3] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2">
+          <button className="hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300">
             <ThumbUpIcon /> Like
           </button>
-          <button className="bg-[#2D133A] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2">
+          <button className="bg-[#2D133A] hover:bg-[#14091a] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300">
             Pass <ThumbDownIcon />
           </button>
         </div>

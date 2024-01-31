@@ -24,7 +24,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
       <aside
         className={` ${
           isOpen ? 'w-[100px] px-2' : 'w-[280px] px-8'
-        } bg-[#F2EEFB] py-8 flex flex-col justify-between fixed inset-y-0 left-0 h-screen transition-all duration-300`}
+        } bg-[#F2EEFB] py-8 flex flex-col justify-between 2xl:justify-start fixed inset-y-0 left-0 h-screen 2xl:h-full transition-all duration-300`}
       >
         <div className="flex flex-col">
           <div

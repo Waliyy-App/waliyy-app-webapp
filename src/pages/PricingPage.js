@@ -50,7 +50,7 @@ const PricingPage = () => {
 
             <button
               disabled
-              className="w-full border text-black font-semibold border-[#BA9FFE] h-12 rounded-lg"
+              className="w-full border text-[#2D133A] font-semibold border-[#2D133A] h-12 rounded-lg"
             >
               Current Plan
             </button>
@@ -102,7 +102,7 @@ const PricingPage = () => {
               </div>
             </div>
 
-            <button className="w-full text-white font-semibold hover:bg-[#9b84d3] bg-[#BA9FFE] h-12 rounded-lg">
+            <button className="w-full text-white font-semibold hover:bg-[#a37eff] bg-[#BA9FFE] h-12 rounded-lg transition-all duration-300">
               Get started
             </button>
           </div>

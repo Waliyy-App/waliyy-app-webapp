@@ -26,7 +26,7 @@ const theme = createTheme({
 });
 
   return (
-    <ThemeProvider theme={theme} className="App">
+    <ThemeProvider theme={theme}>
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/likes" element={<LikePage />} />

@@ -21,9 +21,12 @@ const Dashboard = () => {
           isOpen ? 'ml-[100px]' : 'ml-[280px]'
         } py-[64px] px-8 w-full transition-all duration-300`}
       >
-        <Link to="/filter" className="flex justify-end py-8">
-          <HiOutlineAdjustmentsHorizontal className="h-8 w-8" />
-        </Link>
+        <div className="flex justify-end py-8">
+          <Link to="/filter">
+            <HiOutlineAdjustmentsHorizontal className="h-8 w-8" />
+          </Link>
+        </div>
+
         <div className="flex flex-wrap gap-6">
           <ProfileView />
           <ProfileView />

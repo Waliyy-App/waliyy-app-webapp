@@ -68,21 +68,34 @@ export default function AboutDeenForm({
             name="speakers"
           />
           <SelectInput
-            label="When did you start practising?"
-            name="startPractising"
-          >
-            <option value="">Select option</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </SelectInput>
+              label="When did you start practicing?"
+              name="startPractising"
+            >
+              <option value="">Select option</option>
+              <option value="childhood">Childhood</option>
+              <option value="adolescence">Adolescence</option>
+              <option value="adulthood">Adulthood</option>
+              <option value="recent">Recently</option>
+              <option value="none">Not Practicing</option>
+              <option value="notSaying">Prefer not to say</option>
+            </SelectInput>
         </div>
 
         <div className="flex justify-between gap-12">
-          <SelectInput label="Pattern of salat" name="salat">
-            <option value="">Select option</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </SelectInput>
+           <SelectInput label="Pattern of salat" name="salat">
+              <option value="">Select option</option>
+              <option value="5daily">I pray 5 times daily</option>
+              <option value="partialDaily">
+                I perform some of the daily prayers
+              </option>
+              <option value="occasionally">I pray occasionally</option>
+              <option value="jumah">I regularly attend Friday prayers</option>
+              <option value="specialOccasions">
+                I mainly pray on special occasions
+              </option>
+              <option value="none">Not Practicing</option>
+              <option value="notSaying">Prefer not to say</option>
+            </SelectInput>
 
           <TextInput
             type="text"

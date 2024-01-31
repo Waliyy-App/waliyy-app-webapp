@@ -33,22 +33,27 @@ export default function EducationAndProfessionForm({
         <div className="flex justify-between gap-12">
           <SelectInput label="Level of Education" name="levelOfEducation">
             <option value="">Select option</option>
-            <option value="Nigerian">Nigerian</option>
-            <option value="British">British</option>
+            <option value="none">None</option>
+            <option value="primary">Primary Education</option>
+            <option value="secondary">Secondary Secondary</option>
+            <option value="undergraduate">Undergraduate Degree</option>
+            <option value="masters">Master's Degree</option>
+            <option value="phd">PhD</option>
           </SelectInput>
 
-          <SelectInput label="Profession" name="profession">
-            <option value="">Select option</option>
-            <option value="female">Female</option>
-            <option value="male">Male</option>
-          </SelectInput>
+          <TextInput label="Profession" name="profession" type="text" />
         </div>
 
         <div className="flex justify-between gap-12">
           <SelectInput label="Employment Status" name="employmentStatus">
             <option value="">Select option</option>
-            <option value="Nigerian">Nigerian</option>
-            <option value="British">British</option>
+            <option value="employed">Employed</option>
+            <option value="self-employed">Self Employed</option>
+            <option value="unemployed">Unemployed</option>
+            <option value="student">Student</option>
+            <option value="disabled">
+              Disabled - Unable to work due to disability
+            </option>
           </SelectInput>
           <TextInput label="something" name="something" classname="invisible" />
         </div>

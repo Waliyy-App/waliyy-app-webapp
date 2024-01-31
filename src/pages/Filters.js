@@ -215,7 +215,7 @@ export const Filters = () => {
               <div className="flex justify-end items-center">
                 <button
                   type="submit"
-                  className="w-[150px] my-11 mb-16 hover:bg-[#9b84d3] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style"
+                  className="w-[150px] my-11 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300"
                 >
                   Submit
                 </button>

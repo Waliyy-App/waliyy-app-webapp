@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form } from 'formik';
 import { TextInput, SelectInput } from '../../common/form';
 import {
@@ -17,6 +17,25 @@ export default function NationalityForm({
   completedSteps,
   completed,
 }) {
+  // const [countryOptions, setCountryOptions] = useState([]);
+
+  // const { getData } = require('country-list');
+
+  // const fetchCountryOptions = async () => {
+  //   try {
+  //     const data = await getData();
+  //     const options = data.map((country) => ({
+  //       value: country.name,
+  //       label: country.name,
+  //     }));
+  //     setCountryOptions(options);
+  //   } catch (error) {
+  //     console.error('Error fetching country data:', error);
+  //   }
+  // };
+
+  // console.log(countryOptions, 'countey');
+
   return (
     <Formik
       initialValues={nationalityValues}
@@ -53,8 +72,8 @@ export default function NationalityForm({
 
           <SelectInput label="Country of Residence" name="residence">
             <option value="">Select option</option>
-            <option value="female">Female</option>
-            <option value="male">Male</option>
+            <option value="Nigerian">Nigerian</option>
+            <option value="British">British</option>
           </SelectInput>
         </div>
 

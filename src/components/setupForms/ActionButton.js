@@ -30,7 +30,7 @@ const ActionButton = ({
           alignItems: 'center',
           justifyContent: 'center',
           gap: '4px',
-          border: '1px solid #BA9FFE',
+          border: '1px solid #2D133A',
           textTransform: 'capitalize',
           fontSize: '16px',
         }}
@@ -49,7 +49,7 @@ const ActionButton = ({
                 handleComplete();
                 handleNext();
               }}
-              className="ml-2 bg-[#BA9FFE] text-white w-auto py-[10px] px-[18px] rounded-lg font-medium"
+              className="ml-2 bg-[#BA9FFE] hover:bg-[#a37eff] transition-all duration-300 text-white w-auto py-[10px] px-[18px] rounded-lg font-medium"
               type="submit"
             >
               <FaChevronRight />
@@ -57,7 +57,7 @@ const ActionButton = ({
           </Typography>
         ) : (
           <button
-            className="bg-[#BA9FFE] text-white w-[150px] py-[10px] rounded-lg font-medium flex items-center justify-center gap-1"
+            className="bg-[#BA9FFE] hover:bg-[#a37eff] transition-all duration-300 text-white w-[150px] py-[10px] rounded-lg font-medium flex items-center justify-center gap-1"
             type='submit'
           >
             {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Next'}{' '}

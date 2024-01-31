@@ -40,7 +40,7 @@ export const deenValues = {
   organizationType: '',
   speakers: '',
   startPractising: '',
-  
+  salat: '',
   islamicPractice: '',
 };
 

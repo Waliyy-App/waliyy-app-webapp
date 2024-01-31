@@ -70,7 +70,7 @@ const Login = () => {
               </div>
 
               <Link
-                className="text-end text-sm font-medium text-[#2D133A] hover:text-[#7e26aa]"
+                className="text-end text-sm font-medium text-[#2D133A] hover:text-[#7e26aa] transition-all duration-300"
                 to="/"
               >
                 Forgot password?
@@ -78,7 +78,7 @@ const Login = () => {
 
               <button
                 type="submit"
-                className="my-11 mb-16 hover:bg-[#9b84d3] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style"
+                className="my-11 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300"
               >
                 Sign In
               </button>
@@ -89,7 +89,7 @@ const Login = () => {
             Don&apos;t have an account?{' '}
             <Link
               to="/sign-up"
-              className="font-bold text-[#2D133A] hover:text-[#7e26aa]"
+              className="font-bold text-[#2D133A] hover:text-[#7e26aa] transition-all duration-300"
             >
               Sign Up
             </Link>{' '}

@@ -28,3 +28,4 @@ export default function CustomTabPanel(props) {
     index: PropTypes.number.isRequired,
     value: PropTypes.number.isRequired,
   };
+  
