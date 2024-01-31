@@ -4,6 +4,8 @@ import ProfileView from '../components/ProfileCard';
 import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
 import { usePersistedState } from '../utils.js';
+import MobileNav from '../components/sidebar/MobileBottomNav.js';
+import MobileTopNav from '../components/sidebar/MobileTopNav.js';
 
 const Dashboard = () => {
   // Use the custom hook to create a persisted state
@@ -14,11 +16,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
+      <MobileTopNav />
       <main
         className={`${
-          isOpen ? 'ml-[100px]' : 'ml-[280px]'
+          isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
         } py-[64px] px-8 w-full transition-all duration-300`}
       >
         <div className="flex justify-end py-8">
@@ -37,6 +40,7 @@ const Dashboard = () => {
           <ProfileView />
         </div>
       </main>
+      <MobileNav />
     </div>
   );
 };

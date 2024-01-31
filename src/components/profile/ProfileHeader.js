@@ -8,7 +8,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDownAlt';
 
 const ProfileHeader = ({ isUser }) => {
   return (
-    <div className="flex items-end justify-between py-8">
+    <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between py-8 gap-4">
       <div className="flex items-center gap-4">
         <div className="flex items-center justify-center h-[155px] w-[155px] rounded-full border border-[#0000000d] bg-white box-shadow-profile z-30 relative overflow-hidden">
           <img
@@ -34,7 +34,7 @@ const ProfileHeader = ({ isUser }) => {
       </div>
 
       {!isUser && (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 self-end">
           <button className="hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300">
             <ThumbUpIcon /> Like
           </button>

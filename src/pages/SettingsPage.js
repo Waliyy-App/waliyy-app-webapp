@@ -12,6 +12,8 @@ import EducationSettings from '../components/settings/EducationSettings.js';
 import DeenSettings from '../components/settings/DeenSettings.js';
 import SummarySettings from '../components/settings/SummarySettings.js';
 import AccountSettings from '../components/settings/AccountSettings.js';
+import MobileNav from '../components/sidebar/MobileBottomNav.js';
+import MobileTopNav from '../components/sidebar/MobileTopNav.js';
 
 const SettingsPage = () => {
   const [value, setValue] = useState(0);
@@ -29,11 +31,12 @@ const SettingsPage = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
+      <MobileTopNav />
       <main
         className={`${
-          isOpen ? 'ml-[100px]' : 'ml-[280px]'
+          isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
         } py-[64px] px-8 w-full transition-all duration-300`}
       >
         <SettingsHeader isUser={isUser} />
@@ -62,6 +65,7 @@ const SettingsPage = () => {
           <AccountSettings value={value} />
         </div>
       </main>
+      <MobileNav />
     </div>
   );
 };

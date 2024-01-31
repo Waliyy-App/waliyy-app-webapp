@@ -26,7 +26,7 @@ const DeenSettings = ({ value, handleComplete }) => {
           }, 400);
         }}
       >
-        <Form className="flex flex-col gap-10 px-8">
+        <Form className="flex flex-col gap-10 px-0 sm:px-8">
           <div className="flex flex-col gap-1">
             <p className="font-medium text-lg text-[#2D133A]">About Deen</p>
             <p className="text-[#667085] text-sm">
@@ -35,7 +35,7 @@ const DeenSettings = ({ value, handleComplete }) => {
             <div className="w-full h-[0.5px] bg-[#e4e7ec9c] mt-4 mb-12" />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <SelectInput label="Are you a revert?" name="revert">
               <option value="">Select option</option>
               <option value="yes">Yes</option>
@@ -49,7 +49,7 @@ const DeenSettings = ({ value, handleComplete }) => {
             </SelectInput>
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <SelectInput
               label="Do you belong to any Islamic Organization?"
               name="islamicOrganization"
@@ -66,7 +66,7 @@ const DeenSettings = ({ value, handleComplete }) => {
             />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <TextInput
               type="text"
               label="Speakers/Scholars you listen to"
@@ -86,7 +86,7 @@ const DeenSettings = ({ value, handleComplete }) => {
             </SelectInput>
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <SelectInput label="Pattern of salat" name="salat">
               <option value="">Select option</option>
               <option value="5daily">I pray 5 times daily</option>
@@ -106,11 +106,11 @@ const DeenSettings = ({ value, handleComplete }) => {
               type="text"
               label="If yes, specify"
               name="relocationType"
-              classname="invisible"
+              classname="hidden sm:flex sm:invisible"
             />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <TextArea
               label="Describe your Islamic practice"
               name="islamicPractice"
@@ -119,7 +119,7 @@ const DeenSettings = ({ value, handleComplete }) => {
             <TextInput
               label="something"
               name="something"
-              classname="invisible"
+              classname="hidden sm:flex sm:invisible"
             />
           </div>
 

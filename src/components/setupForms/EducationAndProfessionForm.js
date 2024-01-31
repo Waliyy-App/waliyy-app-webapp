@@ -30,7 +30,7 @@ export default function EducationAndProfessionForm({
       }}
     >
       <Form className="flex flex-col gap-10">
-        <div className="flex justify-between gap-12">
+        <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput label="Level of Education" name="levelOfEducation">
             <option value="">Select option</option>
             <option value="none">None</option>
@@ -44,7 +44,7 @@ export default function EducationAndProfessionForm({
           <TextInput label="Profession" name="profession" type="text" />
         </div>
 
-        <div className="flex justify-between gap-12">
+        <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput label="Employment Status" name="employmentStatus">
             <option value="">Select option</option>
             <option value="employed">Employed</option>
@@ -55,19 +55,19 @@ export default function EducationAndProfessionForm({
               Disabled - Unable to work due to disability
             </option>
           </SelectInput>
-          <TextInput label="something" name="something" classname="invisible" />
+          <TextInput label="something" name="something" classname="hidden sm:flex sm:invisible" />
         </div>
 
-        <div className="flex justify-between gap-12">
+        <div className="flex flex-col sm:flex-row justify-between gap-12">
           <TextArea
             label="What are you short/medium term qualification and professional plans?"
             name="shortTermPlans"
             placeholder="Enter..."
           />
-          <TextInput label="something" name="something" classname="invisible" />
+          <TextInput label="something" name="something" classname="hidden sm:flex sm:invisible" />
         </div>
 
-        <div className="flex justify-between gap-12">
+        <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput
             label="Are you willing to relocate?"
             name="willingnessToRelocate"

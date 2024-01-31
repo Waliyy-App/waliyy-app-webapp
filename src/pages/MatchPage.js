@@ -7,6 +7,8 @@ import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
 import Match from '../components/match/Match';
 import Unmatch from '../components/match/Unmatch';
 import { usePersistedState, a11yProps } from '../utils.js';
+import MobileNav from '../components/sidebar/MobileBottomNav.js';
+import MobileTopNav from '../components/sidebar/MobileTopNav.js';
 
 const MatchPage = () => {
   const [value, setValue] = useState(0);
@@ -20,9 +22,14 @@ const MatchPage = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
-      <main className={`${isOpen ? 'ml-[100px]' : 'ml-[280px]'} py-[64px] px-8 w-full transition-all duration-300`}>
+       <MobileTopNav />
+      <main
+        className={`${
+          isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
+        } py-[64px] px-8 w-full transition-all duration-300`}
+      >
         <Tabs
           value={value}
           onChange={handleChange}
@@ -48,6 +55,8 @@ const MatchPage = () => {
         <Match value={value} />
         <Unmatch value={value} />
       </main>
+
+      <MobileNav />
     </div>
   );
 };

@@ -31,12 +31,12 @@ export default function PersonalDetailsForm({
       }}
     >
       <Form className="flex flex-col gap-10">
-        <div className="flex justify-between gap-12">
+        <div className="flex flex-col sm:flex-row justify-between gap-12">
           <TextInput label="First Name" name="firstName" type="text" />
           <TextInput label="Last Name" name="lastName" type="text" />
         </div>
 
-        <div className="flex justify-between gap-12">
+        <div className="flex flex-col sm:flex-row justify-between gap-12">
           <TextInput label="Date of Birth" name="dateOfBirth" type="date" />
           <SelectInput label="Gender" name="gender">
             <option value="">Select option</option>
@@ -45,7 +45,7 @@ export default function PersonalDetailsForm({
           </SelectInput>
         </div>
 
-        <div className="flex justify-between gap-12">
+        <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput label="Genotype" name="genotype">
             <option value="">Select option</option>
             <option value="AA">AA</option>
@@ -75,7 +75,7 @@ export default function PersonalDetailsForm({
           </SelectInput>
         </div>
 
-        <div className="flex justify-between gap-12">
+        <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput label="Marital Status" name="maritalStatus">
             <option value="">Select option</option>
             <option value="single">Single</option>
@@ -93,7 +93,7 @@ export default function PersonalDetailsForm({
 
         <div className="flex flex-col gap-4">
           <p className="text-[#665e6b] text-lg font-semibold">Do you...</p>
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <SelectInput label="Smoke?" name="smoke">
               <option value="">Select option</option>
               <option value="yes">Yes</option>

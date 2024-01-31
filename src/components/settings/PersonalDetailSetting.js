@@ -31,7 +31,7 @@ const PersonalDetailSetting = ({ handleComplete, value }) => {
           }, 400);
         }}
       >
-        <Form className="flex flex-col gap-10 px-8">
+        <Form className="flex flex-col gap-10 px-0 sm:px-8">
           <div className="flex flex-col gap-1">
             <p className="font-medium text-lg text-[#2D133A]">
               Personal Details
@@ -42,7 +42,7 @@ const PersonalDetailSetting = ({ handleComplete, value }) => {
             <div className="w-full h-[0.5px] bg-[#e4e7ec9c] mt-4 mb-12" />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <TextInput
               label="First Name"
               name="firstName"
@@ -52,7 +52,7 @@ const PersonalDetailSetting = ({ handleComplete, value }) => {
             <TextInput label="Last Name" name="lastName" type="text" readOnly />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <TextInput
               label="Date of Birth"
               name="dateOfBirth"
@@ -62,7 +62,7 @@ const PersonalDetailSetting = ({ handleComplete, value }) => {
             <TextInput label="Gender" name="gender" type="text" readOnly />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <SelectInput label="Genotype" name="genotype">
               <option value="">Select option</option>
               <option value="AA">AA</option>
@@ -92,7 +92,7 @@ const PersonalDetailSetting = ({ handleComplete, value }) => {
             </SelectInput>
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <SelectInput label="Marital Status" name="maritalStatus">
               <option value="">Select option</option>
               <option value="single">Single</option>
@@ -110,7 +110,7 @@ const PersonalDetailSetting = ({ handleComplete, value }) => {
 
           <div className="flex flex-col gap-4">
             <p className="text-[#665e6b] text-lg font-semibold">Do you...</p>
-            <div className="flex justify-between gap-12">
+            <div className="flex flex-col sm:flex-row justify-between gap-12">
               <TextInput label="Smoke?" name="smoke" type="text" readOnly />
               <TextInput label="Drink?" name="drink" type="text" readOnly />
               <TextInput

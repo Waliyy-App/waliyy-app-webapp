@@ -15,7 +15,7 @@ const ActionButton = ({
   completed,
 }) => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }} className='w-full justify-between'>
       <Button
         disabled={activeStep === 0}
         onClick={handleBack}

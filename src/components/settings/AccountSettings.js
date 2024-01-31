@@ -25,14 +25,14 @@ const AccountSettings = ({ value, handleComplete }) => {
           }, 400);
         }}
       >
-        <Form className="flex flex-col gap-10 px-8">
+        <Form className="flex flex-col gap-10 px-0 sm:px-8">
           <div className="flex flex-col gap-1">
             <p className="font-medium text-lg text-[#2D133A]">Account</p>
             <p className="text-[#667085] text-sm">Update your account here</p>
             <div className="w-full h-[0.5px] bg-[#e4e7ec9c] mt-4 mb-12" />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <TextInput label="Full Name" name="name" type="text" readOnly />
 
             <TextInput
@@ -43,7 +43,7 @@ const AccountSettings = ({ value, handleComplete }) => {
             />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <TextInput
               label="Alternative Email Address"
               name="altEmailAddress"
@@ -58,7 +58,7 @@ const AccountSettings = ({ value, handleComplete }) => {
             <div className="w-full h-[0.5px] bg-[#e4e7ec9c] my-4" />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <TextInput
               label="Old Password"
               name="oldPassword"

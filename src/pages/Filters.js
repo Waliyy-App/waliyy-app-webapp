@@ -39,9 +39,8 @@ export const Filters = () => {
   return (
     <React.Fragment>
       <Box
-        sx={{ width: '80%' }}
         spacing={4}
-        className="mx-auto px-8 py-12 box-shadow-style rounded-lg"
+        className="mx-auto px-8 py-12 box-shadow-style rounded-lg w-full md:w-4/5"
       >
         <div className="flex flex-col px-8 mb-8">
           <p className="font-semibold text-2xl text-[#2D133A]">
@@ -50,7 +49,7 @@ export const Filters = () => {
           <p className="text-[#665e6b] text-lg">Choose what you want</p>
         </div>
 
-        <div className="py-8 px-3 sm:px-8 w-11/12 mx-auto flex flex-col gap-10">
+        <div className="py-8 px-0 sm:px-8 w-full md:w-11/12 mx-auto flex flex-col gap-10">
           <Formik
             initialValues={initialValues}
             onSubmit={(values, { setSubmitting }) => {
@@ -62,7 +61,7 @@ export const Filters = () => {
             }}
           >
             <Form className="flex flex-col gap-10">
-              <div className="flex justify-between gap-12">
+              <div className="flex flex-col sm:flex-row justify-between gap-12">
                 <SelectInput label="Minimum Age" name="minAge">
                   <option value="">Select option</option>
                   <option value="female">Female</option>
@@ -75,7 +74,7 @@ export const Filters = () => {
                 </SelectInput>
               </div>
 
-              <div className="flex justify-between gap-12">
+              <div className="flex flex-col sm:flex-row justify-between gap-12">
                 <SelectInput label="Genotype" name="genotype">
                   <option value="">Select option</option>
                   <option value="AA">AA</option>
@@ -105,7 +104,7 @@ export const Filters = () => {
                 </SelectInput>
               </div>
 
-              <div className="flex justify-between gap-12">
+              <div className="flex flex-col sm:flex-row justify-between gap-12">
                 <SelectInput label="Marital Status" name="maritalStatus">
                   <option value="">Select option</option>
                   <option value="single">Single</option>
@@ -121,7 +120,7 @@ export const Filters = () => {
                 </SelectInput>
               </div>
 
-              <div className="flex justify-between gap-12">
+              <div className="flex flex-col sm:flex-row justify-between gap-12">
                 <SelectInput label="Level of Education" name="levelOfEducation">
                   <option value="">Select option</option>
                   <option value="Nigerian">Nigerian</option>
@@ -135,7 +134,7 @@ export const Filters = () => {
                 </SelectInput>
               </div>
 
-              <div className="flex justify-between gap-12">
+              <div className="flex flex-col sm:flex-row justify-between gap-12">
                 <SelectInput label="Country of Residence" name="residence">
                   <option value="">Select option</option>
                   <option value="female">Female</option>
@@ -149,7 +148,7 @@ export const Filters = () => {
                 </SelectInput>
               </div>
 
-              <div className="flex justify-between gap-12">
+              <div className="flex flex-col sm:flex-row justify-between gap-12">
                 <SelectInput label="Citizenship" name="citizenship">
                   <option value="">Select option</option>
                   <option value="Nigerian">Nigerian</option>
@@ -163,7 +162,7 @@ export const Filters = () => {
                 </SelectInput>
               </div>
 
-              <div className="flex justify-between gap-12">
+              <div className="flex flex-col sm:flex-row justify-between gap-12">
                 <SelectInput label="Ethnicity" name="ethnicity">
                   <option value="">Select option</option>
                   <option value="yes">Yes</option>
@@ -180,7 +179,7 @@ export const Filters = () => {
                 </SelectInput>
               </div>
 
-              <div className="flex justify-between gap-12">
+              <div className="flex flex-col sm:flex-row justify-between gap-12">
                 <SelectInput label="Pattern of Salat" name="salat">
                   <option value="">Select option</option>
                   <option value="Nigerian">Nigerian</option>
@@ -191,7 +190,7 @@ export const Filters = () => {
                   type="text"
                   label="If yes, specify"
                   name="relocationType"
-                  classname="invisible"
+                  classname="hidden sm:flex sm:invisible"
                 />
               </div>
 
@@ -212,7 +211,7 @@ export const Filters = () => {
                 </CheckboxInputTwo>
               </div>
 
-              <div className="flex justify-end items-center">
+              <div className="flex flex-col sm:flex-row justify-end items-center">
                 <button
                   type="submit"
                   className="w-[150px] my-11 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300"

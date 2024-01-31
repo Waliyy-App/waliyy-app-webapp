@@ -165,9 +165,8 @@ export default function ProfileSetup() {
         <CongratulationsRegister />
       ) : (
         <Box
-          sx={{ width: '80%' }}
           spacing={4}
-          className="mx-auto px-8 py-12 box-shadow-style rounded-lg"
+          className="mx-auto px-8 py-12 box-shadow-style rounded-lg w-full md:w-4/5"
         >
           <div className="flex flex-col px-8 mb-8">
             <p className="font-semibold text-2xl text-[#2D133A]">
@@ -190,7 +189,7 @@ export default function ProfileSetup() {
             ))}
           </Stepper>
 
-          <div className="p-8 w-11/12 mx-auto flex flex-col gap-10">
+          <div className="px-0 sm:px-8 py-8 w-full md:w-11/12 mx-auto flex flex-col gap-10">
             {forms[activeStep]({
               activeStep,
               handleBack,

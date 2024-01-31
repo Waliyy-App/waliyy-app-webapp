@@ -49,7 +49,7 @@ export default function NationalityForm({
       }}
     >
       <Form className="flex flex-col gap-10">
-        <div className="flex justify-between gap-12">
+        <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput label="Citizenship" name="citizenship">
             <option value="">Select option</option>
             <option value="Nigerian">Nigerian</option>
@@ -63,7 +63,7 @@ export default function NationalityForm({
           </SelectInput>
         </div>
 
-        <div className="flex justify-between gap-12">
+        <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput label="LGA/County" name="lga">
             <option value="">Select option</option>
             <option value="Nigerian">Nigerian</option>
@@ -77,7 +77,7 @@ export default function NationalityForm({
           </SelectInput>
         </div>
 
-        <div className="flex justify-between gap-12">
+        <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput label="Are you mixed ethnicity" name="mixedEthnicity">
             <option value="">Select option</option>
             <option value="yes">Yes</option>

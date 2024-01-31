@@ -24,7 +24,7 @@ const NationalitySettings = ({ value, handleComplete }) => {
           }, 400);
         }}
       >
-        <Form className="flex flex-col gap-10 px-8">
+        <Form className="flex flex-col gap-10 px-0 sm:px-8">
           <div className="flex flex-col gap-1">
             <p className="font-medium text-lg text-[#2D133A]">
               Heritage and Nationality
@@ -35,7 +35,7 @@ const NationalitySettings = ({ value, handleComplete }) => {
             <div className="w-full h-[0.5px] bg-[#e4e7ec9c] mt-4 mb-12" />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <TextInput
               label="Citizenship"
               name="citizenship"
@@ -50,7 +50,7 @@ const NationalitySettings = ({ value, handleComplete }) => {
             />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <TextInput label="LGA/County" name="lga" type="text" readOnly />
 
             <SelectInput label="Country of Residence" name="residence">
@@ -59,7 +59,7 @@ const NationalitySettings = ({ value, handleComplete }) => {
             </SelectInput>
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <SelectInput label="Are you mixed ethnicity" name="mixedEthnicity">
               <option value="">Select option</option>
               <option value="yes">Yes</option>

@@ -9,6 +9,8 @@ import MeProfile from './MeProfile';
 import EduProfile from './EduProfile';
 import DeenProfile from './DeenProfile';
 import { usePersistedState, a11yProps } from '../../utils.js';
+import MobileNav from '../sidebar/MobileBottomNav.js';
+import MobileTopNav from '../sidebar/MobileTopNav.js';
 
 const ProfileDetails = () => {
   const [value, setValue] = useState(0);
@@ -25,9 +27,14 @@ const ProfileDetails = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
-      <main className={`${isOpen ? 'ml-[100px]' : 'ml-[280px]'} py-[64px] px-8 w-full transition-all duration-300`}>
+      <MobileTopNav />
+      <main
+        className={`${
+          isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
+        } py-[64px] px-8 w-full transition-all duration-300`}
+      >
         <ProfileHeader isUser={isUser} />
         <div>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -48,6 +55,7 @@ const ProfileDetails = () => {
           <DeenProfile value={value} />
         </div>
       </main>
+      <MobileNav />
     </div>
   );
 };

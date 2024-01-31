@@ -20,7 +20,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
   };
 
   return (
-    <div className="h-screen flex">
+    <div className="h-screen hidden sm:flex">
       <aside
         className={` ${
           isOpen ? 'w-[100px] px-2' : 'w-[280px] px-8'
@@ -32,7 +32,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
           >
             <Link
               className={isOpen ? 'h-12 w-10' : 'h-[90px] w-[140px]'}
-              to="/"
+              to="/dashboard"
             >
               <img
                 src={isOpen ? LogoIcon : Logo}
@@ -52,7 +52,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
               className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${
                 isOpen && 'justify-center'
               }  ${
-                location.pathname === '/'
+                location.pathname === '/dashboard'
                   ? 'text-white bg-[#BA9FFE] box-shadow-style'
                   : 'text-[#2D133A]'
               }`}

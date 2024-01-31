@@ -2,6 +2,8 @@ import React from 'react';
 import SidebarComponent from '../components/sidebar/Sidebar';
 import { FiCheck } from 'react-icons/fi';
 import { usePersistedState } from '../utils.js';
+import MobileNav from '../components/sidebar/MobileBottomNav.js';
+import MobileTopNav from '../components/sidebar/MobileTopNav.js';
 
 const PricingPage = () => {
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
@@ -10,11 +12,12 @@ const PricingPage = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
+       <MobileTopNav />
       <main
         className={`${
-          isOpen ? 'ml-[100px]' : 'ml-[280px]'
+          isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
         } flex-1 overflow-y-auto py-[64px] px-8 transition-all duration-300`}
       >
         <div className="flex flex-col items-center justify-center gap-2 text-center px-8 pt-8 pb-[64px]">
@@ -108,6 +111,7 @@ const PricingPage = () => {
           </div>
         </div>
       </main>
+      <MobileNav />
     </div>
   );
 };

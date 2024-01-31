@@ -24,7 +24,7 @@ const EducationSettings = ({ value, handleComplete }) => {
           }, 400);
         }}
       >
-        <Form className="flex flex-col gap-10 px-8">
+        <Form className="flex flex-col gap-10 px-0 sm:px-8">
           <div className="flex flex-col gap-1">
             <p className="font-medium text-lg text-[#2D133A]">
               Education and Profession
@@ -35,7 +35,7 @@ const EducationSettings = ({ value, handleComplete }) => {
             <div className="w-full h-[0.5px] bg-[#e4e7ec9c] mt-4 mb-12" />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <SelectInput label="Level of Education" name="levelOfEducation">
               <option value="">Select option</option>
               <option value="none">None</option>
@@ -49,7 +49,7 @@ const EducationSettings = ({ value, handleComplete }) => {
             <TextInput label="Profession" name="profession" type="text" />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <SelectInput label="Employment Status" name="employmentStatus">
               <option value="">Select option</option>
               <option value="employed">Employed</option>
@@ -63,11 +63,11 @@ const EducationSettings = ({ value, handleComplete }) => {
             <TextInput
               label="something"
               name="something"
-              classname="invisible"
+              classname="hidden sm:flex sm:invisible"
             />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <TextArea
               label="What are you short/medium term qualification and professional plans?"
               name="shortTermPlans"
@@ -76,11 +76,11 @@ const EducationSettings = ({ value, handleComplete }) => {
             <TextInput
               label="something"
               name="something"
-              classname="invisible"
+              classname="hidden sm:flex sm:invisible"
             />
           </div>
 
-          <div className="flex justify-between gap-12">
+          <div className="flex flex-col sm:flex-row justify-between gap-12">
             <SelectInput
               label="Are you willing to relocate?"
               name="willingnessToRelocate"
