@@ -52,10 +52,10 @@ export const summaryValues = {
 
 export const personalDetailsValidationSchema = Yup.object({
   firstName: Yup.string()
-    .min(3, 'Must be 3 characters or more')
+    .min(2, 'Must be 2 characters or more')
     .required('Enter your first name'),
   lastName: Yup.string()
-    .min(5, 'Must be 5 characters or more')
+    .min(2, 'Must be 2 characters or more')
     .required('Enter your last name'),
   dateOfBirth: Yup.date()
     .required('Date of Birth is required')

@@ -36,7 +36,8 @@ export default function EducationAndProfessionForm({
             <option value="none">None</option>
             <option value="primary">Primary Education</option>
             <option value="secondary">Secondary Secondary</option>
-            <option value="undergraduate">Undergraduate Degree</option>
+            <option value="undergraduate">Bachelors Degree</option>
+            <option value="postgraduate">Postgraduate Degree</option>
             <option value="masters">Master's Degree</option>
             <option value="phd">PhD</option>
           </SelectInput>
@@ -81,6 +82,7 @@ export default function EducationAndProfessionForm({
             type="text"
             label="If yes, specify"
             name="relocationType"
+            placeholder='If no, input N/A'
           />
         </div>
 

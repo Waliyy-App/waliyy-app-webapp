@@ -5,6 +5,7 @@ import {
   nationalityValidationSchema,
   nationalityValues,
 } from '../../data/inputInitialValues';
+import { citizenshipOptions, countryOptions } from '../../data/formValues';
 import ActionButton from './ActionButton';
 
 export default function NationalityForm({
@@ -17,25 +18,6 @@ export default function NationalityForm({
   completedSteps,
   completed,
 }) {
-  // const [countryOptions, setCountryOptions] = useState([]);
-
-  // const { getData } = require('country-list');
-
-  // const fetchCountryOptions = async () => {
-  //   try {
-  //     const data = await getData();
-  //     const options = data.map((country) => ({
-  //       value: country.name,
-  //       label: country.name,
-  //     }));
-  //     setCountryOptions(options);
-  //   } catch (error) {
-  //     console.error('Error fetching country data:', error);
-  //   }
-  // };
-
-  // console.log(countryOptions, 'countey');
-
   return (
     <Formik
       initialValues={nationalityValues}
@@ -50,31 +32,28 @@ export default function NationalityForm({
     >
       <Form className="flex flex-col gap-10">
         <div className="flex flex-col sm:flex-row justify-between gap-12">
-          <SelectInput label="Citizenship" name="citizenship">
+          <SelectInput label="Nationality" name="citizenship">
             <option value="">Select option</option>
-            <option value="Nigerian">Nigerian</option>
-            <option value="British">British</option>
-          </SelectInput>
-
-          <SelectInput label="State of Origin" name="stateOfOrigin">
-            <option value="">Select option</option>
-            <option value="female">Female</option>
-            <option value="male">Male</option>
-          </SelectInput>
-        </div>
-
-        <div className="flex flex-col sm:flex-row justify-between gap-12">
-          <SelectInput label="LGA/County" name="lga">
-            <option value="">Select option</option>
-            <option value="Nigerian">Nigerian</option>
-            <option value="British">British</option>
+            {citizenshipOptions.map((option) => (
+              <option key={option.id} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </SelectInput>
 
           <SelectInput label="Country of Residence" name="residence">
             <option value="">Select option</option>
-            <option value="Nigerian">Nigerian</option>
-            <option value="British">British</option>
+            {countryOptions.map((option) => (
+              <option key={option.id} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </SelectInput>
+        </div>
+
+        <div className="flex flex-col sm:flex-row justify-between gap-12">
+          <TextInput label="State of Origin" name="stateOfOrigin" type="text" />
+          <TextInput label="LGA/County" name="lga" type="text" />
         </div>
 
         <div className="flex flex-col sm:flex-row justify-between gap-12">
@@ -88,6 +67,7 @@ export default function NationalityForm({
             type="text"
             label="If yes, specify"
             name="mixedEthnicityType"
+            placeHolder="If no, input N/A"
           />
         </div>
 

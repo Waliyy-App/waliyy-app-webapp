@@ -58,6 +58,7 @@ export default function AboutDeenForm({
             type="text"
             label="If yes, specify"
             name="organizationType"
+            placeholder='If no, input N/A'
           />
         </div>
 
@@ -77,7 +78,6 @@ export default function AboutDeenForm({
               <option value="adulthood">Adulthood</option>
               <option value="recent">Recently</option>
               <option value="none">Not Practicing</option>
-              <option value="notSaying">Prefer not to say</option>
             </SelectInput>
         </div>
 
@@ -94,7 +94,6 @@ export default function AboutDeenForm({
                 I mainly pray on special occasions
               </option>
               <option value="none">Not Practicing</option>
-              <option value="notSaying">Prefer not to say</option>
             </SelectInput>
 
           <TextInput
