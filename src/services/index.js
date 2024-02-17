@@ -29,7 +29,7 @@ export const login = async (payload) => {
 
 export const forgotPassword = async (payload) => {
   try {
-    const response = await apiService.post('/auth/forgot-password', payload);
+    const response = await apiService.put('/auth/forgot-password', payload);
     return response.data;
   } catch (error) {
     throw error;
