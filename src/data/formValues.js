@@ -15,6 +15,43 @@ export const genotypeOption = [
   { label: 'SC', value: 'SC' },
 ];
 
+export const maritalStatusOption = [
+  { label: 'Single', value: 'Single' },
+  { label: 'Married', value: 'Married' },
+  { label: 'Divorced', value: 'Divorced' },
+  { label: 'Widowed', value: 'Widowed' },
+];
+
+export const educationOptions = [
+  { label: 'None', value: 'none' },
+  { label: 'Primary Education', value: 'primary' },
+  { label: 'Secondary Education', value: 'secondary' },
+  { label: "Bachelor's Degree", value: 'undergraduate' },
+  { label: 'Postgraduate Degree', value: 'postgraduate' },
+  { label: "Master's Degree", value: 'masters' },
+  { label: 'PhD', value: 'phd' }
+];
+
+export const employmentStatusOptions = [
+  { label: 'Employed', value: 'employed' },
+  { label: 'Self Employed', value: 'self-employed' },
+  { label: 'Unemployed', value: 'unemployed' },
+  { label: 'Student', value: 'student' },
+  {
+    label: 'Disabled - Unable to work due to disability',
+    value: 'disabled'
+  }
+];
+
+export const salatOptions = [
+  { label: 'I pray 5 times daily', value: '5daily' },
+  { label: 'I perform some of the daily prayers', value: 'partialDaily' },
+  { label: 'I pray occasionally', value: 'occasionally' },
+  { label: 'I regularly attend Friday prayers', value: 'jumah' },
+  { label: 'I mainly pray on special occasions', value: 'specialOccasions' },
+  { label: 'Not Practicing', value: 'none' }
+];
+
 export const weightRanges = [
   { label: 'Below 50 kg or Below 110 lbs', value: 'below_50_kg' },
   { label: '50 - 60 kg or 110 - 132 lbs', value: '50_60_kg' },

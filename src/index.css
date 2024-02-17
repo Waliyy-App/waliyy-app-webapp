@@ -43,7 +43,7 @@ main {
 }
 
 @-webkit-keyframes spin-slow {
-   0% {
+  0% {
     transform: rotateY(0deg);
   }
   50% {
@@ -58,3 +58,28 @@ main {
   animation: spin-slow 10s linear infinite;
   -webkit-animation: spin-slow 10s linear infinite;
 }
+
+@media only screen and (max-width: 767px ) {
+  .rmsc .dropdown-container {
+    width: 80vw;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1071px ) {
+  .rmsc .dropdown-container {
+    width: 250px;
+  }
+}
+
+@media only screen and (min-width: 1072px) and (max-width: 1279px) {
+  .rmsc .dropdown-container {
+    width: 300px;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .rmsc .dropdown-container {
+    width: 350px;
+  }
+}
+

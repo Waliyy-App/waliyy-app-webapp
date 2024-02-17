@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import { Formik, Form } from 'formik';
-import { TextInput, SelectInput, CheckboxInputTwo } from '../common/form';
-import { heightRanges, weightRanges } from '../data/formValues';
+import { TextInput, CheckboxInputTwo } from '../common/form';
+import {
+  heightRanges,
+  weightRanges,
+  countryOptions,
+  citizenshipOptions,
+  genotypeOption,
+  maritalStatusOption,
+  educationOptions,
+  employmentStatusOptions,
+  salatOptions,
+} from '../data/formValues';
+import { MultiSelect } from 'react-multi-select-component';
 
 export const Filters = () => {
+  const [selectedHeight, setSelectedHeight] = useState([]);
+  const [selectedWeight, setSelectedWeight] = useState([]);
+  const [selectedGenotype, setSelectedGenotype] = useState([]);
+  const [selectedMaritalStatus, setSelectedMaritalStatus] = useState([]);
+  const [selectedChildren, setSelectedChildren] = useState([]);
+  const [selectedLevelOfEdu, setSelectedLevelOfEdu] = useState([]);
+  const [selectedEmployment, setSelectedEmployment] = useState([]);
+  const [selectedCountries, setSelectedCountries] = useState([]);
+  const [selectedNationality, setSelectedNationality] = useState([]);
+  const [selectedSalat, setSelectedSalat] = useState([]);
+
   const initialValues = {
     minAge: '',
     maxAge: '',
@@ -35,12 +57,17 @@ export const Filters = () => {
     hasAddiction: false,
   };
 
+  const childrenOption = [
+    { label: 'Yes', value: 'Yes' },
+    { label: 'No', value: 'No' },
+  ];
   const navigate = useNavigate();
+
   return (
     <React.Fragment>
       <Box
         spacing={4}
-        className="mx-auto px-8 py-12 box-shadow-style rounded-lg w-full md:w-4/5"
+        className="mx-auto px-8 py-12 box-shadow-style rounded-lg w-full"
       >
         <div className="flex flex-col px-8 mb-8">
           <p className="font-semibold text-2xl text-[#2D133A]">
@@ -49,7 +76,7 @@ export const Filters = () => {
           <p className="text-[#665e6b] text-lg">Choose what you want</p>
         </div>
 
-        <div className="py-8 px-0 sm:px-8 w-full md:w-11/12 mx-auto flex flex-col gap-10">
+        <div className="py-8 px-0 sm:px-8 w-full md:w-10/12 mx-auto flex flex-col items-center justify-center gap-10">
           <Formik
             initialValues={initialValues}
             onSubmit={(values, { setSubmitting }) => {
@@ -61,147 +88,196 @@ export const Filters = () => {
             }}
           >
             <Form className="flex flex-col gap-10">
-              <div className="flex flex-col sm:flex-row justify-between gap-12">
-                <SelectInput label="Minimum Age" name="minAge">
-                  <option value="">Select option</option>
-                  <option value="female">Female</option>
-                  <option value="male">Male</option>
-                </SelectInput>
-                <SelectInput label="Maximum Age" name="maxAge">
-                  <option value="">Select option</option>
-                  <option value="female">Female</option>
-                  <option value="male">Male</option>
-                </SelectInput>
+              <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
+                <div className="flex items-center gap-5 w-full">
+                  <TextInput label="Minimum Age" name="minAge" type="text" />
+                  <TextInput label="Maximum Age" name="maxAge" type="text" />
+                </div>
+                <div>
+                  <label
+                    className="text-sm font-medium text-[#2D133A]"
+                    htmlFor="genotype"
+                  >
+                    Genotype
+                  </label>
+                  <MultiSelect
+                    hasSelectAll
+                    className="w-auto text-input mt-3 multi-select"
+                    options={genotypeOption}
+                    value={selectedGenotype}
+                    onChange={setSelectedGenotype}
+                    labelledBy="Genotype"
+                  />
+                </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row justify-between gap-12">
-                <SelectInput label="Genotype" name="genotype">
-                  <option value="">Select option</option>
-                  <option value="AA">AA</option>
-                  <option value="AC">AC</option>
-                  <option value="AS">AS</option>
-                  <option value="SS">SS</option>
-                  <option value="CC">CC</option>
-                  <option value="SC">SC</option>
-                </SelectInput>
+              <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
+                <div>
+                  <label
+                    className="text-sm font-medium text-[#2D133A]"
+                    htmlFor="height"
+                  >
+                    Height
+                  </label>
+                  <MultiSelect
+                    hasSelectAll
+                    className="w-auto text-input mt-3 multi-select"
+                    options={heightRanges}
+                    value={selectedHeight}
+                    onChange={setSelectedHeight}
+                    labelledBy="Height"
+                  />
+                </div>
 
-                <SelectInput label="Height" name="height">
-                  <option value="">Select option</option>
-                  {heightRanges.map((range) => (
-                    <option key={range.value} value={range.value}>
-                      {range.label}
-                    </option>
-                  ))}
-                </SelectInput>
+                <div>
+                  <label
+                    className="text-sm font-medium text-[#2D133A]"
+                    htmlFor="weight"
+                  >
+                    Weight
+                  </label>
+                  <MultiSelect
+                    hasSelectAll
+                    className="w-auto text-input mt-3 multi-select"
+                    options={weightRanges}
+                    value={selectedWeight}
+                    onChange={setSelectedWeight}
+                    labelledBy="Weight"
+                  />
+                </div>
 
-                <SelectInput label="Weight" name="weight">
-                  <option value="">Select option</option>
-                  {weightRanges.map((range) => (
-                    <option key={range.value} value={range.value}>
-                      {range.label}
-                    </option>
-                  ))}
-                </SelectInput>
+                <div>
+                  <label
+                    className="text-sm font-medium text-[#2D133A]"
+                    htmlFor="maritalStatus"
+                  >
+                    Marital Status
+                  </label>
+                  <MultiSelect
+                    hasSelectAll
+                    className="w-auto text-input mt-3 multi-select"
+                    options={maritalStatusOption}
+                    value={selectedMaritalStatus}
+                    onChange={setSelectedMaritalStatus}
+                    labelledBy="MaritalStatus"
+                  />
+                </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row justify-between gap-12">
-                <SelectInput label="Marital Status" name="maritalStatus">
-                  <option value="">Select option</option>
-                  <option value="single">Single</option>
-                  <option value="married">Married</option>
-                  <option value="divorced">Divorced</option>
-                  <option value="widowed">Widowed</option>
-                </SelectInput>
+              <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
+                <div>
+                  <label
+                    className="text-sm font-medium text-[#2D133A]"
+                    htmlFor="children"
+                  >
+                    Children
+                  </label>
+                  <MultiSelect
+                    hasSelectAll
+                    className="w-auto text-input mt-3 multi-select"
+                    options={childrenOption}
+                    value={selectedChildren}
+                    onChange={setSelectedChildren}
+                    labelledBy="Children"
+                  />
+                </div>
 
-                <SelectInput label="Children" name="haveChildren">
-                  <option value="">Select option</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </SelectInput>
+                <div>
+                  <label
+                    className="text-sm font-medium text-[#2D133A]"
+                    htmlFor="levelOfEducation"
+                  >
+                    Level of Education
+                  </label>
+                  <MultiSelect
+                    hasSelectAll
+                    className="w-auto text-input mt-3 multi-select"
+                    options={educationOptions}
+                    value={selectedLevelOfEdu}
+                    onChange={setSelectedLevelOfEdu}
+                    labelledBy="LevelOfEdu"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    className="text-sm font-medium text-[#2D133A]"
+                    htmlFor="employmentStatus"
+                  >
+                    Employment Status
+                  </label>
+                  <MultiSelect
+                    hasSelectAll
+                    className="w-auto text-input mt-3 multi-select"
+                    options={employmentStatusOptions}
+                    value={selectedEmployment}
+                    onChange={setSelectedEmployment}
+                    labelledBy="Employment"
+                  />
+                </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row justify-between gap-12">
-                <SelectInput label="Level of Education" name="levelOfEducation">
-                  <option value="">Select option</option>
-                  <option value="Nigerian">Nigerian</option>
-                  <option value="British">British</option>
-                </SelectInput>
+              <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
+                <div>
+                  <label
+                    className="text-sm font-medium text-[#2D133A]"
+                    htmlFor="residence"
+                  >
+                    Country of Residence
+                  </label>
+                  <MultiSelect
+                    hasSelectAll
+                    className="w-auto text-input mt-3 multi-select"
+                    options={countryOptions}
+                    value={selectedCountries}
+                    onChange={setSelectedCountries}
+                    labelledBy="Residence"
+                  />
+                </div>
 
-                <SelectInput label="Employment Status" name="employmentStatus">
-                  <option value="">Select option</option>
-                  <option value="Nigerian">Nigerian</option>
-                  <option value="British">British</option>
-                </SelectInput>
-              </div>
+                <div>
+                  <label
+                    className="text-sm font-medium text-[#2D133A]"
+                    htmlFor="citizenship"
+                  >
+                    Nationality
+                  </label>
+                  <MultiSelect
+                    hasSelectAll
+                    className="w-auto text-input mt-3 multi-select"
+                    options={citizenshipOptions}
+                    value={selectedNationality}
+                    onChange={setSelectedNationality}
+                    labelledBy="citizenship"
+                  />
+                </div>
 
-              <div className="flex flex-col sm:flex-row justify-between gap-12">
-                <SelectInput label="Country of Residence" name="residence">
-                  <option value="">Select option</option>
-                  <option value="female">Female</option>
-                  <option value="male">Male</option>
-                </SelectInput>
-
-                <SelectInput label="State of Origin" name="stateOfOrigin">
-                  <option value="">Select option</option>
-                  <option value="female">Female</option>
-                  <option value="male">Male</option>
-                </SelectInput>
-              </div>
-
-              <div className="flex flex-col sm:flex-row justify-between gap-12">
-                <SelectInput label="Citizenship" name="citizenship">
-                  <option value="">Select option</option>
-                  <option value="Nigerian">Nigerian</option>
-                  <option value="British">British</option>
-                </SelectInput>
-
-                <SelectInput label="LGA/County" name="lga">
-                  <option value="">Select option</option>
-                  <option value="Nigerian">Nigerian</option>
-                  <option value="British">British</option>
-                </SelectInput>
-              </div>
-
-              <div className="flex flex-col sm:flex-row justify-between gap-12">
-                <SelectInput label="Ethnicity" name="ethnicity">
-                  <option value="">Select option</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </SelectInput>
-
-                <SelectInput
-                  label="Wiilingness to relocate"
-                  name="willingnessToRelocate"
-                >
-                  <option value="">Select option</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </SelectInput>
-              </div>
-
-              <div className="flex flex-col sm:flex-row justify-between gap-12">
-                <SelectInput label="Pattern of Salat" name="salat">
-                  <option value="">Select option</option>
-                  <option value="Nigerian">Nigerian</option>
-                  <option value="British">British</option>
-                </SelectInput>
-
-                <TextInput
-                  type="text"
-                  label="If yes, specify"
-                  name="relocationType"
-                  classname="hidden sm:flex sm:invisible"
-                />
+                <div>
+                  <label
+                    className="text-sm font-medium text-[#2D133A]"
+                    htmlFor="salat"
+                  >
+                    Pattern of Salat
+                  </label>
+                  <MultiSelect
+                    hasSelectAll
+                    className="w-auto text-input mt-3 multi-select"
+                    options={salatOptions}
+                    value={selectedSalat}
+                    onChange={setSelectedSalat}
+                    labelledBy="Salat"
+                  />
+                </div>
               </div>
 
               <div className="flex flex-wrap gap-8">
-                <CheckboxInputTwo name="revert">Revert</CheckboxInputTwo>
-                <CheckboxInputTwo name="single">Single</CheckboxInputTwo>
-                <CheckboxInputTwo name="divorcees">Divorcees</CheckboxInputTwo>
-                <CheckboxInputTwo name="parentsNeverMarried">
-                  Parents who were never married
+                <CheckboxInputTwo name="revert">
+                  Willing to relocate
                 </CheckboxInputTwo>
-                <CheckboxInputTwo name="widows">Widows</CheckboxInputTwo>
+                <CheckboxInputTwo name="revert">
+                  Unwilling to relocate
+                </CheckboxInputTwo>
+                <CheckboxInputTwo name="revert">Revert</CheckboxInputTwo>
                 <CheckboxInputTwo name="shia">Shi'a</CheckboxInputTwo>
                 <CheckboxInputTwo name="sunni">Sunni</CheckboxInputTwo>
                 <CheckboxInputTwo name="smokes">Smokes</CheckboxInputTwo>

@@ -5,9 +5,13 @@ import {
   personalDetailsValidationSchema,
   personalDetailsValues,
 } from '../../data/inputInitialValues';
-import { heightRanges, weightRanges } from '../../data/formValues';
+import {
+  genotypeOption,
+  heightRanges,
+  maritalStatusOption,
+  weightRanges,
+} from '../../data/formValues';
 import ActionButton from './ActionButton';
-
 
 export default function PersonalDetailsForm({
   activeStep,
@@ -49,12 +53,11 @@ export default function PersonalDetailsForm({
         <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput label="Genotype" name="genotype">
             <option value="">Select option</option>
-            <option value="AA">AA</option>
-            <option value="AC">AC</option>
-            <option value="AS">AS</option>
-            <option value="SS">SS</option>
-            <option value="CC">CC</option>
-            <option value="SC">SC</option>
+            {genotypeOption.map((option) => (
+              <option key={option.id} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </SelectInput>
 
           <SelectInput label="Height" name="height">
@@ -79,10 +82,11 @@ export default function PersonalDetailsForm({
         <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput label="Marital Status" name="maritalStatus">
             <option value="">Select option</option>
-            <option value="single">Single</option>
-            <option value="married">Married</option>
-            <option value="divorced">Divorced</option>
-            <option value="widowed">Widowed</option>
+            {maritalStatusOption.map((option) => (
+              <option key={option.id} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </SelectInput>
 
           <SelectInput label="Do you have children?" name="haveChildren">

@@ -6,6 +6,7 @@ import {
   deenValues,
 } from '../../data/inputInitialValues';
 import ActionButton from './ActionButton';
+import { salatOptions } from '../../data/formValues';
 
 export default function AboutDeenForm({
   activeStep,
@@ -84,16 +85,11 @@ export default function AboutDeenForm({
         <div className="flex flex-col sm:flex-row justify-between gap-12">
            <SelectInput label="Pattern of salat" name="salat">
               <option value="">Select option</option>
-              <option value="5daily">I pray 5 times daily</option>
-              <option value="partialDaily">
-                I perform some of the daily prayers
+             {salatOptions.map((option) => (
+              <option key={option.id} value={option.value}>
+                {option.label}
               </option>
-              <option value="occasionally">I pray occasionally</option>
-              <option value="jumah">I regularly attend Friday prayers</option>
-              <option value="specialOccasions">
-                I mainly pray on special occasions
-              </option>
-              <option value="none">Not Practicing</option>
+            ))}
             </SelectInput>
 
           <TextInput
