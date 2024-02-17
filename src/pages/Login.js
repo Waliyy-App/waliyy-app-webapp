@@ -5,10 +5,14 @@ import { TextInput } from '../common/form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import SplashScreen from '../screens/SplashScreen';
+import { login } from '../services';
+import Loader from '../components/Loader';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const initialValues = {
     emailAddress: '',
@@ -24,9 +28,29 @@ const Login = () => {
       .required('Enter password'),
   });
 
+  const handleLogin = async (values) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await login({
+        email: values.emailAddress,
+        password: values.password,
+      });
+
+      console.log('Success');
+      setLoggedIn(true);
+    } catch (error) {
+      setError(error.response.data.message);
+    }
+
+    setLoading(false);
+  };
+
   return (
     <div className="w-100 bg-white ">
-      {!loggedIn && (
+      {loading ? (
+        <Loader />
+      ) : !loggedIn ? (
         <div className="w-[360px] sm:w-[400px] px-5 sm:px-0 mx-auto py-24">
           <div className="flex flex-col items-center jutify-center mb-20">
             <p className="text-2xl text-[#2D133A] font-medium mb-2">
@@ -37,16 +61,16 @@ const Login = () => {
             </p>
           </div>
 
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md my-4">
+              {error}
+            </div>
+          )}
+
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                console.log(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
-              setLoggedIn(true);
-            }}
+            onSubmit={(values) => handleLogin(values)}
           >
             <Form className="flex flex-col gap-5">
               <TextInput
@@ -71,7 +95,7 @@ const Login = () => {
 
               <Link
                 className="text-end text-sm font-medium text-[#2D133A] hover:text-[#7e26aa] transition-all duration-300"
-                to="/"
+                to="/forgot-password"
               >
                 Forgot password?
               </Link>
@@ -95,9 +119,9 @@ const Login = () => {
             </Link>{' '}
           </p>
         </div>
+      ) : (
+        <SplashScreen />
       )}
-
-      {loggedIn && <SplashScreen />}
     </div>
   );
 };
