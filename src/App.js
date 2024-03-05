@@ -13,6 +13,7 @@ import ProfileDetails from './components/profile/ProfileDetails';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ForgotPassword from './pages/ForgotPassword';
 import ProfileSetupForm from './pages/ProfileSetupForm';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   const theme = createTheme({
@@ -29,6 +30,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Routes>
+        <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
         <Route exact path="/likes" element={<LikePage />} />
         <Route exact path="/match" element={<MatchPage />} />
