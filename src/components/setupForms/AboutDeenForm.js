@@ -1,36 +1,11 @@
 import React from 'react';
-import { Formik, Form } from 'formik';
 import { TextInput, SelectInput, TextArea } from '../../common/form';
-import {
-  deenValidationSchema,
-  deenValues,
-} from '../../data/inputInitialValues';
-import ActionButton from './ActionButton';
+
 import { salatOptions } from '../../data/formValues';
 
-export default function AboutDeenForm({
-  activeStep,
-  handleBack,
-  steps,
-  handleComplete,
-  handleNext,
-  totalSteps,
-  completedSteps,
-  completed,
-}) {
+export default function AboutDeenForm(){
   return (
-    <Formik
-      initialValues={deenValues}
-      validationSchema={deenValidationSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          handleComplete();
-          console.log(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-      }}
-    >
-      <Form className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10">
         <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput label="Are you a revert?" name="revert">
             <option value="">Select option</option>
@@ -59,7 +34,6 @@ export default function AboutDeenForm({
             type="text"
             label="If yes, specify"
             name="organizationType"
-            placeholder='If no, input N/A'
           />
         </div>
 
@@ -86,7 +60,7 @@ export default function AboutDeenForm({
            <SelectInput label="Pattern of salat" name="salat">
               <option value="">Select option</option>
              {salatOptions.map((option) => (
-              <option key={option.id} value={option.value}>
+              <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
@@ -109,17 +83,7 @@ export default function AboutDeenForm({
           <TextInput label="something" name="something" classname="hidden sm:flex sm:invisible" />
         </div>
 
-        <ActionButton
-          activeStep={activeStep}
-          handleBack={handleBack}
-          steps={steps}
-          handleComplete={handleComplete}
-          handleNext={handleNext}
-          totalSteps={totalSteps}
-          completedSteps={completedSteps}
-          completed={completed}
-        />
-      </Form>
-    </Formik>
+    
+      </div>
   );
 }

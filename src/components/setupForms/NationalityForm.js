@@ -1,36 +1,10 @@
 import React from 'react';
-import { Formik, Form } from 'formik';
 import { TextInput, SelectInput } from '../../common/form';
-import {
-  nationalityValidationSchema,
-  nationalityValues,
-} from '../../data/inputInitialValues';
 import { citizenshipOptions, countryOptions } from '../../data/formValues';
-import ActionButton from './ActionButton';
 
-export default function NationalityForm({
-  activeStep,
-  handleBack,
-  steps,
-  handleComplete,
-  handleNext,
-  totalSteps,
-  completedSteps,
-  completed,
-}) {
+export default function NationalityForm(){
   return (
-    <Formik
-      initialValues={nationalityValues}
-      validationSchema={nationalityValidationSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          handleComplete();
-          console.log(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-      }}
-    >
-      <Form className="flex flex-col gap-10">
+   <div className="flex flex-col gap-10">
         <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput label="Nationality" name="citizenship">
             <option value="">Select option</option>
@@ -67,21 +41,10 @@ export default function NationalityForm({
             type="text"
             label="If yes, specify"
             name="mixedEthnicityType"
-            placeHolder="If no, input N/A"
           />
         </div>
 
-        <ActionButton
-          activeStep={activeStep}
-          handleBack={handleBack}
-          steps={steps}
-          handleComplete={handleComplete}
-          handleNext={handleNext}
-          totalSteps={totalSteps}
-          completedSteps={completedSteps}
-          completed={completed}
-        />
-      </Form>
-    </Formik>
+
+      </div>
   );
 }

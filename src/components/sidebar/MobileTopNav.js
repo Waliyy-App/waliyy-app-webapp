@@ -43,7 +43,7 @@ const MobileTopNav = () => {
                 Raufah
               </div>
 
-              <Link to="/" className="flex gap-3 text-sm">
+              <Link to="/login" className="flex gap-3 text-sm">
                 <LogoutIcon />
                 Logout
               </Link>

@@ -1,44 +1,18 @@
 import React from 'react';
-import { Formik, Form } from 'formik';
 import { TextInput, SelectInput, TextArea } from '../../common/form';
-import {
-  educationValidationSchema,
-  educationValues,
-} from '../../data/inputInitialValues';
-import ActionButton from './ActionButton';
 import {
   educationOptions,
   employmentStatusOptions,
 } from '../../data/formValues';
 
-export default function EducationAndProfessionForm({
-  activeStep,
-  handleBack,
-  steps,
-  handleComplete,
-  handleNext,
-  totalSteps,
-  completedSteps,
-  completed,
-}) {
+export default function EducationAndProfessionForm(){
   return (
-    <Formik
-      initialValues={educationValues}
-      validationSchema={educationValidationSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          handleComplete();
-          console.log(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-      }}
-    >
-      <Form className="flex flex-col gap-10">
+     <div className="flex flex-col gap-10">
         <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput label="Level of Education" name="levelOfEducation">
             <option value="">Select option</option>
             {educationOptions.map((option) => (
-              <option key={option.id} value={option.value}>
+              <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
@@ -51,7 +25,7 @@ export default function EducationAndProfessionForm({
           <SelectInput label="Employment Status" name="employmentStatus">
             <option value="">Select option</option>
             {employmentStatusOptions.map((option) => (
-              <option key={option.id} value={option.value}>
+              <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
@@ -90,21 +64,10 @@ export default function EducationAndProfessionForm({
             type="text"
             label="If yes, specify"
             name="relocationType"
-            placeholder="If no, input N/A"
           />
         </div>
 
-        <ActionButton
-          activeStep={activeStep}
-          handleBack={handleBack}
-          steps={steps}
-          handleComplete={handleComplete}
-          handleNext={handleNext}
-          totalSteps={totalSteps}
-          completedSteps={completedSteps}
-          completed={completed}
-        />
-      </Form>
-    </Formik>
+        
+      </div>
   );
 }

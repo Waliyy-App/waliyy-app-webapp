@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import ProfileSetup from './pages/ProfileSetup';
+// import ProfileSetup from './pages/ProfileSetup';
 import LikePage from './pages/LikePage';
 import MatchPage from './pages/MatchPage';
 import SettingsPage from './pages/SettingsPage';
@@ -12,6 +12,7 @@ import { Filters } from './pages/Filters';
 import ProfileDetails from './components/profile/ProfileDetails';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ForgotPassword from './pages/ForgotPassword';
+import ProfileSetupForm from './pages/ProfileSetupForm';
 
 function App() {
   const theme = createTheme({
@@ -28,19 +29,19 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/likes" element={<LikePage />} />
-        <Route path="/match" element={<MatchPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/pricing" element={<PricingPage />} />
+        <Route exact path="/dashboard" element={<Dashboard />} />
+        <Route exact path="/likes" element={<LikePage />} />
+        <Route exact path="/match" element={<MatchPage />} />
+        <Route exact path="/settings" element={<SettingsPage />} />
+        <Route exact path="/pricing" element={<PricingPage />} />
 
-        <Route path="/sign-up" element={<Register />} />
-        <Route path="/" element={<Login />} />
-        <Route path="/sign-up/setup" element={<ProfileSetup />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/filter" element={<Filters />} />
+        <Route exact path="/sign-up" element={<Register />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/get-started" element={<ProfileSetupForm />} />
+        <Route exact path="/forgot-password" element={<ForgotPassword />} />
+        <Route exact path="/filter" element={<Filters />} />
 
-        <Route path="/profile" element={<ProfileDetails />} />
+        <Route exact path="/profile" element={<ProfileDetails />} />
       </Routes>
     </ThemeProvider>
   );

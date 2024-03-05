@@ -85,7 +85,7 @@ const ForgotPassword = () => {
             <div className="w-full text-center">
               <Link
                 className="text-sm font-medium text-[#2D133A] hover:text-[#7e26aa] transition-all duration-300 flex items-center gap-2 justify-center"
-                to="/"
+                to="/login"
               >
                 <FaArrowLeft />
                 Back to login

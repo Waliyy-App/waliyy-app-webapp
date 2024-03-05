@@ -3,10 +3,11 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextInput } from '../common/form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SplashScreen from '../screens/SplashScreen';
 import { login } from '../services';
 import Loader from '../components/Loader';
+const AUTH_TOKEN_KEY = 'auth_token';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,18 +33,20 @@ const Login = () => {
     setLoading(true);
     setError(null);
     try {
-      await login({
+      const response = await login({
         email: values.emailAddress,
         password: values.password,
       });
-
-      console.log('Success');
+      if (response) {
+        localStorage.setItem(AUTH_TOKEN_KEY, response.data.data.token);
+      }
+      console.log('Success', response.data.data.token);
       setLoggedIn(true);
     } catch (error) {
       setError(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (

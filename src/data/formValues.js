@@ -1,9 +1,9 @@
 export const heightRanges = [
-  { label: 'Below 4\'11"', value: 'below_150_cm' },
-  { label: '5\'0" - 5\'3"', value: '150_160_cm' },
-  { label: '5\'4" - 5\'7"', value: '160_170_cm' },
-  { label: '5\'8" - 5\'11"', value: '170_180_cm' },
-  { label: 'Above 6\'0"', value: 'above_180_cm' },
+  { label: 'Below 4\'11"', value: 'below_1.50_m' },
+  { label: '5\'0" - 5\'3"', value: '1.50_1.60_m' },
+  { label: '5\'4" - 5\'7"', value: '1.60_1.70_m' },
+  { label: '5\'8" - 5\'11"', value: '1.70_1.80_m' },
+  { label: 'Above 6\'0"', value: 'above_1.80_m' },
 ];
 
 export const genotypeOption = [
@@ -435,7 +435,7 @@ export const countryOptions = [
   { id: 91, label: 'Grenada', value: 'Grenada' },
   { id: 92, label: 'Guadeloupe', value: 'Guadeloupe' },
   { id: 93, label: 'Guam', value: 'Guam' },
-  { id: 93, label: 'Guatemala', value: 'Guatemala' },
+  { id: 257, label: 'Guatemala', value: 'Guatemala' },
   { id: 94, label: 'Guernsey', value: 'Guernsey' },
   { id: 95, label: 'Guinea', value: 'Guinea' },
   { id: 96, label: 'Guinea-Bissau', value: 'Guinea-Bissau' },

@@ -7,7 +7,7 @@ const SplashScreen = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      navigate('/sign-up/setup');
+      navigate('/get-started');
     }, 5000);
     return () => clearTimeout(timeoutId);
   }, [navigate]);

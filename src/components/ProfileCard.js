@@ -21,7 +21,7 @@ const ProfileCard = () => {
   }, [bioText]);
 
   return (
-    <Link to ='/profile' className="profile-card bg-[#FFF4F6] rounded-2xl px-6 pt-6 pb-8 flex flex-col gap-8 w-10/12 mx-auto sm:w-[335px] cursor-pointer" >
+    <Link to ='/profile' className="profile-card bg-[#FFF4F6] rounded-2xl px-6 pt-6 pb-8 flex flex-col gap-8 w-10/12 sm:w-[335px] cursor-pointer" >
       <div className="w-[128px] h-[128px] rounded-full border-4 border-[#FE8D9F] flex items-center justify-center z-30 relative overflow-hidden mx-auto">
         <img
           src={Male}

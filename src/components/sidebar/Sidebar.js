@@ -115,7 +115,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
               Raufah
             </div>
 
-            <Link to="/">
+            <Link to="/login">
               <LogoutIcon />
             </Link>
           </div>
