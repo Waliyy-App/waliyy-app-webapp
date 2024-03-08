@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import { TextInput } from '../common/form';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import { register } from '../services';
-import Loader from '../components/Loader';
-import VerifyEmailScreen from '../screens/VerifyEmailScreen';
+import React, { useState } from "react";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { TextInput } from "../common/form";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { register } from "../services";
+import Loader from "../components/Loader";
+import VerifyEmailScreen from "../screens/VerifyEmailScreen";
+import { useAuthContext } from "../context/AuthContext";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,28 +15,29 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [onSignUp, setOnSignUp] = useState(false);
   const [error, setError] = useState(null);
+  const { storeAuthCookie } = useAuthContext();
 
   const initialValues = {
-    fname: '',
-    lname: '',
-    emailAddress: '',
-    phoneNumber: '',
-    password: '',
-    confirmPassword: '',
+    fname: "",
+    lname: "",
+    emailAddress: "",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
   };
 
   const phoneRegExp = /^\+[0-9]+$/;
 
   const validationSchema = Yup.object({
     fname: Yup.string()
-      .min(2, 'Must be 5 characters or more')
-      .required('Enter Full Name'),
+      .min(2, "Must be 5 characters or more")
+      .required("Enter Full Name"),
     lname: Yup.string()
-      .min(2, 'Must be 5 characters or more')
-      .required('Enter Full Name'),
+      .min(2, "Must be 5 characters or more")
+      .required("Enter Full Name"),
     emailAddress: Yup.string()
-      .email('Invalid Email Address')
-      .required('Enter Email Address'),
+      .email("Invalid Email Address")
+      .required("Enter Email Address"),
     // altEmailAddress: Yup.string()
     //   .email('Must be a valid email address')
     //   .test(
@@ -47,16 +49,16 @@ const Register = () => {
     //     }
     //   ),
     phoneNumber: Yup.string()
-      .matches(phoneRegExp, 'Must start with a valid country code')
-      .min(10, 'Too short')
-      .max(15, 'Too long')
-      .required('Enter Phone Number'),
+      .matches(phoneRegExp, "Must start with a valid country code")
+      .min(10, "Too short")
+      .max(15, "Too long")
+      .required("Enter Phone Number"),
     password: Yup.string()
-      .min(8, 'Must be 8 characters or more')
-      .required('Create a password'),
+      .min(8, "Must be 8 characters or more")
+      .required("Create a password"),
     confirmPassword: Yup.string()
-      .required('Confirm your password')
-      .oneOf([Yup.ref('password')], 'Passwords do not match'),
+      .required("Confirm your password")
+      .oneOf([Yup.ref("password")], "Passwords do not match"),
     // acceptedTerms: Yup.boolean()
     //   .required('Accept terms and conditions')
     //   .oneOf([true], 'You must accept the terms and conditions.'),
@@ -66,7 +68,7 @@ const Register = () => {
     setLoading(true);
     setError(null);
     try {
-      await register({
+      const data = await register({
         firstName: values.fname,
         lastName: values.lname,
         email: values.emailAddress,
@@ -75,13 +77,13 @@ const Register = () => {
         confirmPassword: values.confirmPassword,
       });
 
-      console.log('Success');
+      storeAuthCookie(data);
       setOnSignUp(true);
     } catch (error) {
       setError(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -129,7 +131,7 @@ const Register = () => {
                   <TextInput
                     label="Password*"
                     name="password"
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                   />
                   <div
                     onClick={() => setShowPassword(!showPassword)}
@@ -143,7 +145,7 @@ const Register = () => {
                   <TextInput
                     label="Confirm Password*"
                     name="confirmPassword"
-                    type={showConfirmPassword ? 'text' : 'password'}
+                    type={showConfirmPassword ? "text" : "password"}
                   />
                   <div
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -163,13 +165,13 @@ const Register = () => {
             </Formik>
 
             <p className="text-center text-sm">
-              Already have an account?{' '}
+              Already have an account?{" "}
               <Link
                 to="/login"
                 className="font-bold text-[#2D133A] hover:text-[#7e26aa] transition-all duration-300"
               >
                 Log in
-              </Link>{' '}
+              </Link>{" "}
             </p>
           </div>
         </div>
