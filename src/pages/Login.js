@@ -1,46 +1,48 @@
-import React, { useState } from 'react';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import { TextInput } from '../common/form';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
-import SplashScreen from '../screens/SplashScreen';
-import { login } from '../services';
-import Loader from '../components/Loader';
-const AUTH_TOKEN_KEY = 'auth_token';
+import React, { useState } from "react";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { TextInput } from "../common/form";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import SplashScreen from "../screens/SplashScreen";
+import { login } from "../services";
+import Loader from "../components/Loader";
+import { useAuthContext } from "../context/AuthContext";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { storeAuthCookie } = useAuthContext();
 
   const initialValues = {
-    emailAddress: '',
-    password: '',
+    emailAddress: "",
+    password: "",
   };
 
   const validationSchema = Yup.object({
     emailAddress: Yup.string()
-      .email('Invalid Email Address')
-      .required('Enter email address'),
+      .email("Invalid Email Address")
+      .required("Enter email address"),
     password: Yup.string()
-      .min(8, 'Must be 8 characters or more')
-      .required('Enter password'),
+      .min(8, "Must be 8 characters or more")
+      .required("Enter password"),
   });
 
   const handleLogin = async (values) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await login({
+      const data = await login({
         email: values.emailAddress,
         password: values.password,
       });
-      if (response) {
-        localStorage.setItem(AUTH_TOKEN_KEY, response.data.data.token);
+
+      if (data) {
+        storeAuthCookie(data);
       }
-      console.log('Success', response.data.data.token);
+      
       setLoggedIn(true);
     } catch (error) {
       setError(error.response.data.message);
@@ -86,7 +88,7 @@ const Login = () => {
                 <TextInput
                   label="Password*"
                   name="password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                 />
                 <div
                   onClick={() => setShowPassword(!showPassword)}
@@ -113,13 +115,13 @@ const Login = () => {
           </Formik>
 
           <p className="text-center text-sm">
-            Don&apos;t have an account?{' '}
+            Don&apos;t have an account?{" "}
             <Link
               to="/sign-up"
               className="font-bold text-[#2D133A] hover:text-[#7e26aa] transition-all duration-300"
             >
               Sign Up
-            </Link>{' '}
+            </Link>{" "}
           </p>
         </div>
       ) : (
