@@ -45,9 +45,13 @@ export const changePassword = async (payload) => {
   }
 };
 
-export const userRegistration = async (payload) => {
+export const userRegistration = async (payload, accessToken) => {
   try {
-    const response = await apiService.post("/parent/child", payload);
+    const response = await apiService.post("/parent/child", payload, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return response.data.user;
   } catch (error) {
     throw error;
