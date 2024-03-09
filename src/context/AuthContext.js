@@ -49,7 +49,6 @@ export const AuthContextProvider = ({ children }) => {
       "/sign-up",
       "/get-started",
       "/forgot-password",
-      "/filter",
       "/pricing"
     ];
 
