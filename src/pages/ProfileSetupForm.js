@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import CongratulationsRegister from '../screens/CongratulationsRegister';
+import React, { useState } from "react";
+import Box from "@mui/material/Box";
+import CongratulationsRegister from "../screens/CongratulationsRegister";
 // import { TextInput, SelectInput, TextArea } from '../common/form';
 // import {
 //   salatOptions,
@@ -13,29 +13,31 @@ import CongratulationsRegister from '../screens/CongratulationsRegister';
 //   citizenshipOptions,
 //   countryOptions,
 // } from '../data/formValues';
-import { Formik, Form } from 'formik';
-import UserIcon from '@mui/icons-material/Person';
-import WorldIcon from '@mui/icons-material/Public';
-import SchoolIcon from '@mui/icons-material/School';
-import MosqueIcon from '@mui/icons-material/Mosque';
-import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
-import { initialValues, validationSchema } from '../data/inputInitialValues';
+import { Formik, Form } from "formik";
+import UserIcon from "@mui/icons-material/Person";
+import WorldIcon from "@mui/icons-material/Public";
+import SchoolIcon from "@mui/icons-material/School";
+import MosqueIcon from "@mui/icons-material/Mosque";
+import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
+import { initialValues, validationSchema } from "../data/inputInitialValues";
 import {
   AboutDeenForm,
   EducationAndProfessionForm,
   NationalityForm,
   PersonalDetailsForm,
   SelfSummaryForm,
-} from '../components/setupForms';
-import { userRegistration, isAuthenticated } from '../services';
-import Loader from '../components/Loader';
-import { useNavigate } from 'react-router-dom';
+} from "../components/setupForms";
+import { userRegistration, isAuthenticated } from "../services";
+import Loader from "../components/Loader";
+import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function ProfileSetupForm() {
-  const [activeStep, setActiveStep] = useState('personalDetails');
+  const [activeStep, setActiveStep] = useState("personalDetails");
   const [completed, setCompleted] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { token } = useAuthContext();
 
   const handleSubmit = async (values) => {
     setLoading(true);
@@ -44,46 +46,49 @@ export default function ProfileSetupForm() {
     const getMonth = date.getMonth();
 
     try {
-      await userRegistration({
-        firstName: values.firstName,
-        lastName: values.lastName,
-        yearOfBirth: getYear,
-        monthOfBirth: getMonth,
-        gender: values.gender,
-        genotype: values.genotype,
-        height: values.height,
-        weight: values.weight,
-        maritalStatus: values.maritalStatus,
-        hasChildren: values.haveChildren,
-        isSmoker: values.smoke,
-        isDrinker: values.drink,
-        hasAddictions: values.addiction,
-        citizenship: values.citizenship,
-        state: values.stateOfOrigin,
-        lga: values.lga,
-        countryofResidence: values.residence,
-        isMixedEthnicity: values.mixedEthnicity,
-        mixedEthnicityDescription: values.mixedEthnicityType,
-        educationLevel: values.levelOfEducation,
-        profession: values.profession,
-        employmentStatus: values.employmentStatus,
-        professionalPlans: values.shortTermPlans,
-        isWillingToRelocate: values.willingnessToRelocate,
-        relocationPlans: values.relocationType,
-        isARevert: values.revert,
-        sect: values.sect,
-        belongsToIslamicOrganization: values.islamicOrganization,
-        islamicOrganizationName: values.organizationType,
-        speakersListenedTo: values.speakers,
-        startedPracticingIn: values.startPracticing,
-        salatPattern: values.salat,
-        descriptionOfIslamicPractice: values.islamicPractice,
-        about: values.aboutou,
-        aboutEducationAndJob: values.aboutEducationAndJob,
-        aboutDressing: values.dressing,
-      });
+      await userRegistration(
+        {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          yearOfBirth: getYear,
+          monthOfBirth: getMonth,
+          gender: values.gender,
+          genotype: values.genotype,
+          height: values.height,
+          weight: values.weight,
+          maritalStatus: values.maritalStatus,
+          hasChildren: values.haveChildren,
+          isSmoker: values.smoke,
+          isDrinker: values.drink,
+          hasAddictions: values.addiction,
+          citizenship: values.citizenship,
+          state: values.stateOfOrigin,
+          lga: values.lga,
+          countryofResidence: values.residence,
+          isMixedEthnicity: values.mixedEthnicity,
+          mixedEthnicityDescription: values.mixedEthnicityType,
+          educationLevel: values.levelOfEducation,
+          profession: values.profession,
+          employmentStatus: values.employmentStatus,
+          professionalPlans: values.shortTermPlans,
+          isWillingToRelocate: values.willingnessToRelocate,
+          relocationPlans: values.relocationType,
+          isARevert: values.revert,
+          sect: values.sect,
+          belongsToIslamicOrganization: values.islamicOrganization,
+          islamicOrganizationName: values.organizationType,
+          speakersListenedTo: values.speakers,
+          startedPracticingIn: values.startPracticing,
+          salatPattern: values.salat,
+          descriptionOfIslamicPractice: values.islamicPractice,
+          about: values.aboutou,
+          aboutEducationAndJob: values.aboutEducationAndJob,
+          aboutDressing: values.dressing,
+        },
+        token
+      );
 
-      console.log(values, 'success');
+      console.log(values, "success");
       //   setCompleted(true);
     } catch (error) {
       alert(error.response.data.message);
@@ -93,7 +98,7 @@ export default function ProfileSetupForm() {
   };
 
   if (!isAuthenticated()) {
-    navigate('/');
+    navigate("/");
   }
 
   return (
@@ -123,60 +128,60 @@ export default function ProfileSetupForm() {
               <div>
                 <div
                   className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep('personalDetails')}
+                  onClick={() => setActiveStep("personalDetails")}
                 >
                   <UserIcon />
                   Personal Details
                 </div>
-                {activeStep === 'personalDetails' ? (
+                {activeStep === "personalDetails" ? (
                   <PersonalDetailsForm />
                 ) : (
-                  ''
+                  ""
                 )}
               </div>
               <div>
                 <div
                   className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep('nationality')}
+                  onClick={() => setActiveStep("nationality")}
                 >
                   <WorldIcon />
                   Nationality
                 </div>
-                {activeStep === 'nationality' ? <NationalityForm /> : ''}
+                {activeStep === "nationality" ? <NationalityForm /> : ""}
               </div>
               <div>
                 <div
                   className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep('education')}
+                  onClick={() => setActiveStep("education")}
                 >
                   <SchoolIcon />
                   Education and Profession
                 </div>
-                {activeStep === 'education' ? (
+                {activeStep === "education" ? (
                   <EducationAndProfessionForm />
                 ) : (
-                  ''
+                  ""
                 )}
               </div>
               <div>
                 <div
                   className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep('deen')}
+                  onClick={() => setActiveStep("deen")}
                 >
                   <MosqueIcon />
                   About my Deen
                 </div>
-                {activeStep === 'deen' ? <AboutDeenForm /> : ''}
+                {activeStep === "deen" ? <AboutDeenForm /> : ""}
               </div>
               <div>
                 <div
                   className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep('summary')}
+                  onClick={() => setActiveStep("summary")}
                 >
                   <RecordVoiceOverIcon />
                   Self Summary
                 </div>
-                {activeStep === 'summary' ? <SelfSummaryForm /> : ''}
+                {activeStep === "summary" ? <SelfSummaryForm /> : ""}
               </div>
 
               <button
