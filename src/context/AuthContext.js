@@ -50,6 +50,7 @@ export const AuthContextProvider = ({ children }) => {
       "/get-started",
       "/forgot-password",
       "/filter",
+      "/pricing"
     ];
 
     if (!isLoggedIn && !unprotectedRoutes.includes(window.location.pathname)) {
