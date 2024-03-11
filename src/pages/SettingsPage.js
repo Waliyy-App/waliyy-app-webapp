@@ -6,14 +6,11 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { usePersistedState, a11yProps } from '../utils.js';
 import SettingsHeader from '../components/settings/SettingsHeader.js';
-import PersonalDetailSetting from '../components/settings/PersonalDetailSetting.js';
-import NationalitySettings from '../components/settings/NationalitySettings.js';
-import EducationSettings from '../components/settings/EducationSettings.js';
-import DeenSettings from '../components/settings/DeenSettings.js';
-import SummarySettings from '../components/settings/SummarySettings.js';
 import AccountSettings from '../components/settings/AccountSettings.js';
 import MobileNav from '../components/sidebar/MobileBottomNav.js';
 import MobileTopNav from '../components/sidebar/MobileTopNav.js';
+import UserSetting from '../components/settings/UserSetting.js';
+import Billing from '../components/settings/Billing.js';
 
 const SettingsPage = () => {
   const [value, setValue] = useState(0);
@@ -49,19 +46,14 @@ const SettingsPage = () => {
               textColor="inherit"
               indicatorColor="secondary"
             >
-              <Tab label="Personal Details" {...a11yProps(0)} />
-              <Tab label="Heritage & Nationality" {...a11yProps(1)} />
-              <Tab label="Education & Profession" {...a11yProps(2)} />
-              <Tab label="Deen" {...a11yProps(3)} />
-              <Tab label="Self Summary" {...a11yProps(4)} />
-              <Tab label="Account" {...a11yProps(5)} />
+              <Tab label="User" {...a11yProps(0)} />
+              <Tab label="Billing" {...a11yProps(1)} />
+              <Tab label="Account" {...a11yProps(2)} />
             </Tabs>
           </Box>
-          <PersonalDetailSetting value={value} />
-          <NationalitySettings value={value} />
-          <EducationSettings value={value} />
-          <DeenSettings value={value} />
-          <SummarySettings value={value} />
+
+          <UserSetting value={value} />
+          <Billing value={value} />
           <AccountSettings value={value} />
         </div>
       </main>
