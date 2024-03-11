@@ -2,9 +2,7 @@ import React from 'react';
 import { TextInput, SelectInput } from '../../common/form';
 import {
   genotypeOption,
-  heightRanges,
   maritalStatusOption,
-  weightRanges,
 } from '../../data/formValues';
 
 export default function PersonalDetailsForm() {
