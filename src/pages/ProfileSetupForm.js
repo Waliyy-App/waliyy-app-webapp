@@ -1,30 +1,28 @@
-import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import CongratulationsRegister from "../screens/CongratulationsRegister";
-import { Formik, Form } from "formik";
-import UserIcon from "@mui/icons-material/Person";
-import WorldIcon from "@mui/icons-material/Public";
-import SchoolIcon from "@mui/icons-material/School";
-import MosqueIcon from "@mui/icons-material/Mosque";
-import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
-import { initialValues, validationSchema } from "../data/inputInitialValues";
+import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import CongratulationsRegister from '../screens/CongratulationsRegister';
+import { Formik, Form } from 'formik';
+import UserIcon from '@mui/icons-material/Person';
+import WorldIcon from '@mui/icons-material/Public';
+import SchoolIcon from '@mui/icons-material/School';
+import MosqueIcon from '@mui/icons-material/Mosque';
+import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
+import { initialValues, validationSchema } from '../data/inputInitialValues';
 import {
   AboutDeenForm,
   EducationAndProfessionForm,
   NationalityForm,
   PersonalDetailsForm,
   SelfSummaryForm,
-} from "../components/setupForms";
-import { userRegistration, isAuthenticated } from "../services";
-import Loader from "../components/Loader";
-import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../context/AuthContext";
+} from '../components/setupForms';
+import { userRegistration } from '../services';
+import Loader from '../components/Loader';
+import { useAuthContext } from '../context/AuthContext';
 
 export default function ProfileSetupForm() {
-  const [activeStep, setActiveStep] = useState("personalDetails");
+  const [activeStep, setActiveStep] = useState('personalDetails');
   const [completed, setCompleted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const { token } = useAuthContext();
 
   const handleSubmit = async (values) => {
@@ -32,6 +30,10 @@ export default function ProfileSetupForm() {
     const date = new Date(values.dateOfBirth);
     const getYear = date.getFullYear();
     const getMonth = date.getMonth();
+
+    const speakers = Array.isArray(values.speakers)
+      ? values.speakers
+      : values.speakers.split(',').map((item) => item.trim());
 
     try {
       await userRegistration(
@@ -65,19 +67,19 @@ export default function ProfileSetupForm() {
           sect: values.sect,
           belongsToIslamicOrganization: values.islamicOrganization,
           islamicOrganizationName: values.organizationType,
-          speakersListenedTo: values.speakers,
+          speakersListenedTo: speakers,
           startedPracticingIn: values.startedPracticingIn,
           salatPattern: values.salat,
           descriptionOfIslamicPractice: values.islamicPractice,
-          about: values.about,
+          about: values.aboutYou,
           aboutEducationAndJob: values.aboutEducationAndJob,
           aboutDressing: values.dressing,
         },
         token
       );
 
-      console.log(values, "success");
-        setCompleted(true);
+      console.log(values, 'success');
+      setCompleted(true);
     } catch (error) {
       alert(error.response.data.message);
     }
@@ -116,60 +118,60 @@ export default function ProfileSetupForm() {
               <div>
                 <div
                   className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep("personalDetails")}
+                  onClick={() => setActiveStep('personalDetails')}
                 >
                   <UserIcon />
                   Personal Details
                 </div>
-                {activeStep === "personalDetails" ? (
+                {activeStep === 'personalDetails' ? (
                   <PersonalDetailsForm />
                 ) : (
-                  ""
+                  ''
                 )}
               </div>
               <div>
                 <div
                   className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep("nationality")}
+                  onClick={() => setActiveStep('nationality')}
                 >
                   <WorldIcon />
                   Nationality
                 </div>
-                {activeStep === "nationality" ? <NationalityForm /> : ""}
+                {activeStep === 'nationality' ? <NationalityForm /> : ''}
               </div>
               <div>
                 <div
                   className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep("education")}
+                  onClick={() => setActiveStep('education')}
                 >
                   <SchoolIcon />
                   Education and Profession
                 </div>
-                {activeStep === "education" ? (
+                {activeStep === 'education' ? (
                   <EducationAndProfessionForm />
                 ) : (
-                  ""
+                  ''
                 )}
               </div>
               <div>
                 <div
                   className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep("deen")}
+                  onClick={() => setActiveStep('deen')}
                 >
                   <MosqueIcon />
                   About my Deen
                 </div>
-                {activeStep === "deen" ? <AboutDeenForm /> : ""}
+                {activeStep === 'deen' ? <AboutDeenForm /> : ''}
               </div>
               <div>
                 <div
                   className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep("summary")}
+                  onClick={() => setActiveStep('summary')}
                 >
                   <RecordVoiceOverIcon />
                   Self Summary
                 </div>
-                {activeStep === "summary" ? <SelfSummaryForm /> : ""}
+                {activeStep === 'summary' ? <SelfSummaryForm /> : ''}
               </div>
 
               <button
