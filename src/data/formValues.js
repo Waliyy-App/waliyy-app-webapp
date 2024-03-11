@@ -7,6 +7,27 @@ export const genotypeOption = [
   { label: 'SC', value: 'SC' },
 ];
 
+export const heightRanges = [
+  { label: 'Below 4\'11"', value: 'below 1.50m' },
+  { label: '5\'0" - 5\'3"', value: '1.50 - 1.60m' },
+  { label: '5\'4" - 5\'7"', value: '1.60 - 1.70m' },
+  { label: '5\'8" - 5\'11"', value: '1.70 - 1.80m' },
+  { label: 'Above 6\'0"', value: 'above 1.80m'},
+];
+
+export const weightRanges = [
+  { label: 'Below 50 kg or Below 110 lbs', value: 'below - 50kg' },
+  { label: '50 - 60 kg or 110 - 132 lbs', value: '50 - 60kg' },
+  { label: '60 - 70 kg or 132 - 154 lbs', value: '60 - 70kg' },
+  { label: '70 - 80 kg or 154 - 176 lbs', value: '70 - 80kg' },
+  { label: '80 - 90 kg or 176 - 198 lbs', value: '80 - 90kg' },
+  { label: '90 - 100 kg or 198 - 220 lbs', value: '90 - 00kg' },
+  { label: '100 - 110 kg or 220 - 242 lbs', value: '100 - 110kg' },
+  { label: '110 - 120 kg or 242 - 264 lbs', value: '110 - 120kg' },
+  { label: '120 - 130 kg or 264 - 286 lbs', value: '120 - 130kg' },
+  { label: 'Above 130 kg or Above 286 lbs', value: 'above - 130kg'},
+];
+
 export const maritalStatusOption = [
   { label: 'Single', value: 'SINGLE' },
   { label: 'Married', value: 'MARRIED' },
