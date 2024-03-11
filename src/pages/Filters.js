@@ -4,8 +4,6 @@ import Box from '@mui/material/Box';
 import { Formik, Form } from 'formik';
 import { TextInput, CheckboxInputTwo } from '../common/form';
 import {
-  heightRanges,
-  weightRanges,
   countryOptions,
   citizenshipOptions,
   genotypeOption,
@@ -17,8 +15,6 @@ import {
 import { MultiSelect } from 'react-multi-select-component';
 
 export const Filters = () => {
-  const [selectedHeight, setSelectedHeight] = useState([]);
-  const [selectedWeight, setSelectedWeight] = useState([]);
   const [selectedGenotype, setSelectedGenotype] = useState([]);
   const [selectedMaritalStatus, setSelectedMaritalStatus] = useState([]);
   const [selectedChildren, setSelectedChildren] = useState([]);
@@ -32,8 +28,10 @@ export const Filters = () => {
     minAge: '',
     maxAge: '',
     genotype: '',
-    height: '',
-    weight: '',
+    minHeight: '',
+    maxHeight: '',
+    minWweight: '',
+    maxWweight: '',
     maritalStatus: '',
     haveChildren: '',
     levelOfEducation: '',
@@ -112,40 +110,28 @@ export const Filters = () => {
               </div>
 
               <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
-                <div>
-                  <label
-                    className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="height"
-                  >
-                    Height
-                  </label>
-                  <MultiSelect
-                    hasSelectAll
-                    className="w-auto text-input mt-3 multi-select"
-                    options={heightRanges}
-                    value={selectedHeight}
-                    onChange={setSelectedHeight}
-                    labelledBy="Height"
+                <div className="flex items-center gap-5 w-full">
+                  <TextInput
+                    label="Minimum Height (m)"
+                    name="minHeight"
+                    type="number"
+                  />
+                  <TextInput
+                    label="Maximum Height (m)"
+                    name="maxHeight"
+                    type="number"
+                  />
+                  <TextInput
+                    label="Minimum Weight (kg)"
+                    name="minWeight"
+                    type="number"
+                  />
+                  <TextInput
+                    label="Maximum Weight (kg)"
+                    name="maxWeight"
+                    type="number"
                   />
                 </div>
-
-                <div>
-                  <label
-                    className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="weight"
-                  >
-                    Weight
-                  </label>
-                  <MultiSelect
-                    hasSelectAll
-                    className="w-auto text-input mt-3 multi-select"
-                    options={weightRanges}
-                    value={selectedWeight}
-                    onChange={setSelectedWeight}
-                    labelledBy="Weight"
-                  />
-                </div>
-
                 <div>
                   <label
                     className="text-sm font-medium text-[#2D133A]"
