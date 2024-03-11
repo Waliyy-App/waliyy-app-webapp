@@ -88,8 +88,8 @@ export const Filters = () => {
             <Form className="flex flex-col gap-10">
               <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
                 <div className="flex items-center gap-5 w-full">
-                  <TextInput label="Minimum Age" name="minAge" type="text" />
-                  <TextInput label="Maximum Age" name="maxAge" type="text" />
+                  <TextInput label="Min Age" name="minAge" type="text" />
+                  <TextInput label="Max Age" name="maxAge" type="text" />
                 </div>
                 <div>
                   <label
@@ -110,27 +110,32 @@ export const Filters = () => {
               </div>
 
               <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
-                <div className="flex items-center gap-5 w-full">
-                  <TextInput
-                    label="Minimum Height (m)"
-                    name="minHeight"
-                    type="number"
-                  />
-                  <TextInput
-                    label="Maximum Height (m)"
-                    name="maxHeight"
-                    type="number"
-                  />
-                  <TextInput
-                    label="Minimum Weight (kg)"
-                    name="minWeight"
-                    type="number"
-                  />
-                  <TextInput
-                    label="Maximum Weight (kg)"
-                    name="maxWeight"
-                    type="number"
-                  />
+                <div className="flex flex-col sm:flex-row items-center gap-5 w-full">
+                  <div className="flex items-center gap-5 w-full">
+                    <TextInput
+                      label="Min Height (m)"
+                      name="minHeight"
+                      type="number"
+                    />
+                    <TextInput
+                      label="Max Height (m)"
+                      name="maxHeight"
+                      type="number"
+                    />
+                  </div>
+
+                  <div className="flex items-center gap-5 w-full">
+                    <TextInput
+                      label="Min Weight (kg)"
+                      name="minWeight"
+                      type="number"
+                    />
+                    <TextInput
+                      label="Max Weight (kg)"
+                      name="maxWeight"
+                      type="number"
+                    />
+                  </div>
                 </div>
                 <div>
                   <label
