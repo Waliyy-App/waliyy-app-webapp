@@ -55,7 +55,7 @@ const AccountSettings = ({ value }) => {
       </CustomTabPanel>
 
       <Modal isOpen={isModalBOpen} onClose={closeModalB}>
-        <div className="bg-white flex items-center justify-center flex-col p-6 w-[294px] rounded-xl shadow gap-8">
+        <div className="bg-white flex items-center justify-center flex-col p-6 w-[294px] rounded-xl shadow-2xl gap-8">
           <div className="flex flex-col gap-8 items-center justify-center">
             <img src={Disable} alt="" />
             <p className="font-medium text-center">
@@ -77,7 +77,7 @@ const AccountSettings = ({ value }) => {
       </Modal>
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <div className="bg-white flex items-center justify-center flex-col p-6 w-[294px] rounded-xl shadow gap-8">
+        <div className="bg-white flex items-center justify-center flex-col p-6 w-[294px] rounded-xl shadow-2xl gap-8">
           <div className="flex flex-col gap-8 items-center justify-center">
             <img src={Trash} alt="" />
             <p className="font-medium text-center">
