@@ -1,11 +1,3 @@
-export const heightRanges = [
-  { label: 'Below 4\'11"', value: 'below_1.50_m' },
-  { label: '5\'0" - 5\'3"', value: '1.50_1.60_m' },
-  { label: '5\'4" - 5\'7"', value: '1.60_1.70_m' },
-  { label: '5\'8" - 5\'11"', value: '1.70_1.80_m' },
-  { label: 'Above 6\'0"', value: 'above_1.80_m' },
-];
-
 export const genotypeOption = [
   { label: 'AA', value: 'AA' },
   { label: 'AC', value: 'AC' },
@@ -16,53 +8,40 @@ export const genotypeOption = [
 ];
 
 export const maritalStatusOption = [
-  { label: 'Single', value: 'Single' },
-  { label: 'Married', value: 'Married' },
-  { label: 'Divorced', value: 'Divorced' },
-  { label: 'Widowed', value: 'Widowed' },
+  { label: 'Single', value: 'SINGLE' },
+  { label: 'Married', value: 'MARRIED' },
+  { label: 'Divorced', value: 'DIVORCED' },
+  { label: 'Widowed', value: 'WIDOWED' },
 ];
 
 export const educationOptions = [
-  { label: 'None', value: 'none' },
-  { label: 'Primary Education', value: 'primary' },
-  { label: 'Secondary Education', value: 'secondary' },
-  { label: "Bachelor's Degree", value: 'undergraduate' },
-  { label: 'Postgraduate Degree', value: 'postgraduate' },
-  { label: "Master's Degree", value: 'masters' },
-  { label: 'PhD', value: 'phd' }
+  { label: 'None', value: 'NONE' },
+  { label: 'Primary Education', value: 'PRIMARY' },
+  { label: 'Secondary Education', value: 'SECONDARY' },
+  { label: "Bachelor's Degree", value: 'UNDERGRADUATE' },
+  { label: 'Postgraduate Degree', value: 'POSTGRADUATE' },
+  { label: "Master's Degree", value: 'MASTERS' },
+  { label: 'PhD', value: 'PhD' },
 ];
 
 export const employmentStatusOptions = [
-  { label: 'Employed', value: 'employed' },
-  { label: 'Self Employed', value: 'self-employed' },
-  { label: 'Unemployed', value: 'unemployed' },
-  { label: 'Student', value: 'student' },
+  { label: 'Employed', value: 'EMPLOYED' },
+  { label: 'Self Employed', value: 'SELF-EMPLOYED' },
+  { label: 'Unemployed', value: 'UNEMPLOYED' },
+  { label: 'Student', value: 'STUDENT' },
   {
     label: 'Disabled - Unable to work due to disability',
-    value: 'disabled'
-  }
+    value: 'DISABLED',
+  },
 ];
 
 export const salatOptions = [
-  { label: 'I pray 5 times daily', value: '5daily' },
-  { label: 'I perform some of the daily prayers', value: 'partialDaily' },
-  { label: 'I pray occasionally', value: 'occasionally' },
-  { label: 'I regularly attend Friday prayers', value: 'jumah' },
-  { label: 'I mainly pray on special occasions', value: 'specialOccasions' },
-  { label: 'Not Practicing', value: 'none' }
-];
-
-export const weightRanges = [
-  { label: 'Below 50 kg or Below 110 lbs', value: 'below_50_kg' },
-  { label: '50 - 60 kg or 110 - 132 lbs', value: '50_60_kg' },
-  { label: '60 - 70 kg or 132 - 154 lbs', value: '60_70_kg' },
-  { label: '70 - 80 kg or 154 - 176 lbs', value: '70_80_kg' },
-  { label: '80 - 90 kg or 176 - 198 lbs', value: '80_90_kg' },
-  { label: '90 - 100 kg or 198 - 220 lbs', value: '90_100_kg' },
-  { label: '100 - 110 kg or 220 - 242 lbs', value: '100_110_kg' },
-  { label: '110 - 120 kg or 242 - 264 lbs', value: '110_120_kg' },
-  { label: '120 - 130 kg or 264 - 286 lbs', value: '120_130_kg' },
-  { label: 'Above 130 kg or Above 286 lbs', value: 'above_130_kg' },
+  { label: 'I pray 5 times daily', value: '5 DAILY' },
+  { label: 'I perform some of the daily prayers', value: 'Partial Daily' },
+  { label: 'I pray occasionally', value: 'Occasionally' },
+  { label: 'I regularly attend Friday prayers', value: 'Jumah Only' },
+  { label: 'I mainly pray on special occasions', value: 'Special Occasions' },
+  { label: 'Not Practicing', value: 'NONE' },
 ];
 
 export const citizenshipOptions = [
