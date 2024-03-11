@@ -2,19 +2,19 @@ import React from 'react';
 import CustomTabPanel from '../../common/CustomTabPanel';
 import { Formik, Form } from 'formik';
 import { TextInput, SelectInput } from '../../common/form';
-import { heightRanges, weightRanges } from '../../data/formValues';
+import { genotypeOption } from '../../data/formValues';
 
 const PersonalDetailSetting = ({ handleComplete, value }) => {
   const initialValues = {
     firstName: 'Oladunni',
     lastName: 'Odetunde',
     dateOfBirth: '15/06/1997',
-    gender: 'Female',
+    gender: 'FEMALE',
     genotype: 'AC',
-    height: '170_180_cm',
-    weight: '70_80_kg',
-    maritalStatus: 'single',
-    haveChildren: 'no',
+    height: 1.73,
+    weight: 70,
+    maritalStatus: 'SINGLE',
+    haveChildren: 'No',
     smoke: 'No',
     drink: 'No',
     addiction: 'No',
@@ -65,31 +65,16 @@ const PersonalDetailSetting = ({ handleComplete, value }) => {
           <div className="flex flex-col sm:flex-row justify-between gap-12">
             <SelectInput label="Genotype" name="genotype">
               <option value="">Select option</option>
-              <option value="AA">AA</option>
-              <option value="AC">AC</option>
-              <option value="AS">AS</option>
-              <option value="SS">SS</option>
-              <option value="CC">CC</option>
-              <option value="SC">SC</option>
-            </SelectInput>
-
-            <SelectInput label="Height" name="height">
-              <option value="">Select option</option>
-              {heightRanges.map((range) => (
-                <option key={range.value} value={range.value}>
-                  {range.label}
+              {genotypeOption.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
                 </option>
               ))}
             </SelectInput>
 
-            <SelectInput label="Weight" name="weight">
-              <option value="">Select option</option>
-              {weightRanges.map((range) => (
-                <option key={range.value} value={range.value}>
-                  {range.label}
-                </option>
-              ))}
-            </SelectInput>
+            <TextInput label="Height (m)" name="height" type="number" />
+
+            <TextInput label="Weight (kg)" name="weight" type="number" />
           </div>
 
           <div className="flex flex-col sm:flex-row justify-between gap-12">

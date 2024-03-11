@@ -1,9 +1,6 @@
 import React from 'react';
 import { TextInput, SelectInput } from '../../common/form';
-import {
-  genotypeOption,
-  maritalStatusOption,
-} from '../../data/formValues';
+import { genotypeOption, maritalStatusOption } from '../../data/formValues';
 
 export default function PersonalDetailsForm() {
   return (
@@ -32,9 +29,9 @@ export default function PersonalDetailsForm() {
           ))}
         </SelectInput>
 
-         <TextInput label="Height (m)" name="height" type="number" />
+        <TextInput label="Height (m)" name="height" type="number" />
 
-       <TextInput label="Weight (kg)" name="weight" type="number" />
+        <TextInput label="Weight (kg)" name="weight" type="number" />
       </div>
 
       <div className="flex flex-col sm:flex-row justify-between gap-12">
@@ -47,35 +44,33 @@ export default function PersonalDetailsForm() {
           ))}
         </SelectInput>
 
-          <SelectInput label="Do you have children?" name="haveChildren">
+        <SelectInput label="Do you have children?" name="haveChildren">
+          <option value="">Select option</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </SelectInput>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <p className="text-[#665e6b] text-lg font-semibold">Do you...</p>
+        <div className="flex flex-col sm:flex-row justify-between gap-12">
+          <SelectInput label="Smoke?" name="smoke">
+            <option value="">Select option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </SelectInput>
+          <SelectInput label="Drink?" name="drink">
+            <option value="">Select option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </SelectInput>
+          <SelectInput label="Have any addiction?" name="addiction">
             <option value="">Select option</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
           </SelectInput>
         </div>
-
-        <div className="flex flex-col gap-4">
-          <p className="text-[#665e6b] text-lg font-semibold">Do you...</p>
-          <div className="flex flex-col sm:flex-row justify-between gap-12">
-            <SelectInput label="Smoke?" name="smoke">
-              <option value="">Select option</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </SelectInput>
-            <SelectInput label="Drink?" name="drink">
-              <option value="">Select option</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </SelectInput>
-            <SelectInput label="Have any addiction?" name="addiction">
-              <option value="">Select option</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </SelectInput>
-          </div>
-        </div>
-
       </div>
-   
+    </div>
   );
 }
