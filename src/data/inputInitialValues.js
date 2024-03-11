@@ -60,11 +60,11 @@ export const validationSchema = Yup.object({
         }
       ),
     gender: Yup.string()
-      .oneOf(['female', 'male'], 'Invalid Gender')
+      .oneOf(['FEMALE', 'MALE'], 'Invalid Gender')
       .required('Select your gender'),
     genotype: Yup.string().required('Select your genotype'),
-    height: Yup.string().required('Height is required'),
-    weight: Yup.string().required('Weight is required'),
+    height: Yup.number().required('Height is required'),
+    weight: Yup.number().required('Weight is required'),
     maritalStatus: Yup.string().required('Marital Status is required'),
     haveChildren: Yup.string().required('This field is required'),
     smoke: Yup.string().required('This field is required'),
