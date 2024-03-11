@@ -1,19 +1,18 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_BASE_URL = 'https://waliyy.onrender.com/api/v1';
+const API_BASE_URL = "https://waliyy.onrender.com/api/v1";
 
-const AUTH_TOKEN_KEY = 'auth_token';
+const AUTH_TOKEN_KEY = "auth_token";
 
 const apiService = axios.create({
   baseURL: API_BASE_URL,
-  responseType: 'json',
+  responseType: "json",
 });
-
 
 export const register = async (payload) => {
   try {
-    const response = await apiService.post('/auth/signup', payload);
-    return response.data.user;
+    const response = await apiService.post("/auth/signup", payload);
+    return response.data.data;
   } catch (error) {
     throw error;
   }
@@ -21,17 +20,16 @@ export const register = async (payload) => {
 
 export const login = async (payload) => {
   try {
-    const response = await apiService.post('/auth/login', payload);
-    return response;
+    const response = await apiService.post("/auth/login", payload);
+    return response.data.data;
   } catch (error) {
     throw error;
   }
 };
 
-
 export const forgotPassword = async (payload) => {
   try {
-    const response = await apiService.put('/auth/forgot-password', payload);
+    const response = await apiService.put("/auth/forgot-password", payload);
     return response.data.user;
   } catch (error) {
     throw error;
@@ -40,16 +38,20 @@ export const forgotPassword = async (payload) => {
 
 export const changePassword = async (payload) => {
   try {
-    const response = await apiService.put('/account/change-password', payload);
+    const response = await apiService.put("/account/change-password", payload);
     return response.data.user;
   } catch (error) {
     throw error;
   }
 };
 
-export const userRegistration = async (payload) => {
+export const userRegistration = async (payload, accessToken) => {
   try {
-    const response = await apiService.post('/parent/child', payload);
+    const response = await apiService.post("/parent/child", payload, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return response.data.user;
   } catch (error) {
     throw error;
@@ -61,7 +63,7 @@ export const getAuthToken = () => {
 };
 
 export const isAuthenticated = () => {
- return getAuthToken()
+  return getAuthToken();
 };
 
 // export const fetchCurrentUser = async (token) => {

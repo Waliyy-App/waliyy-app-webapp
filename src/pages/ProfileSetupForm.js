@@ -1,18 +1,6 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import CongratulationsRegister from '../screens/CongratulationsRegister';
-// import { TextInput, SelectInput, TextArea } from '../common/form';
-// import {
-//   salatOptions,
-//   genotypeOption,
-//   heightRanges,
-//   maritalStatusOption,
-//   weightRanges,
-//   educationOptions,
-//   employmentStatusOptions,
-//   citizenshipOptions,
-//   countryOptions,
-// } from '../data/formValues';
 import { Formik, Form } from 'formik';
 import UserIcon from '@mui/icons-material/Person';
 import WorldIcon from '@mui/icons-material/Public';
@@ -27,15 +15,15 @@ import {
   PersonalDetailsForm,
   SelfSummaryForm,
 } from '../components/setupForms';
-import { userRegistration, isAuthenticated } from '../services';
+import { userRegistration } from '../services';
 import Loader from '../components/Loader';
-import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../context/AuthContext';
 
 export default function ProfileSetupForm() {
   const [activeStep, setActiveStep] = useState('personalDetails');
   const [completed, setCompleted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const { token } = useAuthContext();
 
   const handleSubmit = async (values) => {
     setLoading(true);
@@ -43,48 +31,55 @@ export default function ProfileSetupForm() {
     const getYear = date.getFullYear();
     const getMonth = date.getMonth();
 
+    const speakers = Array.isArray(values.speakers)
+      ? values.speakers
+      : values.speakers.split(',').map((item) => item.trim());
+
     try {
-      await userRegistration({
-        firstName: values.firstName,
-        lastName: values.lastName,
-        yearOfBirth: getYear,
-        monthOfBirth: getMonth,
-        gender: values.gender,
-        genotype: values.genotype,
-        height: values.height,
-        weight: values.weight,
-        maritalStatus: values.maritalStatus,
-        hasChildren: values.haveChildren,
-        isSmoker: values.smoke,
-        isDrinker: values.drink,
-        hasAddictions: values.addiction,
-        citizenship: values.citizenship,
-        state: values.stateOfOrigin,
-        lga: values.lga,
-        countryofResidence: values.residence,
-        isMixedEthnicity: values.mixedEthnicity,
-        mixedEthnicityDescription: values.mixedEthnicityType,
-        educationLevel: values.levelOfEducation,
-        profession: values.profession,
-        employmentStatus: values.employmentStatus,
-        professionalPlans: values.shortTermPlans,
-        isWillingToRelocate: values.willingnessToRelocate,
-        relocationPlans: values.relocationType,
-        isARevert: values.revert,
-        sect: values.sect,
-        belongsToIslamicOrganization: values.islamicOrganization,
-        islamicOrganizationName: values.organizationType,
-        speakersListenedTo: values.speakers,
-        startedPracticingIn: values.startPracticing,
-        salatPattern: values.salat,
-        descriptionOfIslamicPractice: values.islamicPractice,
-        about: values.aboutou,
-        aboutEducationAndJob: values.aboutEducationAndJob,
-        aboutDressing: values.dressing,
-      });
+      await userRegistration(
+        {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          yearOfBirth: getYear,
+          monthOfBirth: getMonth,
+          gender: values.gender,
+          genotype: values.genotype,
+          height: values.height,
+          weight: values.weight,
+          maritalStatus: values.maritalStatus,
+          hasChildren: values.haveChildren,
+          isSmoker: values.smoke,
+          isDrinker: values.drink,
+          hasAddictions: values.addiction,
+          citizenship: values.citizenship,
+          state: values.stateOfOrigin,
+          lga: values.lga,
+          countryofResidence: values.residence,
+          isMixedEthnicity: values.mixedEthnicity,
+          mixedEthnicityDescription: values.mixedEthnicityType,
+          educationLevel: values.levelOfEducation,
+          profession: values.profession,
+          employmentStatus: values.employmentStatus,
+          professionalPlans: values.shortTermPlans,
+          isWillingToRelocate: values.willingnessToRelocate,
+          relocationPlans: values.relocationType,
+          isARevert: values.revert,
+          sect: values.sect,
+          belongsToIslamicOrganization: values.islamicOrganization,
+          islamicOrganizationName: values.organizationType,
+          speakersListenedTo: speakers,
+          startedPracticingIn: values.startedPracticingIn,
+          salatPattern: values.salat,
+          descriptionOfIslamicPractice: values.islamicPractice,
+          about: values.aboutYou,
+          aboutEducationAndJob: values.aboutEducationAndJob,
+          aboutDressing: values.dressing,
+        },
+        token
+      );
 
       console.log(values, 'success');
-      //   setCompleted(true);
+      setCompleted(true);
     } catch (error) {
       alert(error.response.data.message);
     }
@@ -92,9 +87,9 @@ export default function ProfileSetupForm() {
     setLoading(false);
   };
 
-  if (!isAuthenticated()) {
-    navigate('/');
-  }
+  // if (!isAuthenticated()) {
+  //   navigate("/");
+  // }
 
   return (
     <React.Fragment>

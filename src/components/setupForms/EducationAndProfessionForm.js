@@ -56,8 +56,8 @@ export default function EducationAndProfessionForm(){
             name="willingnessToRelocate"
           >
             <option value="">Select option</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
           </SelectInput>
 
           <TextInput

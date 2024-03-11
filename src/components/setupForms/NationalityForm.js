@@ -33,8 +33,8 @@ export default function NationalityForm(){
         <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput label="Are you mixed ethnicity" name="mixedEthnicity">
             <option value="">Select option</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
           </SelectInput>
 
           <TextInput
