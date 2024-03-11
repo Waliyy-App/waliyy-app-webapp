@@ -19,8 +19,8 @@ export default function PersonalDetailsForm() {
         <TextInput label="Date of Birth" name="dateOfBirth" type="date" />
         <SelectInput label="Gender" name="gender">
           <option value="">Select option</option>
-          <option value="female">Female</option>
-          <option value="male">Male</option>
+          <option value="FEMALE">Female</option>
+          <option value="mMALE">Male</option>
         </SelectInput>
       </div>
 
@@ -34,23 +34,9 @@ export default function PersonalDetailsForm() {
           ))}
         </SelectInput>
 
-        <SelectInput label="Height" name="height">
-          <option value="">Select option</option>
-          {heightRanges.map((range) => (
-            <option key={range.value} value={range.value}>
-              {range.label}
-            </option>
-          ))}
-        </SelectInput>
+         <TextInput label="Height (m)" name="height" type="number" />
 
-        <SelectInput label="Weight" name="weight">
-          <option value="">Select option</option>
-          {weightRanges.map((range) => (
-            <option key={range.value} value={range.value}>
-              {range.label}
-            </option>
-          ))}
-        </SelectInput>
+       <TextInput label="Weight (kg)" name="weight" type="number" />
       </div>
 
       <div className="flex flex-col sm:flex-row justify-between gap-12">
