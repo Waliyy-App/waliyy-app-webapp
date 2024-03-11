@@ -1,18 +1,6 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import CongratulationsRegister from "../screens/CongratulationsRegister";
-// import { TextInput, SelectInput, TextArea } from '../common/form';
-// import {
-//   salatOptions,
-//   genotypeOption,
-//   heightRanges,
-//   maritalStatusOption,
-//   weightRanges,
-//   educationOptions,
-//   employmentStatusOptions,
-//   citizenshipOptions,
-//   countryOptions,
-// } from '../data/formValues';
 import { Formik, Form } from "formik";
 import UserIcon from "@mui/icons-material/Person";
 import WorldIcon from "@mui/icons-material/Public";
