@@ -21,7 +21,7 @@ const ChangeAccountDetails = ({ value, handleComplete }) => {
         }, 400);
       }}
     >
-      <Form className="flex flex-col gap-10 px-0 sm:px-8">
+      <Form className="flex flex-col gap-10 px-0 sm:px-8 pt-6">
         <div className="flex flex-col gap-1">
           <p className="font-medium text-lg text-[#2D133A]">Account</p>
           <p className="text-[#667085] text-sm">Update your account here</p>
