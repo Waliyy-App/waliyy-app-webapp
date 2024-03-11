@@ -29,8 +29,8 @@ export const initialValues = {
     sect: '',
     islamicOrganization: '',
     organizationType: '',
-    speakers: '',
-    startPractising: '',
+    speakers: [],
+    startedPracticingIn: '',
     salat: '',
     islamicPractice: '',
     aboutYou: '',
@@ -88,8 +88,8 @@ export const validationSchema = Yup.object({
     sect: Yup.string().required('Select your sect'),
     islamicOrganization: Yup.string().required('This field is required'),
     // organizationType: Yup.string().required('This field is required'),
-    // speakers: Yup.string().required('This field is required'),
-    startPractising: Yup.string().required(
+    // speakers: Yup.array().required('This field is required'),
+    startedPracticingIn: Yup.string().required(
       'State when you started practising Islam'
     ),
     salat: Yup.string().required('Select your pattern of salat'),

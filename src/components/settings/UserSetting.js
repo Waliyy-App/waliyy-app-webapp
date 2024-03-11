@@ -42,7 +42,7 @@ const UserSetting = ({ handleComplete, value }) => {
     islamicOrganization: 'no',
     organizationType: '',
     speakers: 'N/A',
-    startPractising: 'recent',
+    startedPracticingIn: 'recent',
     salat: 'Partial Daily',
     islamicPractice: '',
 
@@ -122,8 +122,8 @@ const UserSetting = ({ handleComplete, value }) => {
 
               <SelectInput label="Do you have children?" name="haveChildren">
                 <option value="">Select option</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
               </SelectInput>
             </div>
             <div className="flex flex-col gap-4">
@@ -188,8 +188,8 @@ const UserSetting = ({ handleComplete, value }) => {
                 name="mixedEthnicity"
               >
                 <option value="">Select option</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
               </SelectInput>
 
               <TextInput
@@ -264,8 +264,8 @@ const UserSetting = ({ handleComplete, value }) => {
                 name="willingnessToRelocate"
               >
                 <option value="">Select option</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
               </SelectInput>
 
               <TextInput
@@ -290,14 +290,14 @@ const UserSetting = ({ handleComplete, value }) => {
             <div className="flex flex-col sm:flex-row justify-between gap-12">
               <SelectInput label="Are you a revert?" name="revert">
                 <option value="">Select option</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
               </SelectInput>
 
               <SelectInput label="Are you Sunni or Shi'a" name="sect">
                 <option value="">Select option</option>
-                <option value="sunni">Sunni</option>
-                <option value="Shi'a">Shi'a</option>
+                <option value="SUNNI">Sunni</option>
+                <option value="SHIA">Shi'a</option>
               </SelectInput>
             </div>
 
@@ -307,8 +307,8 @@ const UserSetting = ({ handleComplete, value }) => {
                 name="islamicOrganization"
               >
                 <option value="">Select option</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
               </SelectInput>
 
               <TextInput
@@ -326,14 +326,14 @@ const UserSetting = ({ handleComplete, value }) => {
               />
               <SelectInput
                 label="When did you start practicing?"
-                name="startPractising"
+                name="startedPracticingIn"
               >
                 <option value="">Select option</option>
-                <option value="childhood">Childhood</option>
-                <option value="adolescence">Adolescence</option>
-                <option value="adulthood">Adulthood</option>
-                <option value="recent">Recently</option>
-                <option value="none">Not Practicing</option>
+                <option value="CHILDHOOD">Childhood</option>
+                <option value="ADOLESCENCE">Adolescence</option>
+                 <option value="ADULTHOOD">Adulthood</option>
+                
+                <option value="NOT_PRACTICING">Not Practicing</option>
                 <option value="notSaying">Prefer not to say</option>
               </SelectInput>
             </div>

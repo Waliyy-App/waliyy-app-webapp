@@ -19,14 +19,14 @@ export const educationOptions = [
   { label: 'Primary Education', value: 'PRIMARY' },
   { label: 'Secondary Education', value: 'SECONDARY' },
   { label: "Bachelor's Degree", value: 'UNDERGRADUATE' },
-  { label: 'Postgraduate Degree', value: 'POSTGRADUATE' },
+  { label: 'Postgraduate Diploma', value: 'POSTGRADUATE_DIPLOMA' },
   { label: "Master's Degree", value: 'MASTERS' },
-  { label: 'PhD', value: 'PhD' },
+  { label: 'PhD', value: 'PHD' },
 ];
 
 export const employmentStatusOptions = [
   { label: 'Employed', value: 'EMPLOYED' },
-  { label: 'Self Employed', value: 'SELF-EMPLOYED' },
+  { label: 'Self Employed', value: 'SELF_EMPLOYED' },
   { label: 'Unemployed', value: 'UNEMPLOYED' },
   { label: 'Student', value: 'STUDENT' },
   {
@@ -36,12 +36,18 @@ export const employmentStatusOptions = [
 ];
 
 export const salatOptions = [
-  { label: 'I pray 5 times daily', value: '5 DAILY' },
-  { label: 'I perform some of the daily prayers', value: 'Partial Daily' },
-  { label: 'I pray occasionally', value: 'Occasionally' },
-  { label: 'I regularly attend Friday prayers', value: 'Jumah Only' },
-  { label: 'I mainly pray on special occasions', value: 'Special Occasions' },
-  { label: 'Not Practicing', value: 'NONE' },
+  { label: 'I pray 5 times daily', value: 'Five Times Daily' },
+  { label: 'I perform some of the daily prayers', value: 'Some Daily Prayers' },
+  { label: 'I pray occasionally', value: 'Pray Occasionally' },
+  {
+    label: 'I regularly attend Friday prayers',
+    value: 'Regularly Attend Friday Prayers',
+  },
+  {
+    label: 'I mainly pray on special occasions',
+    value: 'Mainly Pray On Special Occasions',
+  },
+  { label: 'Not Practicing', value: 'Not Practicing' },
 ];
 
 export const citizenshipOptions = [

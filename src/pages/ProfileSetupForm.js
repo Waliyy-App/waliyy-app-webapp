@@ -66,10 +66,10 @@ export default function ProfileSetupForm() {
           belongsToIslamicOrganization: values.islamicOrganization,
           islamicOrganizationName: values.organizationType,
           speakersListenedTo: values.speakers,
-          startedPracticingIn: values.startPracticing,
+          startedPracticingIn: values.startedPracticingIn,
           salatPattern: values.salat,
           descriptionOfIslamicPractice: values.islamicPractice,
-          about: values.aboutou,
+          about: values.about,
           aboutEducationAndJob: values.aboutEducationAndJob,
           aboutDressing: values.dressing,
         },
@@ -85,9 +85,9 @@ export default function ProfileSetupForm() {
     setLoading(false);
   };
 
-  if (!isAuthenticated()) {
-    navigate("/");
-  }
+  // if (!isAuthenticated()) {
+  //   navigate("/");
+  // }
 
   return (
     <React.Fragment>

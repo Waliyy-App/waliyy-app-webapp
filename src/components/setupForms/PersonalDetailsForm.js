@@ -15,7 +15,7 @@ export default function PersonalDetailsForm() {
         <SelectInput label="Gender" name="gender">
           <option value="">Select option</option>
           <option value="FEMALE">Female</option>
-          <option value="mMALE">Male</option>
+          <option value="MALE">Male</option>
         </SelectInput>
       </div>
 
@@ -46,8 +46,8 @@ export default function PersonalDetailsForm() {
 
         <SelectInput label="Do you have children?" name="haveChildren">
           <option value="">Select option</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
         </SelectInput>
       </div>
 
@@ -56,18 +56,18 @@ export default function PersonalDetailsForm() {
         <div className="flex flex-col sm:flex-row justify-between gap-12">
           <SelectInput label="Smoke?" name="smoke">
             <option value="">Select option</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
           </SelectInput>
           <SelectInput label="Drink?" name="drink">
             <option value="">Select option</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
           </SelectInput>
           <SelectInput label="Have any addiction?" name="addiction">
             <option value="">Select option</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
           </SelectInput>
         </div>
       </div>
