@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { TextInput } from "../common/form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SplashScreen from "../screens/SplashScreen";
 import { login } from "../services";
 import Loader from "../components/Loader";

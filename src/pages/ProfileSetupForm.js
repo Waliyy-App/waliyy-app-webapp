@@ -77,7 +77,7 @@ export default function ProfileSetupForm() {
       );
 
       console.log(values, "success");
-      //   setCompleted(true);
+        setCompleted(true);
     } catch (error) {
       alert(error.response.data.message);
     }
