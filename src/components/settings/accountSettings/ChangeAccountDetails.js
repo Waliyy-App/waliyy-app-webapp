@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik, Form } from 'formik';
 import { TextInput } from '../../../common/form';
 
-const ChangeAccountDetails = ({ value, handleComplete }) => {
+const ChangeAccountDetails = () => {
   const initialValues = {
     name: 'Oladunni Odetunde',
     emailAddress: 'dunniraufah@gmail.com',
@@ -15,7 +15,6 @@ const ChangeAccountDetails = ({ value, handleComplete }) => {
       initialValues={initialValues}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          handleComplete();
           console.log(JSON.stringify(values, null, 2));
           setSubmitting(false);
         }, 400);
