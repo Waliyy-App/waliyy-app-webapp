@@ -269,11 +269,8 @@ export const Filters = () => {
               </div>
 
               <div className="flex flex-wrap gap-8">
-                <CheckboxInputTwo name="revert">
+                <CheckboxInputTwo name="willingnessToRelocate">
                   Willing to relocate
-                </CheckboxInputTwo>
-                <CheckboxInputTwo name="revert">
-                  Unwilling to relocate
                 </CheckboxInputTwo>
                 <CheckboxInputTwo name="revert">Revert</CheckboxInputTwo>
                 <CheckboxInputTwo name="shia">Shi'a</CheckboxInputTwo>
