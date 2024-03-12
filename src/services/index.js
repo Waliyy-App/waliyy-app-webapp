@@ -66,6 +66,20 @@ export const isAuthenticated = () => {
   return getAuthToken();
 };
 
+export const filterSuitors = async (payload,accessToken) => {
+  try {
+    const response = await apiService.post("/child", payload, {
+      headers:{
+        Authorization:`Bearer ${accessToken}`
+      }
+    })
+
+    return response.data
+  } catch(error){
+    throw error
+  }
+}
+
 // export const fetchCurrentUser = async (token) => {
 //      try {
 //     // Set authorization header with the token

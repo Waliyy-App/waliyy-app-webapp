@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import { Formik, Form } from 'formik';
-import { TextInput, CheckboxInputTwo } from '../common/form';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
+import { Formik, Form } from "formik";
+import { TextInput, CheckboxInputTwo } from "../common/form";
 import {
   countryOptions,
   citizenshipOptions,
@@ -11,8 +11,10 @@ import {
   educationOptions,
   employmentStatusOptions,
   salatOptions,
-} from '../data/formValues';
-import { MultiSelect } from 'react-multi-select-component';
+} from "../data/formValues";
+import { MultiSelect } from "react-multi-select-component";
+import { filterSuitors } from "../services";
+import { useAuthContext } from "../context/AuthContext";
 
 export const Filters = () => {
   const [selectedGenotype, setSelectedGenotype] = useState([]);
@@ -23,26 +25,27 @@ export const Filters = () => {
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [selectedNationality, setSelectedNationality] = useState([]);
   const [selectedSalat, setSelectedSalat] = useState([]);
+  const { token } = useAuthContext();
 
   const initialValues = {
-    minAge: '',
-    maxAge: '',
-    genotype: '',
-    minHeight: '',
-    maxHeight: '',
-    minWweight: '',
-    maxWweight: '',
-    maritalStatus: '',
-    haveChildren: '',
-    levelOfEducation: '',
-    employmentStatus: '',
-    residence: '',
-    stateOfOrigin: '',
-    citizenship: '',
-    lga: '',
-    ethnicity: '',
-    willingnessToRelocate: '',
-    salat: '',
+    minAge: "",
+    maxAge: "",
+    genotype: "",
+    minHeight: "",
+    maxHeight: "",
+    minWweight: "",
+    maxWweight: "",
+    maritalStatus: "",
+    haveChildren: "",
+    levelOfEducation: "",
+    employmentStatus: "",
+    residence: "",
+    stateOfOrigin: "",
+    citizenship: "",
+    lga: "",
+    ethnicity: "",
+    willingnessToRelocate: "",
+    salat: "",
     revert: false,
     divorcees: false,
     parentsNeverMarried: false,
@@ -56,10 +59,20 @@ export const Filters = () => {
   };
 
   const childrenOption = [
-    { label: 'Yes', value: 'Yes' },
-    { label: 'No', value: 'No' },
+    { label: "Yes", value: "Yes" },
+    { label: "No", value: "No" },
   ];
+
   const navigate = useNavigate();
+
+  async function handleSubmit(values) {
+    try {
+      await filterSuitors(values, token);
+      navigate("/dashboard");
+    } catch (error) {
+      alert(error.response.data.message);
+    }
+  }
 
   return (
     <React.Fragment>
@@ -77,13 +90,7 @@ export const Filters = () => {
         <div className="py-8 px-0 sm:px-8 w-full md:w-10/12 mx-auto flex flex-col items-center justify-center gap-10">
           <Formik
             initialValues={initialValues}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                console.log(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-                navigate('/dashboard');
-              }, 400);
-            }}
+            onSubmit={(values) => handleSubmit(values)}
           >
             <Form className="flex flex-col gap-10">
               <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
