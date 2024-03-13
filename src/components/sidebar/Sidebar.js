@@ -65,7 +65,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
             </NavLink>
 
             <NavLink
-              to="/likes"
+              to="/pricing"
               className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${
                 isOpen && 'justify-center'
               }  ${
