@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Male from '../assets/illustrations/male-illus.png';
+import MaleIcon from '../assets/illustrations/muslim.svg';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { BsFillDiamondFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
@@ -21,13 +21,12 @@ const ProfileCard = () => {
   }, [bioText]);
 
   return (
-    <Link to ='/profile' className="profile-card bg-[#FFF4F6] rounded-2xl px-6 pt-6 pb-8 flex flex-col gap-8 w-10/12 sm:w-[335px] cursor-pointer" >
+    <Link
+      to="/profile"
+      className="profile-card bg-[#FFF4F6] rounded-2xl px-6 pt-6 pb-8 flex flex-col gap-8 w-full sm:w-[335px] cursor-pointer"
+    >
       <div className="w-[128px] h-[128px] rounded-full border-4 border-[#FE8D9F] flex items-center justify-center z-30 relative overflow-hidden mx-auto">
-        <img
-          src={Male}
-          alt="user-illustration"
-          className="w-full h-full object-cover z-40"
-        />
+        <img src={MaleIcon} alt='' className="w-full h-full object-cover z-40" />
       </div>
 
       <div className="text-[#2D133A]">

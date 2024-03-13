@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import Logo from '../../assets/logo/Untitled-1-01.jpg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
-import Female from '../../assets/illustrations/female-illus.png';
+import SettingsIcon from '@mui/icons-material/Settings';
+import AddIcon from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 const MobileTopNav = () => {
-  const navigate = useNavigate();
   const [toggleMobileMenu, setToggleMobileMenu] = useState(false);
 
-  const handleProfileClick = () => {
-    const isUser = true;
-    navigate('/profile', { state: { isUser } });
-  };
 
   const handleToggle = () => {
     setToggleMobileMenu(!toggleMobileMenu);
@@ -33,20 +29,27 @@ const MobileTopNav = () => {
           <MenuIcon />
         </button>
         {toggleMobileMenu && (
-          <div className="absolute top-5 right-0 bg-white p-10 shadow-xl">
-            <div className="flex flex-col items-center text-[#2D133A] w-full justify-between px-2 gap-8">
-              <div
-                onClick={handleProfileClick}
-                className="flex gap-3 items-center font-semibold cursor-pointer"
+          <div className="absolute top-5 right-0 bg-white p-5 rounded-2xl z-[100] w-[200px]">
+            <div className="flex flex-col text-[#2D133A] w-full justify-between gap-3">
+               <NavLink
+                to="/settings"
+                className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"
               >
-                <img src={Female} alt="" className="h-10 w-10" />
-                Raufah
-              </div>
+                <SettingsIcon /> Settings
+              </NavLink>
 
-              <Link to="/login" className="flex gap-3 text-sm">
-                <LogoutIcon />
-                Logout
-              </Link>
+              <NavLink
+                to="/get-started"
+                className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"
+              >
+                <AddIcon /> Add Account
+              </NavLink>
+
+              <div className="border border-[#2D133A] w-full mt-10"></div>
+
+              <NavLink className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300">
+                <LogoutIcon /> Logout
+              </NavLink>
             </div>
           </div>
         )}

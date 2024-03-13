@@ -59,13 +59,24 @@ main {
   -webkit-animation: spin-slow 10s linear infinite;
 }
 
-@media only screen and (max-width: 767px ) {
+@media only screen and (max-width: 767px) {
   .rmsc .dropdown-container {
     width: 80vw;
   }
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1071px ) {
+@media only screen and (max-width: 640px) {
+  .css-1wf8b0h-MuiTabs-flexContainer,
+  .css-heg063-MuiTabs-flexContainer {
+    overflow-x: scroll !important;
+    padding: 0 12px;
+  }
+  .css-101ok93-MuiButtonBase-root-MuiTab-root{
+    padding: 12px !important;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1071px) {
   .rmsc .dropdown-container {
     width: 250px;
   }
@@ -82,4 +93,3 @@ main {
     width: 350px;
   }
 }
-
