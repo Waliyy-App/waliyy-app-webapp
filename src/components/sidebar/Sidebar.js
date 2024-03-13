@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from '../../assets/logo/logo-nobg-cropped.png';
 import LogoIcon from '../../assets/logo/logo-icon.png';
-import {ReactComponent as FemaleIcon} from '../../assets/illustrations/female-illus.svg';
+import { ReactComponent as FemaleIcon } from '../../assets/illustrations/female-illus.svg';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -10,16 +10,34 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AddIcon from '@mui/icons-material/Add';
+import PersonIcon from '@mui/icons-material/Person';
+import { getChildren } from '../../services';
+import { useAuthContext } from '../../context/AuthContext';
 
 const SidebarComponent = ({ isOpen, toggleMenu }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
+  const [children, setChildren] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
+  const { token } = useAuthContext();
 
   const handleProfileClick = () => {
     const isUser = true;
     navigate('/profile', { state: { isUser } });
   };
+
+  useEffect(() => {
+    const fetchChildren = async () => {
+      try {
+        const res = await getChildren(token);
+        setChildren(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchChildren();
+  }, [token]);
 
   const toggleDropdown = () => {
     setOpenDropdown(!openDropdown);
@@ -131,6 +149,24 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
               >
                 <AddIcon /> {isOpen ? '' : 'Add Account'}
               </NavLink>
+
+              <div className="border border-[#2d133a1f] w-full mt-10"></div>
+
+              {children && (
+                <div className="flex flex-col text-[#2D133A] px-3">
+                  <p className="text-xs my-6">Switch Accounts</p>
+                  <div className='flex flex-col gap-5'>
+                    {children.map((child, index) => (
+                      <div
+                        className="flex gap-3 items-center cursor-pointer"
+                        key={index}
+                      >
+                        <PersonIcon /> {child.firstName}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div className="border border-[#2D133A] w-full mt-10"></div>
 
