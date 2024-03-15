@@ -6,6 +6,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import AddIcon from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import { getChildren } from '../../services';
 import { useAuthContext } from '../../context/AuthContext';
 
@@ -62,12 +63,15 @@ const MobileTopNav = () => {
                 <AddIcon /> Add Account
               </NavLink>
 
-               <div className="border border-[#2d133a1f] w-full mt-10"></div>
+              <div className="border border-[#2d133a1f] w-full mt-10"></div>
 
               {children && (
                 <div className="flex flex-col text-[#2D133A] px-3">
-                  <p className="text-xs my-6">Switch Accounts</p>
-                  <div className='flex flex-col gap-5'>
+                  <p className="text-xs my-6 flex items-center gap-1">
+                    Switch Accounts
+                    <SwapHorizIcon />
+                  </p>
+                  <div className="flex flex-col gap-5">
                     {children.map((child, index) => (
                       <div
                         className="flex gap-3 items-center cursor-pointer"

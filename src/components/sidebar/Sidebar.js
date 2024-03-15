@@ -11,6 +11,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AddIcon from '@mui/icons-material/Add';
 import PersonIcon from '@mui/icons-material/Person';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import { getChildren } from '../../services';
 import { useAuthContext } from '../../context/AuthContext';
 
@@ -154,8 +155,11 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 
               {children && (
                 <div className="flex flex-col text-[#2D133A] px-3">
-                  <p className="text-xs my-6">Switch Accounts</p>
-                  <div className='flex flex-col gap-5'>
+                  <p className="text-xs my-6 flex items-center gap-1">
+                    {isOpen ? '' : 'Switch Accounts'}
+                    <SwapHorizIcon />
+                  </p>
+                  <div className="flex flex-col gap-5">
                     {children.map((child, index) => (
                       <div
                         className="flex gap-3 items-center cursor-pointer"
@@ -168,7 +172,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
                 </div>
               )}
 
-              <div className="border border-[#2D133A] w-full mt-10"></div>
+              <div className="border border-[#2D133A] w-full mt-10 mb-4"></div>
 
               <NavLink className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300">
                 <LogoutIcon /> {isOpen ? '' : 'Logout'}
