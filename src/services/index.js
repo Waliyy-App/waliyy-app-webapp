@@ -80,9 +80,35 @@ export const filterSuitors = async (payload, accessToken) => {
   }
 };
 
-export const pricing = async () => {
+export const getChildren = async (accessToken) => {
+  try {
+    const response = await apiService.get('parent/children', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getPlans = async () => {
   try {
     const response = await apiService.get('/plans');
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const makePayment = async (payload, accessToken) => {
+  try {
+    const response = await apiService.post('/payment/make-payment', payload, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return response.data;
   } catch (error) {
     throw error;
