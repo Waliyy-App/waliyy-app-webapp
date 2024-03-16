@@ -5,7 +5,7 @@ import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import { Link } from 'react-router-dom';
 
 const Billing = ({ value }) => {
-  const [hasSubscription, setHasSubscription] = useState(false);
+  const [hasSubscription] = useState(false);
 
   return (
     <CustomTabPanel value={value} index={1}>
