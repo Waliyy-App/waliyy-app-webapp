@@ -1,22 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import Logo from '../../assets/logo/Untitled-1-01.jpg';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AddIcon from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-import { getChildren } from '../../services';
+import { getChildren, logout } from '../../services';
 import { useAuthContext } from '../../context/AuthContext';
 
 const MobileTopNav = () => {
   const [toggleMobileMenu, setToggleMobileMenu] = useState(false);
   const [children, setChildren] = useState([]);
   const { token } = useAuthContext();
+  const navigate = useNavigate();
 
   const handleToggle = () => {
     setToggleMobileMenu(!toggleMobileMenu);
+  };
+
+  const handleLogout = async () => {
+    try {
+      const res = await logout(token);
+      console.log(res);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -56,13 +67,6 @@ const MobileTopNav = () => {
                 <SettingsIcon /> Settings
               </NavLink>
 
-              <NavLink
-                to="/get-started"
-                className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"
-              >
-                <AddIcon /> Add Account
-              </NavLink>
-
               <div className="border border-[#2d133a1f] w-full mt-10"></div>
 
               {children && (
@@ -74,7 +78,7 @@ const MobileTopNav = () => {
                   <div className="flex flex-col gap-5">
                     {children.map((child, index) => (
                       <div
-                        className="flex gap-3 items-center cursor-pointer"
+                        className="flex gap-3 items-center cursor-pointer text-sm"
                         key={index}
                       >
                         <PersonIcon /> {child.firstName}
@@ -84,11 +88,21 @@ const MobileTopNav = () => {
                 </div>
               )}
 
+              <NavLink
+                to="/get-started"
+                className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 mt-4"
+              >
+                <AddIcon /> Add Account
+              </NavLink>
+
               <div className="border border-[#2D133A] w-full mt-10"></div>
 
-              <NavLink className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300">
+              <button
+                className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"
+                onClick={() => handleLogout()}
+              >
                 <LogoutIcon /> Logout
-              </NavLink>
+              </button>
             </div>
           </div>
         )}

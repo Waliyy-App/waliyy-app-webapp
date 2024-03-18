@@ -45,6 +45,19 @@ export const changePassword = async (payload) => {
   }
 };
 
+export const logout = async (accessToken) => {
+  try {
+    const response = await apiService.delete('/auth/logout', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data.user;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const userRegistration = async (payload, accessToken) => {
   try {
     const response = await apiService.post('/parent/child', payload, {
@@ -95,7 +108,7 @@ export const getChildren = async (accessToken) => {
 
 export const getPlans = async () => {
   try {
-    const response = await apiService.get('/plans');
+    const response = await apiService.get('/plans/');
     return response.data;
   } catch (error) {
     throw error;

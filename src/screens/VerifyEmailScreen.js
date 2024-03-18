@@ -21,9 +21,6 @@ const VerifyEmailScreen = () => {
             Congratulations!!!
           </p>
           <p className="text-[#665e6b] text-center font-normal">
-            Your account is all set!
-            <br />
-            <br />
             To get started, verify your email address by clicking the link in
             the email we've sent you.
           </p>

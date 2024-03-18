@@ -12,7 +12,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import AddIcon from '@mui/icons-material/Add';
 import PersonIcon from '@mui/icons-material/Person';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-import { getChildren } from '../../services';
+import { getChildren, logout } from '../../services';
 import { useAuthContext } from '../../context/AuthContext';
 
 const SidebarComponent = ({ isOpen, toggleMenu }) => {
@@ -39,6 +39,16 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 
     fetchChildren();
   }, [token]);
+
+  const handleLogout = async () => {
+    try {
+      const res = await logout(token);
+      console.log(res);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const toggleDropdown = () => {
     setOpenDropdown(!openDropdown);
@@ -84,7 +94,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
             </NavLink>
 
             <NavLink
-              to="/pricing"
+              to="/likes"
               className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${
                 isOpen && 'justify-center'
               }  ${
@@ -144,13 +154,6 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
                 <SettingsIcon /> {isOpen ? '' : 'Settings'}
               </NavLink>
 
-              <NavLink
-                to="/get-started"
-                className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"
-              >
-                <AddIcon /> {isOpen ? '' : 'Add Account'}
-              </NavLink>
-
               <div className="border border-[#2d133a1f] w-full mt-10"></div>
 
               {children && (
@@ -172,11 +175,21 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
                 </div>
               )}
 
+              <NavLink
+                to="/get-started"
+                className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"
+              >
+                <AddIcon /> {isOpen ? '' : 'Add Account'}
+              </NavLink>
+
               <div className="border border-[#2D133A] w-full mt-10 mb-4"></div>
 
-              <NavLink className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300">
+              <button
+                className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"
+                onClick={() => handleLogout()}
+              >
                 <LogoutIcon /> {isOpen ? '' : 'Logout'}
-              </NavLink>
+              </button>
             </div>
           )}
         </div>
