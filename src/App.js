@@ -14,6 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ForgotPassword from './pages/ForgotPassword';
 import ProfileSetupForm from './pages/ProfileSetupForm';
 import LandingPage from './pages/LandingPage';
+import AboutLandingPage from './pages/AboutLandingPage';
 
 function App() {
   const theme = createTheme({
@@ -31,6 +32,8 @@ function App() {
     <ThemeProvider theme={theme}>
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
+         <Route exact path="/about" element={<AboutLandingPage />} />
+
         <Route exact path="/dashboard" element={<Dashboard />} />
         <Route exact path="/likes" element={<LikePage />} />
         <Route exact path="/match" element={<MatchPage />} />
