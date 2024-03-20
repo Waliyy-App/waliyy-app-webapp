@@ -10,8 +10,6 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.7",
     "country-list": "^2.3.0",
-    "flowbite": "^2.3.0",
-    "flowbite-react": "^0.7.3",
     "formik": "^2.4.5",
     "formik-material-ui": "^4.0.0-alpha.2",
     "localforage": "^1.10.0",
