@@ -12,7 +12,9 @@ const Navbar = () => {
   };
   return (
     <div className="px-6 sm:px-12 gap-4 flex justify-between items-center">
-      <img src={Logo} alt="logo" className="w-20" />
+      <NavLink to='/'>
+        <img src={Logo} alt="logo" className="w-20" />
+      </NavLink>
 
       <div className="relative flex sm:hidden">
         <button onClick={handleToggle}>
