@@ -11,8 +11,8 @@ const Navbar = () => {
     setToggleMobileMenu(!toggleMobileMenu);
   };
   return (
-    <div className="px-6 sm:px-12 gap-4 flex justify-between items-center">
-      <NavLink to='/'>
+    <div className="px-6 sm:px-12 gap-4 flex justify-between items-center w-4/5 mx-auto">
+      <NavLink to="/">
         <img src={Logo} alt="logo" className="w-20" />
       </NavLink>
 
@@ -59,7 +59,7 @@ const Navbar = () => {
         )}
       </div>
 
-      <div className="hidden sm:flex items-center gap-6 justify-center">
+      <div className="hidden sm:flex items-center gap-6">
         <NavLink
           to="/"
           className={`${
@@ -80,8 +80,6 @@ const Navbar = () => {
         >
           About
         </NavLink>
-      </div>
-      <div className="hidden sm:flex items-center gap-6">
         <Link
           to="/login"
           className="flex items-center justify-center w-[120px] rounded-3xl h-12 border border-[#BA9FFE] hover:bg-[#BA9FFE] text-[#a37eff] hover:text-white font-medium box-shadow-style transition-all duration-300"

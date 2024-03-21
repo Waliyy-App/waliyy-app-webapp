@@ -4,6 +4,7 @@ import Section from '../components/landingPage/Section';
 import FrequentlyAskedQuestions from '../components/landingPage/FAQ';
 import Header from '../components/landingPage/Header';
 import Footer from '../components/landingPage/Footer';
+import Features from '../components/landingPage/Features';
 
 const LandingPage = () => {
   const currentYear = new Date().getFullYear();
@@ -12,6 +13,7 @@ const LandingPage = () => {
       <Navbar />
       <Header />
       <Section />
+      <Features />
       <FrequentlyAskedQuestions />
       <Footer />
       <p className='text-[#2D133A] text-center mt-8'>{`© ${currentYear} WaliyyApp. All rights reserved.`}</p>
