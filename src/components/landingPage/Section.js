@@ -2,8 +2,6 @@ import React from 'react';
 import BgSectionTop from '../../assets/images/bg-section-top-desktop-1.svg';
 import BgSectionBottom from '../../assets/images/bg-section-bottom-desktop-1.svg';
 import Illusone from '../../assets/images/illustration-grow-together.svg';
-import IllusTwo from '../../assets/images/illustration-flowing-conversation.svg';
-import IllusThree from '../../assets/images/illustration-your-users.svg';
 
 const Section = () => {
   return (
