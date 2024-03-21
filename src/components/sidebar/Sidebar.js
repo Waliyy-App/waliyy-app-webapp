@@ -12,7 +12,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import AddIcon from '@mui/icons-material/Add';
 import PersonIcon from '@mui/icons-material/Person';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-import { getChildren, logout } from '../../services';
+import { getChildren, logoutFunc } from '../../services';
 import { useAuthContext } from '../../context/AuthContext';
 
 const SidebarComponent = ({ isOpen, toggleMenu }) => {
@@ -20,7 +20,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
   const [children, setChildren] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
-  const { token } = useAuthContext();
+  const { token, logOut } = useAuthContext();
 
   const handleProfileClick = () => {
     const isUser = true;
@@ -42,9 +42,10 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 
   const handleLogout = async () => {
     try {
-      const res = await logout(token);
-      console.log(res);
+      const res = await logoutFunc(token);
+      logOut();
       navigate('/');
+      console.log(res);
     } catch (error) {
       console.log(error);
     }
