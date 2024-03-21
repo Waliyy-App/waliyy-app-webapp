@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+// import { useLocation, useParams } from 'react-router-dom';
 import SidebarComponent from '../sidebar/Sidebar';
 import ProfileHeader from './ProfileHeader';
 import Tabs from '@mui/material/Tabs';
@@ -19,7 +19,7 @@ const ProfileDetails = () => {
   const [value, setValue] = useState(0);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
-  const location = useLocation();
+  // const location = useLocation();
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
 
   // const { id } = useParams();
