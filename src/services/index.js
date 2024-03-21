@@ -36,6 +36,15 @@ export const forgotPassword = async (payload) => {
   }
 };
 
+export const resetPassword = async (token, payload) => {
+  try {
+    const response = await apiService.put(`http://localhost:7345/api/v1/auth/reset-password/${token}`, payload);
+    return response.data.user;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const changePassword = async (payload) => {
   try {
     const response = await apiService.put('/account/change-password', payload);
@@ -45,7 +54,7 @@ export const changePassword = async (payload) => {
   }
 };
 
-export const logout = async (accessToken) => {
+export const logoutFunc = async (accessToken) => {
   try {
     const response = await apiService.delete('/auth/logout', {
       headers: {
