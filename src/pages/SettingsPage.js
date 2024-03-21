@@ -46,7 +46,7 @@ const SettingsPage = () => {
               textColor="inherit"
               indicatorColor="secondary"
             >
-              <Tab label="User" {...a11yProps(0)} />
+              <Tab label="User Profile" {...a11yProps(0)} />
               <Tab label="Billing" {...a11yProps(1)} />
               <Tab label="Account" {...a11yProps(2)} />
             </Tabs>

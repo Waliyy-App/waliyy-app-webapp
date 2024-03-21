@@ -1,5 +1,5 @@
 import React from 'react';
-import Female from '../../assets/illustrations/female-illus.png';
+import {ReactComponent as FemaleIcon} from '../../assets/illustrations/female-illus.svg';
 import { useNavigate } from 'react-router-dom';
 
 const SettingsHeader = ({ isUser }) => {
@@ -14,7 +14,7 @@ const SettingsHeader = ({ isUser }) => {
     <div className="flex flex-col sm:flex-row items-end justify-between py-8 gap-4">
       <div className="flex items-center gap-4">
         <div className="flex items-center justify-center h-[155px] w-[155px] rounded-full border border-[#0000000d] bg-white box-shadow-profile z-30 relative overflow-hidden">
-          <img src={Female} alt="user" className="w-24 h-24 z-40" />
+          <FemaleIcon className="w-24 h-24 z-40" />
         </div>
 
         <div className="flex flex-col gap-2">

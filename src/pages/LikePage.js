@@ -38,6 +38,7 @@ const LikePage = () => {
           value={value}
           onChange={handleChange}
           textColor="inherit"
+          className='overflow-scroll'
           indicatorColor="secondary"
           aria-label="icon position tabs example"
           centered
