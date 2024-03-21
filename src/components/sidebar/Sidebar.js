@@ -12,7 +12,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import AddIcon from '@mui/icons-material/Add';
 import PersonIcon from '@mui/icons-material/Person';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-import { getChildren, logout } from '../../services';
+import { getChildren, logoutFunc } from '../../services';
 import { useAuthContext } from '../../context/AuthContext';
 
 const SidebarComponent = ({ isOpen, toggleMenu }) => {
@@ -20,12 +20,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
   const [children, setChildren] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
-  const { token } = useAuthContext();
-
-  const handleProfileClick = () => {
-    const isUser = true;
-    navigate('/profile', { state: { isUser } });
-  };
+  const { token, logOut } = useAuthContext();
 
   useEffect(() => {
     const fetchChildren = async () => {
@@ -42,9 +37,10 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 
   const handleLogout = async () => {
     try {
-      const res = await logout(token);
-      console.log(res);
+      const res = await logoutFunc(token);
+      logOut();
       navigate('/');
+      console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -119,8 +115,8 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
               <FavoriteIcon /> {isOpen ? '' : 'Match'}
             </NavLink>
 
-            <div
-              onClick={handleProfileClick}
+            <NavLink
+              to="/profile"
               className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 cursor-pointer ${
                 isOpen && 'justify-center'
               }  ${
@@ -131,7 +127,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
             >
               <FemaleIcon className="h-6 w-6 rounded-full flex items-center justify-center" />
               {isOpen ? '' : 'Profile'}
-            </div>
+            </NavLink>
           </div>
         </div>
         <div className="flex flex-col  gap-6 relative">

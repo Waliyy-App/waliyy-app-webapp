@@ -1,63 +1,55 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext } from 'react';
+import { useCookies } from 'react-cookie';
+// import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = React.createContext({
   isLoggedIn: false,
-  token: "",
+  token: '',
   storeAuthCookie: (data) => {},
   logOut: () => {},
 });
 
 export const AuthContextProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies(["waliyy_user"]);
+  const [user, setUser] = useState();
+  const [cookies, setCookie, removeCookie] = useCookies(['waliyy_user']);
   const [token, setToken] = useState(cookies.waliyy_user);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   function storeAuthCookie(data) {
-    setCookie("waliyy_user", data.token, {
-      path: "/",
+    setCookie('waliyy_user', data.token, {
+      path: '/',
       maxAge: 3600 * 24 * 30, // 30 days
     });
-
+    localStorage.setItem('user', JSON.stringify(data.user));
+    setUser(data.user);
     setIsLoggedIn(true);
   }
 
   function logOut() {
-    removeCookie("waliyy_user", {
-      path: "/",
+    removeCookie('waliyy_user', {
+      path: '/',
       maxAge: 3600 * 24 * 30,
     });
-
+    setUser();
+    localStorage.clearItem('user');
     setIsLoggedIn(false);
-    navigate("/login");
   }
 
   useEffect(() => {
     if (cookies.waliyy_user) {
       setToken(cookies.waliyy_user);
       setIsLoggedIn(true);
+
+      const userData = JSON.parse(localStorage.getItem('user'));
+      setUser(userData);
     }
   }, [cookies.waliyy_user]);
-
-  // Add route protection
-  useEffect(() => {
-    const unprotectedRoutes = [
-      "/",
-      "/login",
-      "/sign-up",
-      "/forgot-password",
-    ];
-
-    if (!isLoggedIn && !unprotectedRoutes.includes(window.location.pathname)) {
-      navigate("/login");
-    }
-  }, [isLoggedIn, navigate]);
 
   return (
     <AuthContext.Provider
       value={{
+        user,
         isLoggedIn,
         token,
         storeAuthCookie,

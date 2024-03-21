@@ -4,6 +4,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { BsFillDiamondFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
+
 const truncateText = (text, maxWords) => {
   const words = text.split(/\s+/);
   const truncated = words.slice(0, maxWords).join(' ');

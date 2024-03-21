@@ -1,30 +1,22 @@
 import React from 'react';
 import Navbar from '../components/landingPage/Navbar';
-import WebappImage from '../assets/images/webapp-img.png';
-import { Link } from 'react-router-dom';
 import Section from '../components/landingPage/Section';
+import FrequentlyAskedQuestions from '../components/landingPage/FAQ';
+import Header from '../components/landingPage/Header';
+import Footer from '../components/landingPage/Footer';
+import Features from '../components/landingPage/Features';
+
 const LandingPage = () => {
+  const currentYear = new Date().getFullYear();
   return (
     <div className="py-12 ">
       <Navbar />
-      <div className=" px-6 sm:px-12 flex flex-col items-center justify-center my-24 w-full sm:w-[600px] mx-auto">
-        <div className="flex gap-9 flex-col items-center justify-center text-[#2D133A]">
-          <h1 className="text-capitalize font-bold text-2xl sm:text-3xl text-center">
-            Embark on a journey of love, faith and connection...
-          </h1>
-          <p className="text-center text-lg font-medium">
-            Say Salaam to meaningful connections! WaliyyApp is revolutionising the Nikah process by handing back responsibility to guardians to support their wards in finding like-minded prospects.
-          </p>
-          <Link to='/login' className="flex items-center justify-center w-[340px] rounded-3xl h-12 bg-[#BA9FFE] text-white hover:bg-[#a37eff] font-medium box-shadow-profile transition-all duration-300">
-            Get Started For Free
-          </Link>
-        </div>
-
-        <div className='my-20'>
-          <img src={WebappImage} alt="web app" className='' />
-        </div>
-      </div>
+      <Header />
       <Section />
+      <Features />
+      <FrequentlyAskedQuestions />
+      <Footer />
+      <p className='text-[#2D133A] text-center mt-8'>{`© ${currentYear} WaliyyApp. All rights reserved.`}</p>
     </div>
   );
 };

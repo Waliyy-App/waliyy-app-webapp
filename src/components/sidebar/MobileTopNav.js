@@ -7,13 +7,13 @@ import AddIcon from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-import { getChildren, logout } from '../../services';
+import { getChildren,  logoutFunc } from '../../services';
 import { useAuthContext } from '../../context/AuthContext';
 
 const MobileTopNav = () => {
   const [toggleMobileMenu, setToggleMobileMenu] = useState(false);
   const [children, setChildren] = useState([]);
-  const { token } = useAuthContext();
+  const { token, logOut } = useAuthContext();
   const navigate = useNavigate();
 
   const handleToggle = () => {
@@ -22,9 +22,10 @@ const MobileTopNav = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await logout(token);
+      const res = await  logoutFunc(token);
       console.log(res);
-      navigate('/');
+      logOut()
+      navigate('/')
     } catch (error) {
       console.log(error);
     }

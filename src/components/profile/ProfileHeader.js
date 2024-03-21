@@ -6,12 +6,12 @@ import { BsFillDiamondFill } from 'react-icons/bs';
 import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbDownIcon from '@mui/icons-material/ThumbDownAlt';
 
-const ProfileHeader = ({ isUser }) => {
+const ProfileHeader = ({ isUser, data }) => {
   return (
     <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between py-8 gap-10">
       <div className="flex flex-col sm:flex-row sm:justify-start items-center gap-4">
         <div className="flex items-center justify-center h-[155px] w-[155px] rounded-full border border-[#0000000d] bg-white box-shadow-profile z-30 relative overflow-hidden">
-          {isUser ? (
+          {data.gender === 'FEMALE' ? (
             <img src={FemaleIcon} alt='' className="w-24 h-24 z-40" />
           ) : (
             <img src={MaleIcon} alt='' className="w-24 h-24 z-40" />
@@ -20,15 +20,15 @@ const ProfileHeader = ({ isUser }) => {
 
         <div className="text-[#2D133A] text-center sm:text-left">
           <div className="flex items-center gap-2 text-2xl font-bold">
-            <p>{isUser ? 'Raufah' : 'Muhammad'}</p>
+            <p>{data.firstName}</p>
             <BsFillDiamondFill className="h-2 w-2" />
-            <p>27</p>
+            <p>{data.age}</p>
           </div>
-          <p className="text-lg font-bold">Web Developer</p>
+          <p className="text-lg font-bold">{data.profession}</p>
 
           <div className="flex items-center sm:justify-start justify-center gap-1 ">
             <LocationOnIcon />
-            <p className="text-sm font-light">Lagos, Nigeria</p>
+            <p className="text-sm font-light">{data.countryofResidence}</p>
           </div>
         </div>
       </div>
