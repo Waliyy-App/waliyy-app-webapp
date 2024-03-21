@@ -115,6 +115,19 @@ export const getChildren = async (accessToken) => {
   }
 };
 
+export const getChild = async (id, accessToken) => {
+  try {
+    const response = await apiService.get(`/parent/child/${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getPlans = async () => {
   try {
     const response = await apiService.get('/plans/');

@@ -16,7 +16,7 @@ import ProfileSetupForm from './pages/ProfileSetupForm';
 import LandingPage from './pages/LandingPage';
 import AboutLandingPage from './pages/AboutLandingPage';
 import ProtectedRoute from './route/ProtectedRoute';
-// import UnProtectedRoute from './route/UnProtectedRoute';
+import UnProtectedRoute from './route/UnProtectedRoute';
 import ResetPassword from './pages/ResetPassword';
 
 function App() {
@@ -37,10 +37,12 @@ function App() {
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/about" element={<AboutLandingPage />} />
 
-        <Route exact path="/sign-up" element={<Register />} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/forgot-password" element={<ForgotPassword />} />
-        <Route exact path="/reset-password" element={<ResetPassword />} />
+        <Route element={<UnProtectedRoute />}>
+          <Route exact path="/sign-up" element={<Register />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/forgot-password" element={<ForgotPassword />} />
+          <Route exact path="/reset-password" element={<ResetPassword />} />
+        </Route>
 
         <Route element={<ProtectedRoute />}>
           <Route exact path="/dashboard" element={<Dashboard />} />

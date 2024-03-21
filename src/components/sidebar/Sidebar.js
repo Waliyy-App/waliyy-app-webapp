@@ -22,11 +22,6 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
   const navigate = useNavigate();
   const { token, logOut } = useAuthContext();
 
-  const handleProfileClick = () => {
-    const isUser = true;
-    navigate('/profile', { state: { isUser } });
-  };
-
   useEffect(() => {
     const fetchChildren = async () => {
       try {
@@ -120,8 +115,8 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
               <FavoriteIcon /> {isOpen ? '' : 'Match'}
             </NavLink>
 
-            <div
-              onClick={handleProfileClick}
+            <NavLink
+              to="/profile"
               className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 cursor-pointer ${
                 isOpen && 'justify-center'
               }  ${
@@ -132,7 +127,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
             >
               <FemaleIcon className="h-6 w-6 rounded-full flex items-center justify-center" />
               {isOpen ? '' : 'Profile'}
-            </div>
+            </NavLink>
           </div>
         </div>
         <div className="flex flex-col  gap-6 relative">
