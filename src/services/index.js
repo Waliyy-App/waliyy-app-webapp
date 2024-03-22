@@ -88,9 +88,9 @@ export const isAuthenticated = () => {
   return getAuthToken();
 };
 
-export const filterSuitors = async (payload, accessToken) => {
+export const filterSuitors = async (payload, accessToken, id) => {
   try {
-    const response = await apiService.post('/child', payload, {
+    const response = await apiService.post(`parent/child/preference/${id}`, payload, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -150,19 +150,3 @@ export const makePayment = async (payload, accessToken) => {
   }
 };
 
-// export const fetchCurrentUser = async (token) => {
-//      try {
-//     // Set authorization header with the token
-//     const config = {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     };
-
-//     // Make API request to fetch current user data
-//     const response = await apiService.get('/parent/children', config);
-//     return response.data; // Assuming the response contains user data
-//   } catch (error) {
-//     throw error; // Forwarding the error to the caller
-//   }
-// }

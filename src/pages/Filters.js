@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Box from "@mui/material/Box";
-import { Formik, Form } from "formik";
-import { TextInput, CheckboxInputTwo } from "../common/form";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import { Formik, Form } from 'formik';
+import { TextInput, CheckboxInputTwo } from '../common/form';
 import {
   countryOptions,
   citizenshipOptions,
@@ -11,10 +11,10 @@ import {
   educationOptions,
   employmentStatusOptions,
   salatOptions,
-} from "../data/formValues";
-import { MultiSelect } from "react-multi-select-component";
-import { filterSuitors } from "../services";
-import { useAuthContext } from "../context/AuthContext";
+} from '../data/formValues';
+import { MultiSelect } from 'react-multi-select-component';
+import { filterSuitors } from '../services';
+import { useAuthContext } from '../context/AuthContext';
 
 export const Filters = () => {
   const [selectedGenotype, setSelectedGenotype] = useState([]);
@@ -25,42 +25,48 @@ export const Filters = () => {
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [selectedNationality, setSelectedNationality] = useState([]);
   const [selectedSalat, setSelectedSalat] = useState([]);
+  const [selectedSect, setSelectedSect] = useState([]);
+  const [selectedRelocationOpt, setSelectedRelocationOpt] = useState([]);
   const { token } = useAuthContext();
 
   const initialValues = {
-    minAge: "",
-    maxAge: "",
-    genotype: "",
-    minHeight: "",
-    maxHeight: "",
-    minWweight: "",
-    maxWweight: "",
-    maritalStatus: "",
-    haveChildren: "",
-    levelOfEducation: "",
-    employmentStatus: "",
-    residence: "",
-    stateOfOrigin: "",
-    citizenship: "",
-    lga: "",
-    ethnicity: "",
-    willingnessToRelocate: "",
-    salat: "",
-    revert: false,
-    divorcees: false,
-    parentsNeverMarried: false,
-    single: false,
-    widows: false,
+    minAge: '',
+    maxAge: '',
+    genotypes: [],
+    minHeight: '',
+    maxHeight: '',
+    minWeight: '',
+    maxWeight: '',
+    maritalStatus: [],
+    haveChildren: false,
+    levelOfEducation: [],
+    employmentStatus: [],
+    countryOfResidence: '',
+    nationality: [],
+    willingnessToRelocate: [],
+    patternOfSalat: [],
+    sect: [],
+    isRevert: false,
     shia: false,
     sunni: false,
-    smokes: false,
-    drinks: false,
-    hasAddiction: false,
+    isSmoker: false,
+    isDrinker: false,
+    hasAddictions: false,
   };
 
   const childrenOption = [
-    { label: "Yes", value: "Yes" },
-    { label: "No", value: "No" },
+    { label: 'Yes', value: 'true' },
+    { label: 'No', value: 'false' },
+  ];
+
+  const relocationOptions = [
+    { label: 'Yes', value: 'true' },
+    { label: 'No', value: 'false' },
+  ];
+
+  const sectOptions = [
+    { label: 'Sunni', value: 'SUNNI' },
+    { label: "Shi'a", value: 'SHIA' },
   ];
 
   const navigate = useNavigate();
@@ -68,7 +74,7 @@ export const Filters = () => {
   async function handleSubmit(values) {
     try {
       await filterSuitors(values, token);
-      navigate("/dashboard");
+      navigate('/dashboard');
     } catch (error) {
       alert(error.response.data.message);
     }
@@ -101,7 +107,7 @@ export const Filters = () => {
                 <div>
                   <label
                     className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="genotype"
+                    htmlFor="genotypes"
                   >
                     Genotype
                   </label>
@@ -171,7 +177,6 @@ export const Filters = () => {
                     Children
                   </label>
                   <MultiSelect
-                    hasSelectAll
                     className="w-auto text-input mt-3 multi-select"
                     options={childrenOption}
                     value={selectedChildren}
@@ -219,7 +224,7 @@ export const Filters = () => {
                 <div>
                   <label
                     className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="residence"
+                    htmlFor="countryOfResidence"
                   >
                     Country of Residence
                   </label>
@@ -236,7 +241,7 @@ export const Filters = () => {
                 <div>
                   <label
                     className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="citizenship"
+                    htmlFor="nationality"
                   >
                     Nationality
                   </label>
@@ -253,7 +258,25 @@ export const Filters = () => {
                 <div>
                   <label
                     className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="salat"
+                    htmlFor="willingnessToRelocate"
+                  >
+                    Willingness to Relocate
+                  </label>
+                  <MultiSelect
+                    className="w-auto text-input mt-3 multi-select"
+                    options={relocationOptions}
+                    value={selectedRelocationOpt}
+                    onChange={setSelectedRelocationOpt}
+                    labelledBy="Relocation"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4">
+                <div>
+                  <label
+                    className="text-sm font-medium text-[#2D133A]"
+                    htmlFor="patternOfSalat"
                   >
                     Pattern of Salat
                   </label>
@@ -266,18 +289,32 @@ export const Filters = () => {
                     labelledBy="Salat"
                   />
                 </div>
+
+                <div>
+                  <label
+                    className="text-sm font-medium text-[#2D133A]"
+                    htmlFor="sect"
+                  >
+                    Islamic Sect
+                  </label>
+                  <MultiSelect
+                    hasSelectAll
+                    className="w-auto text-input mt-3 multi-select"
+                    options={sectOptions}
+                    value={selectedSect}
+                    onChange={setSelectedSect}
+                    labelledBy="sect"
+                  />
+                </div>
+
+                
               </div>
 
               <div className="flex flex-wrap gap-8">
-                <CheckboxInputTwo name="willingnessToRelocate">
-                  Willing to relocate
-                </CheckboxInputTwo>
-                <CheckboxInputTwo name="revert">Revert</CheckboxInputTwo>
-                <CheckboxInputTwo name="shia">Shi'a</CheckboxInputTwo>
-                <CheckboxInputTwo name="sunni">Sunni</CheckboxInputTwo>
-                <CheckboxInputTwo name="smokes">Smokes</CheckboxInputTwo>
-                <CheckboxInputTwo name="drinks">Drinks</CheckboxInputTwo>
-                <CheckboxInputTwo name="hasAddiction">
+                <CheckboxInputTwo name="isRevert">Revert</CheckboxInputTwo>
+                <CheckboxInputTwo name="isSmoker">Smokes</CheckboxInputTwo>
+                <CheckboxInputTwo name="isDrinker">Drinks</CheckboxInputTwo>
+                <CheckboxInputTwo name="hasAddictions">
                   Has an Addiction
                 </CheckboxInputTwo>
               </div>

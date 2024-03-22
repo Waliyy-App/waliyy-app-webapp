@@ -87,10 +87,6 @@ export default function ProfileSetupForm() {
     setLoading(false);
   };
 
-  // if (!isAuthenticated()) {
-  //   navigate("/");
-  // }
-
   return (
     <React.Fragment>
       {loading ? (
