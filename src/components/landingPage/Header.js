@@ -1,5 +1,5 @@
 import React from 'react';
-import WebappImage from '../../assets/images/webapp-img.png';
+import WebappImage from '../../assets/images/WEBAPP.png';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
