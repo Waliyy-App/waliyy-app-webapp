@@ -6,7 +6,7 @@ import WorldIcon from '@mui/icons-material/Public';
 import SchoolIcon from '@mui/icons-material/School';
 import MosqueIcon from '@mui/icons-material/Mosque';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
-import { initialValues, validationSchema } from '../data/inputInitialValues';
+import { initialValues, validationSchema } from '../data/initialValues';
 import { useAuthContext } from '../context/AuthContext';
 import { userRegistration } from '../services/index.js';
 
