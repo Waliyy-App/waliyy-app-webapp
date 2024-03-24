@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <div className="px-6 sm:px-12 flex flex-col items-center justify-center my-24 w-full sm:w-[600px] mx-auto">
+    <div className="px-6 sm:px-12 flex flex-col items-center justify-center my-24 w-full sm:w-[600px] mx-auto bg-white dark:bg-white">
       <div className="flex gap-9 flex-col items-center justify-center text-[#2D133A]">
         <h1 className="text-capitalize font-bold text-2xl sm:text-3xl text-center">
           Embark on a journey of love, faith and connection...

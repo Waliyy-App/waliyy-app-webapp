@@ -6,7 +6,7 @@ import { faq } from './faqData';
 const FrequentlyAskedQuestions = () => {
   const [showInfo, setShowInfo] = useState(1);
   return (
-    <div className="w-4/5 sm:w-3/5 mt-24 mx-auto flex flex-col gap-4 text-[#2D133A]">
+    <div className="w-4/5 sm:w-3/5 mt-24 mx-auto flex flex-col gap-4 text-[#2D133A] bg-white dark:bg-white">
       <h2 className="text-2xl sm:text-3xl font-bold mb-10 text-center">
         Frequently Asked Questions
       </h2>

@@ -9,7 +9,7 @@ import Features from '../components/landingPage/Features';
 const LandingPage = () => {
   const currentYear = new Date().getFullYear();
   return (
-    <div className="py-12 ">
+    <div className="py-12 bg-white dark:bg-white">
       <Navbar />
       <Header />
       <Section />

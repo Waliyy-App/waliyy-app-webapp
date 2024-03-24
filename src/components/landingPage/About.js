@@ -2,7 +2,7 @@ import React from 'react';
 
 const About = () => {
   return (
-    <div className="flex flex-col gap-10 w-4/5 lg:w-3/5 mx-auto my-24 text-[#2D133A]">
+    <div className="flex flex-col gap-10 w-4/5 lg:w-3/5 mx-auto my-24 text-[#2D133A] bg-white dark:bg-white">
       <h2 className="text-3xl font-bold">About WaliyyApp</h2>
       <div className="flex flex-col gap-8 text-lg mb-10">
         <p>
