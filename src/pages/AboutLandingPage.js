@@ -10,7 +10,7 @@ const AboutLandingPage = () => {
       <Navbar />
       <About />
       <Footer />
-      <p className="text-[#2D133A] text-center mt-8">{`© ${currentYear} WaliyyApp. All rights reserved.`}</p>
+      <p className="text-[#2D133A] bg-white dark:bg-white text-center mt-8">{`© ${currentYear} WaliyyApp. All rights reserved.`}</p>
     </div>
   );
 };

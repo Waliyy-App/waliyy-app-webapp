@@ -19,3 +19,12 @@ export function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
+
+export const isFormCompleted = () => {
+  const formStatus = localStorage.getItem('formCompleted');
+  return formStatus === 'true';
+};
+
+export const setFormCompleted = () => {
+  localStorage.setItem('formCompleted', 'true');
+};

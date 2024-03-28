@@ -1,32 +1,80 @@
-import React, { useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import Box from '@mui/material/Box';
-import CongratulationsRegister from '../screens/CongratulationsRegister';
 import { Formik, Form } from 'formik';
 import UserIcon from '@mui/icons-material/Person';
 import WorldIcon from '@mui/icons-material/Public';
 import SchoolIcon from '@mui/icons-material/School';
 import MosqueIcon from '@mui/icons-material/Mosque';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
-import { initialValues, validationSchema } from '../data/inputInitialValues';
-import {
-  AboutDeenForm,
-  EducationAndProfessionForm,
-  NationalityForm,
-  PersonalDetailsForm,
-  SelfSummaryForm,
-} from '../components/setupForms';
-import { userRegistration } from '../services';
-import Loader from '../components/Loader';
+import { initialValues, validationSchema } from '../data/initialValues';
 import { useAuthContext } from '../context/AuthContext';
+import { userRegistration } from '../services/index.js';
+
+const CongratulationsRegister = lazy(() =>
+  import('../screens/CongratulationsRegister')
+);
+const Loader = lazy(() => import('../components/Loader'));
+const PersonalDetailsForm = lazy(() =>
+  import('../components/setupForms/PersonalDetailsForm')
+);
+const NationalityForm = lazy(() =>
+  import('../components/setupForms/NationalityForm')
+);
+const EducationAndProfessionForm = lazy(() =>
+  import('../components/setupForms/EducationAndProfessionForm')
+);
+const AboutDeenForm = lazy(() =>
+  import('../components/setupForms/AboutDeenForm')
+);
+const SelfSummaryForm = lazy(() =>
+  import('../components/setupForms/SelfSummaryForm')
+);
+
+const formSections = [
+  {
+    id: 'personalDetails',
+    icon: <UserIcon />,
+    label: 'Personal Details',
+    component: PersonalDetailsForm,
+  },
+  {
+    id: 'nationality',
+    icon: <WorldIcon />,
+    label: 'Nationality',
+    component: NationalityForm,
+  },
+  {
+    id: 'education',
+    icon: <SchoolIcon />,
+    label: 'Education and Profession',
+    component: EducationAndProfessionForm,
+  },
+  {
+    id: 'deen',
+    icon: <MosqueIcon />,
+    label: 'About my Deen',
+    component: AboutDeenForm,
+  },
+  {
+    id: 'summary',
+    icon: <RecordVoiceOverIcon />,
+    label: 'Self Summary',
+    component: SelfSummaryForm,
+  },
+];
 
 export default function ProfileSetupForm() {
-  const [activeStep, setActiveStep] = useState('personalDetails');
-  const [completed, setCompleted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [state, setState] = useState({
+    activeStep: 'personalDetails',
+    completed: false,
+    loading: false,
+    error: null,
+  });
   const { token } = useAuthContext();
 
   const handleSubmit = async (values) => {
-    setLoading(true);
+    setState((prevState) => ({ ...prevState, loading: true, error: null }));
+
     const date = new Date(values.dateOfBirth);
     const getYear = date.getFullYear();
     const getMonth = date.getMonth();
@@ -77,113 +125,90 @@ export default function ProfileSetupForm() {
         },
         token
       );
-
-      console.log(values, 'success');
-      setCompleted(true);
+      setState((prevState) => ({ ...prevState, completed: true }));
     } catch (error) {
-      alert(error.response.data.message);
+      setState((prevState) => ({ ...prevState, error: error.message }));
+    } finally {
+      setState((prevState) => ({ ...prevState, loading: false }));
     }
-
-    setLoading(false);
   };
 
-  // if (!isAuthenticated()) {
-  //   navigate("/");
-  // }
+  const renderForm = () => {
+    const { activeStep, loading, completed, error } = state;
 
-  return (
-    <React.Fragment>
-      {loading ? (
-        <Loader />
-      ) : completed ? (
-        <CongratulationsRegister />
-      ) : (
-        <Box
-          spacing={4}
-          className="mx-auto px-8 py-12 w-full md:w-4/5 transition-all duration-500"
+    if (loading) {
+      return (
+        <Suspense fallback={<div>Loading...</div>}>
+          <Loader />
+        </Suspense>
+      );
+    }
+
+    if (completed) {
+      return (
+        <Suspense fallback={<div>Loading...</div>}>
+          <CongratulationsRegister />
+        </Suspense>
+      );
+    }
+
+    if (error) {
+      return <div>{error}</div>;
+    }
+
+    return (
+      <Box
+        spacing={4}
+        className="mx-auto px-8 py-12 w-full md:w-4/5 transition-all duration-500"
+      >
+        <div className="flex flex-col mb-8">
+          <p className="font-semibold text-2xl text-[#2D133A]">
+            Setup your Account
+          </p>
+          <p className="text-[#665e6b] text-lg">Tell us about your ward</p>
+        </div>
+
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
         >
-          <div className="flex flex-col mb-8">
-            <p className="font-semibold text-2xl text-[#2D133A]">
-              Setup your Account
-            </p>
-            <p className="text-[#665e6b] text-lg">Tell us about your ward</p>
-          </div>
+          <Form className="transition-all duration-500 flex gap-8 flex-col">
+            {formSections.map(
+              ({ id, icon, label, component: FormComponent }) => (
+                <div key={id}>
+                  <div
+                    className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
+                    onClick={() =>
+                      setState((prevState) => ({
+                        ...prevState,
+                        activeStep: id,
+                      }))
+                    }
+                  >
+                    {icon}
+                    {label}
+                  </div>
+                  {activeStep === id && (
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <FormComponent />
+                    </Suspense>
+                  )}
+                </div>
+              )
+            )}
 
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={(values) => handleSubmit(values)}
-          >
-            <Form className="transition-all duration-500 flex gap-8 flex-col">
-              <div>
-                <div
-                  className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep('personalDetails')}
-                >
-                  <UserIcon />
-                  Personal Details
-                </div>
-                {activeStep === 'personalDetails' ? (
-                  <PersonalDetailsForm />
-                ) : (
-                  ''
-                )}
-              </div>
-              <div>
-                <div
-                  className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep('nationality')}
-                >
-                  <WorldIcon />
-                  Nationality
-                </div>
-                {activeStep === 'nationality' ? <NationalityForm /> : ''}
-              </div>
-              <div>
-                <div
-                  className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep('education')}
-                >
-                  <SchoolIcon />
-                  Education and Profession
-                </div>
-                {activeStep === 'education' ? (
-                  <EducationAndProfessionForm />
-                ) : (
-                  ''
-                )}
-              </div>
-              <div>
-                <div
-                  className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep('deen')}
-                >
-                  <MosqueIcon />
-                  About my Deen
-                </div>
-                {activeStep === 'deen' ? <AboutDeenForm /> : ''}
-              </div>
-              <div>
-                <div
-                  className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
-                  onClick={() => setActiveStep('summary')}
-                >
-                  <RecordVoiceOverIcon />
-                  Self Summary
-                </div>
-                {activeStep === 'summary' ? <SelfSummaryForm /> : ''}
-              </div>
+            <button
+              className="my-11 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300"
+              type="submit"
+            >
+              Submit
+            </button>
+          </Form>
+        </Formik>
+      </Box>
+    );
+  };
 
-              <button
-                className="my-11 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300"
-                type="submit"
-              >
-                Submit
-              </button>
-            </Form>
-          </Formik>
-        </Box>
-      )}
-    </React.Fragment>
-  );
+  return <React.Fragment>{renderForm()}</React.Fragment>;
 }

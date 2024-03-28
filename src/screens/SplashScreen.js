@@ -9,6 +9,7 @@ const SplashScreen = () => {
     const timeoutId = setTimeout(() => {
       navigate('/dashboard');
       // navigate('/get-started');
+      // should navigate to dashboard for a returning user, and redirect to get-started for a new user
     }, 5000);
     return () => clearTimeout(timeoutId);
   }, [navigate]);

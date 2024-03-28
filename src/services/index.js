@@ -2,8 +2,6 @@ import axios from 'axios';
 
 const API_BASE_URL = 'https://waliyy.onrender.com/api/v1';
 
-const AUTH_TOKEN_KEY = 'auth_token';
-
 const apiService = axios.create({
   baseURL: API_BASE_URL,
   responseType: 'json',
@@ -38,7 +36,10 @@ export const forgotPassword = async (payload) => {
 
 export const resetPassword = async (token, payload) => {
   try {
-    const response = await apiService.put(`http://localhost:7345/api/v1/auth/reset-password/${token}`, payload);
+    const response = await apiService.put(
+      `http://localhost:7345/api/v1/auth/reset-password/${token}`,
+      payload
+    );
     return response.data.user;
   } catch (error) {
     throw error;
@@ -80,21 +81,29 @@ export const userRegistration = async (payload, accessToken) => {
   }
 };
 
-export const getAuthToken = () => {
-  return localStorage.getItem(AUTH_TOKEN_KEY);
-};
-
-export const isAuthenticated = () => {
-  return getAuthToken();
-};
-
-export const filterSuitors = async (payload, accessToken) => {
+export const updateUserProfile = async (payload, id) => {
   try {
-    const response = await apiService.post('/child', payload, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await apiService.put(
+      `/parent/child/${id}`,
+      payload
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const filterSuitors = async (payload, accessToken, id) => {
+  try {
+    const response = await apiService.post(
+      `parent/child/preference/${id}`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {
@@ -149,20 +158,3 @@ export const makePayment = async (payload, accessToken) => {
     throw error;
   }
 };
-
-// export const fetchCurrentUser = async (token) => {
-//      try {
-//     // Set authorization header with the token
-//     const config = {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     };
-
-//     // Make API request to fetch current user data
-//     const response = await apiService.get('/parent/children', config);
-//     return response.data; // Assuming the response contains user data
-//   } catch (error) {
-//     throw error; // Forwarding the error to the caller
-//   }
-// }
