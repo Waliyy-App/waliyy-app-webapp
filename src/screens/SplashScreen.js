@@ -15,6 +15,7 @@ const SplashScreen = () => {
 		return () => clearTimeout(timeoutId);
 	}, [user, navigate]);
 
+
 	return (
 		<div className="w-100 h-screen bg-white flex flex-col items-center justify-center">
 			<div className="w-[360px] mx-auto">

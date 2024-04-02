@@ -138,7 +138,6 @@ export default function ProfileSetupForm() {
 			setState((prevState) => ({ ...prevState, loading: false }));
 		}
 	};
-
 	const renderForm = () => {
 		const { activeStep, loading, completed } = state;
 
