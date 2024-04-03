@@ -2,14 +2,14 @@ import React from 'react';
 import CustomTabPanel from '../../common/CustomTabPanel';
 import ProfileCard from '../ProfileCard';
 
-const Liked = ({ value }) => {
+const Liked = () => {
   return (
     <div>
-      <CustomTabPanel value={value} index={0}>
+      <CustomTabPanel>
         <div className="flex flex-col items-center justify-center gap-3 text-center px-0 sm:px-8 pt-8 pb-[64px]">
           <p className="text-[#2D133A] font-bold text-4xl">Liked</p>
           <p className="text-[#667085] text-xl">
-            These are the people you liked and want to match with.
+            These are the people you liked.
           </p>
         </div>
         <div className="flex flex-wrap gap-6">
