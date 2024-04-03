@@ -5,8 +5,13 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { BsFillDiamondFill } from 'react-icons/bs';
 import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
 import { useAuthContext } from '../../context/AuthContext';
+import { useParams } from 'react-router-dom';
+
 const ProfileHeader = () => {
   const { user } = useAuthContext();
+  // no id in the url yet
+  const { id } = useParams();
+  const isCurrentUser = user.id === id;
 
   return (
     <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between py-8 gap-10">
@@ -30,7 +35,7 @@ const ProfileHeader = () => {
         </div>
       </div>
 
-      {!user && (
+      {!isCurrentUser && (
         <div className="flex items-center gap-3 self-center sm:self-end">
           <button className="hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300">
             <ThumbUpIcon /> Interested
