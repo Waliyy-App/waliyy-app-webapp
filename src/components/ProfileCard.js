@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MaleIcon from '../assets/illustrations/muslim.svg';
+// import FemaleIcon from '../assets/illustrations/female-illus.svg'; for if gender === 'FEMALE'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { BsFillDiamondFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
