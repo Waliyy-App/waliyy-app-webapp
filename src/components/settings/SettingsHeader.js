@@ -1,13 +1,13 @@
 import React from 'react';
-import {ReactComponent as FemaleIcon} from '../../assets/illustrations/female-illus.svg';
+import { ReactComponent as FemaleIcon } from '../../assets/illustrations/female-illus.svg';
+// import MaleIcon from '../../assets/illustrations/male-illus.svg'; for if gender === 'MALE
 import { useNavigate } from 'react-router-dom';
 
 const SettingsHeader = ({ isUser }) => {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    const isUser = true;
-    navigate('/profile', { state: { isUser } });
+    navigate('/profile');
   };
 
   return (
