@@ -1,5 +1,17 @@
 import React from 'react';
 import CustomTabPanel from '../../common/CustomTabPanel';
+import BloodtypeIcon from '@mui/icons-material/Bloodtype';
+import StraightenIcon from '@mui/icons-material/Straighten';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import { GiBigDiamondRing } from "react-icons/gi";
+import FlagIcon from '@mui/icons-material/Flag';
+import NoStrollerIcon from '@mui/icons-material/NoStroller';
+// import StrollerIcon from '@mui/icons-material/Stroller'; for if hasChildren is true
+import SmokeFreeIcon from '@mui/icons-material/SmokeFree';
+// import SmokeRoomsIcon from '@mui/icons-material/SmokeRooms'; for if isSmoker is true
+import NoDrinksIcon from '@mui/icons-material/NoDrinks';
+// import LocalBarIcon from '@mui/icons-material/LocalBar'; for if isDrinker is true
+import VaccinesIcon from '@mui/icons-material/Vaccines';
 
 const MeProfile = ({ value }) => {
   return (
@@ -35,43 +47,44 @@ const MeProfile = ({ value }) => {
         <div className="w-full sm:w-2/5">
           <p className="text-lg font-semibold mb-4">My Details</p>
           <div className="flex flex-wrap gap-4">
-            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
-              AC
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
+             <BloodtypeIcon /> AC
             </div>
 
-            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
-              1.69m
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
+             <StraightenIcon/> 1.69m
             </div>
 
-            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
-              70kg
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
+             <FitnessCenterIcon/> 70kg
             </div>
 
-            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
-              Single
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
+              <GiBigDiamondRing className='w-6 h-6' /> Single
             </div>
 
-            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
-              Mixed Ethnicity - American
-            </div>
-            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
-              Nigerian
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
+             <FlagIcon /> Nigerian
             </div>
 
-            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
-              No Children
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
+            <FlagIcon /> Canadian
             </div>
 
-            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
-              Does not smoke
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
+             <NoStrollerIcon /> No Children
             </div>
 
-            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
-              Does not drink
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
+              <SmokeFreeIcon />
             </div>
 
-            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
-              No Addictions
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
+             <NoDrinksIcon />
+            </div>
+
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
+             <VaccinesIcon /> No Addictions
             </div>
           </div>
         </div>

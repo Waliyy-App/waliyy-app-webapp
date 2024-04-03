@@ -1,5 +1,9 @@
 import React from 'react';
 import CustomTabPanel from '../../common/CustomTabPanel';
+import SchoolIcon from '@mui/icons-material/School';
+import WorkIcon from '@mui/icons-material/Work';
+// import WorkOffIcon from '@mui/icons-material/WorkOff'; for if employmentStatus is unemployed
+import BadgeIcon from '@mui/icons-material/Badge';
 
 const EduProfile = ({ value }) => {
   return (
@@ -46,16 +50,16 @@ const EduProfile = ({ value }) => {
         <div className="w-full sm:w-2/5">
           <p className="text-lg font-semibold mb-4">My Details</p>
           <div className="flex flex-wrap gap-4">
-            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
-              Masters
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
+            <SchoolIcon/>  Masters
             </div>
 
-            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
-              Employed
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold  flex items-center gap-1">
+            <WorkIcon/>  Employed
             </div>
 
-            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
-              Web developer
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold  flex items-center gap-1">
+             <BadgeIcon /> Web developer
             </div>
           </div>
         </div>
