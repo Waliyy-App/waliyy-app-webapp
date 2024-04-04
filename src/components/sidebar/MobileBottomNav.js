@@ -4,6 +4,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import HomeIcon from '@mui/icons-material/Home';
 import FemaleIcon from '../../assets/illustrations/female-illus.png';
+// import MaleIcon from '../../assets/illustrations/male-illus.svg'; for if gender === 'MALE
 
 const MobileNav = () => {
   const location = useLocation();

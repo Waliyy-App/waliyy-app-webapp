@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Logo from '../../assets/logo/logo-nobg-cropped.png';
 import LogoIcon from '../../assets/logo/logo-icon.png';
 import { ReactComponent as FemaleIcon } from '../../assets/illustrations/female-illus.svg';
+// import MaleIcon from '../../assets/illustrations/male-illus.svg'; for if gender === 'MALE
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -158,14 +159,14 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
                     {isOpen ? '' : 'Switch Accounts'}
                     <SwapHorizIcon />
                   </p>
-                  <div className="flex flex-col gap-5">
+                  <div className="flex flex-col">
                     {children.map((child, index) => (
-                      <div
-                        className="flex gap-3 items-center cursor-pointer"
+                      <button
+                        className="flex p-2 rounded-md gap-3 items-center hover:text-white hover:bg-[#BA9FFE] font-medium"
                         key={index}
                       >
                         <PersonIcon /> {child.firstName}
-                      </div>
+                      </button>
                     ))}
                   </div>
                 </div>

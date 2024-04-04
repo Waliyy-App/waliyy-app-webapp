@@ -15,7 +15,7 @@ const Header = () => {
           their wards in finding like-minded prospects.
         </p>
         <Link
-          to="/login"
+          to="/"
           className="flex items-center justify-center w-[340px] rounded-3xl h-12 bg-[#BA9FFE] text-white hover:bg-[#a37eff] font-medium box-shadow-profile transition-all duration-300"
         >
           Get Started For Free

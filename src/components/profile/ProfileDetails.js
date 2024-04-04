@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { useLocation, useParams } from 'react-router-dom';
 import SidebarComponent from '../sidebar/Sidebar';
 import ProfileHeader from './ProfileHeader';
 import Tabs from '@mui/material/Tabs';
@@ -11,21 +10,15 @@ import DeenProfile from './DeenProfile';
 import { usePersistedState, a11yProps } from '../../utils.js';
 import MobileNav from '../sidebar/MobileBottomNav.js';
 import MobileTopNav from '../sidebar/MobileTopNav.js';
-import { useAuthContext } from '../../context/AuthContext.js';
 
 const ProfileDetails = () => {
   const [value, setValue] = useState(0);
-  // const location = useLocation();
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
-
-  // const { id } = useParams();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const { user } = useAuthContext();
-  const isUser = user;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -41,7 +34,7 @@ const ProfileDetails = () => {
         } py-[64px] px-8 w-full transition-all duration-300`}
       >
         <React.Fragment>
-          <ProfileHeader isUser={isUser} />
+          <ProfileHeader />
           <div>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs

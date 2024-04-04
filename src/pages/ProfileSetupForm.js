@@ -74,6 +74,7 @@ export default function ProfileSetupForm() {
 	});
 	const { token } = useAuthContext();
 
+
 	const handleSubmit = async (values) => {
 		setState((prevState) => ({ ...prevState, loading: true, error: null }));
 

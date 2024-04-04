@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-// import ProfileSetup from './pages/ProfileSetup';
+
 import LikePage from "./pages/LikePage";
 import MatchPage from "./pages/MatchPage";
 import SettingsPage from "./pages/SettingsPage";

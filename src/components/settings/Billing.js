@@ -8,12 +8,12 @@ const Billing = ({ value }) => {
   const [hasSubscription] = useState(false);
 
   return (
-    <CustomTabPanel value={value} index={1}>
-      <div className="my-16">
+    <CustomTabPanel value={value} index={1} className='w-full'>
+      <div className="mb-16 px-0 sm:px-8 pt-6 w-100">
 
         <p className="font-medium text-lg text-[#2D133A]">Account Plan</p>
 
-        <div className="flex p-6 text-[#2D133A] justify-between w-full sm:w-[50%] shadow rounded-xl my-4 mb-10">
+        <div className="flex p-6 text-[#2D133A] justify-between w-full sm:w-3/5 shadow rounded-xl my-4 mb-10">
           <div className="flex flex-col gap-2 ">
             <p className="font-semibold">Free Plan</p>
             <p className="text-sm">Our most popular plan.</p>
@@ -29,11 +29,11 @@ const Billing = ({ value }) => {
 
         <p className="font-medium text-lg text-[#2D133A]">Billing History</p>
         
-        <div className="my-8">
+        <div className="my-8 w-full">
           {hasSubscription ? (
             <BillingHistory />
           ) : (
-            <div className="flex items-center justify-center shadow rounded-xl p-6">
+            <div className="flex items-center justify-center shadow rounded-xl p-6 w-full">
               <p>You have no payment history</p>
             </div>
           )}

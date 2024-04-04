@@ -1,14 +1,13 @@
 import React from 'react';
 import SidebarComponent from '../components/sidebar/Sidebar';
-import ProfileView from '../components/ProfileCard';
 import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
 import { usePersistedState } from '../utils.js';
 import MobileNav from '../components/sidebar/MobileBottomNav.js';
 import MobileTopNav from '../components/sidebar/MobileTopNav.js';
+import ProfileCard from '../components/ProfileCard.js';
 
 const Dashboard = () => {
-  // Use the custom hook to create a persisted state
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
 
   const toggleMenu = () => {
@@ -31,13 +30,7 @@ const Dashboard = () => {
         </div>
 
         <div className="flex flex-wrap gap-6">
-          <ProfileView />
-          <ProfileView />
-          <ProfileView />
-          <ProfileView />
-          <ProfileView />
-          <ProfileView />
-          <ProfileView />
+          <ProfileCard />
         </div>
       </main>
       <MobileNav />
