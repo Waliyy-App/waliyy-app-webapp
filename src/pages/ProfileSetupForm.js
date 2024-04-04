@@ -74,6 +74,7 @@ export default function ProfileSetupForm() {
 	});
 	const { token } = useAuthContext();
 
+
 	const handleSubmit = async (values) => {
 		setState((prevState) => ({ ...prevState, loading: true, error: null }));
 
@@ -138,6 +139,7 @@ export default function ProfileSetupForm() {
 			setState((prevState) => ({ ...prevState, loading: false }));
 		}
 	};
+
 	const renderForm = () => {
 		const { activeStep, loading, completed } = state;
 

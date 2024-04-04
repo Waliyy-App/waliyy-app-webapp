@@ -2,9 +2,11 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+
 import LikePage from "./pages/LikePage";
 import MatchPage from "./pages/MatchPage";
 import SettingsPage from "./pages/SettingsPage";
