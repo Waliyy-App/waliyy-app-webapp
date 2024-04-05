@@ -14,7 +14,14 @@ export const AuthContextProvider = ({ children }) => {
 	const [user, setUser] = useState();
 	const [cookies, setCookie, removeCookie] = useCookies(["waliyy_user"]);
 	const [token, setToken] = useState(cookies.waliyy_user);
+	const [data, setData] = useState({});
+	const [childId, setChildId] = useState("");
 	// const navigate = useNavigate();
+
+	function handleChildId(id) {
+		localStorage.setItem("childId", id);
+		setChildId(id);
+	}
 
 	function storeAuthCookie(data) {
 		setCookie("waliyy_user", data.token, {
@@ -23,6 +30,7 @@ export const AuthContextProvider = ({ children }) => {
 		});
 		localStorage.setItem("user", JSON.stringify(data.user));
 		setUser(data.user);
+		setData(data);
 		setIsLoggedIn(true);
 	}
 
@@ -33,6 +41,7 @@ export const AuthContextProvider = ({ children }) => {
 		});
 		setUser();
 		localStorage.removeItem("user");
+		localStorage.removeItem("childId");
 		setIsLoggedIn(false);
 	}
 
@@ -54,6 +63,9 @@ export const AuthContextProvider = ({ children }) => {
 				token,
 				storeAuthCookie,
 				logOut,
+				data,
+				childId,
+				handleChildId,
 			}}
 		>
 			{children}

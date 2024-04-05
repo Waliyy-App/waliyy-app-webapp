@@ -14,7 +14,7 @@ import {
 	salatOptions,
 } from "../data/formValues";
 import { MultiSelect } from "react-multi-select-component";
-import { filterSuitors } from "../services";
+import { filterSuitors, updateFilter } from "../services";
 import { useAuthContext } from "../context/AuthContext";
 
 export const Filters = () => {
@@ -28,7 +28,7 @@ export const Filters = () => {
 	const [selectedSalat, setSelectedSalat] = useState([]);
 	const [selectedSect, setSelectedSect] = useState([]);
 	const [selectedRelocationOpt, setSelectedRelocationOpt] = useState([]);
-	const { user, token } = useAuthContext();
+	const { childId, token, data } = useAuthContext();
 
 	const initialValues = {
 		minAge: "",
@@ -86,16 +86,18 @@ export const Filters = () => {
 			// haveChildren: selectedChildren.map((item) => item.value)[0],
 			maritalStatus: selectedMaritalStatus.map((item) => item.value),
 		};
-		console.log(newValues);
 		try {
-			await filterSuitors(newValues, token, user._id);
+			const res = data?.isChildPreferenceAdded
+				? await updateFilter(newValues, token, childId)
+				: await filterSuitors(newValues, token, childId);
+			console.log(res);
+			toast.success(res?.message);
 			navigate("/dashboard");
 		} catch (error) {
 			toast.error(error.response.data.message);
 		}
 	}
 
-	console.log(selectedGenotype);
 	return (
 		<React.Fragment>
 			<Box

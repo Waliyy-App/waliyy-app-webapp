@@ -90,9 +90,55 @@ export const updateUserProfile = async (payload, id) => {
 	}
 };
 
+export const likeProfile = async (payload, id, accessToken) => {
+	try {
+		const response = await apiService.post(`/match/like/child/${id}`, payload, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+		return response;
+	} catch (error) {
+		throw error;
+	}
+};
+export const unlikeProfile = async (payload, id, accessToken) => {
+	try {
+		const response = await apiService.post(
+			`/match/unlike/child/${id}`,
+			payload,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		return response;
+	} catch (error) {
+		throw error;
+	}
+};
+
 export const filterSuitors = async (payload, accessToken, id) => {
 	try {
 		const response = await apiService.post(
+			`parent/child/preference/${id}`,
+			payload,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+export const updateFilter = async (payload, accessToken, id) => {
+	try {
+		const response = await apiService.put(
 			`parent/child/preference/${id}`,
 			payload,
 			{
