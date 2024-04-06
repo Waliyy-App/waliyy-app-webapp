@@ -21,6 +21,7 @@ import AboutLandingPage from "./pages/AboutLandingPage";
 import ProtectedRoute from "./route/ProtectedRoute";
 import UnProtectedRoute from "./route/UnProtectedRoute";
 import ResetPassword from "./pages/ResetPassword";
+import SplashScreen from "./screens/SplashScreen";
 
 function App() {
 	const theme = createTheme({
@@ -56,7 +57,8 @@ function App() {
 					<Route exact path="/pricing" element={<PricingPage />} />
 					<Route exact path="/get-started" element={<ProfileSetupForm />} />
 					<Route exact path="/filter" element={<Filters />} />
-					<Route exact path="/profile" element={<ProfileDetails />} />
+					<Route exact path="/profile/:id" element={<ProfileDetails />} />
+					<Route exact path="/login-successful" element={<SplashScreen />} />
 				</Route>
 			</Routes>
 		</ThemeProvider>
