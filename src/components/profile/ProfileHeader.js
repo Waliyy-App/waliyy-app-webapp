@@ -6,11 +6,11 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDownAlt";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 import MaleIcon from "../../assets/illustrations/male-illus.svg";
-// import FemaleIcon from '../../assets/illustrations/female-illus.svg'; for if gender === 'FEMALE'
+import FemaleIcon from "../../assets/illustrations/female-illus.svg";
 // import { likeProfile, unlikeProfile } from "../../services";
 import { useAuthContext } from "../../context/AuthContext";
 
-const ProfileHeader = () => {
+const ProfileHeader = ({ firstName, age, profession, residence, gender }) => {
 	const { childId } = useAuthContext();
 	// no id in the url yet
 	const { id } = useParams();
@@ -20,20 +20,24 @@ const ProfileHeader = () => {
 		<div className="flex flex-col sm:flex-row items-center sm:items-end justify-between py-8 gap-10">
 			<div className="flex flex-col sm:flex-row sm:justify-start items-center gap-4">
 				<div className="flex items-center justify-center h-[155px] w-[155px] rounded-full border border-[#0000000d] bg-white box-shadow-profile z-30 relative overflow-hidden">
-					<img src={MaleIcon} alt="" className="w-24 h-24 z-40" />
+					<img
+						src={gender?.toLowerCase() === "male" ? MaleIcon : FemaleIcon}
+						alt=""
+						className="w-24 h-24 z-40"
+					/>
 				</div>
 
 				<div className="text-[#2D133A] text-center sm:text-left">
 					<div className="flex items-center gap-2 text-2xl font-bold">
-						<p>Raufah</p>
+						<p>{firstName || "Raufah"}</p>
 						<BsFillDiamondFill className="h-2 w-2" />
-						<p>27</p>
+						<p>{age || 27}</p>
 					</div>
-					<p className="text-lg font-bold">Web Developer</p>
+					<p className="text-lg font-bold">{profession || "Web Developer"}</p>
 
 					<div className="flex items-center sm:justify-start justify-center gap-1 ">
 						<LocationOnIcon />
-						<p className="text-sm font-light">Nigeria</p>
+						<p className="text-sm font-light">{residence || "Nigeria"}</p>
 					</div>
 				</div>
 			</div>
