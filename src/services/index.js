@@ -81,10 +81,14 @@ export const userRegistration = async (payload, accessToken) => {
 	}
 };
 
-export const updateUserProfile = async (payload, id) => {
+export const updateUserProfile = async (payload, id, accessToken) => {
 	try {
-		const response = await apiService.put(`/parent/child/${id}`, payload);
-		return response;
+		const response = await apiService.put(`/parent/child/${id}`, payload, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+		return response.data;
 	} catch (error) {
 		throw error;
 	}
