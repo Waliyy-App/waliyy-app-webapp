@@ -14,7 +14,6 @@ import { useAuthContext } from "../context/AuthContext";
 const Login = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
 	const { storeAuthCookie } = useAuthContext();
 	const navigate = useNavigate();
 
@@ -34,7 +33,6 @@ const Login = () => {
 
 	const handleLogin = async (values) => {
 		setLoading(true);
-		setError(null);
 		try {
 			const data = await login({
 				email: values.emailAddress,
@@ -44,10 +42,9 @@ const Login = () => {
 			if (data) {
 				storeAuthCookie(data);
 			}
-			console.log(data);
+			// console.log(data);
 			navigate("/login-successful");
 		} catch (error) {
-			setError(error.response.data.message);
 			toast.error(error.response.data.message);
 		} finally {
 			setLoading(false);
@@ -68,13 +65,6 @@ const Login = () => {
 							Embark on a journey of love, faith, and connection...
 						</p>
 					</div>
-
-					{error && (
-						<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md my-4">
-							{error}
-						</div>
-					)}
-
 					<Formik
 						initialValues={initialValues}
 						validationSchema={validationSchema}

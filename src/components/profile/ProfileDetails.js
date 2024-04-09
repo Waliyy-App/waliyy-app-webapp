@@ -18,7 +18,8 @@ const ProfileDetails = () => {
 	const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
 	const [child, setChild] = useState({});
 
-	const { childId, token } = useAuthContext();
+	const { token } = useAuthContext();
+	const childId = localStorage.getItem("childId");
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);

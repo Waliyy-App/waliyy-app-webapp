@@ -70,13 +70,11 @@ export default function ProfileSetupForm() {
 		activeStep: "personalDetails",
 		completed: false,
 		loading: false,
-		error: null,
 	});
-	const { token } = useAuthContext();
-
+	const { token, handleChildId } = useAuthContext();
 
 	const handleSubmit = async (values) => {
-		setState((prevState) => ({ ...prevState, loading: true, error: null }));
+		setState((prevState) => ({ ...prevState, loading: true }));
 
 		const date = new Date(values.dateOfBirth);
 		const getYear = date.getFullYear();
@@ -87,7 +85,7 @@ export default function ProfileSetupForm() {
 			: values.speakers.split(",").map((item) => item.trim());
 
 		try {
-			await userRegistration(
+			const res = await userRegistration(
 				{
 					firstName: values.firstName,
 					lastName: values.lastName,
@@ -128,13 +126,13 @@ export default function ProfileSetupForm() {
 				},
 				token
 			);
+			console.log(res);
+			handleChildId(res?.data);
+			toast.success(res?.message);
 			setState((prevState) => ({ ...prevState, completed: true }));
 		} catch (error) {
-			setState((prevState) => ({
-				...prevState,
-				error: error.response.data.message,
-			}));
-			toast.error(error.response.data.message);
+			console.log(error);
+			toast.error(error?.response?.data?.message);
 		} finally {
 			setState((prevState) => ({ ...prevState, loading: false }));
 		}

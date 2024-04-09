@@ -21,7 +21,8 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 	const [children, setChildren] = useState([]);
 	const location = useLocation();
 	const navigate = useNavigate();
-	const { token, logOut, childId, handleChildId } = useAuthContext();
+	const { token, logOut, handleChildId } = useAuthContext();
+	const childId = localStorage.getItem("childId");
 
 	useEffect(() => {
 		const fetchChildren = async () => {

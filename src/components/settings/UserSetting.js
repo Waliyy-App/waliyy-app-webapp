@@ -15,26 +15,24 @@ import {
 import { updateUserProfile } from "../../services";
 import { useAuthContext } from "../../context/AuthContext";
 
-const UserSetting = ({ value }) => {
+const UserSetting = ({ value, child }) => {
 	const [speakers, setSpeakers] = useState([]);
 	const { childId, token } = useAuthContext();
 	const initialValues = {
-		weight: 70,
-		maritalStatus: "SINGLE",
-		educationLevel: "masters",
-		profession: "Web Developer",
-		employmentStatus: "employed",
-		professionalPlans: "",
-		isWillingToRelocate: "yes",
-		relocationPlans: "United Kingdom",
-		belongsToIslamicOrganization: false,
-		islamicOrganizationName: "",
-		speakersListenedTo: ["Nouman Ali Khan", "Yasir Qadhi"],
-		about:
-			"I am a passionate and hard-working individual with a strong interest in technology. I am always looking for ways to learn and grow",
-		aboutEducationAndJob:
-			"I am currently pursuing a degree in Computer Science and working as a Software Developer. I am passionate about using technology to solve real-world problems",
-		aboutDressing: "I dress modestly and respectfully",
+		weight: child?.weight,
+		maritalStatus: child?.maritalStatus,
+		educationLevel: child?.educationLevel,
+		profession: child?.profession,
+		employmentStatus: child?.employmentStatus,
+		professionalPlans: child?.professionalPlans,
+		isWillingToRelocate: child?.isWillingToRelocate,
+		relocationPlans: child?.relocationPlans,
+		belongsToIslamicOrganization: child?.belongsToIslamicOrganization,
+		islamicOrganizationName: child?.islamicOrganizationName,
+		speakersListenedTo: child?.speakersListenedTo,
+		about: child?.about,
+		aboutEducationAndJob: child?.aboutEducationAndJob,
+		aboutDressing: child?.aboutDressing,
 	};
 
 	return (

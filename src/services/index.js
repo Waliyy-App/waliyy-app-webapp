@@ -62,7 +62,7 @@ export const logoutFunc = async (accessToken) => {
 				Authorization: `Bearer ${accessToken}`,
 			},
 		});
-		return response.data.user;
+		return response.data;
 	} catch (error) {
 		throw error;
 	}
@@ -75,7 +75,7 @@ export const userRegistration = async (payload, accessToken) => {
 				Authorization: `Bearer ${accessToken}`,
 			},
 		});
-		return response.data.user;
+		return response.data;
 	} catch (error) {
 		throw error;
 	}
