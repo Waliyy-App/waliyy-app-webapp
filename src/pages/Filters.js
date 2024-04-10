@@ -14,13 +14,13 @@ import {
 	salatOptions,
 } from "../data/formValues";
 import { MultiSelect } from "react-multi-select-component";
-import { filterSuitors, getChild, updateFilter } from "../services";
+import { filterSuitors, getChildPreferences, updateFilter } from "../services";
 import { useAuthContext } from "../context/AuthContext";
 
 export const Filters = () => {
 	const [selectedGenotype, setSelectedGenotype] = useState([]);
 	const [selectedMaritalStatus, setSelectedMaritalStatus] = useState([]);
-	const [child, setChild] = useState([]);
+	const [childPref, setChildPref] = useState([]);
 	const [selectedLevelOfEdu, setSelectedLevelOfEdu] = useState([]);
 	const [selectedEmployment, setSelectedEmployment] = useState([]);
 	const [selectedCountries, setSelectedCountries] = useState([]);
@@ -28,12 +28,17 @@ export const Filters = () => {
 	const [selectedSalat, setSelectedSalat] = useState([]);
 	const [selectedSect, setSelectedSect] = useState([]);
 	const [selectedRelocationOpt, setSelectedRelocationOpt] = useState([]);
-	const { childId, token, data } = useAuthContext();
+	const { token } = useAuthContext();
+	const childId = localStorage.getItem("childId");
 
 	useEffect(() => {
 		const getCurrentChild = async () => {
-			const currentChild = await getChild(childId, token);
-			console.log(currentChild);
+			try {
+				const currentChild = await getChildPreferences(token, childId);
+				setChildPref(currentChild?.data);
+			} catch (error) {
+				toast.error(error.response.data.message);
+			}
 		};
 
 		getCurrentChild();
@@ -88,7 +93,7 @@ export const Filters = () => {
 			maritalStatus: selectedMaritalStatus.map((item) => item.value),
 		};
 		try {
-			const res = data?.isChildPreferenceAdded
+			const res = Boolean(childPref)
 				? await updateFilter(newValues, token, childId)
 				: await filterSuitors(newValues, token, childId);
 			console.log(res);

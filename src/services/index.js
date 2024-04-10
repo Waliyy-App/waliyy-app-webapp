@@ -157,6 +157,19 @@ export const updateFilter = async (payload, accessToken, id) => {
 		throw error;
 	}
 };
+export const getChildPreferences = async (accessToken, id) => {
+	try {
+		const response = await apiService.get(`parent/child/preference/${id}`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
 
 export const getChildren = async (accessToken) => {
 	try {
@@ -183,6 +196,21 @@ export const getChild = async (id, accessToken) => {
 		throw error;
 	}
 };
+export const getRecommedations = async (id, accessToken, page) => {
+	try {
+		const response = await apiService.get(
+			`/parent/child/${id}/recommendations?pae=${page}`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
 
 export const getPlans = async () => {
 	try {
@@ -193,11 +221,28 @@ export const getPlans = async () => {
 	}
 };
 
-export const makePayment = async (payload, accessToken) => {
+export const makePayment = async (payload, accessToken, id) => {
 	try {
-		const response = await apiService.post("/payment/make-payment", payload, {
+		const response = await apiService.post(
+			`/payment/make-payment/${id}`,
+			payload,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const getPaymentHistory = async (token) => {
+	try {
+		const response = await apiService.get("/payment/payments", {
 			headers: {
-				Authorization: `Bearer ${accessToken}`,
+				Authorization: `Bearer ${token}`,
 			},
 		});
 		return response.data;
