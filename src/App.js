@@ -1,70 +1,80 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
 
-import LikePage from "./pages/LikePage";
-import MatchPage from "./pages/MatchPage";
-import SettingsPage from "./pages/SettingsPage";
-import PricingPage from "./pages/PricingPage";
-import { Filters } from "./pages/Filters";
-import ProfileDetails from "./components/profile/ProfileDetails";
-import SuitorProfile from "./components/profile/SuitorProfile";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import ForgotPassword from "./pages/ForgotPassword";
-import ProfileSetupForm from "./pages/ProfileSetupForm";
-import LandingPage from "./pages/LandingPage";
-import AboutLandingPage from "./pages/AboutLandingPage";
-import ProtectedRoute from "./route/ProtectedRoute";
-import UnProtectedRoute from "./route/UnProtectedRoute";
-import ResetPassword from "./pages/ResetPassword";
-import SplashScreen from "./screens/SplashScreen";
+import LikePage from './pages/LikePage';
+import MatchPage from './pages/MatchPage';
+import SettingsPage from './pages/SettingsPage';
+import PricingPage from './pages/PricingPage';
+import { Filters } from './pages/Filters';
+import ProfileDetails from './components/profile/ProfileDetails';
+import SuitorProfile from './components/profile/SuitorProfile';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ForgotPassword from './pages/ForgotPassword';
+import ProfileSetupForm from './pages/ProfileSetupForm';
+import LandingPage from './pages/LandingPage';
+import AboutLandingPage from './pages/AboutLandingPage';
+import ProtectedRoute from './route/ProtectedRoute';
+import UnProtectedRoute from './route/UnProtectedRoute';
+import ResetPassword from './pages/ResetPassword';
+import SplashScreen from './screens/SplashScreen';
+import { useResetScrollPosition } from './utils.js';
+
+
+export const AppLayout = ({ children }) => {
+  useResetScrollPosition();
+
+  return <div>{children}</div>;
+};
 
 function App() {
-	const theme = createTheme({
-		typography: {
-			fontFamily: "Nunito, san-serif",
-		},
-		palette: {
-			secondary: {
-				main: "#BA9FFE",
-			},
-		},
-	});
+  const theme = createTheme({
+    typography: {
+      fontFamily: 'Nunito, san-serif',
+    },
+    palette: {
+      secondary: {
+        main: '#BA9FFE',
+      },
+    },
+  });
 
-	return (
-		<ThemeProvider theme={theme}>
-			<ToastContainer />
-			<Routes>
-				<Route exact path="/" element={<LandingPage />} />
-				<Route exact path="/about" element={<AboutLandingPage />} />
+  return (
+    <ThemeProvider theme={theme}>
+      <ToastContainer />
+      <AppLayout>
+        <Routes>
+          <Route exact path="/" element={<LandingPage />} />
+          <Route exact path="/about" element={<AboutLandingPage />} />
 
-				<Route element={<UnProtectedRoute />}>
-					<Route exact path="/sign-up" element={<Register />} />
-					<Route exact path="/login" element={<Login />} />
-					<Route exact path="/forgot-password" element={<ForgotPassword />} />
-					<Route exact path="/reset-password" element={<ResetPassword />} />
-				</Route>
+          <Route element={<UnProtectedRoute />}>
+            <Route exact path="/sign-up" element={<Register />} />
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/forgot-password" element={<ForgotPassword />} />
+            <Route exact path="/reset-password" element={<ResetPassword />} />
+          </Route>
 
-				<Route element={<ProtectedRoute />}>
-					<Route exact path="/dashboard" element={<Dashboard />} />
-					<Route exact path="/likes" element={<LikePage />} />
-					<Route exact path="/match" element={<MatchPage />} />
-					<Route exact path="/settings" element={<SettingsPage />} />
-					<Route exact path="/pricing" element={<PricingPage />} />
-					<Route exact path="/get-started" element={<ProfileSetupForm />} />
-					<Route exact path="/filter" element={<Filters />} />
-					<Route exact path="/profile/:id" element={<ProfileDetails />} />
-					<Route exact path="/recommended/:id" element={<SuitorProfile />} />
-					<Route exact path="/login-successful" element={<SplashScreen />} />
-				</Route>
-			</Routes>
-		</ThemeProvider>
-	);
+          <Route element={<ProtectedRoute />}>
+            <Route exact path="/dashboard" element={<Dashboard />} />
+            <Route exact path="/likes" element={<LikePage />} />
+            <Route exact path="/match" element={<MatchPage />} />
+            <Route exact path="/settings" element={<SettingsPage />} />
+            <Route exact path="/pricing" element={<PricingPage />} />
+            <Route exact path="/get-started" element={<ProfileSetupForm />} />
+            <Route exact path="/filter" element={<Filters />} />
+            <Route exact path="/profile/:id" element={<ProfileDetails />} />
+            <Route exact path="/recommended/:id" element={<SuitorProfile />} />
+            <Route exact path="/login-successful" element={<SplashScreen />} />
+          </Route>
+        </Routes>
+      </AppLayout>
+    </ThemeProvider>
+  );
 }
 
 export default App;
