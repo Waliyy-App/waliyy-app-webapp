@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import SidebarComponent from "../components/sidebar/Sidebar";
 import { FiCheck } from "react-icons/fi";
@@ -13,8 +14,9 @@ const PricingPage = () => {
 	const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
 	const [loading, setLoading] = useState(false);
 	const [plans, setPlans] = useState([]);
+	// const [paymentData, setPaymentData] = useState({});
 	const { token } = useAuthContext();
-	const childId = localStorage.getItem("childId");
+	const navigate = useNavigate();
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
@@ -37,7 +39,8 @@ const PricingPage = () => {
 		handlePlans();
 	}, []);
 
-	const handlePayment = async (price) => {
+	const handlePayment = async (price, planId) => {
+		console.log(planId);
 		setLoading(true);
 		try {
 			const res = await makePayment(
@@ -45,9 +48,11 @@ const PricingPage = () => {
 					amount: price,
 				},
 				token,
-				childId
+				planId
 			);
 			console.log(res);
+			// setPaymentData(res?.data?.data);
+			navigate(res?.data?.data?.authorization_url);
 		} catch (error) {
 			toast.error(error.response.data.message);
 		} finally {
@@ -139,7 +144,7 @@ const PricingPage = () => {
 
 									<button
 										className="w-full text-white font-semibold hover:bg-[#a37eff] bg-[#BA9FFE] h-12 rounded-lg transition-all duration-300"
-										onClick={() => handlePayment(plan.amount)}
+										onClick={() => handlePayment(plan?.amount, plan?._id)}
 									>
 										Get started
 									</button>

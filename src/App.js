@@ -13,6 +13,7 @@ import SettingsPage from "./pages/SettingsPage";
 import PricingPage from "./pages/PricingPage";
 import { Filters } from "./pages/Filters";
 import ProfileDetails from "./components/profile/ProfileDetails";
+import SuitorProfile from "./components/profile/SuitorProfile";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ForgotPassword from "./pages/ForgotPassword";
 import ProfileSetupForm from "./pages/ProfileSetupForm";
@@ -58,6 +59,7 @@ function App() {
 					<Route exact path="/get-started" element={<ProfileSetupForm />} />
 					<Route exact path="/filter" element={<Filters />} />
 					<Route exact path="/profile/:id" element={<ProfileDetails />} />
+					<Route exact path="/recommended/:id" element={<SuitorProfile />} />
 					<Route exact path="/login-successful" element={<SplashScreen />} />
 				</Route>
 			</Routes>

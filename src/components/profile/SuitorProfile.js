@@ -11,7 +11,7 @@ import DeenProfile from "./DeenProfile";
 import { usePersistedState, a11yProps } from "../../utils.js";
 import MobileNav from "../sidebar/MobileBottomNav.js";
 import MobileTopNav from "../sidebar/MobileTopNav.js";
-import { getChild } from "../../services";
+import { getRecommedations } from "../../services";
 import { useAuthContext } from "../../context/AuthContext";
 
 const ProfileDetails = () => {
@@ -19,6 +19,7 @@ const ProfileDetails = () => {
 	const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
 	const [child, setChild] = useState({});
 	const { id } = useParams();
+	const childId = localStorage.getItem("childId");
 
 	const { token } = useAuthContext();
 
@@ -33,15 +34,20 @@ const ProfileDetails = () => {
 	useEffect(() => {
 		async function getChildDetails() {
 			try {
-				const res = await getChild(id, token);
-				setChild(res?.data);
+				const res = await getRecommedations(childId, token, 1);
+				const currentChild = res?.data?.filter(
+					(child) => child?.id === id
+				)?.[0];
+				setChild(currentChild);
 			} catch (err) {
 				throw err;
 			}
 		}
 
 		getChildDetails();
-	}, [id, token]);
+	}, [childId, token, id]);
+
+	console.log(child);
 
 	return (
 		<div className="flex flex-col sm:flex-row">

@@ -30,8 +30,6 @@ const Dashboard = () => {
 		getSuitors();
 	}, [token, childId]);
 
-	console.log(recommedations);
-
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
 	};
@@ -51,8 +49,21 @@ const Dashboard = () => {
 					</Link>
 				</div>
 
-				<div className="flex flex-wrap gap-6">
-					<ProfileCard id={1} />
+				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+					{recommedations?.map((items) => (
+						<ProfileCard
+							key={items.id}
+							id={items.id}
+							firstName={items.firstName}
+							state={items.state}
+							residence={items.countryofResidence}
+							about={items.about}
+							height={items.height}
+							maritalStatus={items.maritalStatus}
+							profession={items.profession}
+							gender={items.gender}
+						/>
+					))}
 				</div>
 			</main>
 			<MobileNav />
