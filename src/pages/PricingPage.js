@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import SidebarComponent from "../components/sidebar/Sidebar";
 import { FiCheck } from "react-icons/fi";
@@ -16,7 +15,6 @@ const PricingPage = () => {
 	const [plans, setPlans] = useState([]);
 	// const [paymentData, setPaymentData] = useState({});
 	const { token } = useAuthContext();
-	const navigate = useNavigate();
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
@@ -52,7 +50,7 @@ const PricingPage = () => {
 			);
 			console.log(res);
 			// setPaymentData(res?.data?.data);
-			navigate(res?.data?.data?.authorization_url);
+			window.location.href = res?.data?.data?.authorization_url;
 		} catch (error) {
 			toast.error(error.response.data.message);
 		} finally {
