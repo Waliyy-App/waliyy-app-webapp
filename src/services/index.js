@@ -62,7 +62,7 @@ export const logoutFunc = async (accessToken) => {
 				Authorization: `Bearer ${accessToken}`,
 			},
 		});
-		return response.data.user;
+		return response.data;
 	} catch (error) {
 		throw error;
 	}
@@ -75,22 +75,41 @@ export const userRegistration = async (payload, accessToken) => {
 				Authorization: `Bearer ${accessToken}`,
 			},
 		});
-		return response.data.user;
+		return response.data;
 	} catch (error) {
 		throw error;
 	}
 };
 
-export const updateUserProfile = async (payload, id) => {
+export const updateUserProfile = async (payload, id, accessToken) => {
 	try {
-		const response = await apiService.put(`/parent/child/${id}`, payload);
-		return response;
+		const response = await apiService.put(`/parent/child/${id}`, payload, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+		return response.data;
 	} catch (error) {
 		throw error;
 	}
 };
 
-export const likeProfile = async (payload, id, accessToken) => {
+export const getLikes = async (id, accessToken) => {
+	try {
+		const response = await apiService.get(
+			`/match/like/child/${id}/?type=given`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+export const likeProfile = async (id, payload, accessToken) => {
 	try {
 		const response = await apiService.post(`/match/like/child/${id}`, payload, {
 			headers: {
@@ -102,9 +121,9 @@ export const likeProfile = async (payload, id, accessToken) => {
 		throw error;
 	}
 };
-export const unlikeProfile = async (payload, id, accessToken) => {
+export const unlikeProfile = async (id, payload, accessToken) => {
 	try {
-		const response = await apiService.post(
+		const response = await apiService.put(
 			`/match/unlike/child/${id}`,
 			payload,
 			{
@@ -153,6 +172,19 @@ export const updateFilter = async (payload, accessToken, id) => {
 		throw error;
 	}
 };
+export const getChildPreferences = async (accessToken, id) => {
+	try {
+		const response = await apiService.get(`parent/child/preference/${id}`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
 
 export const getChildren = async (accessToken) => {
 	try {
@@ -179,6 +211,21 @@ export const getChild = async (id, accessToken) => {
 		throw error;
 	}
 };
+export const getRecommedations = async (id, accessToken, page) => {
+	try {
+		const response = await apiService.get(
+			`/parent/child/${id}/recommendations?pae=${page}`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
 
 export const getPlans = async () => {
 	try {
@@ -189,11 +236,28 @@ export const getPlans = async () => {
 	}
 };
 
-export const makePayment = async (payload, accessToken) => {
+export const makePayment = async (payload, accessToken, id) => {
 	try {
-		const response = await apiService.post("/payment/make-payment", payload, {
+		const response = await apiService.post(
+			`/payment/make-payment/${id}`,
+			payload,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const getPaymentHistory = async (token) => {
+	try {
+		const response = await apiService.get("/payment/payments", {
 			headers: {
-				Authorization: `Bearer ${accessToken}`,
+				Authorization: `Bearer ${token}`,
 			},
 		});
 		return response.data;

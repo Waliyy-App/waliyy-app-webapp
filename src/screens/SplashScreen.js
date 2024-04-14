@@ -11,9 +11,9 @@ const SplashScreen = () => {
 
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
-			if (data.children.length > 1) setSelectUserProfile(true);
-			else if (data.children.length === 1) {
-				handleChildId(data.children[0].id);
+			if (data?.children?.length > 1) setSelectUserProfile(true);
+			else if (data?.children?.length === 1) {
+				handleChildId(data?.children?.[0]?.id);
 				navigate("/dashboard");
 			} else navigate("/get-started");
 		}, 5000);

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { BsFillDiamondFill } from "react-icons/bs";
 import ThumbUpIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownIcon from "@mui/icons-material/ThumbDownAlt";
@@ -7,14 +8,53 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 import MaleIcon from "../../assets/illustrations/male-illus.svg";
 import FemaleIcon from "../../assets/illustrations/female-illus.svg";
-// import { likeProfile, unlikeProfile } from "../../services";
+import { likeProfile, unlikeProfile } from "../../services";
 import { useAuthContext } from "../../context/AuthContext";
 
 const ProfileHeader = ({ firstName, age, profession, residence, gender }) => {
-	const { childId } = useAuthContext();
-	// no id in the url yet
+	const [isDisabled, setIsDisabled] = useState(false);
+	const { token } = useAuthContext();
+	const childId = localStorage.getItem("childId");
 	const { id } = useParams();
-	const isCurrentUser = childId === id;
+	const isChild = Boolean(childId === id);
+
+	const handleLike = async () => {
+		setIsDisabled(true);
+		try {
+			const res = await likeProfile(
+				childId,
+				{
+					profile: id,
+				},
+				token
+			);
+			toast.success(res?.data?.message);
+			setIsDisabled(false);
+		} catch (error) {
+			toast.error(error.response.data.message);
+		} finally {
+			setIsDisabled(false);
+		}
+	};
+
+	const handleUnlike = async () => {
+		setIsDisabled(true);
+		try {
+			const res = await unlikeProfile(
+				childId,
+				{
+					profile: id,
+				},
+				token
+			);
+			toast.success(res?.data?.message);
+			setIsDisabled(false);
+		} catch (error) {
+			toast.error(error.response.data.message);
+		} finally {
+			setIsDisabled(false);
+		}
+	};
 
 	return (
 		<div className="flex flex-col sm:flex-row items-center sm:items-end justify-between py-8 gap-10">
@@ -42,12 +82,20 @@ const ProfileHeader = ({ firstName, age, profession, residence, gender }) => {
 				</div>
 			</div>
 
-			{!isCurrentUser && (
+			{!isChild && (
 				<div className="flex items-center gap-3 self-center sm:self-end">
-					<button className="hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300">
+					<button
+						onClick={handleLike}
+						disabled={isDisabled}
+						className="hover:bg-[#a37eff] disabled:bg-[#9A8AAC] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
+					>
 						<ThumbUpIcon /> Interested
 					</button>
-					<button className="hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300">
+					<button
+						onClick={handleUnlike}
+						disabled={isDisabled}
+						className="hover:bg-[#a37eff] disabled:bg-[#9A8AAC] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
+					>
 						<ThumbDownIcon /> Uninterested
 					</button>
 				</div>

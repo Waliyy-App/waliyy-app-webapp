@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { Formik, Form } from "formik";
@@ -14,13 +14,13 @@ import {
 	salatOptions,
 } from "../data/formValues";
 import { MultiSelect } from "react-multi-select-component";
-import { filterSuitors, updateFilter } from "../services";
+import { filterSuitors, getChildPreferences, updateFilter } from "../services";
 import { useAuthContext } from "../context/AuthContext";
 
 export const Filters = () => {
 	const [selectedGenotype, setSelectedGenotype] = useState([]);
 	const [selectedMaritalStatus, setSelectedMaritalStatus] = useState([]);
-	// const [selectedChildren, setSelectedChildren] = useState([]);
+	const [childPref, setChildPref] = useState([]);
 	const [selectedLevelOfEdu, setSelectedLevelOfEdu] = useState([]);
 	const [selectedEmployment, setSelectedEmployment] = useState([]);
 	const [selectedCountries, setSelectedCountries] = useState([]);
@@ -28,7 +28,21 @@ export const Filters = () => {
 	const [selectedSalat, setSelectedSalat] = useState([]);
 	const [selectedSect, setSelectedSect] = useState([]);
 	const [selectedRelocationOpt, setSelectedRelocationOpt] = useState([]);
-	const { childId, token, data } = useAuthContext();
+	const { token } = useAuthContext();
+	const childId = localStorage.getItem("childId");
+
+	useEffect(() => {
+		const getCurrentChild = async () => {
+			try {
+				const currentChild = await getChildPreferences(token, childId);
+				setChildPref(currentChild?.data);
+			} catch (error) {
+				toast.error(error.response.data.message);
+			}
+		};
+
+		getCurrentChild();
+	}, [childId, token]);
 
 	const initialValues = {
 		minAge: "",
@@ -48,17 +62,10 @@ export const Filters = () => {
 		patternOfSalat: [],
 		sect: [],
 		isRevert: false,
-		// shia: false,
-		// sunni: false,
 		isSmoker: false,
 		isDrinker: false,
 		hasAddictions: false,
 	};
-
-	// const childrenOption = [
-	// 	{ label: "Yes", value: "true" },
-	// 	{ label: "No", value: "false" },
-	// ];
 
 	const relocationOptions = [
 		{ label: "Yes", value: "true" },
@@ -83,11 +90,10 @@ export const Filters = () => {
 			patternOfSalat: selectedSalat.map((item) => item.value),
 			sect: selectedSect.map((item) => item.value),
 			willingnessToRelocate: selectedRelocationOpt.map((item) => item.value)[0],
-			// haveChildren: selectedChildren.map((item) => item.value)[0],
 			maritalStatus: selectedMaritalStatus.map((item) => item.value),
 		};
 		try {
-			const res = data?.isChildPreferenceAdded
+			const res = Boolean(childPref)
 				? await updateFilter(newValues, token, childId)
 				: await filterSuitors(newValues, token, childId);
 			console.log(res);

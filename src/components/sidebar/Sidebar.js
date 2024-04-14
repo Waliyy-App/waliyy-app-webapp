@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Logo from "../../assets/logo/logo-nobg-cropped.png";
 import LogoIcon from "../../assets/logo/logo-icon.png";
 import { ReactComponent as FemaleIcon } from "../../assets/illustrations/female-illus.svg";
+import { toast } from "react-toastify";
 // import MaleIcon from '../../assets/illustrations/male-illus.svg'; for if gender === 'MALE
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import ThumbUpIcon from "@mui/icons-material/ThumbUpAlt";
@@ -21,7 +22,8 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 	const [children, setChildren] = useState([]);
 	const location = useLocation();
 	const navigate = useNavigate();
-	const { token, logOut, childId, handleChildId } = useAuthContext();
+	const { token, logOut, handleChildId } = useAuthContext();
+	const childId = localStorage.getItem("childId");
 
 	useEffect(() => {
 		const fetchChildren = async () => {
@@ -47,9 +49,12 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 			const res = await logoutFunc(token);
 			logOut();
 			navigate("/");
-			console.log(res);
+			toast.success(res.message);
 		} catch (error) {
 			console.log(error);
+			toast.error(error.response.data.message);
+			logOut();
+			navigate("/login");
 		}
 	};
 

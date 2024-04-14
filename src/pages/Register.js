@@ -93,7 +93,7 @@ const Register = () => {
 			{loading ? (
 				<Loader />
 			) : !onSignUp ? (
-				<div className="w-100 bg-white ">
+				<div className="w-100 bg-white">
 					<div className="w-[360px] sm:w-[400px] px-5 sm:px-0 mx-auto py-24">
 						<div className="flex flex-col items-center jutify-center mb-20">
 							<p className="text-2xl text-[#2D133A] font-medium mb-2">
