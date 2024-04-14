@@ -3,11 +3,13 @@ import { Formik, Form } from 'formik';
 import { TextInput } from '../../../common/form';
 
 const ChangeAccountDetails = () => {
+  const user = localStorage.getItem('user');
+  const userObject = JSON.parse(user);
+  console.log(userObject);
+
   const initialValues = {
-    name: 'Oladunni Odetunde',
-    emailAddress: 'dunniraufah@gmail.com',
-    altEmailAddress: 'delzeen@ymail.com',
-    phoneNumber: '08108202722',
+    altEmailAddress: '',
+    phoneNumber: userObject.phone,
   };
 
   return (
@@ -28,12 +30,13 @@ const ChangeAccountDetails = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row justify-between gap-12">
-          <TextInput label="Full Name" name="name" type="text" readOnly />
+          <TextInput label="Full Name" name="name" type="text" value={userObject.fullName} readOnly />
 
           <TextInput
             label="Email Address"
             name="emailAddress"
             type="email"
+            value={userObject.email}
             readOnly
           />
         </div>
