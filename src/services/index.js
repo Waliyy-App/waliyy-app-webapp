@@ -290,3 +290,15 @@ export const getSubHistory = async (token) => {
 		throw error;
 	}
 };
+export const deleteAccount = async (token) => {
+	try {
+		const response = await apiService.put("/account/delete", {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
