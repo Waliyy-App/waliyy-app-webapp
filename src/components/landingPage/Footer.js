@@ -22,14 +22,14 @@ const Footer = () => {
         About
       </NavLink>
       <Link
-        to="/"
+        to="/login"
         className="flex items-center justify-center w-[120px] rounded-3xl h-12 border border-[#BA9FFE] hover:bg-[#BA9FFE] text-white font-medium box-shadow-style transition-all duration-300"
       >
         Sign In
       </Link>
 
       <Link
-        to="/"
+        to="/sign-up"
         className="flex items-center justify-center w-[120px] rounded-3xl h-12 bg-[#BA9FFE] text-white hover:bg-[#a37eff] font-medium box-shadow-style transition-all duration-300"
       >
         Sign Up
