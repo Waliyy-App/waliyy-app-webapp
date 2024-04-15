@@ -18,9 +18,10 @@ import { capitalize } from '../../utils.js';
 
 const UserSetting = ({ value, child }) => {
   const [speakers, setSpeakers] = useState([]);
-  const { childId, token } = useAuthContext();
+  const { token } = useAuthContext();
+  const childId = localStorage.getItem('childId');
+
   const initialValues = {
-    height: child?.height,
     weight: child?.weight,
     maritalStatus: child?.maritalStatus,
     countryofResidence: child?.countryofResidence,
@@ -111,7 +112,13 @@ const UserSetting = ({ value, child }) => {
                 ))}
               </SelectInput>
 
-              <TextInput label="Height (m)" name="height" type="number" />
+              <TextInput
+                label="Height (m)"
+                name="height"
+                type="number"
+                readOnly
+                value={child.height}
+              />
 
               <TextInput label="Weight (kg)" name="weight" type="number" />
             </div>
@@ -190,7 +197,6 @@ const UserSetting = ({ value, child }) => {
                 label="State / County of Residence"
                 name="lga"
                 type="text"
-                readOnly
               />
 
               <SelectInput

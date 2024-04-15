@@ -24,7 +24,7 @@ export const Filters = () => {
   const [selectedLevelOfEdu, setSelectedLevelOfEdu] = useState([]);
   const [selectedEmployment, setSelectedEmployment] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([]);
-  const [selectedNationality, setSelectedNationality] = useState([]);
+  const [selectedCitizenship, setSelectedCitizenship] = useState([]);
   const [selectedSalat, setSelectedSalat] = useState([]);
   const [selectedSect, setSelectedSect] = useState([]);
   const [selectedRelocationOpt, setSelectedRelocationOpt] = useState([]);
@@ -56,8 +56,8 @@ export const Filters = () => {
     maxNumberOfChildren: '',
     levelOfEducation: [],
     employmentStatus: [],
-    countryOfResidence: '',
-    nationality: '',
+    countryOfResidence: [],
+    citizenship: [],
     willingnessToRelocate: [],
     patternOfSalat: [],
     sect: [],
@@ -86,7 +86,7 @@ export const Filters = () => {
       countryOfResidence: selectedCountries.map((item) => item.value)[0],
       employmentStatus: selectedEmployment.map((item) => item.value),
       levelOfEducation: selectedLevelOfEdu.map((item) => item.value),
-      nationality: selectedNationality.map((item) => item.value)[0],
+      citizenship: selectedCitizenship.map((item) => item.value)[0],
       patternOfSalat: selectedSalat.map((item) => item.value),
       sect: selectedSect.map((item) => item.value),
       willingnessToRelocate: selectedRelocationOpt.map((item) => item.value)[0],
@@ -277,9 +277,9 @@ export const Filters = () => {
                     hasSelectAll
                     className="w-auto text-input mt-3 multi-select"
                     options={citizenshipOptions}
-                    value={selectedNationality}
-                    onChange={setSelectedNationality}
-                    labelledBy="citizenship"
+                    value={selectedCitizenship}
+                    onChange={setSelectedCitizenship}
+                    labelledBy="Citizenship"
                   />
                 </div>
 
