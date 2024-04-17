@@ -27,7 +27,6 @@ export const Filters = () => {
   const [selectedCitizenship, setSelectedCitizenship] = useState([]);
   const [selectedSalat, setSelectedSalat] = useState([]);
   const [selectedSect, setSelectedSect] = useState([]);
-  const [selectedRelocationOpt, setSelectedRelocationOpt] = useState([]);
   const { token } = useAuthContext();
   const childId = localStorage.getItem('childId');
 
@@ -53,24 +52,19 @@ export const Filters = () => {
     minWeight: '',
     maxWeight: '',
     maritalStatus: [],
-    maxNumberOfChildren: '',
     levelOfEducation: [],
     employmentStatus: [],
     countryOfResidence: [],
     citizenship: [],
-    willingnessToRelocate: [],
+    willingnessToRelocate: false,
     patternOfSalat: [],
     sect: [],
+    hasChildren: false,
     isRevert: false,
     isSmoker: false,
     isDrinker: false,
     hasAddictions: false,
   };
-
-  const relocationOptions = [
-    { label: 'Yes', value: 'true' },
-    { label: 'No', value: 'false' },
-  ];
 
   const sectOptions = [
     { label: 'Sunni', value: 'SUNNI' },
@@ -83,13 +77,12 @@ export const Filters = () => {
     const newValues = {
       ...values,
       genotypes: selectedGenotype.map((item) => item.value),
-      countryOfResidence: selectedCountries.map((item) => item.value)[0],
+      countryOfResidence: selectedCountries.map((item) => item.value),
       employmentStatus: selectedEmployment.map((item) => item.value),
       levelOfEducation: selectedLevelOfEdu.map((item) => item.value),
-      citizenship: selectedCitizenship.map((item) => item.value)[0],
+      citizenship: selectedCitizenship.map((item) => item.value),
       patternOfSalat: selectedSalat.map((item) => item.value),
       sect: selectedSect.map((item) => item.value),
-      willingnessToRelocate: selectedRelocationOpt.map((item) => item.value)[0],
       maritalStatus: selectedMaritalStatus.map((item) => item.value),
     };
     try {
@@ -174,6 +167,9 @@ export const Filters = () => {
                     />
                   </div>
                 </div>
+              </div>
+
+              <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
                 <div>
                   <label
                     className="text-sm font-medium text-[#2D133A]"
@@ -190,29 +186,6 @@ export const Filters = () => {
                     labelledBy="MaritalStatus"
                   />
                 </div>
-              </div>
-
-              <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
-                {/*<div>
-									<label
-										className="text-sm font-medium text-[#2D133A]"
-										htmlFor="children"
-									>
-										Children
-									</label>
-									<MultiSelect
-										className="w-auto text-input mt-3 multi-select"
-										options={childrenOption}
-										value={selectedChildren}
-										onChange={setSelectedChildren}
-										labelledBy="Children"
-									/>
-	</div>*/}
-                <TextInput
-                  label="Max no of Children"
-                  name="maxNumberOfChildren"
-                  type="number"
-                />
                 <div>
                   <label
                     className="text-sm font-medium text-[#2D133A]"
@@ -283,25 +256,7 @@ export const Filters = () => {
                   />
                 </div>
 
-                <div>
-                  <label
-                    className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="willingnessToRelocate"
-                  >
-                    Willingness to Relocate
-                  </label>
-                  <MultiSelect
-                    className="w-auto text-input mt-3 multi-select"
-                    options={relocationOptions}
-                    value={selectedRelocationOpt}
-                    onChange={setSelectedRelocationOpt}
-                    labelledBy="Relocation"
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4">
-                <div>
+                 <div>
                   <label
                     className="text-sm font-medium text-[#2D133A]"
                     htmlFor="patternOfSalat"
@@ -317,6 +272,10 @@ export const Filters = () => {
                     labelledBy="Salat"
                   />
                 </div>
+              </div>
+
+              <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4">
+               
 
                 <div>
                   <label
@@ -337,6 +296,12 @@ export const Filters = () => {
               </div>
 
               <div className="flex flex-wrap gap-8">
+                <CheckboxInputTwo name="hasChildren">
+                  Has Children
+                </CheckboxInputTwo>
+                <CheckboxInputTwo name="willingnessToRelocate">
+                  Willing to relocate
+                </CheckboxInputTwo>
                 <CheckboxInputTwo name="isRevert">Revert</CheckboxInputTwo>
                 <CheckboxInputTwo name="isSmoker">Smokes</CheckboxInputTwo>
                 <CheckboxInputTwo name="isDrinker">Drinks</CheckboxInputTwo>
