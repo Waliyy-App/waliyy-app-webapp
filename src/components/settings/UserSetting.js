@@ -71,37 +71,41 @@ const UserSetting = ({ value, child }) => {
               <div className="w-full h-[0.5px] bg-[#e4e7ec9c] mt-4 mb-12" />
             </div>
             <div className="flex flex-col sm:flex-row justify-between gap-12">
-              <TextInput
-                label="First Name"
-                name="firstName"
-                type="text"
-                value={child.firstName}
-                readOnly
-              />
-              <TextInput
-                label="Last Name"
-                name="lastName"
-                type="text"
-                value={child.lastName}
-                readOnly
-              />
+              <div className={`flex flex-col w-full gap-4 relative`}>
+                <p className="text-sm font-medium  text-[#2D133A]">
+                  First Name
+                </p>
+                <p className="text-input w-full border-b h-9 border-b-[#CDD1D0]">
+                  {child.firstName}
+                </p>
+              </div>
+
+              <div className={`flex flex-col w-full gap-4 relative`}>
+                <p className="text-sm font-medium  text-[#2D133A]">Last Name</p>
+                <p className="text-input w-full border-b h-9 border-b-[#CDD1D0]">
+                  {child.lastName}
+                </p>
+              </div>
             </div>
+
             <div className="flex flex-col sm:flex-row justify-between gap-12">
-              <TextInput
-                label="Date of Birth"
-                name="dateOfBirth"
-                type="text"
-                value={`${child.monthOfBirth}/${child.yearOfBirth}`}
-                readOnly
-              />
-              <TextInput
-                label="Gender"
-                name="gender"
-                type="text"
-                value={capitalize(child.gender)}
-                readOnly
-              />
+              <div className={`flex flex-col w-full gap-4 relative`}>
+                <p className="text-sm font-medium  text-[#2D133A]">
+                  Date of Birth
+                </p>
+                <p className="text-input w-full border-b h-9 border-b-[#CDD1D0]">
+                  {`${child.monthOfBirth}/${child.yearOfBirth}`}
+                </p>
+              </div>
+
+              <div className={`flex flex-col w-full gap-4 relative`}>
+                <p className="text-sm font-medium  text-[#2D133A]">Gender</p>
+                <p className="text-input w-full border-b h-9 border-b-[#CDD1D0]">
+                  {capitalize(child.gender)}
+                </p>
+              </div>
             </div>
+
             <div className="flex flex-col sm:flex-row justify-between gap-12">
               <SelectInput label="Genotype" name="genotype" readOnly>
                 <option value={child.genotype}>{child.genotype}</option>
@@ -112,13 +116,14 @@ const UserSetting = ({ value, child }) => {
                 ))}
               </SelectInput>
 
-              <TextInput
-                label="Height (m)"
-                name="height"
-                type="number"
-                readOnly
-                value={child.height}
-              />
+              <div className={`flex flex-col w-full gap-4 relative`}>
+                <p className="text-sm font-medium  text-[#2D133A]">
+                  Height (m)
+                </p>
+                <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
+                  {child.height}
+                </p>
+              </div>
 
               <TextInput label="Weight (kg)" name="weight" type="number" />
             </div>
@@ -134,30 +139,33 @@ const UserSetting = ({ value, child }) => {
                 ))}
               </SelectInput>
             </div>
+
             <div className="flex flex-col gap-4">
               <p className="text-[#665e6b] text-lg font-semibold">Do you...</p>
+
               <div className="flex flex-col sm:flex-row justify-between gap-12">
-                <TextInput
-                  label="Smoke?"
-                  name="smoke"
-                  type="text"
-                  value={child.isSmoker === true ? 'Yes' : 'No'}
-                  readOnly
-                />
-                <TextInput
-                  label="Drink?"
-                  name="drink"
-                  type="text"
-                  value={child.isDrinker === true ? 'Yes' : 'No'}
-                  readOnly
-                />
-                <TextInput
-                  label="Have any addiction?"
-                  name="addiction"
-                  type="text"
-                  value={child.hasAddictions === true ? 'Yes' : 'No'}
-                  readOnly
-                />
+                <div className={`flex flex-col w-full gap-4 relative`}>
+                  <p className="text-sm font-medium  text-[#2D133A]">Smoke?</p>
+                  <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
+                    {child.isSmoker === true ? 'Yes' : 'No'}
+                  </p>
+                </div>
+
+                <div className={`flex flex-col w-full gap-4 relative`}>
+                  <p className="text-sm font-medium  text-[#2D133A]">Drink?</p>
+                  <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
+                    {child.isDrinker === true ? 'Yes' : 'No'}
+                  </p>
+                </div>
+
+                <div className={`flex flex-col w-full gap-4 relative`}>
+                  <p className="text-sm font-medium  text-[#2D133A]">
+                    Have any addiction?
+                  </p>
+                  <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
+                    {child.hasAddictions === true ? 'Yes' : 'No'}
+                  </p>
+                </div>
               </div>
             </div>
           </React.Fragment>
@@ -176,20 +184,23 @@ const UserSetting = ({ value, child }) => {
             </div>
 
             <div className="flex flex-col sm:flex-row justify-between gap-12">
-              <TextInput
-                label="Citizenship"
-                name="citizenship"
-                type="text"
-                value={child.citizenship}
-                readOnly
-              />
-              <TextInput
-                label="State of Origin"
-                name="stateOfOrigin"
-                type="text"
-                value={child.state}
-                readOnly
-              />
+              <div className={`flex flex-col w-full gap-4 relative`}>
+                <p className="text-sm font-medium  text-[#2D133A]">
+                  Citizenship
+                </p>
+                <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
+                  {child.citizenship}
+                </p>
+              </div>
+
+              <div className={`flex flex-col w-full gap-4 relative`}>
+                <p className="text-sm font-medium  text-[#2D133A]">
+                  State of Origin
+                </p>
+                <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
+                  {child.state}
+                </p>
+              </div>
             </div>
 
             <div className="flex flex-col sm:flex-row justify-between gap-12">
