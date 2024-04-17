@@ -236,6 +236,19 @@ export const getPlans = async () => {
 	}
 };
 
+export const getCurrentPlan = async (token) => {
+	try {
+		const response = await apiService.get("/subscriptions/active", {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+
 export const makePayment = async (payload, accessToken, id) => {
 	try {
 		const response = await apiService.post(
@@ -256,6 +269,30 @@ export const makePayment = async (payload, accessToken, id) => {
 export const getPaymentHistory = async (token) => {
 	try {
 		const response = await apiService.get("/payment/payments", {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+export const getSubHistory = async (token) => {
+	try {
+		const response = await apiService.get("/subscriptions", {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+export const deleteAccount = async (token) => {
+	try {
+		const response = await apiService.put("/account/delete", {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
