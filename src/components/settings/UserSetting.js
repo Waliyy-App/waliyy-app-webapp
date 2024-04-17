@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik, Form } from 'formik';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
 import { toast } from 'react-toastify';
 import CustomTabPanel from '../../common/CustomTabPanel';
 import { TextInput, SelectInput, TextArea } from '../../common/form';
@@ -11,13 +9,13 @@ import {
   educationOptions,
   employmentStatusOptions,
   maritalStatusOption,
+  salatOptions,
 } from '../../data/formValues';
 import { updateUserProfile } from '../../services';
 import { useAuthContext } from '../../context/AuthContext';
 import { capitalize } from '../../utils.js';
 
 const UserSetting = ({ value, child }) => {
-  const [speakers, setSpeakers] = useState([]);
   const { token } = useAuthContext();
   const childId = localStorage.getItem('childId');
 
@@ -26,7 +24,11 @@ const UserSetting = ({ value, child }) => {
     maritalStatus: child?.maritalStatus,
     countryofResidence: child?.countryofResidence,
     educationLevel: child?.educationLevel,
-    lga: child.lga,
+
+    lga: child?.lga,
+    descriptionOfIslamicPractice: child?.descriptionOfIslamicPractice,
+    salatPattern: child?.salatPattern,
+
     profession: child?.profession,
     employmentStatus: child?.employmentStatus,
     professionalPlans: child?.professionalPlans,
@@ -47,7 +49,6 @@ const UserSetting = ({ value, child }) => {
         onSubmit={async (values) => {
           const newValues = {
             ...values,
-            speakersListenedTo: speakers,
           };
 
           try {
@@ -138,6 +139,15 @@ const UserSetting = ({ value, child }) => {
                   </option>
                 ))}
               </SelectInput>
+
+               <div className={`flex flex-col w-full gap-4 relative`}>
+                <p className="text-sm font-medium  text-[#2D133A]">
+                 Do you have children?
+                </p>
+                <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
+                  {child.hasChildren === true ? 'Yes' : 'No'}
+                </p>
+              </div>
             </div>
 
             <div className="flex flex-col gap-4">
@@ -224,6 +234,26 @@ const UserSetting = ({ value, child }) => {
                 ))}
               </SelectInput>
             </div>
+
+             <div className="flex flex-col sm:flex-row justify-between gap-12">
+               <div className={`flex flex-col w-full gap-4 relative`}>
+                <p className="text-sm font-medium  text-[#2D133A]">
+                  Are you mixed ethnicity?
+                </p>
+                <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
+                  {child.isMixedEthnicity === true ? 'Yes' : 'No'}
+                </p>
+              </div>
+
+              <div className={`flex flex-col w-full gap-4 relative`}>
+                <p className="text-sm font-medium  text-[#2D133A]">
+                  If yes, specify
+                </p>
+                <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
+                  {child.mixedEthnicityDescription}
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="w-full h-[0.5px] bg-[#e4e7ec9c] my-8" />
@@ -276,7 +306,7 @@ const UserSetting = ({ value, child }) => {
               <TextArea
                 label="What are you short and medium term qualification and professional plans?"
                 name="professionalPlans"
-                rows="12"
+                rows="10"
                 placeholder="Enter..."
               />
               <TextInput
@@ -317,6 +347,26 @@ const UserSetting = ({ value, child }) => {
             </div>
 
             <div className="flex flex-col sm:flex-row justify-between gap-12">
+              <div className={`flex flex-col w-full gap-4 relative`}>
+                <p className="text-sm font-medium  text-[#2D133A]">
+                  Are you a revert?
+                </p>
+                <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
+                  {child.isARevert === true ? 'Yes' : 'No'}
+                </p>
+              </div>
+
+              <div className={`flex flex-col w-full gap-4 relative`}>
+                <p className="text-sm font-medium  text-[#2D133A]">
+                  Are you Sunni or Shi'a?
+                </p>
+                <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
+                  {capitalize(child.sect)}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row justify-between gap-12">
               <SelectInput
                 label="Do you belong to any Islamic Organization?"
                 name="belongsToIslamicOrganization"
@@ -334,33 +384,48 @@ const UserSetting = ({ value, child }) => {
             </div>
 
             <div className="flex flex-col sm:flex-row justify-between gap-12">
-              <div className="flex flex-col w-full">
-                <p className="ext-sm font-medium mb-2 text-[#2D133A]">
-                  Speakers/Scholars you listen to
-                </p>
-                <Autocomplete
-                  freeSolo
-                  fullWidth
-                  multiple
-                  onChange={(e, value) => setSpeakers(value)}
-                  value={speakers}
-                  options={['Mufti Menk', 'Yasir Qahdi']}
-                  renderInput={(params) => (
-                    <TextField {...params} variant="standard" />
-                  )}
-                  name="speakersListenedTo"
-                />
-              </div>
+              <TextInput
+                type="text"
+                label="Speakers/Scholars you listen to"
+                name="speakersListenedTo"
+              />
 
-              <div className="flex flex-col sm:flex-row justify-between gap-12">
-                <TextInput
-                  type="text"
-                  label="If yes, specify"
-                  name="relocationType"
-                  classname="hidden sm:flex sm:invisible"
-                  readOnly
-                />
+              <div className={`flex flex-col w-full gap-4 relative`}>
+                <p className="text-sm font-medium  text-[#2D133A]">
+                  When did you start practicing?
+                </p>
+                <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
+                  {capitalize(child.startedPracticingIn)}
+                </p>
               </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row justify-between gap-12">
+              <SelectInput label="Pattern of salat" name="salatPattern">
+                <option value="">Select option</option>
+                {salatOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </SelectInput>
+
+              <TextInput
+                type="text"
+                label="If yes, specify"
+                name="relocationType"
+                classname="hidden sm:flex sm:invisible"
+              />
+            </div>
+
+            <div className="flex flex-col sm:flex-row justify-between gap-12">
+              <TextArea
+                classname="w-full sm:w-[640px]"
+                rows="10"
+                label="Describe your Islamic practice"
+                name="descriptionOfIslamicPractice"
+                placeholder="Tell us about yourself and who you would like to marry. Tell us fun things about you, your hobbies and interests, your goals and aspirations, your relationship with your family, your current lifestyle and so on..."
+              />
             </div>
           </div>
 
@@ -378,7 +443,7 @@ const UserSetting = ({ value, child }) => {
             <div className="flex flex-col gap-10">
               <TextArea
                 classname="w-full sm:w-[640px]"
-                rows="12"
+                rows="10"
                 label="Tell us about you"
                 name="about"
                 placeholder="Tell us about yourself and who you would like to marry. Tell us fun things about you, your hobbies and interests, your goals and aspirations, your relationship with your family, your current lifestyle and so on..."
@@ -386,14 +451,14 @@ const UserSetting = ({ value, child }) => {
 
               <TextArea
                 classname="w-full sm:w-[640px]"
-                rows="12"
+                rows="10"
                 label="Tell us about your education and job"
                 name="aboutEducationAndJob"
               />
 
               <TextArea
                 classname="w-full sm:w-[640px]"
-                rows="12"
+                rows="10"
                 label="Tell us how you dress"
                 name="aboutDressing"
               />
