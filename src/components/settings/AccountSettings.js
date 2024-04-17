@@ -37,6 +37,7 @@ const AccountSettings = ({ value }) => {
       const res = await deleteAccount(token);
       console.log(res);
       toast.success(res.message);
+      closeModalB()
       logOut();
       navigate('/');
     } catch (err) {
