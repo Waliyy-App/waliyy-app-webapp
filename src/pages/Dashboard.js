@@ -65,12 +65,8 @@ const Dashboard = () => {
                   age={items.age}
                   lga={items.lga}
                   firstName={items.firstName}
-                  state={items.state}
-                  genotype={items.genotype}
                   residence={items.countryofResidence}
                   about={items.about}
-                  height={items.height}
-                  maritalStatus={items.maritalStatus}
                   profession={items.profession}
                   gender={items.gender}
                 />
