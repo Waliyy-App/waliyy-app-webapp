@@ -53,7 +53,7 @@ export const changePassword = async (payload, token) => {
 				Authorization: `Bearer ${token}`,
 			},
 		});
-		return response.data.user;
+		return response.data;
 	} catch (error) {
 		throw error;
 	}

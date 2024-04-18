@@ -1,32 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
+import { toast } from "react-toastify";
 import { Formik, Form } from "formik";
 import { TextInput } from "../../../common/form";
 import { changePassword } from "../../../services";
+import { useAuthContext } from "../../../context/AuthContext.js";
 
 const ChangePassword = () => {
-	const [error, setError] = useState(null);
-	const [passwordChanged, setPasswordChanged] = useState(null);
+	const { token } = useAuthContext();
 
 	const initialValues = {
 		oldPassword: "",
 		newPassword: "",
-		confirmNewPassword: "",
+		confirmPassword: "",
 	};
 
 	const handlePasswordChange = async (values) => {
-		setError(null);
-		setPasswordChanged(null);
+		const { oldPassword, newPassword, confirmPassword } = values;
 		try {
-			await changePassword({
-				oldPassword: values.oldPassword,
-				newPassword: values.newPassword,
-				confirmPassword: values.confirmNewPassword,
-			});
+			const res = await changePassword(
+				{
+					oldPassword,
+					newPassword,
+					confirmPassword,
+				},
+				token
+			);
 
-			console.log("Success");
-			setPasswordChanged(true);
+			toast.success(res?.message);
 		} catch (error) {
-			setError(error.response.data.message);
+			toast.error(error.response.data.message);
 		}
 	};
 
