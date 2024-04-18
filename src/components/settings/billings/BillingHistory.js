@@ -20,9 +20,6 @@ const BillingHistory = ({ data }) => {
 								Date
 							</th>
 							<th scope="col" className="px-6 py-3">
-								Users on plan
-							</th>
-							<th scope="col" className="px-6 py-3">
 								Status
 							</th>
 						</tr>
@@ -33,14 +30,13 @@ const BillingHistory = ({ data }) => {
 								scope="row"
 								className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
 							>
-								Premium Plan
+								{`${data?.plan?.planName} Plan`}
 							</th>
-							<td className="px-6 py-4">{toCurrency(data?._doc?.amount)}</td>
+							<td className="px-6 py-4">{toCurrency(data?.plan?.amount)}</td>
 							<td className="px-6 py-4">
 								{moment(data?._doc?.createdAt).format("MMM DD, YYYY")}
 							</td>
-							<td className="px-6 py-4">3</td>
-							<td className="px-6 py-4">{capitalize(data?._doc?.status)}</td>
+							<td className="px-6 py-4">{capitalize(data?.payment?.status)}</td>
 						</tr>
 					</tbody>
 				</table>

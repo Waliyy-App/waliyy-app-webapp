@@ -98,6 +98,18 @@ export const updateUserProfile = async (payload, id, accessToken) => {
 	}
 };
 
+export const getMatch = async (id, accessToken) => {
+	try {
+		const response = await apiService.get(`/match/child/${id}/?type=received`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
 export const getLikes = async (id, accessToken) => {
 	try {
 		const response = await apiService.get(

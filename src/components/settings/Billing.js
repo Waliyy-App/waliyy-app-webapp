@@ -4,7 +4,7 @@ import CustomTabPanel from "../../common/CustomTabPanel";
 import BillingHistory from "./billings/BillingHistory";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import { Link } from "react-router-dom";
-import { getPaymentHistory, getCurrentPlan } from "../../services";
+import { getSubHistory, getCurrentPlan } from "../../services";
 import { useAuthContext } from "../../context/AuthContext";
 import { toCurrency } from "../../utils.js";
 
@@ -16,7 +16,7 @@ const Billing = ({ value }) => {
 	useEffect(() => {
 		const getHistory = async () => {
 			try {
-				const res = await getPaymentHistory(token);
+				const res = await getSubHistory(token);
 				setHasSubscription(res?.data);
 			} catch (error) {
 				toast.error(error.response.data.message);
@@ -25,6 +25,8 @@ const Billing = ({ value }) => {
 
 		getHistory();
 	}, [token]);
+
+	console.log(hasSubscription);
 
 	useEffect(() => {
 		const getActivePlan = async () => {
@@ -70,7 +72,7 @@ const Billing = ({ value }) => {
 				<div className="my-8 w-full">
 					{hasSubscription?.length ? (
 						<div className="flex flex-col gap-y-5">
-							{hasSubscription.map((item, i) => (
+							{hasSubscription?.map((item, i) => (
 								<BillingHistory key={i + 1} data={item} />
 							))}
 						</div>
