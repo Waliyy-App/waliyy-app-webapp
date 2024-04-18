@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import MaleIcon from '../assets/illustrations/muslim.svg';
 import FemaleIcon from '../assets/illustrations/female-illus.svg';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import WorkIcon from '@mui/icons-material/Work';
 import { BsFillDiamondFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import { capitalize } from '../utils.js';
 
 const truncateText = (text, maxWords) => {
   const words = text?.split(/\s+/);
@@ -31,13 +31,6 @@ const ProfileCard = ({
     setTruncatedLoremIpsum(truncateText(about, 20));
   }, [about]);
 
-  const heightInFoot = (height * 3.281).toFixed(1);
-  function decimalToFeet() {
-    const feet = Math.floor(heightInFoot);
-    const inches = Math.round((heightInFoot - feet) * 10);
-
-    return `${feet} ft ${inches}`;
-  }
 
   return (
     <Link
@@ -60,10 +53,17 @@ const ProfileCard = ({
             <p>{age}</p>
           </div>
 
-          <div className="flex items-end gap-1 ">
+          <div className="flex items-end gap-1 mb-2">
             <LocationOnIcon />
             <p className="text-sm font-light">
               {lga}, {residence}
+            </p>
+          </div>
+
+           <div className="flex items-center gap-1 ">
+            <WorkIcon />
+            <p className="text-sm font-light">
+               <p>{profession}</p>
             </p>
           </div>
         </div>
@@ -72,15 +72,7 @@ const ProfileCard = ({
           <p>{truncatedLoremIpsum}</p>
         </div>
       </div>
-      <div className="flex items-center justify-between text-[#FF4164] text-sm font-semibold">
-        <p>{genotype}</p>
-        <BsFillDiamondFill className="h-1 w-1" />
-        <p>{capitalize(maritalStatus)}</p>
-        <BsFillDiamondFill className="h-1 w-1" />
-        <p>{profession}</p>
-        <BsFillDiamondFill className="h-1 w-1" />
-        <p>{decimalToFeet()}</p>
-      </div>
+      
     </Link>
   );
 };
