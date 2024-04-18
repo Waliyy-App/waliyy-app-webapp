@@ -48,6 +48,10 @@ const ProfileDetails = () => {
     getChildDetails();
   }, [id, token]);
 
+  // to check if the user is on the match page for testing
+  const isMatchPage = false;
+
+
   return (
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
@@ -68,6 +72,7 @@ const ProfileDetails = () => {
               profession={child.profession}
               residence={child.countryofResidence}
               gender={child.gender}
+              isMatchPage={isMatchPage}
             />
             <div>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
