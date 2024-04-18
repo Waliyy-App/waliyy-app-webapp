@@ -37,6 +37,6 @@ export const faq = [
   {
     id: 8,
     question: "Can I chat with someone I like on the platform?",
-    answer: "WaliyyApp protects the interests of sisters; as such, WaliyyApp should make contact in the first instance and set up supervised meetings for their wards."
+    answer: "WaliyyApp protects the interests of sisters; as such, the Walis should make contact in the first instance and set up supervised meetings for their wards."
   }
 ];

@@ -86,7 +86,7 @@ export const TextArea = ({ label, classname, ...props }) => {
       </label>
       <div className="w-full">
         <textarea
-          className="relative text-input w-full h-32 border rounded py-[10px] px-[14px] border-[#CDD1D0] focus:outline-none focus:border-b focus:border-b-[#BA9FFE]"
+          className="relative text-input w-full border rounded py-[10px] px-[14px] border-[#CDD1D0] focus:outline-none focus:border-b focus:border-b-[#BA9FFE]"
           {...field}
           {...props}
         />

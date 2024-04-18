@@ -79,6 +79,7 @@ export default function AboutDeenForm(){
           <TextArea
             label="Describe your Islamic practice"
             name="islamicPractice"
+            rows="10"
             placeholder="Tell us about your family’s relationship with Islam, upbringing, when you started practising, what are you currently learning about, how much Qur’an memorised..."
           />
           <TextInput label="something" name="something" classname="hidden sm:flex sm:invisible" />

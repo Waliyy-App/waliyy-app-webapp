@@ -27,7 +27,7 @@ export default function NationalityForm(){
 
         <div className="flex flex-col sm:flex-row justify-between gap-12">
           <TextInput label="State of Origin" name="stateOfOrigin" type="text" />
-          <TextInput label="LGA/County" name="lga" type="text" />
+          <TextInput label="State/County of Residence" name="lga" type="text" />
         </div>
 
         <div className="flex flex-col sm:flex-row justify-between gap-12">

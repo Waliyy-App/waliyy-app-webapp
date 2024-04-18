@@ -37,7 +37,7 @@ export const forgotPassword = async (payload) => {
 export const resetPassword = async (token, payload) => {
 	try {
 		const response = await apiService.put(
-			`http://localhost:7345/api/v1/auth/reset-password/${token}`,
+			`/auth/reset-password/${token}`,
 			payload
 		);
 		return response.data.user;
@@ -46,10 +46,14 @@ export const resetPassword = async (token, payload) => {
 	}
 };
 
-export const changePassword = async (payload) => {
+export const changePassword = async (payload, token) => {
 	try {
-		const response = await apiService.put("/account/change-password", payload);
-		return response.data.user;
+		const response = await apiService.put("/account/change-password", payload, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
 	} catch (error) {
 		throw error;
 	}
@@ -62,7 +66,7 @@ export const logoutFunc = async (accessToken) => {
 				Authorization: `Bearer ${accessToken}`,
 			},
 		});
-		return response.data.user;
+		return response.data;
 	} catch (error) {
 		throw error;
 	}
@@ -75,15 +79,75 @@ export const userRegistration = async (payload, accessToken) => {
 				Authorization: `Bearer ${accessToken}`,
 			},
 		});
-		return response.data.user;
+		return response.data;
 	} catch (error) {
 		throw error;
 	}
 };
 
-export const updateUserProfile = async (payload, id) => {
+export const updateUserProfile = async (payload, id, accessToken) => {
 	try {
-		const response = await apiService.put(`/parent/child/${id}`, payload);
+		const response = await apiService.put(`/parent/child/${id}`, payload, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const getMatch = async (id, accessToken) => {
+	try {
+		const response = await apiService.get(`/match/child/${id}/?type=received`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+export const getLikes = async (id, accessToken) => {
+	try {
+		const response = await apiService.get(
+			`/match/like/child/${id}/?type=given`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+export const likeProfile = async (id, payload, accessToken) => {
+	try {
+		const response = await apiService.post(`/match/like/child/${id}`, payload, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+		return response;
+	} catch (error) {
+		throw error;
+	}
+};
+export const unlikeProfile = async (id, payload, accessToken) => {
+	try {
+		const response = await apiService.put(
+			`/match/unlike/child/${id}`,
+			payload,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
 		return response;
 	} catch (error) {
 		throw error;
@@ -101,6 +165,36 @@ export const filterSuitors = async (payload, accessToken, id) => {
 				},
 			}
 		);
+
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+export const updateFilter = async (payload, accessToken, id) => {
+	try {
+		const response = await apiService.put(
+			`parent/child/preference/${id}`,
+			payload,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+export const getChildPreferences = async (accessToken, id) => {
+	try {
+		const response = await apiService.get(`parent/child/preference/${id}`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
 
 		return response.data;
 	} catch (error) {
@@ -133,6 +227,21 @@ export const getChild = async (id, accessToken) => {
 		throw error;
 	}
 };
+export const getRecommedations = async (id, accessToken, page) => {
+	try {
+		const response = await apiService.get(
+			`/parent/child/${id}/recommendations?pae=${page}`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
 
 export const getPlans = async () => {
 	try {
@@ -143,11 +252,79 @@ export const getPlans = async () => {
 	}
 };
 
-export const makePayment = async (payload, accessToken) => {
+export const getCurrentPlan = async (token) => {
 	try {
-		const response = await apiService.post("/payment/make-payment", payload, {
+		const response = await apiService.get("/subscriptions/active", {
 			headers: {
-				Authorization: `Bearer ${accessToken}`,
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const makePayment = async (payload, accessToken, id) => {
+	try {
+		const response = await apiService.post(
+			`/payment/make-payment/${id}`,
+			payload,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const getPaymentHistory = async (token) => {
+	try {
+		const response = await apiService.get("/payment/payments", {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+export const getSubHistory = async (token) => {
+	try {
+		const response = await apiService.get("/subscriptions", {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const deleteAccount = async (token, payload) => {
+	try {
+		const response = await apiService.put(`/account/delete`, payload, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const deleteChild = async (id, token) => {
+	try {
+		const response = await apiService.delete(`/parent/child/${id}`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
 			},
 		});
 		return response.data;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { TextInput } from "../common/form";
@@ -6,17 +7,15 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import SplashScreen from "../screens/SplashScreen";
 import { login } from "../services";
 import Loader from "../components/Loader";
 import { useAuthContext } from "../context/AuthContext";
 
 const Login = () => {
 	const [showPassword, setShowPassword] = useState(false);
-	const [loggedIn, setLoggedIn] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
 	const { storeAuthCookie } = useAuthContext();
+	const navigate = useNavigate();
 
 	const initialValues = {
 		emailAddress: "",
@@ -34,7 +33,6 @@ const Login = () => {
 
 	const handleLogin = async (values) => {
 		setLoading(true);
-		setError(null);
 		try {
 			const data = await login({
 				email: values.emailAddress,
@@ -44,9 +42,9 @@ const Login = () => {
 			if (data) {
 				storeAuthCookie(data);
 			}
-			setLoggedIn(true);
+			// console.log(data);
+			navigate("/login-successful");
 		} catch (error) {
-			setError(error.response.data.message);
 			toast.error(error.response.data.message);
 		} finally {
 			setLoading(false);
@@ -57,7 +55,7 @@ const Login = () => {
 		<div className="w-100 bg-white ">
 			{loading ? (
 				<Loader />
-			) : !loggedIn ? (
+			) : (
 				<div className="w-[360px] sm:w-[400px] px-5 sm:px-0 mx-auto py-24">
 					<div className="flex flex-col items-center jutify-center mb-20">
 						<p className="text-2xl text-[#2D133A] font-medium mb-2">
@@ -67,13 +65,6 @@ const Login = () => {
 							Embark on a journey of love, faith, and connection...
 						</p>
 					</div>
-
-					{error && (
-						<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md my-4">
-							{error}
-						</div>
-					)}
-
 					<Formik
 						initialValues={initialValues}
 						validationSchema={validationSchema}
@@ -126,8 +117,6 @@ const Login = () => {
 						</Link>{" "}
 					</p>
 				</div>
-			) : (
-				<SplashScreen />
 			)}
 		</div>
 	);

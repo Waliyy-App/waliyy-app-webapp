@@ -7,27 +7,38 @@ import AddIcon from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-import { getChildren,  logoutFunc } from '../../services';
+import { getChildren, logoutFunc } from '../../services';
+import { toast } from 'react-toastify';
 import { useAuthContext } from '../../context/AuthContext';
 
 const MobileTopNav = () => {
   const [toggleMobileMenu, setToggleMobileMenu] = useState(false);
   const [children, setChildren] = useState([]);
-  const { token, logOut } = useAuthContext();
+  const { token, logOut, handleChildId } = useAuthContext();
+
   const navigate = useNavigate();
 
   const handleToggle = () => {
     setToggleMobileMenu(!toggleMobileMenu);
   };
 
+  const handleChildLogin = (id) => {
+    handleChildId(id);
+    navigate('/dashboard');
+    setToggleMobileMenu(false);
+  };
+
   const handleLogout = async () => {
     try {
-      const res = await  logoutFunc(token);
-      console.log(res);
-      logOut()
-      navigate('/')
+      const res = await logoutFunc(token);
+      logOut();
+      navigate('/');
+      toast.success(res.message);
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
+      logOut();
+      navigate('/login');
     }
   };
 
@@ -58,8 +69,9 @@ const MobileTopNav = () => {
         <button onClick={handleToggle}>
           <MenuIcon />
         </button>
+
         {toggleMobileMenu && (
-          <div className="absolute top-5 right-0 bg-white p-5 rounded-2xl z-[999999] w-[200px]">
+          <div className="absolute top-5 right-0 bg-white p-5 rounded-2xl z-[9999999999px] w-[200px]">
             <div className="flex flex-col text-[#2D133A] w-full justify-between gap-3">
               <NavLink
                 to="/settings"
@@ -78,12 +90,13 @@ const MobileTopNav = () => {
                   </p>
                   <div className="flex flex-col gap-5">
                     {children.map((child, index) => (
-                      <div
-                        className="flex gap-3 items-center cursor-pointer text-sm"
+                      <button
+                        onClick={() => handleChildLogin(child?.id)}
+                        className="flex p-2 rounded-md gap-3 items-center hover:text-white hover:bg-[#BA9FFE] font-medium"
                         key={index}
                       >
                         <PersonIcon /> {child.firstName}
-                      </div>
+                      </button>
                     ))}
                   </div>
                 </div>
