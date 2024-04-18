@@ -19,11 +19,8 @@ const ProfileCard = ({
   age,
   firstName,
   lga,
-  height,
-  maritalStatus,
   profession,
   gender,
-  genotype,
 }) => {
   const [truncatedLoremIpsum, setTruncatedLoremIpsum] = useState('');
 
