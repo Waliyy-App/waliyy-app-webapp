@@ -39,6 +39,7 @@ export default function EducationAndProfessionForm(){
 
         <div className="flex flex-col sm:flex-row justify-between gap-12">
           <TextArea
+          rows="10"
             label="What are you short/medium term qualification and professional plans?"
             name="shortTermPlans"
             placeholder="Enter..."

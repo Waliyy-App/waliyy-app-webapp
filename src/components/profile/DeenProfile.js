@@ -33,7 +33,9 @@ const DeenProfile = ({
                 ))}
               </div>
             </div>
-          ) : ''}
+          ) : (
+            ''
+          )}
         </div>
 
         <div className="w-full sm:w-2/5">
@@ -54,7 +56,9 @@ const DeenProfile = ({
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
-              {capitalize(startedPracticingIn)}
+              {startedPracticingIn === 'NOT_PRACTICING'
+                ? 'I am not practicing'
+                : `I started practicing in my ${capitalize(startedPracticingIn)}`}
             </div>
           </div>
         </div>

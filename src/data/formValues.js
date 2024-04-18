@@ -36,16 +36,16 @@ export const employmentStatusOptions = [
 ];
 
 export const salatOptions = [
-  { label: 'I pray 5 times daily', value: 'Five Times Daily' },
-  { label: 'I perform some of the daily prayers', value: 'Some Daily Prayers' },
-  { label: 'I pray occasionally', value: 'Pray Occasionally' },
+  { label: 'I pray 5 times daily', value: 'I pray 5 times daily' },
+  { label: 'I perform some of the daily prayers', value: 'I perform some of the daily prayers' },
+  { label: 'I pray occasionally', value: 'I pray occasionally' },
   {
     label: 'I regularly attend Friday prayers',
-    value: 'Regularly Attend Friday Prayers',
+    value: 'I regularly attend Friday prayers',
   },
   {
     label: 'I mainly pray on special occasions',
-    value: 'Mainly Pray On Special Occasions',
+    value: 'I mainly pray on special occasions',
   },
   { label: 'Not Practicing', value: 'Not Practicing' },
 ];
