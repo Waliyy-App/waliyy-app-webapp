@@ -1,7 +1,8 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ErrorBoundary } from "react-error-boundary";
 
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -25,6 +26,8 @@ import ResetPassword from "./pages/ResetPassword";
 import SplashScreen from "./screens/SplashScreen";
 import VerifyEmailScreen from "./screens/VerifyEmailScreen";
 import { useResetScrollPosition } from "./utils.js";
+import NetworkError from "./screens/NetworkError";
+import NoPage from "./screens/404Page.js";
 
 export const AppLayout = ({ children }) => {
 	useResetScrollPosition();
@@ -44,37 +47,61 @@ function App() {
 		},
 	});
 
+	const navigate = useNavigate();
+
 	return (
-		<ThemeProvider theme={theme}>
-			<ToastContainer />
-			<AppLayout>
-				<Routes>
-					<Route exact path="/" element={<LandingPage />} />
-					<Route exact path="/about" element={<AboutLandingPage />} />
+		<ErrorBoundary
+			FallbackComponent={NetworkError}
+			onReset={() => navigate("/dashboard")}
+		>
+			<ThemeProvider theme={theme}>
+				<ToastContainer />
+				<AppLayout>
+					<Routes>
+						<Route exact path="/" element={<LandingPage />} />
+						<Route exact path="/about" element={<AboutLandingPage />} />
+						<Route exact path="*" element={<NoPage />} />
 
-					<Route element={<UnProtectedRoute />}>
-						<Route exact path="/sign-up" element={<Register />} />
-						<Route exact path="/login" element={<Login />} />
-						<Route exact path="/forgot-password" element={<ForgotPassword />} />
-						<Route exact path="/reset-password" element={<ResetPassword />} />
-						<Route exact path="/verify-email" element={<VerifyEmailScreen />} />
-					</Route>
+						<Route element={<UnProtectedRoute />}>
+							<Route exact path="/sign-up" element={<Register />} />
+							<Route exact path="/login" element={<Login />} />
+							<Route
+								exact
+								path="/forgot-password"
+								element={<ForgotPassword />}
+							/>
+							<Route exact path="/reset-password" element={<ResetPassword />} />
+							<Route
+								exact
+								path="/verify-email"
+								element={<VerifyEmailScreen />}
+							/>
+						</Route>
 
-					<Route element={<ProtectedRoute />}>
-						<Route exact path="/dashboard" element={<Dashboard />} />
-						<Route exact path="/likes" element={<LikePage />} />
-						<Route exact path="/match" element={<MatchPage />} />
-						<Route exact path="/settings" element={<SettingsPage />} />
-						<Route exact path="/pricing" element={<PricingPage />} />
-						<Route exact path="/get-started" element={<ProfileSetupForm />} />
-						<Route exact path="/filter" element={<Filters />} />
-						<Route exact path="/profile/:id" element={<ProfileDetails />} />
-						<Route exact path="/recommended/:id" element={<SuitorProfile />} />
-						<Route exact path="/login-successful" element={<SplashScreen />} />
-					</Route>
-				</Routes>
-			</AppLayout>
-		</ThemeProvider>
+						<Route element={<ProtectedRoute />}>
+							<Route exact path="/dashboard" element={<Dashboard />} />
+							<Route exact path="/likes" element={<LikePage />} />
+							<Route exact path="/match" element={<MatchPage />} />
+							<Route exact path="/settings" element={<SettingsPage />} />
+							<Route exact path="/pricing" element={<PricingPage />} />
+							<Route exact path="/get-started" element={<ProfileSetupForm />} />
+							<Route exact path="/filter" element={<Filters />} />
+							<Route exact path="/profile/:id" element={<ProfileDetails />} />
+							<Route
+								exact
+								path="/recommended/:id"
+								element={<SuitorProfile />}
+							/>
+							<Route
+								exact
+								path="/login-successful"
+								element={<SplashScreen />}
+							/>
+						</Route>
+					</Routes>
+				</AppLayout>
+			</ThemeProvider>
+		</ErrorBoundary>
 	);
 }
 
