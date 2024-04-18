@@ -26,8 +26,6 @@ const Billing = ({ value }) => {
 		getHistory();
 	}, [token]);
 
-	console.log(hasSubscription);
-
 	useEffect(() => {
 		const getActivePlan = async () => {
 			try {
