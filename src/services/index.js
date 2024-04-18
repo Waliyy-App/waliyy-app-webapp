@@ -110,6 +110,24 @@ export const getMatch = async (id, accessToken) => {
 		throw error;
 	}
 };
+
+export const acceptProposal = async (id, payload, accessToken) => {
+	try {
+		const response = await apiService.put(
+			`/match/like/child/${id}/?type=received`,
+			payload,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+
 export const getLikes = async (id, accessToken) => {
 	try {
 		const response = await apiService.get(
