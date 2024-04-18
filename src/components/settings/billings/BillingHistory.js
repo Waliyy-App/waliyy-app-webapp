@@ -1,26 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import moment from "moment";
 
-import { getSubHistory } from "../../../services/index.js";
-import { useAuthContext } from "../../../context/AuthContext.js";
+import { capitalize, toCurrency } from "../../../utils.js";
 
-const BillingHistory = () => {
-	const [plans, setPlans] = useState([]);
-	const { token } = useAuthContext();
-
-	useEffect(() => {
-		const handlePlans = async () => {
-			try {
-				const res = await getSubHistory(token);
-				setPlans(res.data);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-
-		handlePlans();
-	}, [token]);
-
-	console.log(plans);
+const BillingHistory = ({ data }) => {
 	return (
 		<div className="w-full">
 			<div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
@@ -37,9 +20,6 @@ const BillingHistory = () => {
 								Date
 							</th>
 							<th scope="col" className="px-6 py-3">
-								Users on plan
-							</th>
-							<th scope="col" className="px-6 py-3">
 								Status
 							</th>
 						</tr>
@@ -50,12 +30,13 @@ const BillingHistory = () => {
 								scope="row"
 								className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
 							>
-								Premium Plan
+								{`${data?.plan?.planName} Plan`}
 							</th>
-							<td className="px-6 py-4">₦15,000</td>
-							<td className="px-6 py-4">Dec-11th-2024</td>
-							<td className="px-6 py-4">3</td>
-							<td className="px-6 py-4">Pending</td>
+							<td className="px-6 py-4">{toCurrency(data?.plan?.amount)}</td>
+							<td className="px-6 py-4">
+								{moment(data?._doc?.createdAt).format("MMM DD, YYYY")}
+							</td>
+							<td className="px-6 py-4">{capitalize(data?.payment?.status)}</td>
 						</tr>
 					</tbody>
 				</table>

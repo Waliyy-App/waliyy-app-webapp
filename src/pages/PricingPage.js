@@ -13,7 +13,6 @@ const PricingPage = () => {
 	const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
 	const [loading, setLoading] = useState(false);
 	const [plans, setPlans] = useState([]);
-	// const [paymentData, setPaymentData] = useState({});
 	const { token } = useAuthContext();
 
 	const toggleMenu = () => {
@@ -26,7 +25,6 @@ const PricingPage = () => {
 			try {
 				const res = await getPlans();
 				setPlans(res.data);
-				console.log(res.data); // Log the fetched data, not the state variable plans
 			} catch (error) {
 				console.log(error);
 			} finally {
@@ -35,6 +33,8 @@ const PricingPage = () => {
 		};
 
 		handlePlans();
+
+		return () => handlePlans();
 	}, []);
 
 	const handlePayment = async (price, planId) => {
@@ -49,7 +49,6 @@ const PricingPage = () => {
 				planId
 			);
 			console.log(res);
-			// setPaymentData(res?.data?.data);
 			window.location.href = res?.data?.data?.authorization_url;
 		} catch (error) {
 			toast.error(error.response.data.message);

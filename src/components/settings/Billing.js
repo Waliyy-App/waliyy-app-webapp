@@ -4,17 +4,19 @@ import CustomTabPanel from "../../common/CustomTabPanel";
 import BillingHistory from "./billings/BillingHistory";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import { Link } from "react-router-dom";
-import { getPaymentHistory } from "../../services";
+import { getSubHistory, getCurrentPlan } from "../../services";
 import { useAuthContext } from "../../context/AuthContext";
+import { toCurrency } from "../../utils.js";
 
 const Billing = ({ value }) => {
 	const [hasSubscription, setHasSubscription] = useState(false);
+	const [activePlan, setActivePlan] = useState(null);
 	const { token } = useAuthContext();
 
 	useEffect(() => {
 		const getHistory = async () => {
 			try {
-				const res = await getPaymentHistory(token);
+				const res = await getSubHistory(token);
 				setHasSubscription(res?.data);
 			} catch (error) {
 				toast.error(error.response.data.message);
@@ -23,6 +25,24 @@ const Billing = ({ value }) => {
 
 		getHistory();
 	}, [token]);
+
+	console.log(hasSubscription);
+
+	useEffect(() => {
+		const getActivePlan = async () => {
+			try {
+				const res = await getCurrentPlan(token);
+				setActivePlan(res?.data);
+			} catch (err) {
+				throw err;
+			}
+		};
+
+		getActivePlan();
+
+		return () => getActivePlan();
+	}, [token]);
+
 	return (
 		<CustomTabPanel value={value} index={1} className="w-full">
 			<div className="mb-16 px-0 sm:px-8 pt-6 w-100">
@@ -30,15 +50,20 @@ const Billing = ({ value }) => {
 
 				<div className="flex p-6 text-[#2D133A] justify-between w-full sm:w-3/5 shadow rounded-xl my-4 mb-10">
 					<div className="flex flex-col gap-2 ">
-						<p className="font-semibold">Free Plan</p>
+						<p className="font-semibold">
+							{!activePlan ? "Free Plan" : activePlan?.plan?.planName}
+						</p>
 						<p className="text-sm">Our most popular plan.</p>
-						<Link to="/pricing" className="mt-8 font-semibold text-[#BA9FFE]">
-							Upgrade Plan <ArrowOutwardIcon />
-						</Link>
+						{!activePlan && (
+							<Link to="/pricing" className="mt-8 font-semibold text-[#BA9FFE]">
+								Upgrade Plan <ArrowOutwardIcon />
+							</Link>
+						)}
 					</div>
 
 					<div className="font-semibold text-4xl">
-						₦0 <span className="text-sm">per annum</span>
+						{!activePlan ? "₦0" : toCurrency(activePlan?.plan?.amount)}{" "}
+						<span className="text-sm">per annum</span>
 					</div>
 				</div>
 
@@ -46,7 +71,11 @@ const Billing = ({ value }) => {
 
 				<div className="my-8 w-full">
 					{hasSubscription?.length ? (
-						<BillingHistory />
+						<div className="flex flex-col gap-y-5">
+							{hasSubscription?.map((item, i) => (
+								<BillingHistory key={i + 1} data={item} />
+							))}
+						</div>
 					) : (
 						<div className="flex items-center justify-center shadow rounded-xl p-6 w-full">
 							<p>You have no payment history</p>
