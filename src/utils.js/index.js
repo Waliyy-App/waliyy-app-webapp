@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 export const usePersistedState = (key, defaultValue) => {
 	// Retrieve the value from the cookie storage or use the default value
@@ -36,16 +36,22 @@ export const capitalize = (value) => {
 	return value.charAt(0) + value.slice(1).toLowerCase();
 };
 
+export const toCurrency = (number, country = "en-NG") => {
+	const formatter = new Intl.NumberFormat(country, {
+		style: "currency",
+		currency: country === "en-NG" ? "NGN" : "GBP",
+	});
 
+	return formatter.format(number).split(".00")[0];
+};
 
 export const useResetScrollPosition = () => {
-  const location = useLocation();
+	const location = useLocation();
 
-  useEffect(() => {
-    // Reset the scroll position to the top of the page
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+	useEffect(() => {
+		// Reset the scroll position to the top of the page
+		window.scrollTo(0, 0);
+	}, [location.pathname]);
 
-  return null; 
-}
-
+	return null;
+};
