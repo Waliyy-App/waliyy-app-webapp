@@ -28,13 +28,13 @@ export const login = async (payload) => {
 export const forgotPassword = async (payload) => {
 	try {
 		const response = await apiService.put("/auth/forgot-password", payload);
-		return response.data.user;
+		return response.data;
 	} catch (error) {
 		throw error;
 	}
 };
 
-export const resetPassword = async (token, payload) => {
+export const resetPassword = async (payload, token) => {
 	try {
 		const response = await apiService.put(
 			`/auth/reset-password/${token}`,
@@ -100,11 +100,28 @@ export const updateUserProfile = async (payload, id, accessToken) => {
 
 export const getMatch = async (id, accessToken) => {
 	try {
-		const response = await apiService.get(`/match/child/${id}/?type=received`, {
+		const response = await apiService.get(`/match/child/${id}`, {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 			},
 		});
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const cancelMatch = async (id, payload, accessToken) => {
+	try {
+		const response = await apiService.put(
+			`/match/cancel/child/${id}`,
+			payload,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
 		return response.data;
 	} catch (error) {
 		throw error;
@@ -341,6 +358,36 @@ export const deleteAccount = async (token, payload) => {
 export const deleteChild = async (id, token) => {
 	try {
 		const response = await apiService.delete(`/parent/child/${id}`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const addAlternateEmail = async (payload, token) => {
+	try {
+		const response = await apiService.post(
+			`/account/alternate-email`,
+			payload,
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const verifyAltEmail = async (token, payload) => {
+	try {
+		const response = await apiService.put(`/account/alternate-email`, payload, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
