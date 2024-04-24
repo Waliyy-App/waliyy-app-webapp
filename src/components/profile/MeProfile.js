@@ -62,7 +62,7 @@ const MeProfile = ({
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
-              <StraightenIcon /> {decimalToFeet()}
+              <StraightenIcon /> {`${height}m`}
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
