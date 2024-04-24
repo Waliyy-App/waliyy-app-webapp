@@ -12,7 +12,7 @@ export const register = async (payload) => {
 		const response = await apiService.post("/auth/signup", payload);
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -21,7 +21,7 @@ export const login = async (payload) => {
 		const response = await apiService.post("/auth/login", payload);
 		return response.data.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -30,7 +30,7 @@ export const forgotPassword = async (payload) => {
 		const response = await apiService.put("/auth/forgot-password", payload);
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -42,7 +42,7 @@ export const resetPassword = async (payload, token) => {
 		);
 		return response.data.user;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -55,7 +55,7 @@ export const changePassword = async (payload, token) => {
 		});
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -68,7 +68,7 @@ export const logoutFunc = async (accessToken) => {
 		});
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -81,7 +81,7 @@ export const userRegistration = async (payload, accessToken) => {
 		});
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -94,7 +94,7 @@ export const updateUserProfile = async (payload, id, accessToken) => {
 		});
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -107,7 +107,7 @@ export const getMatch = async (id, accessToken) => {
 		});
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -124,7 +124,7 @@ export const cancelMatch = async (id, payload, accessToken) => {
 		);
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -141,7 +141,7 @@ export const acceptProposal = async (id, payload, accessToken) => {
 		);
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -157,7 +157,7 @@ export const getLikes = async (id, accessToken) => {
 		);
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 export const likeProfile = async (id, payload, accessToken) => {
@@ -169,7 +169,7 @@ export const likeProfile = async (id, payload, accessToken) => {
 		});
 		return response;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 export const unlikeProfile = async (id, payload, accessToken) => {
@@ -185,7 +185,7 @@ export const unlikeProfile = async (id, payload, accessToken) => {
 		);
 		return response;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -203,7 +203,7 @@ export const filterSuitors = async (payload, accessToken, id) => {
 
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 export const updateFilter = async (payload, accessToken, id) => {
@@ -220,7 +220,7 @@ export const updateFilter = async (payload, accessToken, id) => {
 
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 export const getChildPreferences = async (accessToken, id) => {
@@ -233,7 +233,7 @@ export const getChildPreferences = async (accessToken, id) => {
 
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -246,7 +246,7 @@ export const getChildren = async (accessToken) => {
 		});
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -259,7 +259,7 @@ export const getChild = async (id, accessToken) => {
 		});
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 export const getRecommedations = async (id, accessToken, page) => {
@@ -274,7 +274,7 @@ export const getRecommedations = async (id, accessToken, page) => {
 		);
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -283,7 +283,7 @@ export const getPlans = async () => {
 		const response = await apiService.get("/plans/");
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -296,7 +296,7 @@ export const getCurrentPlan = async (token) => {
 		});
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -313,7 +313,7 @@ export const makePayment = async (payload, accessToken, id) => {
 		);
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -326,7 +326,7 @@ export const getPaymentHistory = async (token) => {
 		});
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 export const getSubHistory = async (token) => {
@@ -338,7 +338,7 @@ export const getSubHistory = async (token) => {
 		});
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -351,7 +351,7 @@ export const deleteAccount = async (token, payload) => {
 		});
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -364,7 +364,7 @@ export const deleteChild = async (id, token) => {
 		});
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -381,7 +381,7 @@ export const addAlternateEmail = async (payload, token) => {
 		);
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };
 
@@ -394,6 +394,6 @@ export const verifyAltEmail = async (token, payload) => {
 		});
 		return response.data;
 	} catch (error) {
-		throw new Error(error);
+		throw error;
 	}
 };

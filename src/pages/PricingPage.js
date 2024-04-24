@@ -26,7 +26,6 @@ const PricingPage = () => {
 				const res = await getPlans();
 				setPlans(res.data);
 			} catch (error) {
-				console.log(error);
 			} finally {
 				setLoading(false);
 			}

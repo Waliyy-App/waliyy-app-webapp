@@ -28,7 +28,7 @@ const ProfileHeader = ({
 	const [isDisabled, setIsDisabled] = useState(false);
 	const [activePlan, setActivePlan] = useState(null);
 	const [isMatchPage, setIsMatchPage] = useState(null);
-	const [matchId, setMatchId] = useState(null);
+	const [matchDetails, setMatchDetails] = useState(null);
 	const { token } = useAuthContext();
 	const childId = localStorage.getItem("childId");
 	const { id } = useParams();
@@ -46,9 +46,8 @@ const ProfileHeader = ({
 		const getMatches = async () => {
 			try {
 				const res = await getMatch(childId, token);
-				setMatchId(res?.data?.match_id);
+				setMatchDetails(res?.data);
 			} catch (err) {
-				console.log(err);
 				throw new Error(err);
 			}
 		};
@@ -90,7 +89,7 @@ const ProfileHeader = ({
 			);
 			toast.success(res?.data?.message);
 		} catch (error) {
-			toast.error(error.response.data.message);
+			toast.error(error?.response?.data?.message);
 		} finally {
 			setIsDisabled(false);
 		}
@@ -102,14 +101,14 @@ const ProfileHeader = ({
 			const res = await cancelMatch(
 				childId,
 				{
-					match: matchId,
+					match: matchDetails?.match_id,
 					action: "initiate",
 				},
 				token
 			);
 			toast.success(res?.message);
 		} catch (error) {
-			toast.error(error.response.data.message);
+			toast.error(error?.response?.data?.message);
 		} finally {
 			setIsDisabled(false);
 		}
@@ -133,7 +132,7 @@ const ProfileHeader = ({
 			toast.success(res?.data?.message);
 			setIsDisabled(false);
 		} catch (error) {
-			toast.error(error.response.data.message);
+			toast.error(error?.response?.data?.message);
 		} finally {
 			setIsDisabled(false);
 		}
@@ -189,7 +188,9 @@ const ProfileHeader = ({
 			{isMatchPage && (
 				<button
 					onClick={handleCancelMatch}
-					disabled={isDisabled}
+					disabled={
+						isDisabled || matchDetails?.status === "PENDING_CANCELLATION"
+					}
 					className="hover:bg-red-700 disabled:bg-red-300 bg-red-500 rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
 				>
 					<NotInterestedIcon /> Cancel Match

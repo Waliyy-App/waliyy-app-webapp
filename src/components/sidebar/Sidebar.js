@@ -29,9 +29,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 			try {
 				const res = await getChildren(token);
 				setChildren(res.data);
-			} catch (error) {
-				console.log(error);
-			}
+			} catch (error) {}
 		};
 
 		fetchChildren();

@@ -10,7 +10,7 @@ const NetworkError = ({ error, resetErrorBoundary }) => {
 				<p className="mb-10 text-lg">
 					{error?.status === "FETCH_ERROR"
 						? "There seems to be an error with your network connection. Kindly check your internet connection and try again..."
-						: error?.data?.message ?? error?.message}
+						: "We ran into an error. Kindly refresh the page."}
 				</p>
 				<button
 					onClick={resetErrorBoundary}
