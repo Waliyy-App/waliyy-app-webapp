@@ -17,7 +17,6 @@ const MatchPage = () => {
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
 	};
-	console.log(matches);
 	useEffect(() => {
 		const getMatches = async () => {
 			try {

@@ -126,7 +126,6 @@ export default function ProfileSetupForm() {
 				},
 				token
 			);
-			console.log(res);
 			handleChildId(res?.data);
 			toast.success(res?.message);
 			setState((prevState) => ({ ...prevState, completed: true }));

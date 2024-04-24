@@ -37,7 +37,6 @@ const PricingPage = () => {
 	}, []);
 
 	const handlePayment = async (price, planId) => {
-		console.log(planId);
 		setLoading(true);
 		try {
 			const res = await makePayment(
@@ -47,7 +46,6 @@ const PricingPage = () => {
 				token,
 				planId
 			);
-			console.log(res);
 			window.location.href = res?.data?.data?.authorization_url;
 		} catch (error) {
 			toast.error(error.response.data.message);
