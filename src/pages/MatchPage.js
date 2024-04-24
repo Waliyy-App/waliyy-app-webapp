@@ -27,7 +27,7 @@ const MatchPage = () => {
 				setMatches(res?.data);
 			} catch (err) {
 				console.log(err);
-				throw err;
+				throw new Error(err);
 			} finally {
 				setIsLoading(false);
 			}

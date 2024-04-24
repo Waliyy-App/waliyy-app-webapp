@@ -49,7 +49,7 @@ const ProfileHeader = ({
 				setMatchId(res?.data?.match_id);
 			} catch (err) {
 				console.log(err);
-				throw err;
+				throw new Error(err);
 			}
 		};
 
@@ -64,7 +64,7 @@ const ProfileHeader = ({
 				const res = await getCurrentPlan(token);
 				setActivePlan(res?.data);
 			} catch (err) {
-				throw err;
+				throw new Error(err);
 			}
 		};
 
