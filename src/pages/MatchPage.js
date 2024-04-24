@@ -17,17 +17,14 @@ const MatchPage = () => {
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
 	};
-	console.log(matches);
 	useEffect(() => {
 		const getMatches = async () => {
 			try {
 				setIsLoading(true);
 				const res = await getMatch(childId, token);
-				console.log(res);
 				setMatches(res?.data);
 			} catch (err) {
-				console.log(err);
-				throw err;
+				throw new Error(err);
 			} finally {
 				setIsLoading(false);
 			}

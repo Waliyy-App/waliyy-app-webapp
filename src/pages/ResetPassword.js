@@ -19,8 +19,6 @@ const ResetPassword = () => {
 
 	const token = localStorage.getItem("resetPwdToken");
 
-	console.log(token);
-
 	const initialValues = {
 		password: "",
 		confirmPassword: "",

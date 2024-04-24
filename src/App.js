@@ -27,7 +27,8 @@ import SplashScreen from "./screens/SplashScreen";
 import VerifyEmailScreen from "./screens/VerifyEmailScreen";
 import { useResetScrollPosition } from "./utils.js";
 import NetworkError from "./screens/NetworkError";
-import NoPage from "./screens/404Page.js";
+import NoPage from "./screens/404Page";
+import UserList from "./screens/UserList";
 
 export const AppLayout = ({ children }) => {
 	useResetScrollPosition();
@@ -85,6 +86,7 @@ function App() {
 							<Route exact path="/settings" element={<SettingsPage />} />
 							<Route exact path="/pricing" element={<PricingPage />} />
 							<Route exact path="/get-started" element={<ProfileSetupForm />} />
+							<Route exact path="/select-child" element={<UserList />} />
 							<Route exact path="/filter" element={<Filters />} />
 							<Route exact path="/profile/:id" element={<ProfileDetails />} />
 							<Route

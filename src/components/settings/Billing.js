@@ -32,7 +32,7 @@ const Billing = ({ value }) => {
 				const res = await getCurrentPlan(token);
 				setActivePlan(res?.data);
 			} catch (err) {
-				throw err;
+				throw new Error(err);
 			}
 		};
 

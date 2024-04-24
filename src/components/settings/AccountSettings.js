@@ -8,13 +8,13 @@ import Modal from "../../common/Modal";
 import Trash from "../../assets/illustrations/trash-bin.svg";
 import Disable from "../../assets/illustrations/disable.svg";
 import { useAuthContext } from "../../context/AuthContext.js";
-import { deleteAccount, deleteChild } from "../../services";
+import { deleteAccount, deleteChild, getChildren } from "../../services";
 
 const AccountSettings = ({ value }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isModalBOpen, setIsModalBOpen] = useState(false);
 	const navigate = useNavigate();
-	const { logOut, token } = useAuthContext();
+	const { logOut, token, setData } = useAuthContext();
 	const childId = localStorage.getItem("childId");
 
 	const openModal = () => {
@@ -49,7 +49,13 @@ const AccountSettings = ({ value }) => {
 		try {
 			const res = await deleteChild(childId, token);
 			toast.success(res.message);
-			navigate("/get-started");
+			const currentChildren = await getChildren(token);
+			setData((prev) => ({
+				...prev,
+				children: currentChildren?.data,
+			}));
+			if (currentChildren?.data?.length >= 1) navigate("/select-child");
+			else navigate("/get-started");
 			closeModalB();
 		} catch (err) {
 			toast.error(err.response.data.message);

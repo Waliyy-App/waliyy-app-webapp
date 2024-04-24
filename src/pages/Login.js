@@ -42,7 +42,6 @@ const Login = () => {
 			if (data) {
 				storeAuthCookie(data);
 			}
-			// console.log(data);
 			navigate("/login-successful");
 		} catch (error) {
 			toast.error(error.response.data.message);

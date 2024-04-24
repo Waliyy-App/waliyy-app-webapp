@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import SidebarComponent from "../sidebar/Sidebar";
 import ProfileHeader from "./ProfileHeader";
 import Tabs from "@mui/material/Tabs";
@@ -11,7 +11,7 @@ import DeenProfile from "./DeenProfile";
 import { usePersistedState, a11yProps } from "../../utils.js";
 import MobileNav from "../sidebar/MobileBottomNav.js";
 import MobileTopNav from "../sidebar/MobileTopNav.js";
-import { getRecommedations } from "../../services";
+import { getRecommedations, getMatch } from "../../services";
 import { useAuthContext } from "../../context/AuthContext";
 import Loader from "../Loader.js";
 
@@ -21,6 +21,7 @@ const ProfileDetails = () => {
 	const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
 	const [child, setChild] = useState({});
 	const { id } = useParams();
+	const location = useLocation();
 	const childId = localStorage.getItem("childId");
 
 	const { token } = useAuthContext();
@@ -34,25 +35,39 @@ const ProfileDetails = () => {
 	};
 
 	useEffect(() => {
-		async function getChildDetails() {
-			setLoading(true);
-			try {
-				const res = await getRecommedations(childId, token, 1);
-				const currentChild = res?.data?.filter(
-					(child) => child?.id === id
-				)?.[0];
-				setChild(currentChild);
-			} catch (err) {
-				throw err;
-			} finally {
-				setLoading(false);
+		if (location.state.from && location.state.from === "match") {
+			const getMatches = async () => {
+				try {
+					setLoading(true);
+					const res = await getMatch(childId, token);
+					setChild(res?.data?.match);
+				} catch (err) {
+					throw new Error(err);
+				} finally {
+					setLoading(false);
+				}
+			};
+
+			getMatches();
+		} else {
+			async function getChildDetails() {
+				setLoading(true);
+				try {
+					const res = await getRecommedations(childId, token);
+					const currentChild = res?.data?.filter(
+						(child) => child?.id === id
+					)?.[0];
+					setChild(currentChild);
+				} catch (err) {
+					throw new Error(err);
+				} finally {
+					setLoading(false);
+				}
 			}
+
+			getChildDetails();
 		}
-
-		getChildDetails();
-
-		return () => getChildDetails();
-	}, [childId, token, id]);
+	}, [childId, token, id, location.state]);
 
 	return (
 		<div className="flex flex-col sm:flex-row">
@@ -68,12 +83,12 @@ const ProfileDetails = () => {
 				) : (
 					<React.Fragment>
 						<ProfileHeader
-							firstName={child.firstName}
-							age={child.age}
-							profession={child.profession}
-							lga={child.lga}
-							residence={child.countryofResidence}
-							gender={child.gender}
+							firstName={child?.firstName}
+							age={child?.age}
+							profession={child?.profession}
+							lga={child?.lga}
+							residence={child?.countryofResidence}
+							gender={child?.gender}
 						/>
 
 						<div>
@@ -91,41 +106,41 @@ const ProfileDetails = () => {
 								</Tabs>
 							</Box>
 							<MeProfile
-								about={child.about}
-								dressing={child.aboutDressing}
-								genotype={child.genotype}
-								height={child.height}
-								weight={child.weight}
-								hasChildren={child.hasChildren}
-								smoke={child.isSmoker}
-								drink={child.isDrinker}
-								state={child.state}
-								maritalStatus={child.maritalStatus}
-								nationality={child.citizenship}
-								mixedEthnicityDescription={child.mixedEthnicityDescription}
-								isMixedEthnicity={child.isMixedEthnicity}
-								addictions={child.hasAddictions}
+								about={child?.about}
+								dressing={child?.aboutDressing}
+								genotype={child?.genotype}
+								height={child?.height}
+								weight={child?.weight}
+								hasChildren={child?.hasChildren}
+								smoke={child?.isSmoker}
+								drink={child?.isDrinker}
+								state={child?.state}
+								maritalStatus={child?.maritalStatus}
+								nationality={child?.citizenship}
+								mixedEthnicityDescription={child?.mixedEthnicityDescription}
+								isMixedEthnicity={child?.isMixedEthnicity}
+								addictions={child?.hasAddictions}
 								value={value}
 							/>
 
 							<EduProfile
-								eduProf={child.aboutEducationAndJob}
-								plans={child.professionalPlans}
+								eduProf={child?.aboutEducationAndJob}
+								plans={child?.professionalPlans}
 								value={value}
-								educationLevel={child.educationLevel}
-								employmentStatus={child.employmentStatus}
-								profession={child.profession}
-								isWillingToRelocate={child.isWillingToRelocate}
-								relocationPlans={child.relocationPlans}
+								educationLevel={child?.educationLevel}
+								employmentStatus={child?.employmentStatus}
+								profession={child?.profession}
+								isWillingToRelocate={child?.isWillingToRelocate}
+								relocationPlans={child?.relocationPlans}
 							/>
 
 							<DeenProfile
-								practiceDesc={child.descriptionOfIslamicPractice}
-								speakers={child.speakersListenedTo}
-								revert={child.isARevert}
-								salatPattern={child.salatPattern}
-								sect={child.sect}
-								startedPracticingIn={child.startedPracticingIn}
+								practiceDesc={child?.descriptionOfIslamicPractice}
+								speakers={child?.speakersListenedTo}
+								revert={child?.isARevert}
+								salatPattern={child?.salatPattern}
+								sect={child?.sect}
+								startedPracticingIn={child?.startedPracticingIn}
 								value={value}
 							/>
 						</div>

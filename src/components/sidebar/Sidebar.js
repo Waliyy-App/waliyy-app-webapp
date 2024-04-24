@@ -29,9 +29,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 			try {
 				const res = await getChildren(token);
 				setChildren(res.data);
-			} catch (error) {
-				console.log(error);
-			}
+			} catch (error) {}
 		};
 
 		fetchChildren();
@@ -50,7 +48,6 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 			navigate("/");
 			toast.success(res.message);
 		} catch (error) {
-			console.log(error);
 			toast.error(error.response.data.message);
 			logOut();
 			navigate("/login");
@@ -171,7 +168,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 											{isOpen ? "" : "Switch Accounts"}
 											<SwapHorizIcon />
 										</p>
-										<div className="flex flex-col max-h-[200px] overflow-y-auto">
+										<div className="flex flex-col max-h-[120px] overflow-y-auto">
 											{children.map((child, index) => (
 												<button
 													onClick={() => handleChildLogin(child?.id)}
