@@ -54,7 +54,7 @@ const MobileTopNav = () => {
   }, [token]);
 
   return (
-    <div className="sm:hidden flex justify-between items-center bg-white w-full transition-all duration-300 p-6 shadow-2xl sticky top-0 z-50">
+    <div className="sm:hidden flex justify-between items-center bg-white w-full transition-all duration-300 p-6 shadow-2xl sticky top-0 z-[200]">
       <Link className="h-[100px] w-[100px]" to="/dashboard">
         <img
           src={Logo}

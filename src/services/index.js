@@ -144,7 +144,7 @@ export const acceptProposal = async (id, payload, accessToken) => {
 		throw error;
 	}
 };
-
+	
 export const getLikes = async (id, accessToken) => {
 	try {
 		const response = await apiService.get(

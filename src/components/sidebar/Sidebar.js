@@ -13,6 +13,8 @@ import AddIcon from '@mui/icons-material/Add';
 import PersonIcon from '@mui/icons-material/Person';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { getChildren, logoutFunc } from '../../services';
 import { useAuthContext } from '../../context/AuthContext';
 
@@ -67,9 +69,9 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
           } bg-[#F2EEFB] py-8 flex flex-col justify-between 2xl:justify-start fixed inset-y-0 left-0 h-screen 2xl:h-full transition-all duration-300`}
         >
           <div className="flex flex-col">
-            <div className="w-100 flex justify-between transition-all duration-300 mb-11">
+            <div className="w-100 flex justify-between items-end transition-all duration-300 mb-11">
               <Link
-                className={isOpen ? 'h-12 w-10' : 'h-[90px] w-[140px]'}
+                className={isOpen ? 'h-12 w-10' : 'h-[50px] w-[100px]'}
                 to="/dashboard"
               >
                 <img
@@ -79,8 +81,11 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
                 />
               </Link>
 
-              <button onClick={toggleMenu}>
-                <MenuIcon />
+              <button
+                onClick={toggleMenu}
+                className="flex items-center rounded-md font-semibold border-[1px] border-[#BA9FFE] transition duration-300"
+              >
+                {isOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
               </button>
             </div>
 
@@ -172,7 +177,9 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
                       {children.map((child, index) => (
                         <button
                           onClick={() => handleChildLogin(child?.id)}
-                          className={`flex p-2 rounded-md gap-3 items-center hover:text-white hover:bg-[#BA9FFE] font-medium ${child?.id === childId && 'bg-[#BA9FFE] text-white'}`}
+                          className={`flex p-2 rounded-md gap-3 items-center hover:text-white hover:bg-[#BA9FFE] font-medium ${
+                            child.id === childId && 'border-2 border-[#BA9FFE]'
+                          }`}
                           key={index}
                         >
                           <PersonIcon /> {child.firstName}
