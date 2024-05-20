@@ -262,7 +262,8 @@ export const getChild = async (id, accessToken) => {
 		throw error;
 	}
 };
-export const getRecommedations = async (id, accessToken, page) => {
+
+export const getRecommedations = async (id, accessToken, page = 1) => {
 	try {
 		const response = await apiService.get(
 			`/parent/child/${id}/recommendations?pae=${page}`,
@@ -272,6 +273,19 @@ export const getRecommedations = async (id, accessToken, page) => {
 				},
 			}
 		);
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const getAllUsers = async (accessToken, page = 1) => {
+	try {
+		const response = await apiService.get(`/parent/?page=${page}`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
 		return response.data;
 	} catch (error) {
 		throw error;

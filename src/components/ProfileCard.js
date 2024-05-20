@@ -22,6 +22,7 @@ const ProfileCard = ({
 	profession,
 	gender,
 	state,
+	href,
 }) => {
 	const [truncatedLoremIpsum, setTruncatedLoremIpsum] = useState("");
 
@@ -31,7 +32,7 @@ const ProfileCard = ({
 
 	return (
 		<Link
-			to={`/recommended/${id}`}
+			to={href || `/recommended/${id}`}
 			state={{ from: state ? state : "" }}
 			className="profile-card bg-[#FFF4F6] rounded-2xl px-6 pt-6 pb-8 flex flex-col gap-8 w-full cursor-pointer"
 		>

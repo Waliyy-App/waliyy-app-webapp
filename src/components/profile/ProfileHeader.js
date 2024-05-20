@@ -24,10 +24,12 @@ const ProfileHeader = ({
 	residence,
 	gender,
 	lga,
+	isGeneral = false,
 }) => {
 	const [isDisabled, setIsDisabled] = useState(false);
 	const [activePlan, setActivePlan] = useState(null);
 	const [isMatchPage, setIsMatchPage] = useState(null);
+	const [isDashboard, setIsDashboard] = useState(null);
 	const [matchDetails, setMatchDetails] = useState(null);
 	const { token } = useAuthContext();
 	const childId = localStorage.getItem("childId");
@@ -39,6 +41,8 @@ const ProfileHeader = ({
 	useEffect(() => {
 		if (location?.state?.from && location?.state?.from === "match")
 			setIsMatchPage(true);
+		else if (location?.state?.from && location?.state?.from === "dashboard")
+			setIsDashboard(true);
 		else return;
 	}, [location.state]);
 
@@ -166,22 +170,25 @@ const ProfileHeader = ({
 				</div>
 			</div>
 
-			{!isChild && !isMatchPage && (
+			{!isGeneral && !isChild && !isMatchPage && (
 				<div className="flex items-center gap-3 self-center sm:self-end">
-					<button
-						onClick={handleLike}
-						disabled={isDisabled}
-						className="hover:bg-[#a37eff] disabled:bg-[#9A8AAC] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
-					>
-						<ThumbUpIcon /> Interested
-					</button>
-					<button
-						onClick={handleUnlike}
-						disabled={isDisabled}
-						className="hover:bg-[#a37eff] disabled:bg-[#9A8AAC] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
-					>
-						<ThumbDownIcon /> Uninterested
-					</button>
+					{isDashboard ? (
+						<button
+							onClick={handleLike}
+							disabled={isDisabled}
+							className="hover:bg-[#a37eff] disabled:bg-[#9A8AAC] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
+						>
+							<ThumbUpIcon /> Interested
+						</button>
+					) : (
+						<button
+							onClick={handleUnlike}
+							disabled={isDisabled}
+							className="hover:bg-[#a37eff] disabled:bg-[#9A8AAC] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
+						>
+							<ThumbDownIcon /> Uninterested
+						</button>
+					)}
 				</div>
 			)}
 

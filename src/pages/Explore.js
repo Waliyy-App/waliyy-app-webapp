@@ -8,10 +8,10 @@ import MobileNav from "../components/sidebar/MobileBottomNav.js";
 import MobileTopNav from "../components/sidebar/MobileTopNav.js";
 import ProfileCard from "../components/ProfileCard.js";
 import { useAuthContext } from "../context/AuthContext.js";
-import { getRecommedations } from "../services/index.js";
+import { getAllUsers } from "../services/index.js";
 import Loader from "../components/Loader.js";
 
-const Dashboard = () => {
+const Explore = () => {
 	const PAGE_NUMBER = 12;
 
 	const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
@@ -22,24 +22,23 @@ const Dashboard = () => {
 	const [pageStart, setPageStart] = useState(0);
 	const { token } = useAuthContext();
 
-	const childId = localStorage.getItem("childId");
 	const usersLength = recommedations?.length;
 
 	useEffect(() => {
 		const getSuitors = async () => {
 			setLoading(true);
 			try {
-				const res = await getRecommedations(childId, token);
+				const res = await getAllUsers(token);
 				setRecommendations(res?.data);
 			} catch (error) {
-				toast.error(error.response.data.message);
+				toast.error(error?.response?.data?.message);
 			} finally {
 				setLoading(false);
 			}
 		};
 
 		getSuitors();
-	}, [token, childId]);
+	}, [token]);
 
 	useEffect(() => {
 		setCurrRecommendations(() => {
@@ -87,7 +86,6 @@ const Dashboard = () => {
 							<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 								{currRecommendations?.map((items) => (
 									<ProfileCard
-										state="dashboard"
 										key={items.id}
 										id={items.id}
 										age={items.age}
@@ -97,6 +95,7 @@ const Dashboard = () => {
 										about={items.about}
 										profession={items.profession}
 										gender={items.gender}
+										href={`/explore/${items.id}`}
 									/>
 								))}
 							</div>
@@ -125,4 +124,4 @@ const Dashboard = () => {
 	);
 };
 
-export default Dashboard;
+export default Explore;

@@ -7,6 +7,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Explore from "./pages/Explore";
 
 import LikePage from "./pages/LikePage";
 import MatchPage from "./pages/MatchPage";
@@ -15,6 +16,7 @@ import PricingPage from "./pages/PricingPage";
 import { Filters } from "./pages/Filters";
 import ProfileDetails from "./components/profile/ProfileDetails";
 import SuitorProfile from "./components/profile/SuitorProfile";
+import GeneralProfile from "./components/profile/GeneralProfile";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ForgotPassword from "./pages/ForgotPassword";
 import ProfileSetupForm from "./pages/ProfileSetupForm";
@@ -83,6 +85,7 @@ function App() {
 
 						<Route element={<ProtectedRoute />}>
 							<Route exact path="/dashboard" element={<Dashboard />} />
+							<Route exact path="/explore" element={<Explore />} />
 							<Route exact path="/likes" element={<LikePage />} />
 							<Route exact path="/match" element={<MatchPage />} />
 							<Route exact path="/settings" element={<SettingsPage />} />
@@ -96,6 +99,7 @@ function App() {
 								path="/recommended/:id"
 								element={<SuitorProfile />}
 							/>
+							<Route exact path="/explore/:id" element={<GeneralProfile />} />
 							<Route
 								exact
 								path="/login-successful"
