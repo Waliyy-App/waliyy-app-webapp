@@ -4,7 +4,7 @@ import { getLikes } from "../../services";
 import { useAuthContext } from "../../context/AuthContext";
 import Loader from "../Loader";
 
-const Liked = () => {
+const LikedYou = () => {
 	const [likes, setLikes] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const { token } = useAuthContext();
@@ -67,4 +67,4 @@ const Liked = () => {
 	);
 };
 
-export default Liked;
+export default LikedYou;

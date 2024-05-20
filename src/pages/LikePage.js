@@ -3,6 +3,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import ThumbUpIcon from "@mui/icons-material/ThumbUpAlt";
 import MoodIcon from "@mui/icons-material/EmojiEmotions";
+
 import SidebarComponent from "../components/sidebar/Sidebar";
 import Liked from "../components/likes/Liked";
 import LikedYou from "../components/likes/LikedYou";
@@ -10,9 +11,9 @@ import { usePersistedState, a11yProps } from "../utils.js";
 import MobileNav from "../components/sidebar/MobileBottomNav.js";
 import MobileTopNav from "../components/sidebar/MobileTopNav.js";
 
-const LikePage = () => {
+const LikedPage = () => {
 	const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
-	const [value, setValue] = useState("");
+	const [value, setValue] = useState(0);
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
@@ -61,4 +62,4 @@ const LikePage = () => {
 	);
 };
 
-export default LikePage;
+export default LikedPage;
