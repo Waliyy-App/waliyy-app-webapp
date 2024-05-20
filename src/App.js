@@ -23,6 +23,7 @@ import AboutLandingPage from "./pages/AboutLandingPage";
 import ProtectedRoute from "./route/ProtectedRoute";
 import UnProtectedRoute from "./route/UnProtectedRoute";
 import ResetPassword from "./pages/ResetPassword";
+import VerifyOtp from "./pages/VerifyOtp";
 import SplashScreen from "./screens/SplashScreen";
 import VerifyEmailScreen from "./screens/VerifyEmailScreen";
 import { useResetScrollPosition } from "./utils.js";
@@ -77,6 +78,7 @@ function App() {
 								path="/verify-email"
 								element={<VerifyEmailScreen />}
 							/>
+							<Route exact path="/verify-otp" element={<VerifyOtp />} />
 						</Route>
 
 						<Route element={<ProtectedRoute />}>

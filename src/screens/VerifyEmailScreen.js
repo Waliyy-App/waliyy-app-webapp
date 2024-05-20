@@ -7,7 +7,7 @@ const VerifyEmailScreen = () => {
 
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
-			navigate("/login");
+			navigate("/verify-otp");
 		}, 5000);
 		return () => clearTimeout(timeoutId);
 	});
@@ -21,8 +21,8 @@ const VerifyEmailScreen = () => {
 						Congratulations!!!
 					</p>
 					<p className="text-[#665e6b] text-center font-normal">
-						To get started, verify your email address by clicking the link in
-						the email we've sent you.
+						To get started, verify your email address by entering the otp in the
+						email we've sent you in the next page.
 					</p>
 				</div>
 			</div>

@@ -37,7 +37,7 @@ const ProfileHeader = ({
 	const location = useLocation();
 
 	useEffect(() => {
-		if (location.state.from && location.state.from === "match")
+		if (location?.state?.from && location?.state?.from === "match")
 			setIsMatchPage(true);
 		else return;
 	}, [location.state]);
