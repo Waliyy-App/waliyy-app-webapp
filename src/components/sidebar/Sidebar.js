@@ -4,6 +4,8 @@ import LogoIcon from "../../assets/logo/logo-icon.png";
 import { toast } from "react-toastify";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import ThumbUpIcon from "@mui/icons-material/ThumbUpAlt";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -67,7 +69,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 					} bg-[#F2EEFB] py-8 flex flex-col justify-between 2xl:justify-start fixed inset-y-0 left-0 h-screen 2xl:h-full transition-all duration-300`}
 				>
 					<div className="flex flex-col">
-						<div className="w-100 flex justify-between transition-all duration-300 mb-11">
+						<div className="w-100 flex justify-between items-center transition-all duration-300 mb-11">
 							<Link
 								className={isOpen ? "h-12 w-10" : "h-[90px] w-[140px]"}
 								to="/dashboard"
@@ -79,8 +81,11 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 								/>
 							</Link>
 
-							<button onClick={toggleMenu}>
-								<MenuIcon />
+							<button
+								onClick={toggleMenu}
+								className="flex items-center rounded-md font-semibold border-[1px] border-[#BA9FFE] transition duration-300"
+							>
+								{isOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
 							</button>
 						</div>
 
