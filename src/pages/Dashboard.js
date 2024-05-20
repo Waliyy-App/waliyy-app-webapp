@@ -8,22 +8,21 @@ import MobileNav from "../components/sidebar/MobileBottomNav.js";
 import MobileTopNav from "../components/sidebar/MobileTopNav.js";
 import ProfileCard from "../components/ProfileCard.js";
 import { useAuthContext } from "../context/AuthContext.js";
-import { getRecommedations } from "../services/index.js";
+import { getChild, getRecommedations } from "../services/index.js";
 import Loader from "../components/Loader.js";
 
 const Dashboard = () => {
-	const PAGE_NUMBER = 12;
-
 	const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
+	const [child, setChild] = useState({});
 	const [loading, setLoading] = useState(false);
 	const [recommedations, setRecommendations] = useState([]);
-	const [currRecommendations, setCurrRecommendations] = useState([]);
-	const [endPage, setEndPage] = useState(PAGE_NUMBER);
-	const [pageStart, setPageStart] = useState(0);
 	const { token } = useAuthContext();
-
 	const childId = localStorage.getItem("childId");
-	const usersLength = recommedations?.length;
+	//   const user = localStorage.getItem('user');
+
+	//   const userObj = JSON.parse(user);
+
+	console.log(child);
 
 	useEffect(() => {
 		const getSuitors = async () => {
@@ -42,28 +41,24 @@ const Dashboard = () => {
 	}, [token, childId]);
 
 	useEffect(() => {
-		setCurrRecommendations(() => {
-			const curr = recommedations?.slice(pageStart, endPage);
-			return curr;
-		});
-	}, [recommedations, pageStart, endPage]);
+		async function getChildDetails() {
+			setLoading(true);
+			try {
+				const res = await getChild(childId, token);
+				setChild(res?.data);
+			} catch (err) {
+				throw new Error(err);
+			} finally {
+				setLoading(false);
+			}
+		}
+
+		getChildDetails();
+	}, [childId, token]);
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
 	};
-
-	function handlePrev() {
-		if (pageStart === 0) return;
-		setPageStart((prev) => prev - PAGE_NUMBER);
-		setEndPage((prev) => prev - PAGE_NUMBER);
-	}
-
-	function handleNext() {
-		if (endPage < usersLength) {
-			setPageStart((prev) => prev + PAGE_NUMBER);
-			setEndPage((prev) => prev + PAGE_NUMBER);
-		}
-	}
 
 	return (
 		<div className="flex flex-col sm:flex-row">
@@ -78,44 +73,28 @@ const Dashboard = () => {
 					<Loader />
 				) : (
 					<React.Fragment>
-						<div className="flex justify-end py-8">
+						<div className="flex justify-between items-center py-8 text-[#2D133A] sticky top-0 bg-white z-[100]">
+							<p className=" text-3xl font-semibold">{child?.firstName}</p>
 							<Link to="/filter">
 								<HiOutlineAdjustmentsHorizontal className="h-8 w-8" />
 							</Link>
 						</div>
-						<div className="flex flex-col gap-y-8">
-							<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-								{currRecommendations?.map((items) => (
-									<ProfileCard
-										state="dashboard"
-										key={items.id}
-										id={items.id}
-										age={items.age}
-										lga={items.lga}
-										firstName={items.firstName}
-										residence={items.countryofResidence}
-										about={items.about}
-										profession={items.profession}
-										gender={items.gender}
-									/>
-								))}
-							</div>
-							<div className="self-end flex items-center gap-x-4">
-								<button
-									onClick={handlePrev}
-									disabled={pageStart === 0}
-									className="hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2"
-								>
-									Prev
-								</button>
-								<button
-									onClick={handleNext}
-									disabled={usersLength === endPage}
-									className="hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2"
-								>
-									Next
-								</button>
-							</div>
+
+						<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+							{recommedations?.map((items) => (
+								<ProfileCard
+									state="dashboard"
+									key={items.id}
+									id={items.id}
+									age={items.age}
+									lga={items.lga}
+									firstName={items.firstName}
+									residence={items.countryofResidence}
+									about={items.about}
+									profession={items.profession}
+									gender={items.gender}
+								/>
+							))}
 						</div>
 					</React.Fragment>
 				)}
