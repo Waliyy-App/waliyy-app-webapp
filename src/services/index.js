@@ -145,10 +145,10 @@ export const acceptProposal = async (id, payload, accessToken) => {
 	}
 };
 
-export const getLikes = async (id, accessToken) => {
+export const getLikes = async (id, type = "given", accessToken) => {
 	try {
 		const response = await apiService.get(
-			`/match/like/child/${id}/?type=given`,
+			`/match/like/child/${id}/?type=${type}`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,

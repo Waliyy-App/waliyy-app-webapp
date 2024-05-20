@@ -14,7 +14,7 @@ const Liked = () => {
 		const fetchLikes = async () => {
 			try {
 				setLoading(true);
-				const res = await getLikes(childId, "given", token);
+				const res = await getLikes(childId, "received", token);
 				setLikes(res?.data);
 			} catch (err) {
 				throw new Error(err);
@@ -33,9 +33,9 @@ const Liked = () => {
 			) : (
 				<React.Fragment>
 					<div className="flex flex-col items-center justify-center gap-3 text-center px-0 sm:px-8 pt-8 pb-[64px]">
-						<p className="text-[#2D133A] font-bold text-4xl">Liked</p>
+						<p className="text-[#2D133A] font-bold text-4xl">Liked You</p>
 						<p className="text-[#667085] text-xl">
-							These are the people you liked.
+							These are the people that liked your profile.
 						</p>
 					</div>
 					{likes.length > 0 ? (
