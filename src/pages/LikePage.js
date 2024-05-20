@@ -54,8 +54,12 @@ const LikedPage = () => {
 						{...a11yProps(1)}
 					/>
 				</Tabs>
-				<Liked value={value} />
-				<LikedYou value={value} />
+				<CustomTabPanel value={value} index={0}>
+					<Liked />
+				</CustomTabPanel>
+				<CustomTabPanel value={value} index={1}>
+					<LikedYou />
+				</CustomTabPanel>
 			</main>
 			<MobileNav />
 		</div>
@@ -63,3 +67,19 @@ const LikedPage = () => {
 };
 
 export default LikedPage;
+
+function CustomTabPanel(props) {
+	const { children, value, index, ...other } = props;
+
+	return (
+		<div
+			role="tabpanel"
+			hidden={value !== index}
+			id={`simple-tabpanel-${index}`}
+			aria-labelledby={`simple-tab-${index}`}
+			{...other}
+		>
+			{value === index && children}
+		</div>
+	);
+}

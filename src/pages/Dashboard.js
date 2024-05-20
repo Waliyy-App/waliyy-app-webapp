@@ -18,11 +18,6 @@ const Dashboard = () => {
 	const [recommedations, setRecommendations] = useState([]);
 	const { token } = useAuthContext();
 	const childId = localStorage.getItem("childId");
-	//   const user = localStorage.getItem('user');
-
-	//   const userObj = JSON.parse(user);
-
-	console.log(child);
 
 	useEffect(() => {
 		const getSuitors = async () => {
