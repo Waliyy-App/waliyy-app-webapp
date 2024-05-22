@@ -3,8 +3,9 @@ import ProfileCard from "../ProfileCard";
 import { getLikes } from "../../services";
 import { useAuthContext } from "../../context/AuthContext";
 import Loader from "../Loader";
+import CustomTabPanel from "../../common/CustomTabPanel";
 
-const Liked = () => {
+const Liked = ({value}) => {
 	const [likes, setLikes] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const { token } = useAuthContext();
@@ -31,7 +32,7 @@ const Liked = () => {
 			{loading ? (
 				<Loader />
 			) : (
-				<React.Fragment>
+				<CustomTabPanel value={value} index={0}>
 					<div className="flex flex-col items-center justify-center gap-3 text-center px-0 sm:px-8 pt-8 pb-[64px]">
 						<p className="text-[#2D133A] font-bold text-4xl">Liked</p>
 						<p className="text-[#667085] text-xl">
@@ -61,7 +62,7 @@ const Liked = () => {
 							</p>
 						</div>
 					)}
-				</React.Fragment>
+				</CustomTabPanel>
 			)}
 		</div>
 	);

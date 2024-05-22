@@ -32,14 +32,6 @@ const MeProfile = ({
   state,
 }) => {
 
-  const heightInFoot = (height * 3.281).toFixed(1);
-
-  function decimalToFeet() {
-    const feet = Math.floor(heightInFoot);
-    const inches = Math.round((heightInFoot - feet) * 10);
-
-    return `${feet} ft ${inches}`;
-  }
   return (
     <CustomTabPanel value={value} index={0}>
       <div className="flex flex-col items-start gap-10 py-8">
@@ -62,7 +54,7 @@ const MeProfile = ({
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
-              <StraightenIcon /> {decimalToFeet()}
+              <StraightenIcon /> {`${height}m`}
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
