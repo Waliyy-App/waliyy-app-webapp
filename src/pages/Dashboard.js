@@ -39,6 +39,7 @@ const Dashboard = () => {
 				setLoading(false);
 			}
 		};
+		getSuitors()
 	})
 
   console.log(child);
