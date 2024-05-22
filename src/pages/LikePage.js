@@ -1,21 +1,19 @@
-import React from "react";
-import SidebarComponent from "../components/sidebar/Sidebar";
+import React, { useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import ThumbUpIcon from "@mui/icons-material/ThumbUpAlt";
 import MoodIcon from "@mui/icons-material/EmojiEmotions";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+
+import SidebarComponent from "../components/sidebar/Sidebar";
 import Liked from "../components/likes/Liked";
 import LikedYou from "../components/likes/LikedYou";
 import { usePersistedState, a11yProps } from "../utils.js";
 import MobileNav from "../components/sidebar/MobileBottomNav.js";
 import MobileTopNav from "../components/sidebar/MobileTopNav.js";
-import Viewed from "../components/likes/Viewed.js";
 
-const LikePage = () => {
-	const [value, setValue] = React.useState(0);
-
+const LikedPage = () => {
 	const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
+	const [value, setValue] = useState(0);
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
@@ -55,24 +53,20 @@ const LikePage = () => {
 						label="Liked You"
 						{...a11yProps(1)}
 					/>
-					<Tab
-						icon={<RemoveRedEyeIcon />}
-						iconPosition="start"
-						label="Viewed You"
-						{...a11yProps(2)}
-					/>
 				</Tabs>
-
-				<Liked value={value} />
-				<LikedYou value={value} />
-				<Viewed value={value} />
+				<CustomTabPanel value={value} index={0}>
+					<Liked />
+				</CustomTabPanel>
+				<CustomTabPanel value={value} index={1}>
+					<LikedYou />
+				</CustomTabPanel>
 			</main>
 			<MobileNav />
 		</div>
 	);
 };
 
-export default LikePage;
+export default LikedPage;
 
 function CustomTabPanel(props) {
 	const { children, value, index, ...other } = props;
