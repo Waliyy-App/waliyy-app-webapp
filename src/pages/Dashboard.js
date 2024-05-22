@@ -39,7 +39,7 @@ const Dashboard = () => {
 				setLoading(false);
 			}
 		};
-		getSuitors()
+	console.log(getSuitors)
 	})
 
   console.log(child);
