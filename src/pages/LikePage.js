@@ -64,7 +64,6 @@ const LikedPage = () => {
 			<MobileNav />
 		</div>
 	);
-
 };
 
 export default LikedPage;
