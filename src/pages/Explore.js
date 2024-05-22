@@ -8,21 +8,19 @@ import MobileNav from "../components/sidebar/MobileBottomNav.js";
 import MobileTopNav from "../components/sidebar/MobileTopNav.js";
 import ProfileCard from "../components/ProfileCard.js";
 import { useAuthContext } from "../context/AuthContext.js";
-import { getChild, getRecommedations } from "../services/index.js";
+import { getAllUsers } from "../services/index.js";
 import Loader from "../components/Loader.js";
 
-const Dashboard = () => {
+const Explore = () => {
 	const PAGE_NUMBER = 12;
 
 	const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
-	const [child, setChild] = useState({});
 	const [loading, setLoading] = useState(false);
 	const [recommedations, setRecommendations] = useState([]);
 	const [currRecommendations, setCurrRecommendations] = useState([]);
 	const [endPage, setEndPage] = useState(PAGE_NUMBER);
 	const [pageStart, setPageStart] = useState(0);
 	const { token } = useAuthContext();
-	const childId = localStorage.getItem("childId");
 
 	const usersLength = recommedations?.length;
 
@@ -30,17 +28,17 @@ const Dashboard = () => {
 		const getSuitors = async () => {
 			setLoading(true);
 			try {
-				const res = await getRecommedations(childId, token);
+				const res = await getAllUsers(token);
 				setRecommendations(res?.data);
 			} catch (error) {
-				toast.error(error.response.data.message);
+				toast.error(error?.response?.data?.message);
 			} finally {
 				setLoading(false);
 			}
 		};
 
 		getSuitors();
-	}, [token, childId]);
+	}, [token]);
 
 	useEffect(() => {
 		setCurrRecommendations(() => {
@@ -48,6 +46,10 @@ const Dashboard = () => {
 			return curr;
 		});
 	}, [recommedations, pageStart, endPage]);
+
+	const toggleMenu = () => {
+		setIsOpen(!isOpen);
+	};
 
 	function handlePrev() {
 		if (pageStart === 0) return;
@@ -62,26 +64,6 @@ const Dashboard = () => {
 		}
 	}
 
-	useEffect(() => {
-		async function getChildDetails() {
-			setLoading(true);
-			try {
-				const res = await getChild(childId, token);
-				setChild(res?.data);
-			} catch (err) {
-				throw new Error(err);
-			} finally {
-				setLoading(false);
-			}
-		}
-
-		getChildDetails();
-	}, [childId, token]);
-
-	const toggleMenu = () => {
-		setIsOpen(!isOpen);
-	};
-
 	return (
 		<div className="flex flex-col sm:flex-row">
 			<SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
@@ -95,8 +77,7 @@ const Dashboard = () => {
 					<Loader />
 				) : (
 					<React.Fragment>
-						<div className="flex justify-between items-center py-8 text-[#2D133A] sticky top-0 bg-white z-[100]">
-							<p className=" text-3xl font-semibold">{child?.firstName}</p>
+						<div className="flex justify-end py-8">
 							<Link to="/filter">
 								<HiOutlineAdjustmentsHorizontal className="h-8 w-8" />
 							</Link>
@@ -105,7 +86,6 @@ const Dashboard = () => {
 							<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 								{currRecommendations?.map((items) => (
 									<ProfileCard
-										state="dashboard"
 										key={items.id}
 										id={items.id}
 										age={items.age}
@@ -115,6 +95,7 @@ const Dashboard = () => {
 										about={items.about}
 										profession={items.profession}
 										gender={items.gender}
+										href={`/explore/${items.id}`}
 									/>
 								))}
 							</div>
@@ -143,4 +124,4 @@ const Dashboard = () => {
 	);
 };
 
-export default Dashboard;
+export default Explore;
