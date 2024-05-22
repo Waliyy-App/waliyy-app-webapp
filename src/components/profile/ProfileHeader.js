@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
-import { BsFillDiamondFill } from "react-icons/bs";
-import ThumbUpIcon from "@mui/icons-material/ThumbUpAlt";
-import ThumbDownIcon from "@mui/icons-material/ThumbDownAlt";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import NotInterestedIcon from "@mui/icons-material/NotInterested";
-import MaleIcon from "../../assets/illustrations/male-illus.svg";
-import FemaleIcon from "../../assets/illustrations/female-illus.svg";
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { BsFillDiamondFill } from 'react-icons/bs';
+import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
+import ThumbDownIcon from '@mui/icons-material/ThumbDownAlt';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import NotInterestedIcon from '@mui/icons-material/NotInterested';
+import MaleIcon from '../../assets/illustrations/male-illus.svg';
+import FemaleIcon from '../../assets/illustrations/female-illus.svg';
 import {
-	likeProfile,
-	unlikeProfile,
-	getCurrentPlan,
-	cancelMatch,
-	getMatch,
-} from "../../services";
-import { useAuthContext } from "../../context/AuthContext";
+  likeProfile,
+  unlikeProfile,
+  getCurrentPlan,
+  cancelMatch,
+  getMatch,
+} from '../../services';
+import { useAuthContext } from '../../context/AuthContext';
 
 const ProfileHeader = ({
 	firstName,
@@ -205,6 +205,7 @@ const ProfileHeader = ({
 			)}
 		</div>
 	);
+
 };
 
 export default ProfileHeader;

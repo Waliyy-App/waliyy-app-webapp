@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import MaleIcon from "../assets/illustrations/muslim.svg";
-import FemaleIcon from "../assets/illustrations/female-illus.svg";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import WorkIcon from "@mui/icons-material/Work";
-import { BsFillDiamondFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import MaleIcon from '../assets/illustrations/muslim.svg';
+import FemaleIcon from '../assets/illustrations/female-illus.svg';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import WorkIcon from '@mui/icons-material/Work';
+import { BsFillDiamondFill } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 
 const truncateText = (text, maxWords) => {
-	const words = text?.split(/\s+/);
-	const truncated = words?.slice(0, maxWords).join(" ");
-	return truncated + "...";
+  const words = text?.split(/\s+/);
+  const truncated = words?.slice(0, maxWords).join(' ');
+  return truncated + '...';
 };
 
 const ProfileCard = ({
@@ -24,11 +24,11 @@ const ProfileCard = ({
 	state,
 	href,
 }) => {
-	const [truncatedLoremIpsum, setTruncatedLoremIpsum] = useState("");
+  const [truncatedLoremIpsum, setTruncatedLoremIpsum] = useState('');
 
-	useEffect(() => {
-		setTruncatedLoremIpsum(truncateText(about, 20));
-	}, [about]);
+  useEffect(() => {
+    setTruncatedLoremIpsum(truncateText(about, 20));
+  }, [about]);
 
 	return (
 		<Link
@@ -45,34 +45,34 @@ const ProfileCard = ({
 					/>
 				</div>
 
-				<div className="text-[#2D133A]">
-					<div className="flex items-center gap-2  text-2xl font-bold">
-						<p>{firstName}</p>
-						<BsFillDiamondFill className="h-2 w-2" />
-						<p>{age}</p>
-					</div>
+        <div className="text-[#2D133A]">
+          <div className="flex items-center gap-2  text-2xl font-bold">
+            <p>{firstName}</p>
+            <BsFillDiamondFill className="h-2 w-2" />
+            <p>{age}</p>
+          </div>
 
-					<div className="flex items-end gap-1 mb-2">
-						<LocationOnIcon />
-						<p className="text-sm font-light">
-							{lga}, {residence}
-						</p>
-					</div>
+          <div className="flex items-end gap-1 mb-2">
+            <LocationOnIcon />
+            <p className="text-sm font-light">
+              {lga}, {residence}
+            </p>
+          </div>
 
-					<div className="flex items-center gap-1 ">
-						<WorkIcon />
-						<p className="text-sm font-light">
-							<p>{profession}</p>
-						</p>
-					</div>
-				</div>
+          <div className="flex items-center gap-1 ">
+            <WorkIcon />
+            <p className="text-sm font-light">
+              <p>{profession}</p>
+            </p>
+          </div>
+        </div>
 
-				<div>
-					<p>{truncatedLoremIpsum}</p>
-				</div>
-			</div>
-		</Link>
-	);
+        <div>
+          <p>{truncatedLoremIpsum}</p>
+        </div>
+      </div>
+    </Link>
+  );
 };
 
 export default ProfileCard;

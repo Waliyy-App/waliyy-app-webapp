@@ -65,6 +65,7 @@ const LikedYou = () => {
 			)}
 		</div>
 	);
+
 };
 
 export default LikedYou;

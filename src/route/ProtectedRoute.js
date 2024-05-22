@@ -8,4 +8,4 @@ const ProtectedRoute = () => {
   return user && isLoggedIn ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
-export default ProtectedRoute;
+export default ProtectedRoute; 

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import SidebarComponent from "../components/sidebar/Sidebar";
@@ -39,8 +40,7 @@ const Dashboard = () => {
 			}
 		};
 
-		getSuitors();
-	}, [token, childId]);
+  console.log(child);
 
 	useEffect(() => {
 		setCurrRecommendations(() => {
