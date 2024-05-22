@@ -72,7 +72,7 @@ const LikePage = () => {
 	);
 };
 
-export default LikedPage;
+export default LikePage;
 
 function CustomTabPanel(props) {
 	const { children, value, index, ...other } = props;
