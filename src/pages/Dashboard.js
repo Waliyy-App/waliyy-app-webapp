@@ -39,6 +39,7 @@ const Dashboard = () => {
 				setLoading(false);
 			}
 		};
+	})
 
   console.log(child);
 
