@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { TextInput } from "../common/form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { register } from "../services";

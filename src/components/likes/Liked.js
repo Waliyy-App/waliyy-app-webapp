@@ -15,7 +15,7 @@ const Liked = ({value}) => {
 		const fetchLikes = async () => {
 			try {
 				setLoading(true);
-				const res = await getLikes(childId, token);
+				const res = await getLikes(childId, "given", token);
 				setLikes(res?.data);
 			} catch (err) {
 				throw new Error(err);
