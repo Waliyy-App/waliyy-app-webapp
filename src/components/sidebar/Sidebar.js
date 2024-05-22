@@ -77,7 +77,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 								<img
 									src={isOpen ? LogoIcon : Logo}
 									alt="logo"
-									className="h-full w-full object-fill rounded-2xl"
+									className="h-full w-full object-contain rounded-2xl"
 								/>
 							</Link>
 
