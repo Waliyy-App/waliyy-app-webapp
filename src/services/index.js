@@ -46,6 +46,15 @@ export const resetPassword = async (payload, token) => {
 	}
 };
 
+export const verifyOtp = async (payload) => {
+	try {
+		const response = await apiService.put(`/auth/verify-email`, payload);
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+};
+
 export const changePassword = async (payload, token) => {
 	try {
 		const response = await apiService.put("/account/change-password", payload, {
@@ -146,7 +155,6 @@ export const acceptProposal = async (id, payload, accessToken) => {
 };
 
 export const getLikes = async (id, type = "given", accessToken) => {
-
 	try {
 		const response = await apiService.get(
 			`/match/like/child/${id}/?type=${type}`,
@@ -267,7 +275,7 @@ export const getChild = async (id, accessToken) => {
 export const getRecommedations = async (id, accessToken, page = 1) => {
 	try {
 		const response = await apiService.get(
-			`/parent/child/${id}/recommendations?pae=${page}`,
+			`/parent/child/${id}/recommendations?page=${page}`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,

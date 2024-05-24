@@ -17,6 +17,7 @@ const MatchPage = () => {
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
 	};
+
 	useEffect(() => {
 		const getMatches = async () => {
 			try {
@@ -24,15 +25,13 @@ const MatchPage = () => {
 				const res = await getMatch(childId, token);
 				setMatches(res?.data);
 			} catch (err) {
-				throw new Error(err);
+				console.error(err);
 			} finally {
 				setIsLoading(false);
 			}
 		};
 
 		getMatches();
-
-		return () => getMatches();
 	}, [token, childId]);
 
 	return (
