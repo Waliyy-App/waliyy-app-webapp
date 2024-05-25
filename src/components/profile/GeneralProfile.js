@@ -11,7 +11,7 @@ import DeenProfile from "./DeenProfile";
 import { usePersistedState, a11yProps } from "../../utils.js";
 import MobileNav from "../sidebar/MobileBottomNav.js";
 import MobileTopNav from "../sidebar/MobileTopNav.js";
-import { getRecommedations, getMatch } from "../../services";
+import { getAllUsers, getMatch } from "../../services";
 import { useAuthContext } from "../../context/AuthContext";
 import Loader from "../Loader.js";
 
@@ -53,7 +53,7 @@ const GeneralProfile = () => {
 			async function getChildDetails() {
 				setLoading(true);
 				try {
-					const res = await getRecommedations(childId, token);
+					const res = await getAllUsers(token);
 					const currentChild = res?.data?.filter(
 						(child) => child?.id === id
 					)?.[0];
