@@ -55,12 +55,14 @@ const Explore = () => {
 		if (pageStart === 0) return;
 		setPageStart((prev) => prev - PAGE_NUMBER);
 		setEndPage((prev) => prev - PAGE_NUMBER);
+		window.scrollTo(0, 0);
 	}
 
 	function handleNext() {
 		if (endPage < usersLength) {
 			setPageStart((prev) => prev + PAGE_NUMBER);
 			setEndPage((prev) => prev + PAGE_NUMBER);
+			window.scrollTo(0, 0);
 		}
 	}
 
