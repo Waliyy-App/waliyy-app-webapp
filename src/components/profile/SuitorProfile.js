@@ -20,7 +20,6 @@ const ProfileDetails = () => {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
   const [child, setChild] = useState({});
-  const [showCategory, setShowCategory] = useState('Me');
   const { id } = useParams();
   const location = useLocation();
   const childId = localStorage.getItem('childId');
