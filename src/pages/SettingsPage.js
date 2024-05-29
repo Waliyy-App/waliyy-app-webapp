@@ -73,6 +73,8 @@ const SettingsPage = () => {
                   aria-label="basic tabs example"
                   textColor="inherit"
                   indicatorColor="secondary"
+                  variant="scrollable"
+                  scrollButtons="auto"
                 >
                   <Tab label="User" {...a11yProps(0)} />
                   <Tab label="Billing" {...a11yProps(1)} />

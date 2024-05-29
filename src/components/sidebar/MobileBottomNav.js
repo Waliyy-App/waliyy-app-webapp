@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
@@ -20,6 +21,17 @@ const MobileNav = () => {
         }`}
       >
         <HomeIcon />
+      </NavLink>
+
+      <NavLink
+        to="/explore"
+        className={`flex justify-center items-center py-2 px-3 h-16 w-16 rounded-full font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300  ${
+          location.pathname === '/explore'
+            ? 'text-white bg-[#BA9FFE] box-shadow-style'
+            : 'text-[#2D133A]'
+        }`}
+      >
+        <PersonSearchIcon />
       </NavLink>
 
       <NavLink
@@ -44,7 +56,7 @@ const MobileNav = () => {
         <FavoriteIcon />
       </NavLink>
 
-     <NavLink
+      <NavLink
         to={`/profile/${childId}`}
         className={`flex justify-center items-center py-2 px-3 h-16 w-16 rounded-full font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300  ${
           location.pathname === `/profile/${childId}`

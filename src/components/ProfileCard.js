@@ -13,16 +13,17 @@ const truncateText = (text, maxWords) => {
 };
 
 const ProfileCard = ({
-	id,
-	about,
-	residence,
-	age,
-	firstName,
-	lga,
-	profession,
-	gender,
-	state,
-	href,
+  id,
+  about,
+  residence,
+  age,
+  firstName,
+  lga,
+  profession,
+  gender,
+  state,
+  href,
+  displayID,
 }) => {
   const [truncatedLoremIpsum, setTruncatedLoremIpsum] = useState('');
 
@@ -30,24 +31,24 @@ const ProfileCard = ({
     setTruncatedLoremIpsum(truncateText(about, 20));
   }, [about]);
 
-	return (
-		<Link
-			to={href || `/recommended/${id}`}
-			state={{ from: state ? state : "" }}
-			className="profile-card bg-[#FFF4F6] rounded-2xl px-6 pt-6 pb-8 flex flex-col gap-8 w-full cursor-pointer"
-		>
-			<div className="mb-auto flex flex-col gap-y-8">
-				<div className="w-[128px] h-[128px] rounded-full border-4 border-[#FE8D9F] flex items-center justify-center z-30 relative overflow-hidden mx-auto">
-					<img
-						src={gender === "MALE" ? MaleIcon : FemaleIcon}
-						alt=""
-						className="w-full h-full object-cover"
-					/>
-				</div>
+  return (
+    <Link
+      to={href || `/recommended/${id}`}
+      state={{ from: state ? state : '' }}
+      className="profile-card bg-[#FFF4F6] rounded-2xl px-6 pt-6 pb-8 flex flex-col gap-8 w-full cursor-pointer"
+    >
+      <div className="mb-auto flex flex-col gap-y-8">
+        <div className="w-[128px] h-[128px] rounded-full border-4 border-[#FE8D9F] flex items-center justify-center z-30 relative overflow-hidden mx-auto">
+          <img
+            src={gender === 'MALE' ? MaleIcon : FemaleIcon}
+            alt=""
+            className="w-full h-full object-cover"
+          />
+        </div>
 
         <div className="text-[#2D133A]">
           <div className="flex items-center gap-2  text-2xl font-bold">
-            <p>{firstName}</p>
+            <p>{firstName || displayID}</p>
             <BsFillDiamondFill className="h-2 w-2" />
             <p>{age}</p>
           </div>
