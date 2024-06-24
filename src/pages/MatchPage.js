@@ -41,7 +41,7 @@ const MatchPage = () => {
       <main
         className={`${
           isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
-        } py-[64px] px-8 w-full transition-all duration-300`}
+        } py-[64px] px-8 w-full transition-all duration-300 bg-[#d4c4fb1d]`}
       >
         {isLoading ? (
           <Loader />

@@ -91,13 +91,13 @@ const Dashboard = () => {
       <main
         className={`${
           isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
-        } py-[64px] px-8 w-full transition-all duration-300`}
+        } py-[64px] px-8 w-full transition-all duration-300 bg-[#d4c4fb1d] `}
       >
         {loading ? (
           <Loader />
         ) : (
           <React.Fragment>
-            <div className="flex justify-between items-center py-8 text-[#2D133A] sticky top-0 bg-white z-[100]">
+            <div className="flex justify-between items-center py-8 text-[#2D133A] sticky top-0 bg-[#d4c4fb1d] z-[100]">
               <p className=" text-3xl font-semibold">{child?.firstName}</p>
               <Link to="/filter">
                 <HiOutlineAdjustmentsHorizontal className="h-8 w-8" />

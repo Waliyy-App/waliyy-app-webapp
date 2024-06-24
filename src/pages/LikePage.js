@@ -24,46 +24,46 @@ const LikedPage = () => {
 	};
 
 	return (
-		<div className="flex flex-col sm:flex-row">
-			<SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
-			<MobileTopNav />
-			<main
-				className={`${
-					isOpen ? "ml-0 sm:ml-[100px]" : "ml-0 sm:ml-[280px]"
-				} py-[64px] px-8 w-full transition-all duration-300`}
-			>
-				<Tabs
-					value={value}
-					onChange={handleChange}
-					textColor="inherit"
-					className="overflow-scroll"
-					indicatorColor="secondary"
-					aria-label="icon position tabs example"
-					centered
-				>
-					<Tab
-						icon={<ThumbUpIcon />}
-						iconPosition="start"
-						label="Liked"
-						{...a11yProps(0)}
-					/>
-					<Tab
-						icon={<MoodIcon />}
-						iconPosition="start"
-						label="Liked You"
-						{...a11yProps(1)}
-					/>
-				</Tabs>
-				<CustomTabPanel value={value} index={0}>
-					<Liked />
-				</CustomTabPanel>
-				<CustomTabPanel value={value} index={1}>
-					<LikedYou />
-				</CustomTabPanel>
-			</main>
-			<MobileNav />
-		</div>
-	);
+    <div className="flex flex-col sm:flex-row">
+      <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
+      <MobileTopNav />
+      <main
+        className={`${
+          isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
+        } py-[64px] px-8 w-full transition-all duration-300 bg-[#d4c4fb1d]`}
+      >
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          textColor="inherit"
+          className="overflow-scroll"
+          indicatorColor="secondary"
+          aria-label="icon position tabs example"
+          centered
+        >
+          <Tab
+            icon={<ThumbUpIcon />}
+            iconPosition="start"
+            label="Liked"
+            {...a11yProps(0)}
+          />
+          <Tab
+            icon={<MoodIcon />}
+            iconPosition="start"
+            label="Liked You"
+            {...a11yProps(1)}
+          />
+        </Tabs>
+        <CustomTabPanel value={value} index={0}>
+          <Liked />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <LikedYou />
+        </CustomTabPanel>
+      </main>
+      <MobileNav />
+    </div>
+  );
 };
 
 export default LikedPage;
