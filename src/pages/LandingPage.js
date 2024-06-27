@@ -1,6 +1,5 @@
 import React from 'react';
 import Navbar from '../components/landingPage/Navbar';
-import Section from '../components/landingPage/Section';
 import FrequentlyAskedQuestions from '../components/landingPage/FAQ';
 import Header from '../components/landingPage/Header';
 import Footer from '../components/landingPage/Footer';
