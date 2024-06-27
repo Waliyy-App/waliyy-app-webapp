@@ -11,7 +11,7 @@ const Navbar = () => {
 		setToggleMobileMenu(!toggleMobileMenu);
 	};
 	return (
-		<div className="px-6 sm:px-12 gap-4 flex justify-between items-center w-4/5 mx-auto bg-white dark:bg-white">
+		<div className="px-6 sm:px-12 gap-4 flex justify-between items-center w-4/5 mx-auto bg-white dark:bg-white pb-4">
 			<NavLink to="/">
 				<img src={Logo} alt="logo" className="w-20" />
 			</NavLink>

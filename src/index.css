@@ -97,3 +97,8 @@ main {
     width: 350px;
   }
 }
+
+
+.hero-section{
+ background: linear-gradient(to bottom, #a37eff37, #FFF4F6);
+}
