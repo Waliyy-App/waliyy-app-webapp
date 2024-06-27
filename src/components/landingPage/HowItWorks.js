@@ -36,7 +36,7 @@ const HowItWorks = () => {
               Complete your Profile
             </p>
             <p>
-              Personalize your Waliyy App experience by completing your profile.
+              Personalize your WaliyyApp experience by completing your profile.
               Provide information about yourself, such as your background,
               hobbies, and interests. This helps others get to know you better
               and enhances your experience within the app.
@@ -78,7 +78,7 @@ const HowItWorks = () => {
                 pricing page
               </Link>
               . Once your subscription is confirmed, your account will be fully
-              activated, allowing you to make the most of your Waliyy App
+              activated, allowing you to make the most of your WaliyyApp
               experience.
             </p>
           </div>
