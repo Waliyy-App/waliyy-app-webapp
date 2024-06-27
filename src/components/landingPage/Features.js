@@ -13,14 +13,14 @@ const Features = () => {
         <div className="flex h-full items-center mb-10 text-[#2d133a]">
           <p className="text-3xl font-bold">What sets us apart</p>
         </div>
-        
+
         <div className="flex flex-col bg-white rounded-xl px-4 gap-4 py-8">
-          <div className="">
-            <img src={Halal} alt="" />
+          <div className="w-8 h-8">
+            <img src={Halal} alt="" className="h-full w-full object-cover" />
           </div>
           <div className="text-[#2d133a] flex flex-col gap-2">
-            <p className="text-2xl font-bold">Halal Matchmaking</p>
-            <p className="text-lg">
+            <p className="text-xl font-bold">Halal Matchmaking</p>
+            <p className="">
               Our platform is dedicated to providing a halal matchmaking
               experience, adhering to Islamic principles and values.
             </p>
@@ -28,12 +28,12 @@ const Features = () => {
         </div>
 
         <div className="flex flex-col bg-white rounded-xl px-4 gap-4 py-8">
-          <div className="">
-            <FilterIcon />
+          <div className="w-8 h-8">
+            <FilterIcon className="h-full w-full object-cover" />
           </div>
           <div className="text-[#2d133a] flex flex-col gap-2">
-            <p className="text-2xl font-bold">Smart Filter</p>
-            <p className="text-lg">
+            <p className="text-xl font-bold">Smart Filter</p>
+            <p className="">
               Our filters help you set your children’s preferences to quickly
               identify compatible matches tailored just for them.
             </p>
@@ -41,12 +41,12 @@ const Features = () => {
         </div>
 
         <div className="flex flex-col bg-white rounded-xl px-4 gap-4 py-8">
-          <div className="w-[50px] h-[50px]">
+          <div className="w-8 h-8">
             <img src={Koran} alt="" className="h-full w-full object-cover" />
           </div>
           <div className="text-[#2d133a] flex flex-col gap-2">
-            <p className="text-2xl font-bold capitalize">islamic values</p>
-            <p className="text-lg">
+            <p className="text-xl font-bold capitalize">islamic values</p>
+            <p className="">
               Our platform is guided by Islamic values, providing a safe and
               supportive community where you can connect with others who share
               your beliefs and values. We're committed to helping you find a
@@ -57,12 +57,12 @@ const Features = () => {
         </div>
 
         <div className="flex flex-col bg-white rounded-xl px-4 gap-4 py-8">
-          <div className="">
-            <img src={Secure} alt="" />
+          <div className="w-8 h-8">
+            <img src={Secure} alt="" className="h-full w-full object-cover" />
           </div>
           <div className="text-[#2d133a] flex flex-col gap-2">
-            <p className="text-2xl font-bold capitalize">strict privacy</p>
-            <p className="text-lg">
+            <p className="text-xl font-bold capitalize">strict privacy</p>
+            <p className="">
               We take your privacy very seriously, ensuring that your personal
               information secure and only accessible to those you authorize. Our
               strict privacy policy allows you to focus on finding the right
@@ -72,14 +72,14 @@ const Features = () => {
         </div>
 
         <div className="flex flex-col bg-white rounded-xl px-4 gap-4 py-8">
-          <div className="w-[50px] h-[50px]">
+          <div className="w-8 h-8">
             <img src={UX} alt="" className="h-full w-full object-cover" />
           </div>
           <div className="text-[#2d133a] flex flex-col gap-2">
-            <p className="text-2xl font-bold capitalize">
+            <p className="text-xl font-bold capitalize">
               user-friendly interface
             </p>
-            <p className="text-lg">
+            <p className="">
               Our user-friendly interface makes it easy to navigate and find the
               right match for you. With a simple and intuitive design, you can
               quickly browse profiles, connect with others, and find the perfect
