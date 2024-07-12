@@ -6,13 +6,13 @@ export default function PersonalDetailsForm() {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col sm:flex-row justify-between gap-12">
-        <TextInput label="First Name" name="firstName" type="text" />
-        <TextInput label="Last Name" name="lastName" type="text" />
+        <TextInput label="First Name*" name="firstName" type="text"/>
+        <TextInput label="Last Name*" name="lastName" type="text" />
       </div>
 
       <div className="flex flex-col sm:flex-row justify-between gap-12">
-        <TextInput label="Date of Birth" name="dateOfBirth" type="date" />
-        <SelectInput label="Gender" name="gender">
+        <TextInput label="Date of Birth*" name="dateOfBirth" type="date" />
+        <SelectInput label="Gender*" name="gender">
           <option value="">Select option</option>
           <option value="FEMALE">Female</option>
           <option value="MALE">Male</option>
@@ -20,7 +20,7 @@ export default function PersonalDetailsForm() {
       </div>
 
       <div className="flex flex-col sm:flex-row justify-between gap-12">
-        <SelectInput label="Genotype" name="genotype">
+        <SelectInput label="Genotype*" name="genotype">
           <option value="">Select option</option>
           {genotypeOption.map((option) => (
             <option key={option.value} value={option.value}>
@@ -29,13 +29,13 @@ export default function PersonalDetailsForm() {
           ))}
         </SelectInput>
 
-        <TextInput label="Height (m)" name="height" type="number" />
+        <TextInput label="Height (m)*" name="height" type="number" placeholder='Height must be in metres' />
 
-        <TextInput label="Weight (kg)" name="weight" type="number" />
+        <TextInput label="Weight (kg)*" name="weight" type="number" placeholder='Weight must be in kilogram' />
       </div>
 
       <div className="flex flex-col sm:flex-row justify-between gap-12">
-        <SelectInput label="Marital Status" name="maritalStatus">
+        <SelectInput label="Marital Status*" name="maritalStatus">
           <option value="">Select option</option>
           {maritalStatusOption.map((option) => (
             <option key={option.label} value={option.value}>
@@ -44,7 +44,7 @@ export default function PersonalDetailsForm() {
           ))}
         </SelectInput>
 
-        <SelectInput label="Do you have children?" name="haveChildren">
+        <SelectInput label="Do you have children?*" name="haveChildren">
           <option value="">Select option</option>
           <option value="true">Yes</option>
           <option value="false">No</option>
@@ -54,17 +54,17 @@ export default function PersonalDetailsForm() {
       <div className="flex flex-col gap-4">
         <p className="text-[#665e6b] text-lg font-semibold">Do you...</p>
         <div className="flex flex-col sm:flex-row justify-between gap-12">
-          <SelectInput label="Smoke?" name="smoke">
+          <SelectInput label="Smoke?*" name="smoke">
             <option value="">Select option</option>
             <option value="true">Yes</option>
             <option value="false">No</option>
           </SelectInput>
-          <SelectInput label="Drink?" name="drink">
+          <SelectInput label="Drink?*" name="drink">
             <option value="">Select option</option>
             <option value="true">Yes</option>
             <option value="false">No</option>
           </SelectInput>
-          <SelectInput label="Have any addiction?" name="addiction">
+          <SelectInput label="Have any addiction?*" name="addiction">
             <option value="">Select option</option>
             <option value="true">Yes</option>
             <option value="false">No</option>

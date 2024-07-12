@@ -6,7 +6,7 @@ export default function NationalityForm(){
   return (
    <div className="flex flex-col gap-10">
         <div className="flex flex-col sm:flex-row justify-between gap-12">
-          <SelectInput label="Nationality" name="citizenship">
+          <SelectInput label="Nationality*" name="citizenship">
             <option value="">Select option</option>
             {citizenshipOptions.map((option) => (
               <option key={option.id} value={option.value}>
@@ -15,7 +15,7 @@ export default function NationalityForm(){
             ))}
           </SelectInput>
 
-          <SelectInput label="Country of Residence" name="residence">
+          <SelectInput label="Country of Residence*" name="residence">
             <option value="">Select option</option>
             {countryOptions.map((option) => (
               <option key={option.id} value={option.value}>
@@ -26,12 +26,12 @@ export default function NationalityForm(){
         </div>
 
         <div className="flex flex-col sm:flex-row justify-between gap-12">
-          <TextInput label="State of Origin" name="stateOfOrigin" type="text" />
-          <TextInput label="State/County of Residence" name="lga" type="text" />
+          <TextInput label="State of Origin*" name="stateOfOrigin" type="text" />
+          <TextInput label="State/County of Residence*" name="lga" type="text" />
         </div>
 
         <div className="flex flex-col sm:flex-row justify-between gap-12">
-          <SelectInput label="Are you mixed ethnicity" name="mixedEthnicity">
+          <SelectInput label="Are you mixed ethnicity*" name="mixedEthnicity">
             <option value="">Select option</option>
             <option value="true">Yes</option>
             <option value="false">No</option>
