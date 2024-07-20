@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useCookies } from "react-cookie";
-// import { useNavigate } from 'react-router-dom';
+import { decodeToken } from "../utils.js"
 
 export const AuthContext = React.createContext({
 	isLoggedIn: false,
@@ -11,12 +11,22 @@ export const AuthContext = React.createContext({
 
 export const AuthContextProvider = ({ children }) => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [user, setUser] = useState();
+	const [user, setUser] = useState(null);
 	const [cookies, setCookie, removeCookie] = useCookies(["waliyy_user"]);
 	const [token, setToken] = useState(cookies.waliyy_user);
 	const [data, setData] = useState({});
 	const [childId, setChildId] = useState("");
-	// const navigate = useNavigate();
+
+	const checkTokenExpiration = () => {
+		if (token) {
+			const decodedToken = decodeToken(token);
+			const currentTime = Date.now() / 1000;
+
+			if (decodedToken.exp < currentTime) {
+				logOut();
+			}
+		}
+	};
 
 	function handleChildId(id) {
 		localStorage.setItem("childId", id);
@@ -26,7 +36,7 @@ export const AuthContextProvider = ({ children }) => {
 	function storeAuthCookie(data) {
 		setCookie("waliyy_user", data.token, {
 			path: "/",
-			maxAge: 3600 * 24 * 1, // 30 days
+			maxAge: 3600 * 24 * 1, // 1 day
 		});
 		localStorage.setItem("user", JSON.stringify(data.user));
 		setUser(data.user);
@@ -35,13 +45,9 @@ export const AuthContextProvider = ({ children }) => {
 	}
 
 	function logOut() {
-		removeCookie("waliyy_user", {
-			path: "/",
-			maxAge: 3600 * 24 * 30,
-		});
-		setUser();
-		localStorage.removeItem("user");
-		localStorage.removeItem("childId");
+		removeCookie("waliyy_user", { path: "/" });
+		setUser(null);
+		localStorage.clear();
 		setIsLoggedIn(false);
 	}
 
@@ -49,10 +55,11 @@ export const AuthContextProvider = ({ children }) => {
 		if (cookies.waliyy_user) {
 			setToken(cookies.waliyy_user);
 			setIsLoggedIn(true);
-
 			const userData = JSON.parse(localStorage.getItem("user"));
 			setUser(userData);
+			checkTokenExpiration();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [cookies.waliyy_user]);
 
 	return (
