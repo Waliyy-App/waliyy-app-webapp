@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import SidebarComponent from '../components/sidebar/Sidebar';
 import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
-import { Link } from 'react-router-dom';
 import { usePersistedState } from '../utils.js';
 import MobileNav from '../components/sidebar/MobileBottomNav.js';
 import MobileTopNav from '../components/sidebar/MobileTopNav.js';
@@ -13,6 +13,8 @@ import Loader from '../components/Loader.js';
 
 const Dashboard = () => {
   const PAGE_NUMBER = 12;
+
+  const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
   const [child, setChild] = useState({});
@@ -25,6 +27,10 @@ const Dashboard = () => {
   const childId = localStorage.getItem('childId');
 
   const usersLength = recommedations?.length;
+
+  const goFilter = () => {
+    navigate('/filter', { state: { from: '/dashboard' } });
+  };
 
   useEffect(() => {
     const getSuitors = async () => {
@@ -99,9 +105,9 @@ const Dashboard = () => {
           <React.Fragment>
             <div className="flex justify-between items-center p-8 text-[#2D133A] sticky top-0 bg-white w-full z-[100]">
               <p className=" text-2xl font-semibold">{child?.firstName}</p>
-              <Link to="/filter">
+              <button onClick={goFilter}>
                 <HiOutlineAdjustmentsHorizontal className="h-8 w-8" />
-              </Link>
+              </button>
             </div>
             <div className="flex flex-col gap-y-8">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
