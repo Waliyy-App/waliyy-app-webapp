@@ -1,11 +1,29 @@
-import React from 'react';
-import { useAuthContext } from '../context/AuthContext';
-import { Navigate, Outlet } from 'react-router';
+import React from "react";
+import { useAuthContext } from "../context/AuthContext";
+import { Navigate, Outlet } from "react-router";
+import { decodeToken } from "../utils.js";
 
 const ProtectedRoute = () => {
-  const { user, isLoggedIn } = useAuthContext();
+	const { user, isLoggedIn, token, logOut } = useAuthContext();
 
-  return user && isLoggedIn ? <Outlet /> : <Navigate to="/login" replace />;
+	const checkTokenExpiration = () => {
+		if (token) {
+			const decodedToken = decodeToken(token);
+			const currentTime = Date.now() / 1000;
+
+			if (decodedToken.exp < currentTime) {
+				logOut();
+				return false;
+			}
+		}
+		return true;
+	};
+
+	return user && isLoggedIn && checkTokenExpiration() ? (
+		<Outlet />
+	) : (
+		<Navigate to="/login" replace />
+	);
 };
 
-export default ProtectedRoute; 
+export default ProtectedRoute;
