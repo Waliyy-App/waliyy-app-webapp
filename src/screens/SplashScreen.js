@@ -34,7 +34,7 @@ const SplashScreen = () => {
             />
             <div className="flex flex-col items-center jutify-center mt-8">
               <p className="text-2xl text-[#2D133A] font-medium mb-3">
-                Welcome to Waliyy App
+                Welcome to WaliyyApp
               </p>
               <p className="text-[#665e6b] text-center font-normal">
                 Where Waliyy play matchmakers, and hearts find their forever
