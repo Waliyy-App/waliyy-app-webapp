@@ -9,10 +9,12 @@ import AddIcon from '@mui/icons-material/Add';
 import PersonIcon from '@mui/icons-material/Person';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import { getChildren, logoutFunc } from '../../services';
+import { ThreeDots } from 'react-loader-spinner';
 
 const Navigation = () => {
   const [child, setChild] = useState({});
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [children, setChildren] = useState([]);
   const { token, logOut, handleChildId } = useAuthContext();
@@ -27,7 +29,9 @@ const Navigation = () => {
       try {
         const res = await getChildren(token);
         setChildren(res.data);
-      } catch (error) {}
+      } catch (error) {
+        throw new Error(error);
+      }
     };
 
     fetchChildren();
@@ -35,11 +39,14 @@ const Navigation = () => {
 
   useEffect(() => {
     async function getChildDetails() {
+      setLoading(true);
       try {
         const res = await getChild(childId, token);
         setChild(res?.data);
       } catch (err) {
         throw new Error(err);
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -69,9 +76,26 @@ const Navigation = () => {
     setOpenDropdown(!openDropdown);
   };
 
+  const username = (
+    <ThreeDots
+      visible={true}
+      height="24"
+      width="24"
+      color="#2D133A"
+      radius="9"
+      ariaLabel="three-dots-loading"
+      wrapperStyle={{}}
+      wrapperClass=""
+    />
+  );
+
   return (
     <div className="flex justify-between items-center p-8 shadow-xl  text-[#2D133A] sticky top-0 bg-white w-full z-[100]">
-      <p className=" text-2xl font-semibold">{child?.firstName}</p>
+      {loading ? (
+        username
+      ) : (
+        <p className=" text-2xl font-semibold">{child?.firstName}</p>
+      )}
       <div className="flex gap-4 items-center relative">
         <button
           onClick={goFilter}

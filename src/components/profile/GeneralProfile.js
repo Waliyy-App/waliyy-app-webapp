@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import SidebarComponent from '../sidebar/Sidebar';
 import ProfileHeader from './ProfileHeader';
 import Tabs from '@mui/material/Tabs';
@@ -14,6 +14,7 @@ import MobileTopNav from '../sidebar/MobileTopNav.js';
 import { getAllUsers, getMatch } from '../../services';
 import { useAuthContext } from '../../context/AuthContext';
 import Loader from '../Loader.js';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const GeneralProfile = () => {
   const [value, setValue] = useState(0);
@@ -24,6 +25,7 @@ const GeneralProfile = () => {
   const location = useLocation();
   const childId = localStorage.getItem('childId');
 
+  const navigate = useNavigate();
   const { token } = useAuthContext();
 
   const toggleMenu = () => {
@@ -69,6 +71,11 @@ const GeneralProfile = () => {
     }
   }, [childId, token, id, location.state]);
 
+  const goBack = () => {
+    navigate(-1);
+    console.log(navigate);
+  };
+
   return (
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
@@ -82,6 +89,13 @@ const GeneralProfile = () => {
           <Loader />
         ) : (
           <React.Fragment>
+            <button
+              onClick={goBack}
+              className="border mb-4 border-[#2D133A] text-[#2D133A] p-2 rounded flex items-center gap-2 "
+            >
+              <ArrowBackIcon />
+              Back
+            </button>
             <ProfileHeader
               firstName={child?.firstName}
               age={child?.age}
