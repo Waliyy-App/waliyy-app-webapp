@@ -1,52 +1,53 @@
-import React, { useState, useEffect } from "react";
-import SidebarComponent from "../components/sidebar/Sidebar";
-import { usePersistedState } from "../utils.js";
-import MobileNav from "../components/sidebar/MobileBottomNav.js";
-import MobileTopNav from "../components/sidebar/MobileTopNav.js";
-import ProfileCard from "../components/ProfileCard.js";
-import { getMatch } from "../services";
-import { useAuthContext } from "../context/AuthContext.js";
-import Loader from "../components/Loader.js";
+import React, { useState, useEffect } from 'react';
+import SidebarComponent from '../components/sidebar/Sidebar';
+import { usePersistedState } from '../utils.js';
+import MobileNav from '../components/sidebar/MobileBottomNav.js';
+import MobileTopNav from '../components/sidebar/MobileTopNav.js';
+import ProfileCard from '../components/ProfileCard.js';
+import { getMatch } from '../services';
+import { useAuthContext } from '../context/AuthContext.js';
+import Loader from '../components/Loader.js';
+import Navigation from '../components/sidebar/Navigation.js';
 
 const MatchPage = () => {
-	const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
-	const [isLoading, setIsLoading] = useState(false);
-	const [matches, setMatches] = useState([]);
-	const { token } = useAuthContext();
-	const childId = localStorage.getItem("childId");
-	const toggleMenu = () => {
-		setIsOpen(!isOpen);
-	};
+  const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [matches, setMatches] = useState([]);
+  const { token } = useAuthContext();
+  const childId = localStorage.getItem('childId');
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
-	useEffect(() => {
-		const getMatches = async () => {
-			try {
-				setIsLoading(true);
-				const res = await getMatch(childId, token);
-				setMatches(res?.data);
-			} catch (err) {
-				console.error(err);
-			} finally {
-				setIsLoading(false);
-			}
-		};
+  useEffect(() => {
+    const getMatches = async () => {
+      try {
+        setIsLoading(true);
+        const res = await getMatch(childId, token);
+        setMatches(res?.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-		getMatches();
-	}, [token, childId]);
+    getMatches();
+  }, [token, childId]);
 
-	return (
+  return (
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
-      <MobileTopNav />
       <main
         className={`${
           isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
-        } py-[64px] px-8 w-full transition-all duration-300 bg-[#d4c4fb1d]`}
+        }  w-full transition-all duration-300 bg-[#d4c4fb1d]`}
       >
+        <Navigation />
         {isLoading ? (
           <Loader />
         ) : (
-          <div>
+          <div className="py-[64px] px-8">
             <div className="flex flex-col matches?.match?-center justify-center gap-2 text-center px-8 pt-8 pb-[64px]">
               <p className="text-[#BA9FFE]">Match</p>
               <p className="text-[#2D133A] font-bold text-4xl">

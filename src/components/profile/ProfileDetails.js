@@ -14,6 +14,7 @@ import MobileTopNav from '../sidebar/MobileTopNav.js';
 import { getChild } from '../../services';
 import { useAuthContext } from '../../context/AuthContext';
 import Loader from '../Loader.js';
+import Navigation from '../sidebar/Navigation.js';
 
 const ProfileDetails = () => {
   const [value, setValue] = useState(0);
@@ -48,21 +49,21 @@ const ProfileDetails = () => {
     getChildDetails();
   }, [id, token]);
 
-  console.log(child)
+  console.log(child);
 
   return (
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
-      <MobileTopNav />
       <main
         className={`${
           isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
-        } py-[64px] px-8 w-full transition-all duration-300`}
+        } w-full transition-all duration-300`}
       >
+        <Navigation />
         {loading ? (
           <Loader />
         ) : (
-          <React.Fragment>
+          <div className=" py-[64px] px-8">
             <ProfileHeader
               firstName={child.firstName}
               age={child.age}
@@ -124,7 +125,7 @@ const ProfileDetails = () => {
                 value={value}
               />
             </div>
-          </React.Fragment>
+          </div>
         )}
       </main>
       <MobileNav />

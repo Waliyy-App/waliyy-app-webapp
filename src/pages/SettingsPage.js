@@ -14,6 +14,7 @@ import Billing from '../components/settings/Billing.js';
 import { useAuthContext } from '../context/AuthContext.js';
 import { getChild } from '../services';
 import Loader from '../components/Loader.js';
+import Navigation from '../components/sidebar/Navigation.js';
 
 const SettingsPage = () => {
   const [value, setValue] = useState(0);
@@ -40,7 +41,7 @@ const SettingsPage = () => {
 
     getCurrentChild();
   }, [childId, token]);
-  
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -54,16 +55,16 @@ const SettingsPage = () => {
   return (
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
-      <MobileTopNav />
       <main
         className={`${
           isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
-        } py-[64px] px-8 w-full transition-all duration-300 bg-[#d4c4fb1d]`}
+        }  w-full transition-all duration-300 bg-[#d4c4fb1d]`}
       >
+        <Navigation />
         {loading ? (
           <Loader />
         ) : (
-          <React.Fragment>
+          <div className="py-[64px] px-8 ">
             <SettingsHeader isUser={isUser} childId={childId} child={child} />
             <div>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -86,7 +87,7 @@ const SettingsPage = () => {
               <Billing value={value} />
               <AccountSettings value={value} />
             </div>
-          </React.Fragment>
+          </div>
         )}
       </main>
       <MobileNav />

@@ -3,13 +3,14 @@ import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
 import { getChild } from '../../services/index.js';
 import { useAuthContext } from '../../context/AuthContext.js';
 import { toast } from 'react-toastify';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
 import PersonIcon from '@mui/icons-material/Person';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import { getChildren, logoutFunc } from '../../services';
 import { ThreeDots } from 'react-loader-spinner';
+import Logo from '../../assets/logo/Untitled-1-01.jpg';
 
 const Navigation = () => {
   const [child, setChild] = useState({});
@@ -113,6 +114,13 @@ const Navigation = () => {
 
         {openDropdown && (
           <div className="flex flex-col bg-white p-4 rounded-2xl absolute top-16 right-0 w-[200px] z-[100] shadow">
+            <Link className="flex sm:hidden h-[50px] w-[50px] mx-auto" to="/dashboard">
+              <img
+                src={Logo}
+                alt="logo"
+                className="h-full w-full object-fill rounded-2xl"
+              />
+            </Link>
             {children && (
               <div className="flex flex-col text-[#2D133A] px-3">
                 <p className="text-xs my-6 flex items-center gap-1">

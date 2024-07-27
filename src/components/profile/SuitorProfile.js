@@ -79,7 +79,6 @@ const ProfileDetails = () => {
   return (
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
-      <MobileTopNav />
       <main
         className={`${
           isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'

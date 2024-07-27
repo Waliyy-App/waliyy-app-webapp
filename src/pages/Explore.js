@@ -8,6 +8,7 @@ import ProfileCard from '../components/ProfileCard.js';
 import { useAuthContext } from '../context/AuthContext.js';
 import { getAllUsers } from '../services/index.js';
 import Loader from '../components/Loader.js';
+import Navigation from '../components/sidebar/Navigation.js';
 
 const Explore = () => {
   const PAGE_NUMBER = 12;
@@ -67,17 +68,17 @@ const Explore = () => {
   return (
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
-      <MobileTopNav />
       <main
         className={`${
           isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
-        } py-[64px] px-8 w-full transition-all duration-300 bg-[#d4c4fb1d]`}
+        }  w-full transition-all duration-300 bg-[#d4c4fb1d]`}
       >
+        <Navigation />
         {loading ? (
           <Loader />
         ) : (
           <React.Fragment>
-            <div className="flex flex-col gap-y-8">
+            <div className="flex flex-col gap-y-8 py-[64px] px-8">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {currRecommendations?.map((items) => (
                   <ProfileCard

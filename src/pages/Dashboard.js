@@ -79,8 +79,6 @@ const Dashboard = () => {
     }
   }
 
- 
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -89,19 +87,16 @@ const Dashboard = () => {
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
 
-      <MobileTopNav />
-
       <main
         className={`${
           isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
         }  w-full transition-all duration-300 bg-[#d4c4fb1d] min-h-screen`}
       >
+        <Navigation />
         {loading ? (
           <Loader />
         ) : (
           <React.Fragment>
-            <Navigation />
-
             <div className="px-8 py-[64px] flex flex-col gap-y-8">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {currRecommendations?.map((items) => (
