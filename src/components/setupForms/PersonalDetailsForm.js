@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TextInput, SelectInput } from '../../common/form';
 import { genotypeOption, maritalStatusOption } from '../../data/formValues';
 

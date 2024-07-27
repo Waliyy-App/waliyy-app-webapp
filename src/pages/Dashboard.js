@@ -6,7 +6,7 @@ import MobileNav from '../components/sidebar/MobileBottomNav.js';
 import MobileTopNav from '../components/sidebar/MobileTopNav.js';
 import ProfileCard from '../components/ProfileCard.js';
 import { useAuthContext } from '../context/AuthContext.js';
-import { getChild, getRecommedations } from '../services/index.js';
+import { getRecommedations } from '../services/index.js';
 import Loader from '../components/Loader.js';
 import Navigation from '../components/sidebar/Navigation.js';
 
@@ -14,7 +14,7 @@ const Dashboard = () => {
   const PAGE_NUMBER = 12;
 
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
-  const [child, setChild] = useState({});
+  // const [child, setChild] = useState({});
   const [loading, setLoading] = useState(false);
   const [recommedations, setRecommendations] = useState([]);
   const [currRecommendations, setCurrRecommendations] = useState([]);
@@ -25,21 +25,21 @@ const Dashboard = () => {
 
   const usersLength = recommedations?.length;
 
-  useEffect(() => {
-    async function getChildDetails() {
-      setLoading(true);
-      try {
-        const res = await getChild(childId, token);
-        setChild(res?.data);
-      } catch (err) {
-        throw new Error(err);
-      } finally {
-        setLoading(false);
-      }
-    }
+  // useEffect(() => {
+  //   async function getChildDetails() {
+  //     setLoading(true);
+  //     try {
+  //       const res = await getChild(childId, token);
+  //       setChild(res?.data);
+  //     } catch (err) {
+  //       throw new Error(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
 
-    getChildDetails();
-  }, [childId, token]);
+  //   getChildDetails();
+  // }, [childId, token]);
 
   useEffect(() => {
     const getSuitors = async () => {
@@ -79,21 +79,7 @@ const Dashboard = () => {
     }
   }
 
-  useEffect(() => {
-    async function getChildDetails() {
-      setLoading(true);
-      try {
-        const res = await getChild(childId, token);
-        setChild(res?.data);
-      } catch (err) {
-        throw new Error(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    getChildDetails();
-  }, [childId, token]);
+ 
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
