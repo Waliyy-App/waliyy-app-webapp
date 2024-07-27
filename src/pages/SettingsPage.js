@@ -8,7 +8,6 @@ import { usePersistedState, a11yProps } from '../utils.js';
 import SettingsHeader from '../components/settings/SettingsHeader.js';
 import AccountSettings from '../components/settings/AccountSettings.js';
 import MobileNav from '../components/sidebar/MobileBottomNav.js';
-import MobileTopNav from '../components/sidebar/MobileTopNav.js';
 import UserSetting from '../components/settings/UserSetting.js';
 import Billing from '../components/settings/Billing.js';
 import { useAuthContext } from '../context/AuthContext.js';

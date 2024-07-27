@@ -4,7 +4,6 @@ import SidebarComponent from '../components/sidebar/Sidebar';
 import { FiCheck } from 'react-icons/fi';
 import { usePersistedState } from '../utils.js';
 import MobileNav from '../components/sidebar/MobileBottomNav.js';
-import MobileTopNav from '../components/sidebar/MobileTopNav.js';
 import { getPlans, makePayment } from '../services/index.js';
 import { useAuthContext } from '../context/AuthContext.js';
 import Loader from '../components/Loader.js';

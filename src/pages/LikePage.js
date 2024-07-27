@@ -9,7 +9,6 @@ import Liked from '../components/likes/Liked';
 import LikedYou from '../components/likes/LikedYou';
 import { usePersistedState, a11yProps } from '../utils.js';
 import MobileNav from '../components/sidebar/MobileBottomNav.js';
-import MobileTopNav from '../components/sidebar/MobileTopNav.js';
 import Navigation from '../components/sidebar/Navigation.js';
 
 const LikedPage = () => {

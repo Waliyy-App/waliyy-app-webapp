@@ -10,7 +10,6 @@ import EduProfile from './EduProfile';
 import DeenProfile from './DeenProfile';
 import { usePersistedState, a11yProps } from '../../utils.js';
 import MobileNav from '../sidebar/MobileBottomNav.js';
-import MobileTopNav from '../sidebar/MobileTopNav.js';
 import { getChild } from '../../services';
 import { useAuthContext } from '../../context/AuthContext';
 import Loader from '../Loader.js';

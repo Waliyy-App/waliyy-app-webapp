@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import SidebarComponent from '../components/sidebar/Sidebar';
 import { usePersistedState } from '../utils.js';
 import MobileNav from '../components/sidebar/MobileBottomNav.js';
-import MobileTopNav from '../components/sidebar/MobileTopNav.js';
 import ProfileCard from '../components/ProfileCard.js';
 import { getMatch } from '../services';
 import { useAuthContext } from '../context/AuthContext.js';
