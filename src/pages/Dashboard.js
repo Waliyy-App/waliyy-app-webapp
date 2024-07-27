@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import SidebarComponent from '../components/sidebar/Sidebar';
-import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
 import { usePersistedState } from '../utils.js';
 import MobileNav from '../components/sidebar/MobileBottomNav.js';
 import MobileTopNav from '../components/sidebar/MobileTopNav.js';
@@ -10,11 +8,10 @@ import ProfileCard from '../components/ProfileCard.js';
 import { useAuthContext } from '../context/AuthContext.js';
 import { getChild, getRecommedations } from '../services/index.js';
 import Loader from '../components/Loader.js';
+import Navigation from '../components/sidebar/Navigation.js';
 
 const Dashboard = () => {
   const PAGE_NUMBER = 12;
-
-  const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
   const [child, setChild] = useState({});
@@ -28,9 +25,21 @@ const Dashboard = () => {
 
   const usersLength = recommedations?.length;
 
-  const goFilter = () => {
-    navigate('/filter', { state: { from: '/dashboard' } });
-  };
+  useEffect(() => {
+    async function getChildDetails() {
+      setLoading(true);
+      try {
+        const res = await getChild(childId, token);
+        setChild(res?.data);
+      } catch (err) {
+        throw new Error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    getChildDetails();
+  }, [childId, token]);
 
   useEffect(() => {
     const getSuitors = async () => {
@@ -93,23 +102,21 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
+
       <MobileTopNav />
+
       <main
         className={`${
           isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
-        } py-[64px] px-8 w-full transition-all duration-300 bg-[#d4c4fb1d] min-h-screen`}
+        }  w-full transition-all duration-300 bg-[#d4c4fb1d] min-h-screen`}
       >
         {loading ? (
           <Loader />
         ) : (
           <React.Fragment>
-            <div className="flex justify-between items-center p-8 text-[#2D133A] sticky top-0 bg-white w-full z-[100]">
-              <p className=" text-2xl font-semibold">{child?.firstName}</p>
-              <button onClick={goFilter}>
-                <HiOutlineAdjustmentsHorizontal className="h-8 w-8" />
-              </button>
-            </div>
-            <div className="flex flex-col gap-y-8">
+            <Navigation />
+
+            <div className="px-8 py-[64px] flex flex-col gap-y-8">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {currRecommendations?.map((items) => (
                   <ProfileCard

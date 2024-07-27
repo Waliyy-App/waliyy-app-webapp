@@ -89,6 +89,7 @@ const ProfileDetails = () => {
               lga={child?.lga}
               residence={child?.countryofResidence}
               gender={child?.gender}
+              displayID = {child?.displayId}
             />
 
             <div>

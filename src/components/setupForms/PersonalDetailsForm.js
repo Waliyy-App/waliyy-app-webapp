@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextInput, SelectInput } from '../../common/form';
 import { genotypeOption, maritalStatusOption } from '../../data/formValues';
 
@@ -6,7 +6,7 @@ export default function PersonalDetailsForm() {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col sm:flex-row justify-between gap-12">
-        <TextInput label="First Name*" name="firstName" type="text"/>
+        <TextInput label="First Name*" name="firstName" type="text" />
         <TextInput label="Last Name*" name="lastName" type="text" />
       </div>
 
@@ -29,9 +29,20 @@ export default function PersonalDetailsForm() {
           ))}
         </SelectInput>
 
-        <TextInput label="Height (m)*" name="height" type="number" placeholder='Height must be in metres' />
+        <div className="flex flex-col">
+          <p className="text-sm font-medium mb-0 text-[#2D133A]">Height(in)*</p>
+          <div className="flex items-center gap-3">
+            <TextInput name="feet" type="number" placeholder="feet" />
+            <TextInput name="inches" type="number" placeholder="inches" />
+          </div>
+        </div>
 
-        <TextInput label="Weight (kg)*" name="weight" type="number" placeholder='Weight must be in kilogram' />
+        <TextInput
+          label="Weight (kg)*"
+          name="weight"
+          type="number"
+          placeholder="Weight must be in kilogram"
+        />
       </div>
 
       <div className="flex flex-col sm:flex-row justify-between gap-12">

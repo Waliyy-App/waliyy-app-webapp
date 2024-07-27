@@ -1,67 +1,21 @@
-import React, { useState, useEffect } from "react";
-import Logo from "../../assets/logo/logo-nobg-cropped.png";
-import LogoIcon from "../../assets/logo/logo-icon.png";
-import { toast } from "react-toastify";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import ThumbUpIcon from "@mui/icons-material/ThumbUpAlt";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import HomeIcon from "@mui/icons-material/Home";
-import LogoutIcon from "@mui/icons-material/Logout";
-import MenuIcon from "@mui/icons-material/Menu";
-import SettingsIcon from "@mui/icons-material/Settings";
-import AddIcon from "@mui/icons-material/Add";
-import PersonIcon from "@mui/icons-material/Person";
+import React from 'react';
+import Logo from '../../assets/logo/logo-nobg-cropped.png';
+import LogoIcon from '../../assets/logo/logo-icon.png';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import HomeIcon from '@mui/icons-material/Home';
+import SettingsIcon from '@mui/icons-material/Settings';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
-import { getChildren, logoutFunc } from "../../services";
-import { useAuthContext } from "../../context/AuthContext";
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 const SidebarComponent = ({ isOpen, toggleMenu }) => {
-	const [openDropdown, setOpenDropdown] = useState(false);
-	const [children, setChildren] = useState([]);
-	const location = useLocation();
-	const navigate = useNavigate();
-	const { token, logOut, handleChildId } = useAuthContext();
-	const childId = localStorage.getItem("childId");
+  const location = useLocation();
+  const childId = localStorage.getItem('childId');
 
-	useEffect(() => {
-		const fetchChildren = async () => {
-			try {
-				const res = await getChildren(token);
-				setChildren(res.data);
-			} catch (error) {}
-		};
-
-		fetchChildren();
-	}, [token]);
-
-	const handleChildLogin = (id) => {
-		handleChildId(id);
-		navigate("/dashboard");
-		setOpenDropdown(false);
-	};
-
-	const handleLogout = async () => {
-		try {
-			const res = await logoutFunc(token);
-			logOut();
-			navigate("/");
-			toast.success(res.message);
-		} catch (error) {
-			toast.error(error.response.data.message);
-			logOut();
-			navigate("/login");
-		}
-	};
-
-	const toggleDropdown = () => {
-		setOpenDropdown(!openDropdown);
-	};
-
-	return (
+  return (
     <React.Fragment>
       <div className="h-screen hidden sm:flex">
         <aside
@@ -105,18 +59,6 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
               </NavLink>
 
               <NavLink
-                to="/explore"
-                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${
-                  isOpen && 'justify-center'
-                }  ${
-                  location.pathname === '/explore'
-                    ? 'text-white bg-[#BA9FFE] box-shadow-style'
-                    : 'text-[#2D133A]'
-                }`}
-              >
-                <PersonSearchIcon /> {isOpen ? '' : 'Explore Waliyy'}
-              </NavLink>
-              <NavLink
                 to="/likes"
                 className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${
                   isOpen && 'justify-center'
@@ -143,6 +85,19 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
               </NavLink>
 
               <NavLink
+                to="/explore"
+                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${
+                  isOpen && 'justify-center'
+                }  ${
+                  location.pathname === '/explore'
+                    ? 'text-white bg-[#BA9FFE] box-shadow-style'
+                    : 'text-[#2D133A]'
+                }`}
+              >
+                <PersonSearchIcon /> {isOpen ? '' : 'Explore'}
+              </NavLink>
+
+              <NavLink
                 to={`/profile/${childId}`}
                 state={{ from: 'profile' }}
                 className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 cursor-pointer ${
@@ -156,67 +111,22 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
                 <AccountBoxIcon />
                 {isOpen ? '' : 'Profile'}
               </NavLink>
+
+              <NavLink
+                to={`/settings`}
+                state={{ from: 'profile' }}
+                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 cursor-pointer ${
+                  isOpen && 'justify-center'
+                }  ${
+                  location.pathname === `/settings`
+                    ? 'text-white bg-[#BA9FFE] box-shadow-style'
+                    : 'text-[#2D133A]'
+                }`}
+              >
+                <SettingsIcon />
+                {isOpen ? '' : 'Settings'}
+              </NavLink>
             </div>
-          </div>
-          <div className="flex flex-col  gap-6 relative">
-            <div className="border border-[#2D133A] w-full"></div>
-            <div
-              onClick={toggleDropdown}
-              className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 cursor-pointer ${
-                isOpen && 'justify-center'
-              }`}
-            >
-              <MenuIcon /> {isOpen ? '' : 'More'}
-            </div>
-
-            {openDropdown && (
-              <div className="flex flex-col bg-white p-4 rounded-2xl absolute bottom-14 left-0 w-full z-[100] shadow">
-                <NavLink
-                  to="/settings"
-                  className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"
-                >
-                  <SettingsIcon /> {isOpen ? '' : 'Settings'}
-                </NavLink>
-
-                <div className="border border-[#2d133a1f] w-full mt-10"></div>
-
-                {children && (
-                  <div className="flex flex-col text-[#2D133A] px-3">
-                    <p className="text-xs my-6 flex items-center gap-1">
-                      {isOpen ? '' : 'Switch Accounts'}
-                      <SwapHorizIcon />
-                    </p>
-                    <div className="flex flex-col max-h-[120px] overflow-y-auto">
-                      {children.map((child, index) => (
-                        <button
-                          onClick={() => handleChildLogin(child?.id)}
-                          className="flex p-2 rounded-md gap-3 items-center hover:text-white hover:bg-[#BA9FFE] font-medium"
-                          key={index}
-                        >
-                          <PersonIcon /> {child.firstName}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <NavLink
-                  to="/get-started"
-                  className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"
-                >
-                  <AddIcon /> {isOpen ? '' : 'Add Account'}
-                </NavLink>
-
-                <div className="border border-[#2D133A] w-full mt-10 mb-4"></div>
-
-                <button
-                  className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"
-                  onClick={() => handleLogout()}
-                >
-                  <LogoutIcon /> {isOpen ? '' : 'Logout'}
-                </button>
-              </div>
-            )}
           </div>
         </aside>
       </div>

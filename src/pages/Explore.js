@@ -90,7 +90,7 @@ const Explore = () => {
                     about={items.about}
                     profession={items.profession}
                     gender={items.gender}
-                    displayID={items?.displayID}
+                    displayID={items?.displayId}
                     href={`/explore/${items.id}`}
                   />
                 ))}

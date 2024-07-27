@@ -34,7 +34,7 @@ export const Filters = () => {
 
   const showBackButton = location.state?.from === '/dashboard';
 
-  console.log(location, navigate)
+  console.log(selectedCountries)
 
   const goBack = () => {
     navigate(-1);

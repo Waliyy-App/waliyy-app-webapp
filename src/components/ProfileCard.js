@@ -17,7 +17,6 @@ const ProfileCard = ({
   about,
   residence,
   age,
-  firstName,
   lga,
   profession,
   gender,
@@ -48,22 +47,22 @@ const ProfileCard = ({
 
         <div className="text-[#2D133A]">
           <div className="flex items-center gap-2  text-2xl font-bold">
-            <p>{firstName || displayID}</p>
+            <p>{displayID ? displayID : 'Waliyy User'}</p>
             <BsFillDiamondFill className="h-2 w-2" />
             <p>{age}</p>
           </div>
 
           <div className="flex items-end gap-1 mb-2">
             <LocationOnIcon />
-            <p className="text-sm font-light">
+            <p className="text-sm font-light capitalize">
               {lga}, {residence}
             </p>
           </div>
 
           <div className="flex items-center gap-1 ">
             <WorkIcon />
-            <p className="text-sm font-light">
-              <p>{profession}</p>
+            <p className="text-sm font-light capitalize">
+             {profession}
             </p>
           </div>
         </div>

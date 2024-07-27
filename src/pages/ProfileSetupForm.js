@@ -107,6 +107,11 @@ export default function ProfileSetupForm() {
           gender: values.gender,
           genotype: values.genotype,
           height: values.height,
+          // height: {
+          //   feet: values.feet,
+          //   inches: values.inches,
+          // },
+
           weight: values.weight,
           maritalStatus: values.maritalStatus,
           hasChildren: values.haveChildren,
