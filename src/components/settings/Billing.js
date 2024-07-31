@@ -25,7 +25,7 @@ const Billing = ({ value }) => {
     };
 
     getHistory();
-  }, [token]);
+  }, [token, hasSubscription]);
 
   useEffect(() => {
     const getActivePlan = async () => {
