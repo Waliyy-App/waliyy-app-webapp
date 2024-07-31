@@ -38,7 +38,7 @@ const Billing = ({ value }) => {
     };
 
     getActivePlan();
-  }, [token]);
+  }, [token, hasSubscription]);
 
   return (
     <CustomTabPanel value={value} index={1} className="w-full">
