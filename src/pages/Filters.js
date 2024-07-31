@@ -55,13 +55,13 @@ export const Filters = () => {
   }, [childId, token]);
 
   const initialValues = {
-    minAge: '',
-    maxAge: '',
+    minAge: null,
+    maxAge: null,
     genotypes: [],
-    minHeight: '',
-    maxHeight: '',
-    minWeight: '',
-    maxWeight: '',
+    minHeight: null,
+    maxHeight: null,
+    minWeight: null,
+    maxWeight: null,
     maritalStatus: [],
     levelOfEducation: [],
     employmentStatus: [],
@@ -123,6 +123,7 @@ export const Filters = () => {
             initialValues={initialValues}
             onSubmit={(values) => handleSubmit(values)}
           >
+            {({ handleSubmit }) => (
             <Form className="flex flex-col gap-10">
               <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
                 <div className="flex items-center gap-5 w-full">
@@ -315,27 +316,30 @@ export const Filters = () => {
                   Has an Addiction
                 </CheckboxInputTwo>
               </div>
-
               <div className="flex items-center w-full justify-between">
-                {showBackButton && (
-                  <button
-                    className="my-11 mb-16 hover:bg-[#2D133A] border border-[#BA9FFE] rounded-lg h-11 text-[#2D133A] hover:text-white font-medium box-shadow-style transition-all duration-300 w-[250px]"
-                    onClick={goBack}
-                  >
-                    Back
-                  </button>
-                )}
-                <button
-                  className="my-11 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300  w-[250px]"
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </div>
+        {showBackButton && (
+          <button
+            type="button"  // This prevents form submission
+            className="my-11 mb-16 hover:bg-[#2D133A] border border-[#BA9FFE] rounded-lg h-11 text-[#2D133A] hover:text-white font-medium box-shadow-style transition-all duration-300 w-[250px]"
+            onClick={goBack}
+          >
+            Back
+          </button>
+        )}
+        <button
+          type="submit"
+          className="my-11 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300  w-[250px]"
+          onClick={() => handleSubmit()}
+        >
+          Submit
+        </button>
+        </div>
             </Form>
+            )}
           </Formik>
         </div>
       </Box>
     </React.Fragment>
   );
 };
+

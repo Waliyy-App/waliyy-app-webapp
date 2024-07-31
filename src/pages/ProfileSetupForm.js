@@ -216,6 +216,7 @@ export default function ProfileSetupForm() {
             <div className="flex items-center w-full justify-between">
               {showBackButton && (
                 <button
+                type='button'
                   className="my-11 mb-16 hover:bg-[#2D133A] border border-[#BA9FFE] rounded-lg h-11 text-[#2D133A] hover:text-white font-medium box-shadow-style transition-all duration-300 w-[250px]"
                   onClick={goBack}
                 >

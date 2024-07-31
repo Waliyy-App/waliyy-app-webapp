@@ -467,7 +467,7 @@ const UserSetting = ({ value, child }) => {
 					<div className="w-full h-[0.5px] bg-[#e4e7ec9c] my-8" />
 
 					<div className="w-full flex gap-8 justify-end items-center">
-						<button className="bg-white text-[#2D133A] hover:text-white hover:bg-[#2D133A] border border-[#2D133A] w-[150px] py-[10px] rounded-lg font-medium flex items-center justify-center transition-all duration-300">
+						<button type="button" className="bg-white text-[#2D133A] hover:text-white hover:bg-[#2D133A] border border-[#2D133A] w-[150px] py-[10px] rounded-lg font-medium flex items-center justify-center transition-all duration-300">
 							Cancel
 						</button>
 						<button
