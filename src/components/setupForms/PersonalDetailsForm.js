@@ -29,13 +29,12 @@ export default function PersonalDetailsForm() {
           ))}
         </SelectInput>
 
-        <div className="flex flex-col">
-          <p className="text-sm font-medium mb-0 text-[#2D133A]">Height(in)*</p>
-          <div className="flex items-center gap-3">
-            <TextInput name="feet" type="number" placeholder="feet" />
-            <TextInput name="inches" type="number" placeholder="inches" />
-          </div>
-        </div>
+        <TextInput
+          label="Height (m)"
+          name="height"
+          type="number"
+          placeholder="Weight must be in metres"
+        />
 
         <TextInput
           label="Weight (kg)*"
