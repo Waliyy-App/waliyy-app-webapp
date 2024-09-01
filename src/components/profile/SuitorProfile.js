@@ -67,6 +67,7 @@ const ProfileDetails = () => {
       }
 
       getChildDetails();
+      console.log(childId, 'childid')
     }
   }, [childId, token, id, location.state]);
 

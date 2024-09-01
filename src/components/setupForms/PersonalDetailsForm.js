@@ -29,19 +29,39 @@ export default function PersonalDetailsForm() {
           ))}
         </SelectInput>
 
-        <TextInput
-          label="Height (m)"
-          name="height"
-          type="number"
-          placeholder="Weight must be in metres"
-        />
+        <div className="flex flex-col w-full">
+          <TextInput
+            label="Height (m)*"
+            name="height"
+            type="number"
+            placeholder="Height must be in metres"
+          />
+          <a
+            href="https://www.thecalculatorsite.com/conversions/common/height-converter.php"
+            target="_blank"
+            rel="noreferrer"
+            className="text-sm font-medium"
+          >
+            Click here to convert to metres
+          </a>
+        </div>
 
-        <TextInput
-          label="Weight (kg)*"
-          name="weight"
-          type="number"
-          placeholder="Weight must be in kilogram"
-        />
+        <div className="flex flex-col w-full">
+          <TextInput
+            label="Weight (kg)*"
+            name="weight"
+            type="number"
+            placeholder="Weight must be in kilogram"
+          />
+          <a
+            href="https://www.thecalculatorsite.com/conversions/common/weight-converter.php"
+            target="_blank"
+            rel="noreferrer"
+            className="text-sm font-medium"
+          >
+            Click here to convert to kilogram
+          </a>
+        </div>
       </div>
 
       <div className="flex flex-col sm:flex-row justify-between gap-12">
