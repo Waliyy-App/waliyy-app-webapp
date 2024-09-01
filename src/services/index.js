@@ -34,10 +34,10 @@ export const forgotPassword = async (payload) => {
 	}
 };
 
-export const resetPassword = async (payload, token) => {
+export const resetPassword = async (payload) => {
 	try {
 		const response = await apiService.put(
-			`/auth/reset-password/${token}`,
+			`/auth/reset-password`,
 			payload
 		);
 		return response.data.user;
