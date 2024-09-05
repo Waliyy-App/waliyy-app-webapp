@@ -18,7 +18,6 @@ const Billing = ({ value }) => {
       try {
         const res = await getSubHistory(token);
         setHasSubscription(res?.data);
-		console.log(hasSubscription, 'sub')
       } catch (error) {
         toast.error(error.response.data.message);
       }

@@ -43,15 +43,15 @@ const LikedYou = () => {
               {likes.map((item) => (
                 <ProfileCard
                   key={item.id}
-                  id={item.receiver._id}
-                  firstName={item.receiver.firstName}
-                  lga={item.receiver.lga}
-                  age={item.receiver.age}
-                  residence={item.receiver.countryofResidence}
-                  about={item.receiver.about}
-                  displayID={item?.receiver.displayID}
-                  profession={item.receiver.profession}
-                  gender={item.receiver.gender}
+                  id={item.initiator._id}
+                  firstName={item.initiator.firstName}
+                  lga={item.initiator.lga}
+                  age={item.initiator.age}
+                  residence={item.initiator.countryofResidence}
+                  about={item.initiator.about}
+                  displayID={item?.initiator.displayID}
+                  profession={item.initiator.profession}
+                  gender={item.initiator.gender}
                 />
               ))}
             </div>

@@ -44,22 +44,22 @@ const LikedPage = () => {
             centered
           >
             <Tab
-              icon={<ThumbUpIcon />}
-              iconPosition="start"
-              label="Liked"
-              {...a11yProps(0)}
-            />
-            <Tab
               icon={<MoodIcon />}
               iconPosition="start"
               label="Liked You"
+              {...a11yProps(0)}
+            />
+            <Tab
+              icon={<ThumbUpIcon />}
+              iconPosition="start"
+              label="Liked"
               {...a11yProps(1)}
             />
           </Tabs>
-          <CustomTabPanel value={value} index={0}>
+          <CustomTabPanel value={value} index={1}>
             <Liked />
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
+          <CustomTabPanel value={value} index={0}>
             <LikedYou />
           </CustomTabPanel>
         </div>

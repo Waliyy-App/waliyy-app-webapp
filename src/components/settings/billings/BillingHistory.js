@@ -17,7 +17,7 @@ const BillingHistory = ({ data }) => {
                 Amount
               </th>
               <th scope="col" className="w-full px-6 py-3">
-                Date
+                Due Date
               </th>
               <th scope="col" className="w-full px-6 py-3">
                 Status
@@ -26,19 +26,18 @@ const BillingHistory = ({ data }) => {
           </thead>
           <tbody>
             <tr className="w-full bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
+              <td
                 className="w-full px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
               >
                 {`${data?.plan?.planName} Plan`}
-              </th>
-              <td className="w-full px-6 py-4">
+              </td>
+              <td className="w-full px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {toCurrency(data?.plan?.amount)}
               </td>
-              <td className="w-full px-6 py-4">
-                {moment(data?._doc?.createdAt).format('MMM DD, YYYY')}
+              <td className="w-full px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {moment(data?.expiresAt).format('MMM DD, YYYY')}
               </td>
-              <td className="w-full px-6 py-4">
+              <td className="w-full px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {capitalize(data?.payment?.status)}
               </td>
             </tr>
