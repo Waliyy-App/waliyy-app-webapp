@@ -34,7 +34,7 @@ export const Filters = () => {
 
   const showBackButton = location.state?.from === '/dashboard';
 
-  console.log(selectedCountries)
+  console.log(selectedCountries);
 
   const goBack = () => {
     navigate(-1);
@@ -55,13 +55,13 @@ export const Filters = () => {
   }, [childId, token]);
 
   const initialValues = {
-    minAge: null,
-    maxAge: null,
+    minAge: undefined,
+    maxAge: undefined,
     genotypes: [],
-    minHeight: null,
-    maxHeight: null,
-    minWeight: null,
-    maxWeight: null,
+    minHeight: undefined,
+    maxHeight: undefined,
+    minWeight: undefined,
+    maxWeight: undefined,
     maritalStatus: [],
     levelOfEducation: [],
     employmentStatus: [],
@@ -99,6 +99,7 @@ export const Filters = () => {
         ? await updateFilter(newValues, token, childId)
         : await filterSuitors(newValues, token, childId);
       toast.success(res?.message);
+      console.log(childPref);
       navigate('/dashboard');
     } catch (error) {
       toast.error(error.response.data.message);
@@ -124,217 +125,217 @@ export const Filters = () => {
             onSubmit={(values) => handleSubmit(values)}
           >
             {({ handleSubmit }) => (
-            <Form className="flex flex-col gap-10">
-              <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
-                <div className="flex items-center gap-5 w-full">
-                  <TextInput label="Min Age" name="minAge" type="text" />
-                  <TextInput label="Max Age" name="maxAge" type="text" />
-                </div>
-                <div>
-                  <label
-                    className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="genotypes"
-                  >
-                    Genotype
-                  </label>
-                  <MultiSelect
-                    hasSelectAll
-                    className="w-auto text-input mt-3 multi-select"
-                    options={genotypeOption}
-                    value={selectedGenotype}
-                    onChange={setSelectedGenotype}
-                    labelledBy="Genotype"
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
-                <div className="flex flex-col sm:flex-row items-center gap-5 w-full">
+              <Form className="flex flex-col gap-10">
+                <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
                   <div className="flex items-center gap-5 w-full">
-                    <TextInput
-                      label="Min Height (m)"
-                      name="minHeight"
-                      type="number"
-                    />
-                    <TextInput
-                      label="Max Height (m)"
-                      name="maxHeight"
-                      type="number"
-                    />
+                    <TextInput label="Min Age" name="minAge" type="text" />
+                    <TextInput label="Max Age" name="maxAge" type="text" />
                   </div>
-
-                  <div className="flex items-center gap-5 w-full">
-                    <TextInput
-                      label="Min Weight (kg)"
-                      name="minWeight"
-                      type="number"
-                    />
-                    <TextInput
-                      label="Max Weight (kg)"
-                      name="maxWeight"
-                      type="number"
+                  <div>
+                    <label
+                      className="text-sm font-medium text-[#2D133A]"
+                      htmlFor="genotypes"
+                    >
+                      Genotype
+                    </label>
+                    <MultiSelect
+                      hasSelectAll
+                      className="w-auto text-input mt-3 multi-select"
+                      options={genotypeOption}
+                      value={selectedGenotype}
+                      onChange={setSelectedGenotype}
+                      labelledBy="Genotype"
                     />
                   </div>
                 </div>
-              </div>
 
-              <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
-                <div>
-                  <label
-                    className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="maritalStatus"
-                  >
-                    Marital Status
-                  </label>
-                  <MultiSelect
-                    hasSelectAll
-                    className="w-auto text-input mt-3 multi-select"
-                    options={maritalStatusOption}
-                    value={selectedMaritalStatus}
-                    onChange={setSelectedMaritalStatus}
-                    labelledBy="MaritalStatus"
-                  />
-                </div>
-                <div>
-                  <label
-                    className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="levelOfEducation"
-                  >
-                    Level of Education
-                  </label>
-                  <MultiSelect
-                    hasSelectAll
-                    className="w-auto text-input mt-3 multi-select"
-                    options={educationOptions}
-                    value={selectedLevelOfEdu}
-                    onChange={setSelectedLevelOfEdu}
-                    labelledBy="LevelOfEdu"
-                  />
+                <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
+                  <div className="flex flex-col sm:flex-row items-center gap-5 w-full">
+                    <div className="flex items-center gap-5 w-full">
+                      <TextInput
+                        label="Min Height (m)"
+                        name="minHeight"
+                        type="number"
+                      />
+                      <TextInput
+                        label="Max Height (m)"
+                        name="maxHeight"
+                        type="number"
+                      />
+                    </div>
+
+                    <div className="flex items-center gap-5 w-full">
+                      <TextInput
+                        label="Min Weight (kg)"
+                        name="minWeight"
+                        type="number"
+                      />
+                      <TextInput
+                        label="Max Weight (kg)"
+                        name="maxWeight"
+                        type="number"
+                      />
+                    </div>
+                  </div>
                 </div>
 
-                <div>
-                  <label
-                    className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="employmentStatus"
-                  >
-                    Employment Status
-                  </label>
-                  <MultiSelect
-                    hasSelectAll
-                    className="w-auto text-input mt-3 multi-select"
-                    options={employmentStatusOptions}
-                    value={selectedEmployment}
-                    onChange={setSelectedEmployment}
-                    labelledBy="Employment"
-                  />
-                </div>
-              </div>
+                <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
+                  <div>
+                    <label
+                      className="text-sm font-medium text-[#2D133A]"
+                      htmlFor="maritalStatus"
+                    >
+                      Marital Status
+                    </label>
+                    <MultiSelect
+                      hasSelectAll
+                      className="w-auto text-input mt-3 multi-select"
+                      options={maritalStatusOption}
+                      value={selectedMaritalStatus}
+                      onChange={setSelectedMaritalStatus}
+                      labelledBy="MaritalStatus"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      className="text-sm font-medium text-[#2D133A]"
+                      htmlFor="levelOfEducation"
+                    >
+                      Level of Education
+                    </label>
+                    <MultiSelect
+                      hasSelectAll
+                      className="w-auto text-input mt-3 multi-select"
+                      options={educationOptions}
+                      value={selectedLevelOfEdu}
+                      onChange={setSelectedLevelOfEdu}
+                      labelledBy="LevelOfEdu"
+                    />
+                  </div>
 
-              <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
-                <div>
-                  <label
-                    className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="countryOfResidence"
-                  >
-                    Country of Residence
-                  </label>
-                  <MultiSelect
-                    hasSelectAll
-                    className="w-auto text-input mt-3 multi-select"
-                    options={countryOptions}
-                    value={selectedCountries}
-                    onChange={setSelectedCountries}
-                    labelledBy="Residence"
-                  />
+                  <div>
+                    <label
+                      className="text-sm font-medium text-[#2D133A]"
+                      htmlFor="employmentStatus"
+                    >
+                      Employment Status
+                    </label>
+                    <MultiSelect
+                      hasSelectAll
+                      className="w-auto text-input mt-3 multi-select"
+                      options={employmentStatusOptions}
+                      value={selectedEmployment}
+                      onChange={setSelectedEmployment}
+                      labelledBy="Employment"
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label
-                    className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="nationality"
-                  >
-                    Nationality
-                  </label>
-                  <MultiSelect
-                    hasSelectAll
-                    className="w-auto text-input mt-3 multi-select"
-                    options={citizenshipOptions}
-                    value={selectedCitizenship}
-                    onChange={setSelectedCitizenship}
-                    labelledBy="Citizenship"
-                  />
+                <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
+                  <div>
+                    <label
+                      className="text-sm font-medium text-[#2D133A]"
+                      htmlFor="countryOfResidence"
+                    >
+                      Country of Residence
+                    </label>
+                    <MultiSelect
+                      hasSelectAll
+                      className="w-auto text-input mt-3 multi-select"
+                      options={countryOptions}
+                      value={selectedCountries}
+                      onChange={setSelectedCountries}
+                      labelledBy="Residence"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      className="text-sm font-medium text-[#2D133A]"
+                      htmlFor="nationality"
+                    >
+                      Nationality
+                    </label>
+                    <MultiSelect
+                      hasSelectAll
+                      className="w-auto text-input mt-3 multi-select"
+                      options={citizenshipOptions}
+                      value={selectedCitizenship}
+                      onChange={setSelectedCitizenship}
+                      labelledBy="Citizenship"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      className="text-sm font-medium text-[#2D133A]"
+                      htmlFor="patternOfSalat"
+                    >
+                      Pattern of Salat
+                    </label>
+                    <MultiSelect
+                      hasSelectAll
+                      className="w-auto text-input mt-3 multi-select"
+                      options={salatOptions}
+                      value={selectedSalat}
+                      onChange={setSelectedSalat}
+                      labelledBy="Salat"
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label
-                    className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="patternOfSalat"
-                  >
-                    Pattern of Salat
-                  </label>
-                  <MultiSelect
-                    hasSelectAll
-                    className="w-auto text-input mt-3 multi-select"
-                    options={salatOptions}
-                    value={selectedSalat}
-                    onChange={setSelectedSalat}
-                    labelledBy="Salat"
-                  />
+                <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4">
+                  <div>
+                    <label
+                      className="text-sm font-medium text-[#2D133A]"
+                      htmlFor="sect"
+                    >
+                      Islamic Sect
+                    </label>
+                    <MultiSelect
+                      hasSelectAll
+                      className="w-auto text-input mt-3 multi-select"
+                      options={sectOptions}
+                      value={selectedSect}
+                      onChange={setSelectedSect}
+                      labelledBy="sect"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4">
-                <div>
-                  <label
-                    className="text-sm font-medium text-[#2D133A]"
-                    htmlFor="sect"
-                  >
-                    Islamic Sect
-                  </label>
-                  <MultiSelect
-                    hasSelectAll
-                    className="w-auto text-input mt-3 multi-select"
-                    options={sectOptions}
-                    value={selectedSect}
-                    onChange={setSelectedSect}
-                    labelledBy="sect"
-                  />
+                <div className="flex flex-wrap gap-8">
+                  <CheckboxInputTwo name="hasChildren">
+                    Has Children
+                  </CheckboxInputTwo>
+                  <CheckboxInputTwo name="willingnessToRelocate">
+                    Willing to relocate
+                  </CheckboxInputTwo>
+                  <CheckboxInputTwo name="isRevert">Revert</CheckboxInputTwo>
+                  <CheckboxInputTwo name="isSmoker">Smokes</CheckboxInputTwo>
+                  <CheckboxInputTwo name="isDrinker">Drinks</CheckboxInputTwo>
+                  <CheckboxInputTwo name="hasAddictions">
+                    Has an Addiction
+                  </CheckboxInputTwo>
                 </div>
-              </div>
-
-              <div className="flex flex-wrap gap-8">
-                <CheckboxInputTwo name="hasChildren">
-                  Has Children
-                </CheckboxInputTwo>
-                <CheckboxInputTwo name="willingnessToRelocate">
-                  Willing to relocate
-                </CheckboxInputTwo>
-                <CheckboxInputTwo name="isRevert">Revert</CheckboxInputTwo>
-                <CheckboxInputTwo name="isSmoker">Smokes</CheckboxInputTwo>
-                <CheckboxInputTwo name="isDrinker">Drinks</CheckboxInputTwo>
-                <CheckboxInputTwo name="hasAddictions">
-                  Has an Addiction
-                </CheckboxInputTwo>
-              </div>
-              <div className="flex items-center w-full justify-between">
-        {showBackButton && (
-          <button
-            type="button"  // This prevents form submission
-            className="my-11 mb-16 hover:bg-[#2D133A] border border-[#BA9FFE] rounded-lg h-11 text-[#2D133A] hover:text-white font-medium box-shadow-style transition-all duration-300 w-[250px]"
-            onClick={goBack}
-          >
-            Back
-          </button>
-        )}
-        <button
-          type="submit"
-          className="my-11 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300  w-[250px]"
-          onClick={() => handleSubmit()}
-        >
-          Submit
-        </button>
-        </div>
-            </Form>
+                <div className="flex items-center w-full justify-between">
+                  {showBackButton && (
+                    <button
+                      type="button" // This prevents form submission
+                      className="my-11 mb-16 hover:bg-[#2D133A] border border-[#BA9FFE] rounded-lg h-11 text-[#2D133A] hover:text-white font-medium box-shadow-style transition-all duration-300 w-[250px]"
+                      onClick={goBack}
+                    >
+                      Back
+                    </button>
+                  )}
+                  <button
+                    type="submit"
+                    className="my-11 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300  w-[250px]"
+                    onClick={() => handleSubmit()}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </Form>
             )}
           </Formik>
         </div>
@@ -342,4 +343,3 @@ export const Filters = () => {
     </React.Fragment>
   );
 };
-

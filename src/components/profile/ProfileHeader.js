@@ -89,6 +89,7 @@ const ProfileHeader = ({
         token
       );
       toast.success(res?.data?.message);
+      console.log('liked', childId, id)
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
@@ -152,7 +153,13 @@ const ProfileHeader = ({
 
         <div className="text-[#2D133A] text-center sm:text-left">
           <div className="flex items-center gap-2 text-2xl font-bold">
-            <p>{isChild ? firstName : !isChild && displayID ? displayID : 'Waliyy User'}</p>
+            <p>
+              {isChild
+                ? firstName
+                : !isChild && displayID
+                ? displayID
+                : 'Waliyy User'}
+            </p>
             <BsFillDiamondFill className="h-2 w-2" />
             <p>{age}</p>
           </div>
