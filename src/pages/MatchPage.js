@@ -64,7 +64,7 @@ const MatchPage = () => {
                   firstName={matches?.match?.firstName}
                   residence={matches?.match?.countryofResidence}
                   about={matches?.match?.about}
-                  displayID={matches?.match.displayID}
+                  displayID={matches?.match.displayId}
                   profession={matches?.match?.profession}
                   gender={matches?.match?.gender}
                 />
