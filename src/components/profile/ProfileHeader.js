@@ -32,6 +32,7 @@ const ProfileHeader = ({
   const [isMatchPage, setIsMatchPage] = useState(null);
   const [isDashboard, setIsDashboard] = useState(null);
   const [matchDetails, setMatchDetails] = useState(null);
+  const [isLiked, setIsLiked] = useState(false); // State to track if profile is liked
   const { token } = useAuthContext();
   const childId = localStorage.getItem('childId');
   const { id } = useParams();
@@ -39,12 +40,17 @@ const ProfileHeader = ({
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Retrieve isLiked from localStorage when the component mounts
   useEffect(() => {
-    if (location?.state?.from && location?.state?.from === 'match')
-      setIsMatchPage(true);
-    else if (location?.state?.from && location?.state?.from === 'dashboard')
-      setIsDashboard(true);
-    else return;
+    const likedStatus = localStorage.getItem(`liked_${id}`);
+    if (likedStatus) {
+      setIsLiked(JSON.parse(likedStatus)); // Set the isLiked state based on localStorage value
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (location?.state?.from === 'match') setIsMatchPage(true);
+    else if (location?.state?.from === 'dashboard') setIsDashboard(true);
   }, [location.state]);
 
   useEffect(() => {
@@ -56,9 +62,8 @@ const ProfileHeader = ({
         console.error(err);
       }
     };
-
     getMatches();
-  }, [token, childId]);
+  }, [token, childId, id]);
 
   useEffect(() => {
     const getActivePlan = async () => {
@@ -69,7 +74,6 @@ const ProfileHeader = ({
         console.error(err);
       }
     };
-
     getActivePlan();
   }, [token]);
 
@@ -81,34 +85,10 @@ const ProfileHeader = ({
     }
     try {
       setIsDisabled(true);
-      const res = await likeProfile(
-        childId,
-        {
-          profile: id,
-        },
-        token
-      );
+      const res = await likeProfile(childId, { profile: id }, token);
       toast.success(res?.data?.message);
-      console.log('liked', childId, id)
-    } catch (error) {
-      toast.error(error?.response?.data?.message);
-    } finally {
-      setIsDisabled(false);
-    }
-  };
-
-  const handleCancelMatch = async () => {
-    try {
-      setIsDisabled(true);
-      const res = await cancelMatch(
-        childId,
-        {
-          match: matchDetails?.match_id,
-          action: 'initiate',
-        },
-        token
-      );
-      toast.success(res?.message);
+      setIsLiked(true); // Mark profile as liked
+      localStorage.setItem(`liked_${id}`, JSON.stringify(true)); // Save isLiked state to localStorage
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
@@ -124,15 +104,26 @@ const ProfileHeader = ({
     }
     setIsDisabled(true);
     try {
-      const res = await unlikeProfile(
+      const res = await unlikeProfile(childId, { profile: id }, token);
+      toast.success(res?.data?.message);
+      setIsLiked(false); // Mark profile as unliked
+      localStorage.setItem(`liked_${id}`, JSON.stringify(false)); // Save isLiked state to localStorage
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    } finally {
+      setIsDisabled(false);
+    }
+  };
+
+  const handleCancelMatch = async () => {
+    try {
+      setIsDisabled(true);
+      const res = await cancelMatch(
         childId,
-        {
-          profile: id,
-        },
+        { match: matchDetails?.match_id, action: 'initiate' },
         token
       );
-      toast.success(res?.data?.message);
-      setIsDisabled(false);
+      toast.success(res?.message);
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
@@ -176,7 +167,7 @@ const ProfileHeader = ({
 
       {!isGeneral && !isChild && !isMatchPage && (
         <div className="flex items-center gap-3 self-center sm:self-end">
-          {isDashboard ? (
+          {isDashboard && !isLiked && (
             <button
               onClick={handleLike}
               disabled={isDisabled}
@@ -184,14 +175,24 @@ const ProfileHeader = ({
             >
               <ThumbUpIcon /> Interested
             </button>
-          ) : (
-            <button
-              onClick={handleUnlike}
-              disabled={isDisabled}
-              className="hover:bg-[#a37eff] disabled:bg-[#9A8AAC] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
-            >
-              <ThumbDownIcon /> Uninterested
-            </button>
+          )}
+          {!isDashboard && (
+            <>
+              <button
+                onClick={handleLike}
+                disabled={isDisabled || isLiked}
+                className="hover:bg-[#a37eff] disabled:bg-[#9A8AAC] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
+              >
+                <ThumbUpIcon /> Interested
+              </button>
+              <button
+                onClick={handleUnlike}
+                disabled={isDisabled || !isLiked}
+                className="hover:bg-[#a37eff] disabled:bg-[#9A8AAC] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
+              >
+                <ThumbDownIcon /> Uninterested
+              </button>
+            </>
           )}
         </div>
       )}
