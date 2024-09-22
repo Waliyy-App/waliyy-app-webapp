@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import { Formik, Form } from 'formik';
-import { toast } from 'react-toastify';
-import { TextInput, CheckboxInputTwo } from '../common/form';
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
+import { Formik, Form } from "formik";
+import { toast } from "react-toastify";
+import { TextInput, CheckboxInputTwo } from "../common/form";
 import {
   countryOptions,
   citizenshipOptions,
@@ -12,10 +12,10 @@ import {
   educationOptions,
   employmentStatusOptions,
   salatOptions,
-} from '../data/formValues';
-import { MultiSelect } from 'react-multi-select-component';
-import { filterSuitors, getChildPreferences, updateFilter } from '../services';
-import { useAuthContext } from '../context/AuthContext';
+} from "../data/formValues";
+import { MultiSelect } from "react-multi-select-component";
+import { filterSuitors, getChildPreferences, updateFilter } from "../services";
+import { useAuthContext } from "../context/AuthContext";
 
 export const Filters = () => {
   const [selectedGenotype, setSelectedGenotype] = useState([]);
@@ -28,17 +28,14 @@ export const Filters = () => {
   const [selectedSalat, setSelectedSalat] = useState([]);
   const [selectedSect, setSelectedSect] = useState([]);
   const { token } = useAuthContext();
-  const childId = localStorage.getItem('childId');
+  const childId = localStorage.getItem("childId");
   const location = useLocation();
   const navigate = useNavigate();
 
-  const showBackButton = location.state?.from === '/dashboard';
-
-  console.log(selectedCountries);
+  const showBackButton = location.state?.from === "/dashboard";
 
   const goBack = () => {
     navigate(-1);
-    console.log(navigate);
   };
 
   useEffect(() => {
@@ -53,8 +50,6 @@ export const Filters = () => {
 
     getCurrentChild();
   }, [childId, token]);
-
-  console.log(childPref, 'filter');
 
   const initialValues = {
     minAge: childPref?.minAge ? childPref?.minAge : undefined,
@@ -88,8 +83,8 @@ export const Filters = () => {
   };
 
   const sectOptions = [
-    { label: 'Sunni', value: 'SUNNI' },
-    { label: "Shi'a", value: 'SHIA' },
+    { label: "Sunni", value: "SUNNI" },
+    { label: "Shi'a", value: "SHIA" },
   ];
 
   async function handleSubmit(values) {
@@ -109,9 +104,9 @@ export const Filters = () => {
         ? await updateFilter(newValues, token, childId)
         : await filterSuitors(newValues, token, childId);
       toast.success(res?.message);
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
     }
   }
 
@@ -228,8 +223,8 @@ export const Filters = () => {
                           selectedMaritalStatus.length > 0
                             ? selectedMaritalStatus
                                 .map((item) => item.label)
-                                .join(', ')
-                            : childPref?.maritalStatus // Fallback placeholder
+                                .join(", ")
+                            : childPref?.maritalStatus, // Fallback placeholder
                       }}
                     />
                   </div>

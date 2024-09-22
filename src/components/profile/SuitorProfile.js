@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import SidebarComponent from '../sidebar/Sidebar';
-import ProfileHeader from './ProfileHeader';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import MeProfile from './MeProfile';
-import EduProfile from './EduProfile';
-import DeenProfile from './DeenProfile';
-import { usePersistedState, a11yProps } from '../../utils.js';
-import MobileNav from '../sidebar/MobileBottomNav.js';
-import { getRecommedations, getMatch } from '../../services';
-import { useAuthContext } from '../../context/AuthContext';
-import Loader from '../Loader.js';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import React, { useState, useEffect } from "react";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
+import SidebarComponent from "../sidebar/Sidebar";
+import ProfileHeader from "./ProfileHeader";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import MeProfile from "./MeProfile";
+import EduProfile from "./EduProfile";
+import DeenProfile from "./DeenProfile";
+import { usePersistedState, a11yProps } from "../../utils.js";
+import MobileNav from "../sidebar/MobileBottomNav.js";
+import { getRecommedations, getMatch } from "../../services";
+import { useAuthContext } from "../../context/AuthContext";
+import Loader from "../Loader.js";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const ProfileDetails = () => {
   const [value, setValue] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
+  const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
   const [child, setChild] = useState({});
   const { id } = useParams();
   const location = useLocation();
-  const childId = localStorage.getItem('childId');
+  const childId = localStorage.getItem("childId");
   const navigate = useNavigate();
 
   const { token } = useAuthContext();
@@ -36,7 +36,7 @@ const ProfileDetails = () => {
   };
 
   useEffect(() => {
-    if (location.state.from && location.state.from === 'match') {
+    if (location.state.from && location.state.from === "match") {
       const getMatches = async () => {
         try {
           setLoading(true);
@@ -67,13 +67,11 @@ const ProfileDetails = () => {
       }
 
       getChildDetails();
-      console.log(childId, 'childid')
     }
   }, [childId, token, id, location.state]);
 
   const goBack = () => {
     navigate(-1);
-    console.log(navigate);
   };
 
   return (
@@ -81,7 +79,7 @@ const ProfileDetails = () => {
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
       <main
         className={`${
-          isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
+          isOpen ? "ml-0 sm:ml-[100px]" : "ml-0 sm:ml-[280px]"
         } py-[64px] px-8 w-full transition-all duration-300`}
       >
         {loading ? (
@@ -106,7 +104,7 @@ const ProfileDetails = () => {
             />
 
             <div>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <Tabs
                   value={value}
                   onChange={handleChange}

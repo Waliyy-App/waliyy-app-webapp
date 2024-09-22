@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import SidebarComponent from '../components/sidebar/Sidebar';
-import { usePersistedState } from '../utils.js';
-import MobileNav from '../components/sidebar/MobileBottomNav.js';
-import ProfileCard from '../components/ProfileCard.js';
-import { useAuthContext } from '../context/AuthContext.js';
-import { getRecommedations } from '../services/index.js';
-import Loader from '../components/Loader.js';
-import Navigation from '../components/sidebar/Navigation.js';
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import SidebarComponent from "../components/sidebar/Sidebar";
+import { usePersistedState } from "../utils.js";
+import MobileNav from "../components/sidebar/MobileBottomNav.js";
+import ProfileCard from "../components/ProfileCard.js";
+import { useAuthContext } from "../context/AuthContext.js";
+import { getRecommedations } from "../services/index.js";
+import Loader from "../components/Loader.js";
+import Navigation from "../components/sidebar/Navigation.js";
 
 const Dashboard = () => {
   const PAGE_NUMBER = 12;
 
-  const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
+  const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
   // const [child, setChild] = useState({});
   const [loading, setLoading] = useState(false);
   const [recommedations, setRecommendations] = useState([]);
@@ -20,7 +20,7 @@ const Dashboard = () => {
   const [endPage, setEndPage] = useState(PAGE_NUMBER);
   const [pageStart, setPageStart] = useState(0);
   const { token } = useAuthContext();
-  const childId = localStorage.getItem('childId');
+  const childId = localStorage.getItem("childId");
 
   const usersLength = recommedations?.length;
 
@@ -88,7 +88,7 @@ const Dashboard = () => {
 
       <main
         className={`${
-          isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
+          isOpen ? "ml-0 sm:ml-[100px]" : "ml-0 sm:ml-[280px]"
         }  w-full transition-all duration-300 bg-[#d4c4fb1d] min-h-screen`}
       >
         <Navigation />
