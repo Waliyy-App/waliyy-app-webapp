@@ -1,67 +1,67 @@
-import React, { lazy, Suspense, useState } from 'react';
-import Box from '@mui/material/Box';
-import { Formik, Form } from 'formik';
-import UserIcon from '@mui/icons-material/Person';
-import WorldIcon from '@mui/icons-material/Public';
-import SchoolIcon from '@mui/icons-material/School';
-import MosqueIcon from '@mui/icons-material/Mosque';
-import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
-import { toast } from 'react-toastify';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { lazy, Suspense, useState } from "react";
+import Box from "@mui/material/Box";
+import { Formik, Form } from "formik";
+import UserIcon from "@mui/icons-material/Person";
+import WorldIcon from "@mui/icons-material/Public";
+import SchoolIcon from "@mui/icons-material/School";
+import MosqueIcon from "@mui/icons-material/Mosque";
+import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
+import { toast } from "react-toastify";
+import { useNavigate, useLocation } from "react-router-dom";
 
-import { initialValues, validationSchema } from '../data/initialValues';
-import { useAuthContext } from '../context/AuthContext';
-import { userRegistration } from '../services/index.js';
+import { initialValues, validationSchema } from "../data/initialValues";
+import { useAuthContext } from "../context/AuthContext";
+import { userRegistration } from "../services/index.js";
 
 const CongratulationsRegister = lazy(() =>
-  import('../screens/CongratulationsRegister')
+  import("../screens/CongratulationsRegister")
 );
-const Loader = lazy(() => import('../components/Loader'));
+const Loader = lazy(() => import("../components/Loader"));
 const PersonalDetailsForm = lazy(() =>
-  import('../components/setupForms/PersonalDetailsForm')
+  import("../components/setupForms/PersonalDetailsForm")
 );
 const NationalityForm = lazy(() =>
-  import('../components/setupForms/NationalityForm')
+  import("../components/setupForms/NationalityForm")
 );
 const EducationAndProfessionForm = lazy(() =>
-  import('../components/setupForms/EducationAndProfessionForm')
+  import("../components/setupForms/EducationAndProfessionForm")
 );
 const AboutDeenForm = lazy(() =>
-  import('../components/setupForms/AboutDeenForm')
+  import("../components/setupForms/AboutDeenForm")
 );
 const SelfSummaryForm = lazy(() =>
-  import('../components/setupForms/SelfSummaryForm')
+  import("../components/setupForms/SelfSummaryForm")
 );
 
 const formSections = [
   {
-    id: 'personalDetails',
+    id: "personalDetails",
     icon: <UserIcon />,
-    label: 'Personal Details',
+    label: "Personal Details",
     component: PersonalDetailsForm,
   },
   {
-    id: 'nationality',
+    id: "nationality",
     icon: <WorldIcon />,
-    label: 'Nationality',
+    label: "Nationality",
     component: NationalityForm,
   },
   {
-    id: 'education',
+    id: "education",
     icon: <SchoolIcon />,
-    label: 'Education and Profession',
+    label: "Education and Profession",
     component: EducationAndProfessionForm,
   },
   {
-    id: 'deen',
+    id: "deen",
     icon: <MosqueIcon />,
-    label: 'About my Deen',
+    label: "About my Deen",
     component: AboutDeenForm,
   },
   {
-    id: 'summary',
+    id: "summary",
     icon: <RecordVoiceOverIcon />,
-    label: 'Self Summary',
+    label: "Self Summary",
     component: SelfSummaryForm,
   },
 ];
@@ -70,17 +70,14 @@ export default function ProfileSetupForm() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const showBackButton = location.state?.from !== '/login-successful';
-
-  console.log(location, navigate);
+  const showBackButton = location.state?.from !== "/login-successful";
 
   const goBack = () => {
     navigate(-1);
-    console.log(navigate);
   };
 
   const [state, setState] = useState({
-    activeStep: '',
+    activeStep: "",
     completed: false,
     loading: false,
   });
@@ -95,7 +92,7 @@ export default function ProfileSetupForm() {
 
     const speakers = Array.isArray(values.speakers)
       ? values.speakers
-      : values.speakers.split(',').map((item) => item.trim());
+      : values.speakers.split(",").map((item) => item.trim());
 
     try {
       const res = await userRegistration(
@@ -216,7 +213,7 @@ export default function ProfileSetupForm() {
             <div className="flex items-center w-full justify-between">
               {showBackButton && (
                 <button
-                type='button'
+                  type="button"
                   className="my-11 mb-16 hover:bg-[#2D133A] border border-[#BA9FFE] rounded-lg h-11 text-[#2D133A] hover:text-white font-medium box-shadow-style transition-all duration-300 w-[250px]"
                   onClick={goBack}
                 >
