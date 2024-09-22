@@ -46,7 +46,7 @@ const Liked = () => {
                   firstName={item.receiver.firstName}
                   lga={item.receiver.lga}
                   age={item.receiver.age}
-                  displayID={item.receiver.displayID}
+                  displayID={item.receiver.displayId}
                   residence={item.receiver.countryofResidence}
                   about={item.receiver.about}
                   profession={item.receiver.profession}

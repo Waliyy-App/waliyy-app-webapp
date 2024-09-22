@@ -54,27 +54,37 @@ export const Filters = () => {
     getCurrentChild();
   }, [childId, token]);
 
+  console.log(childPref, 'filter');
+
   const initialValues = {
-    minAge: undefined,
-    maxAge: undefined,
-    genotypes: [],
-    minHeight: undefined,
-    maxHeight: undefined,
-    minWeight: undefined,
-    maxWeight: undefined,
-    maritalStatus: [],
-    levelOfEducation: [],
-    employmentStatus: [],
-    countryOfResidence: [],
-    citizenship: [],
-    willingnessToRelocate: false,
-    patternOfSalat: [],
-    sect: [],
-    hasChildren: false,
-    isRevert: false,
-    isSmoker: false,
-    isDrinker: false,
-    hasAddictions: false,
+    minAge: childPref?.minAge ? childPref?.minAge : undefined,
+    maxAge: childPref?.maxAge ? childPref?.maxAge : undefined,
+    genotypes: childPref?.genotypes ? childPref?.genotypes : [],
+    minHeight: childPref?.minHeight ? childPref?.minHeight : undefined,
+    maxHeight: childPref?.maxHeight ? childPref?.maxHeight : undefined,
+    minWeight: childPref?.minWeight ? childPref?.minWeight : undefined,
+    maxWeight: childPref?.maxWeight ? childPref?.maxWeight : undefined,
+    maritalStatus: childPref?.maritalStatus ? childPref?.maritalStatus : [],
+    levelOfEducation: childPref?.levelOfEducation
+      ? childPref?.levelOfEducation
+      : [],
+    employmentStatus: childPref?.employmentStatus
+      ? childPref?.employmentStatus
+      : [],
+    countryOfResidence: childPref?.countryOfResidence
+      ? childPref?.countryOfResidence
+      : [],
+    citizenship: childPref?.citizenship ? childPref?.citizenship : [],
+    willingnessToRelocate: childPref?.willingnessToRelocate
+      ? childPref?.maxWeight
+      : null,
+    patternOfSalat: childPref?.patternOfSalat ? childPref?.patternOfSalat : [],
+    sect: childPref?.sect ? childPref?.sect : [],
+    hasChildren: childPref?.hasChildren ? childPref?.hasChildren : null,
+    isRevert: childPref?.isRevert ? childPref?.isRevert : null,
+    isSmoker: childPref?.isSmoker ? childPref?.isSmoker : null,
+    isDrinker: childPref?.isDrinker ? childPref?.isDrinker : null,
+    hasAddictions: childPref?.hasAddictions ? childPref?.hasAddictions : null,
   };
 
   const sectOptions = [
@@ -99,7 +109,6 @@ export const Filters = () => {
         ? await updateFilter(newValues, token, childId)
         : await filterSuitors(newValues, token, childId);
       toast.success(res?.message);
-      console.log(childPref);
       navigate('/dashboard');
     } catch (error) {
       toast.error(error.response.data.message);
@@ -112,11 +121,13 @@ export const Filters = () => {
         spacing={4}
         className="mx-auto px-8 py-12 box-shadow-style rounded-lg w-full"
       >
-        <div className="flex flex-col px-8 mb-8">
-          <p className="font-semibold text-2xl text-[#2D133A]">
+        <div className="flex flex-col text-center px-8 mb-8">
+          <p className="font-semibold text-lg sm:text-2xl text-[#2D133A]">
             Set your preference
           </p>
-          <p className="text-[#665e6b] text-lg">Choose what you want</p>
+          <p className="text-[#665e6b] text-base sm:text-lg">
+            Choose what you want
+          </p>
         </div>
 
         <div className="py-8 px-0 sm:px-8 w-full md:w-10/12 mx-auto flex flex-col items-center justify-center gap-10">
@@ -125,11 +136,21 @@ export const Filters = () => {
             onSubmit={(values) => handleSubmit(values)}
           >
             {({ handleSubmit }) => (
-              <Form className="flex flex-col gap-10">
-                <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
+              <Form className="flex w-full flex-col gap-10">
+                <div className="flex w-full flex-wrap lg:flex-nowrap flex-col sm:flex-row gap-4 justify-between">
                   <div className="flex items-center gap-5 w-full">
-                    <TextInput label="Min Age" name="minAge" type="text" />
-                    <TextInput label="Max Age" name="maxAge" type="text" />
+                    <TextInput
+                      label="Min Age"
+                      name="minAge"
+                      type="text"
+                      placeholder={childPref?.minAge}
+                    />
+                    <TextInput
+                      label="Max Age"
+                      name="maxAge"
+                      type="text"
+                      placeholder={childPref?.maxAge}
+                    />
                   </div>
                   <div>
                     <label
@@ -142,25 +163,31 @@ export const Filters = () => {
                       hasSelectAll
                       className="w-auto text-input mt-3 multi-select"
                       options={genotypeOption}
-                      value={selectedGenotype}
+                      value={
+                        childPref?.genotype
+                          ? childPref?.genotype
+                          : selectedGenotype
+                      }
                       onChange={setSelectedGenotype}
                       labelledBy="Genotype"
                     />
                   </div>
                 </div>
 
-                <div className="flex flex-col flex-wrap lg:flex-nowrap md:flex-row gap-4 justify-between">
+                <div className="flex flex-wrap lg:flex-nowrap flex-col sm:flex-row gap-4 justify-between">
                   <div className="flex flex-col sm:flex-row items-center gap-5 w-full">
                     <div className="flex items-center gap-5 w-full">
                       <TextInput
                         label="Min Height (m)"
                         name="minHeight"
+                        placeholder={childPref?.minHeight}
                         type="number"
                       />
                       <TextInput
                         label="Max Height (m)"
                         name="maxHeight"
                         type="number"
+                        placeholder={childPref?.maxHeight}
                       />
                     </div>
 
@@ -168,11 +195,13 @@ export const Filters = () => {
                       <TextInput
                         label="Min Weight (kg)"
                         name="minWeight"
+                        placeholder={childPref?.minWeight}
                         type="number"
                       />
                       <TextInput
                         label="Max Weight (kg)"
                         name="maxWeight"
+                        placeholder={childPref?.maxWeight}
                         type="number"
                       />
                     </div>
@@ -194,6 +223,14 @@ export const Filters = () => {
                       value={selectedMaritalStatus}
                       onChange={setSelectedMaritalStatus}
                       labelledBy="MaritalStatus"
+                      overrideStrings={{
+                        selectSomeItems:
+                          selectedMaritalStatus.length > 0
+                            ? selectedMaritalStatus
+                                .map((item) => item.label)
+                                .join(', ')
+                            : childPref?.maritalStatus // Fallback placeholder
+                      }}
                     />
                   </div>
                   <div>
@@ -317,7 +354,7 @@ export const Filters = () => {
                     Has an Addiction
                   </CheckboxInputTwo>
                 </div>
-                <div className="flex items-center w-full justify-between">
+                <div className="flex items-center w-full gap-3 sm:gap-0 justify-center sm:justify-between">
                   {showBackButton && (
                     <button
                       type="button" // This prevents form submission

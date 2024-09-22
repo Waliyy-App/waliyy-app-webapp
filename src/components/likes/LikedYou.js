@@ -49,7 +49,7 @@ const LikedYou = () => {
                   age={item.initiator.age}
                   residence={item.initiator.countryofResidence}
                   about={item.initiator.about}
-                  displayID={item?.initiator.displayID}
+                  displayID={item?.initiator.displayId}
                   profession={item.initiator.profession}
                   gender={item.initiator.gender}
                 />
