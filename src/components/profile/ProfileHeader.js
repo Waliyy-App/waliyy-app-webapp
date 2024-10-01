@@ -14,6 +14,7 @@ import {
   getCurrentPlan,
   cancelMatch,
   getMatch,
+  acceptProposal,
 } from '../../services';
 import { useAuthContext } from '../../context/AuthContext';
 
@@ -115,12 +116,33 @@ const ProfileHeader = ({
     }
   };
 
+  const handleMatch = async () => {
+    if (!activePlan) {
+      toast.warning('No current plan. Upgrade to like suitors');
+      navigate('/pricing');
+      return;
+    }
+    try {
+      setIsDisabled(true);
+      const res = await acceptProposal(
+        childId,
+        { like: id, reaction: 'accept' }, //which id?
+        token
+      );
+      toast.success(res?.data?.message);
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    } finally {
+      setIsDisabled(false);
+    }
+  };
+
   const handleCancelMatch = async () => {
     try {
       setIsDisabled(true);
       const res = await cancelMatch(
         childId,
-        { match: matchDetails?.match_id, action: 'initiate' },
+        { match: matchDetails?.match_id, action: 'initiate' }, // where is match details coming from? it is returning null.
         token
       );
       toast.success(res?.message);
