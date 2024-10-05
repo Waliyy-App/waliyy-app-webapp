@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { BsFillDiamondFill } from 'react-icons/bs';
-import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
-import ThumbDownIcon from '@mui/icons-material/ThumbDownAlt';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import NotInterestedIcon from '@mui/icons-material/NotInterested';
-import MaleIcon from '../../assets/illustrations/male-illus.svg';
-import FemaleIcon from '../../assets/illustrations/female-illus.svg';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import { BsFillDiamondFill } from "react-icons/bs";
+import ThumbUpIcon from "@mui/icons-material/ThumbUpAlt";
+import ThumbDownIcon from "@mui/icons-material/ThumbDownAlt";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import NotInterestedIcon from "@mui/icons-material/NotInterested";
+import MaleIcon from "../../assets/illustrations/male-illus.svg";
+import FemaleIcon from "../../assets/illustrations/female-illus.svg";
 import {
   likeProfile,
   unlikeProfile,
   getCurrentPlan,
   cancelMatch,
   getMatch,
-} from '../../services';
-import { useAuthContext } from '../../context/AuthContext';
+  reactToLike,
+} from "../../services";
+import { useAuthContext } from "../../context/AuthContext";
 
 const ProfileHeader = ({
   firstName,
@@ -34,7 +35,7 @@ const ProfileHeader = ({
   const [matchDetails, setMatchDetails] = useState(null);
   const [isLiked, setIsLiked] = useState(false); // State to track if profile is liked
   const { token } = useAuthContext();
-  const childId = localStorage.getItem('childId');
+  const childId = localStorage.getItem("childId");
   const { id } = useParams();
   const isChild = Boolean(childId === id);
   const navigate = useNavigate();
@@ -49,8 +50,8 @@ const ProfileHeader = ({
   }, [id]);
 
   useEffect(() => {
-    if (location?.state?.from === 'match') setIsMatchPage(true);
-    else if (location?.state?.from === 'dashboard') setIsDashboard(true);
+    if (location?.state?.from === "match") setIsMatchPage(true);
+    else if (location?.state?.from === "dashboard") setIsDashboard(true);
   }, [location.state]);
 
   useEffect(() => {
@@ -79,8 +80,8 @@ const ProfileHeader = ({
 
   const handleLike = async () => {
     if (!activePlan) {
-      toast.warning('No current plan. Upgrade to like suitors');
-      navigate('/pricing');
+      toast.warning("No current plan. Upgrade to like suitors");
+      navigate("/pricing");
       return;
     }
     try {
@@ -96,10 +97,54 @@ const ProfileHeader = ({
     }
   };
 
+  const handleAcceptLike = async () => {
+    if (!activePlan) {
+      toast.warning("No current plan. Upgrade to like suitors");
+      navigate("/pricing");
+      return;
+    }
+    try {
+      setIsDisabled(true);
+      const res = await reactToLike(
+        childId,
+        { like: id, reaction: "accept" },
+        token
+      );
+      toast.success(res?.data?.message);
+      localStorage.setItem(`liked_${id}`, JSON.stringify(true)); // Save isLiked state to localStorage
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    } finally {
+      setIsDisabled(false);
+    }
+  };
+
+  const handleRejectLike = async () => {
+    if (!activePlan) {
+      toast.warning("No current plan. Upgrade to like suitors");
+      navigate("/pricing");
+      return;
+    }
+    try {
+      setIsDisabled(true);
+      const res = await reactToLike(
+        childId,
+        { like: id, reaction: "reject" },
+        token
+      );
+      toast.success(res?.data?.message);
+      localStorage.setItem(`liked_${id}`, JSON.stringify(true)); // Save isLiked state to localStorage
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    } finally {
+      setIsDisabled(false);
+    }
+  };
+
   const handleUnlike = async () => {
     if (!activePlan) {
-      toast.warning('No current plan. Upgrade to unlike suitors');
-      navigate('/pricing');
+      toast.warning("No current plan. Upgrade to unlike suitors");
+      navigate("/pricing");
       return;
     }
     setIsDisabled(true);
@@ -120,7 +165,7 @@ const ProfileHeader = ({
       setIsDisabled(true);
       const res = await cancelMatch(
         childId,
-        { match: matchDetails?.match_id, action: 'initiate' },
+        { match: matchDetails?.match_id, action: "initiate" },
         token
       );
       toast.success(res?.message);
@@ -136,7 +181,7 @@ const ProfileHeader = ({
       <div className="flex flex-col sm:flex-row sm:justify-start items-center gap-4">
         <div className="flex items-center justify-center h-[155px] w-[155px] rounded-full border border-[#0000000d] bg-white box-shadow-profile z-30 relative overflow-hidden">
           <img
-            src={gender?.toLowerCase() === 'male' ? MaleIcon : FemaleIcon}
+            src={gender?.toLowerCase() === "male" ? MaleIcon : FemaleIcon}
             alt="user icon"
             className="w-24 h-24 z-40"
           />
@@ -149,7 +194,7 @@ const ProfileHeader = ({
                 ? firstName
                 : !isChild && displayID
                 ? displayID
-                : 'Waliyy User'}
+                : "Waliyy User"}
             </p>
             <BsFillDiamondFill className="h-2 w-2" />
             <p>{age}</p>
@@ -179,18 +224,18 @@ const ProfileHeader = ({
           {!isDashboard && (
             <>
               <button
-                onClick={handleLike}
-                disabled={isDisabled || isLiked}
+                onClick={handleAcceptLike}
+                disabled={isDisabled}
                 className="hover:bg-[#a37eff] disabled:bg-[#9A8AAC] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
               >
-                <ThumbUpIcon /> Interested
+                <ThumbUpIcon /> Accept
               </button>
               <button
-                onClick={handleUnlike}
-                disabled={isDisabled || !isLiked}
+                onClick={handleRejectLike}
+                disabled={isDisabled}
                 className="hover:bg-[#a37eff] disabled:bg-[#9A8AAC] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
               >
-                <ThumbDownIcon /> Uninterested
+                <ThumbDownIcon /> Reject
               </button>
             </>
           )}
@@ -201,7 +246,7 @@ const ProfileHeader = ({
         <button
           onClick={handleCancelMatch}
           disabled={
-            isDisabled || matchDetails?.status === 'PENDING_CANCELLATION'
+            isDisabled || matchDetails?.status === "PENDING_CANCELLATION"
           }
           className="hover:bg-red-700 disabled:bg-red-300 bg-red-500 rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
         >

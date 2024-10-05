@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import ProfileCard from '../ProfileCard';
-import { getLikes } from '../../services';
-import { useAuthContext } from '../../context/AuthContext';
-import Loader from '../Loader';
+import React, { useEffect, useState } from "react";
+import ProfileCard from "../ProfileCard";
+import { getLikes } from "../../services";
+import { useAuthContext } from "../../context/AuthContext";
+import Loader from "../Loader";
 
 const Liked = () => {
   const [likes, setLikes] = useState([]);
   const [loading, setLoading] = useState(false);
   const { token } = useAuthContext();
-  const childId = localStorage.getItem('childId');
+  const childId = localStorage.getItem("childId");
 
   useEffect(() => {
     const fetchLikes = async () => {
       try {
         setLoading(true);
-        const res = await getLikes(childId, 'given', token);
+        const res = await getLikes(childId, "given", token);
+        console.log(res);
         setLikes(res?.data);
       } catch (err) {
         throw new Error(err);
