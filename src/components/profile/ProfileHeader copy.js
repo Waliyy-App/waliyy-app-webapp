@@ -52,6 +52,7 @@ const ProfileHeader = ({
       try {
         const res = await getMatch(childId, token);
         setMatchDetails(res?.data);
+        console.log(matchDetails)
       } catch (err) {
         console.error(err);
       }
