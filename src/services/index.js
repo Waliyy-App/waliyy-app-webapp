@@ -151,7 +151,7 @@ export const acceptProposal = async (id, payload, accessToken) => {
   }
 };
 
-export const getLikes = async (id, type = "given", accessToken) => {
+export const getLikes = async (id, type, accessToken) => {
   try {
     const response = await apiService.get(
       `/match/like/child/${id}/?type=${type}`,

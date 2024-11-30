@@ -26,6 +26,7 @@ const ProfileHeader = ({
   gender,
   lga,
   displayID,
+  matchID,
   isGeneral = false,
 }) => {
   const [isDisabled, setIsDisabled] = useState(false);
@@ -89,7 +90,7 @@ const ProfileHeader = ({
       const res = await likeProfile(childId, { profile: id }, token);
       toast.success(res?.data?.message);
       setIsLiked(true); // Mark profile as liked
-      localStorage.setItem(`liked_${id}`, JSON.stringify(true)); // Save isLiked state to localStorage
+      // localStorage.setItem(`liked_${id}`, JSON.stringify(true)); // Save isLiked state to localStorage
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
@@ -107,11 +108,11 @@ const ProfileHeader = ({
       setIsDisabled(true);
       const res = await reactToLike(
         childId,
-        { like: id, reaction: 'accept' },
+        { like: matchID, reaction: 'accept' },
         token
       );
       toast.success(res?.data?.message);
-      localStorage.setItem(`liked_${id}`, JSON.stringify(true)); // Save isLiked state to localStorage
+      // localStorage.setItem(`liked_${id}`, JSON.stringify(true)); // Save isLiked state to localStorage
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
@@ -160,27 +161,32 @@ const ProfileHeader = ({
     }
   };
 
-  console.log(handleUnlike)
+  // console.log(handleUnlike);
+
   const handleCancelMatch = async () => {
     try {
-      setIsDisabled(true);
+      // setIsDisabled(true);
       const res = await cancelMatch(
         childId,
         {
           match: matchDetails?.match_id,
           action:
             matchDetails?.status === 'PENDING_CANCELLATION' &&
-            !matchDetails?.requestedByYou
+            !matchDetails?.requstedByYou
               ? 'confirm'
               : 'initiate',
         },
         token
       );
       toast.success(res?.message);
+      matchDetails?.status === 'PENDING_CANCELLATION' &&
+      matchDetails?.requstedByYou
+        ? setIsDisabled(true)
+        : setIsDisabled(false);
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
-      setIsDisabled(false);
+      window.location.reload();
     }
   };
 
@@ -253,9 +259,6 @@ const ProfileHeader = ({
       {isMatchPage && (
         <button
           onClick={handleCancelMatch}
-          disabled={
-            isDisabled || matchDetails?.status === 'PENDING_CANCELLATION'
-          }
           className="hover:bg-red-700 disabled:bg-red-300 bg-red-500 rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
         >
           <NotInterestedIcon /> Cancel Match

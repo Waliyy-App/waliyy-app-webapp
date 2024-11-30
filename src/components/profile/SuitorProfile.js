@@ -23,6 +23,7 @@ const ProfileDetails = () => {
   const { id } = useParams();
   const location = useLocation();
   const childId = localStorage.getItem("childId");
+  const { matchID } = location.state || {};
   const navigate = useNavigate();
 
   const { token } = useAuthContext();
@@ -34,6 +35,8 @@ const ProfileDetails = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  console.log(matchID, 'match id')
 
   useEffect(() => {
     if (location.state.from && location.state.from === "match") {
@@ -101,6 +104,7 @@ const ProfileDetails = () => {
               residence={child?.countryofResidence}
               gender={child?.gender}
               displayID={child?.displayId}
+              matchID={matchID}
             />
 
             <div>

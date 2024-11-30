@@ -15,7 +15,9 @@ const LikedYou = () => {
       try {
         setLoading(true);
         const res = await getLikes(childId, 'received', token);
-        setLikes(res?.data);
+        setLikes(res.data);
+        console.log(res.data, 'likes');
+
       } catch (err) {
         console.log(err);
       } finally {
@@ -43,6 +45,7 @@ const LikedYou = () => {
               {likes.map((item) => (
                 <ProfileCard
                   key={item.id}
+                  matchID={item._id}
                   id={item.initiator._id}
                   firstName={item.initiator.firstName}
                   lga={item.initiator.lga}
