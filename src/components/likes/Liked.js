@@ -15,7 +15,7 @@ const Liked = () => {
       try {
         setLoading(true);
         const res = await getLikes(childId, "given", token);
-        console.log(res);
+        console.log(res.data);
         setLikes(res?.data);
       } catch (err) {
         throw new Error(err);
@@ -40,8 +40,10 @@ const Liked = () => {
           </div>
           {likes.length > 0 ? (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {likes.map((item) => (
+              {likes.map((item, index) => (
                 <ProfileCard
+                  state="liked"
+                  index={index}
                   key={item.id}
                   id={item.receiver._id}
                   firstName={item.receiver.firstName}

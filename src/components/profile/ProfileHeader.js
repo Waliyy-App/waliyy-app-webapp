@@ -27,6 +27,7 @@ const ProfileHeader = ({
   lga,
   displayID,
   matchID,
+  showButton,
   isGeneral = false,
 }) => {
   const [isDisabled, setIsDisabled] = useState(false);
@@ -42,11 +43,13 @@ const ProfileHeader = ({
   const navigate = useNavigate();
   const location = useLocation();
 
+  console.log(showButton)
+
   // Retrieve isLiked from localStorage when the component mounts
   useEffect(() => {
     const likedStatus = localStorage.getItem(`liked_${id}`);
     if (likedStatus) {
-      setIsLiked(JSON.parse(likedStatus)); // Set the isLiked state based on localStorage value
+      setIsLiked(JSON.parse(likedStatus));
     }
   }, [id]);
 
@@ -89,12 +92,11 @@ const ProfileHeader = ({
       setIsDisabled(true);
       const res = await likeProfile(childId, { profile: id }, token);
       toast.success(res?.data?.message);
-      setIsLiked(true); // Mark profile as liked
-      // localStorage.setItem(`liked_${id}`, JSON.stringify(true)); // Save isLiked state to localStorage
+      setIsLiked(true);
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
-      setIsDisabled(false);
+      window.location.reload();
     }
   };
 
@@ -112,11 +114,10 @@ const ProfileHeader = ({
         token
       );
       toast.success(res?.data?.message);
-      // localStorage.setItem(`liked_${id}`, JSON.stringify(true)); // Save isLiked state to localStorage
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
-      setIsDisabled(false);
+      window.location.reload();
     }
   };
 
@@ -130,15 +131,14 @@ const ProfileHeader = ({
       setIsDisabled(true);
       const res = await reactToLike(
         childId,
-        { like: id, reaction: 'reject' },
+        { like: matchID, reaction: 'reject' },
         token
       );
       toast.success(res?.data?.message);
-      localStorage.setItem(`liked_${id}`, JSON.stringify(true)); // Save isLiked state to localStorage
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
-      setIsDisabled(false);
+      window.location.reload();
     }
   };
 
@@ -157,11 +157,9 @@ const ProfileHeader = ({
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
-      setIsDisabled(false);
+      window.location.reload();
     }
   };
-
-  // console.log(handleUnlike);
 
   const handleCancelMatch = async () => {
     try {
@@ -189,6 +187,7 @@ const ProfileHeader = ({
       window.location.reload();
     }
   };
+  
 
   return (
     <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between py-8 gap-10">
@@ -235,7 +234,7 @@ const ProfileHeader = ({
               <ThumbUpIcon /> Interested
             </button>
           )}
-          {!isDashboard && (
+          {!isDashboard && showButton === 'receiver' && (
             <>
               <button
                 onClick={handleAcceptLike}
@@ -250,6 +249,18 @@ const ProfileHeader = ({
                 className="hover:bg-[#a37eff] disabled:bg-[#9A8AAC] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
               >
                 <ThumbDownIcon /> Reject
+              </button>
+            </>
+          )}
+          {!isDashboard && showButton === 'initator' && (
+            <>
+              
+              <button
+                onClick={handleUnlike}
+                disabled={isDisabled}
+                className="hover:bg-[#a37eff] disabled:bg-[#9A8AAC] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
+              >
+                <ThumbDownIcon /> Unlike
               </button>
             </>
           )}

@@ -23,18 +23,18 @@ const ProfileCard = ({
   state,
   href,
   displayID,
-  matchID
+  matchID,
 }) => {
   const [truncatedLoremIpsum, setTruncatedLoremIpsum] = useState('');
 
   useEffect(() => {
     setTruncatedLoremIpsum(truncateText(about, 20));
   }, [about]);
-console.log(matchID)
+
   return (
     <Link
       to={href || `/recommended/${id}`}
-      state={{ from: state ? state : '', matchID  }}
+      state={{ from: state ? state : '', matchID }}
       className="profile-card bg-[#FFF4F6] rounded-2xl px-6 pt-6 pb-8 flex flex-col gap-8 w-full cursor-pointer"
     >
       <div className="mb-auto flex flex-col gap-y-8">
@@ -62,9 +62,7 @@ console.log(matchID)
 
           <div className="flex items-center gap-1 ">
             <WorkIcon />
-            <p className="text-sm font-light capitalize">
-             {profession}
-            </p>
+            <p className="text-sm font-light capitalize">{profession}</p>
           </div>
         </div>
 

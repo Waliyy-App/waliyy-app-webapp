@@ -44,6 +44,7 @@ const LikedYou = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {likes.map((item) => (
                 <ProfileCard
+                  state="likedYou"
                   key={item.id}
                   matchID={item._id}
                   id={item.initiator._id}
