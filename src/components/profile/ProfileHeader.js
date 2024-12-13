@@ -260,7 +260,7 @@ const ProfileHeader = ({
                 disabled={isDisabled}
                 className="hover:bg-[#a37eff] disabled:bg-[#9A8AAC] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2 transition-all duration-300"
               >
-                <ThumbDownIcon /> Unlike
+                <ThumbDownIcon /> Uninterested
               </button>
             </>
           )}
