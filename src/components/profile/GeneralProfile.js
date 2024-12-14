@@ -72,7 +72,6 @@ const GeneralProfile = () => {
 
   const goBack = () => {
     navigate(-1);
-    console.log(navigate);
   };
 
   return (
