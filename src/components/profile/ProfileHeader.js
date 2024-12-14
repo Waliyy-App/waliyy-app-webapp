@@ -43,7 +43,7 @@ const ProfileHeader = ({
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(showButton)
+  console.log(showButton);
 
   // Retrieve isLiked from localStorage when the component mounts
   useEffect(() => {
@@ -93,11 +93,13 @@ const ProfileHeader = ({
       const res = await likeProfile(childId, { profile: id }, token);
       toast.success(res?.data?.message);
       setIsLiked(true);
+      window.location.hash = '#/likes';
     } catch (error) {
       toast.error(error?.response?.data?.message);
-    } finally {
-      window.location.reload();
-    }
+    } 
+    // finally {
+    //   window.location.reload();
+    // }
   };
 
   const handleAcceptLike = async () => {
@@ -114,10 +116,9 @@ const ProfileHeader = ({
         token
       );
       toast.success(res?.data?.message);
+      window.location.hash = '#/match';
     } catch (error) {
       toast.error(error?.response?.data?.message);
-    } finally {
-      window.location.reload();
     }
   };
 
@@ -135,10 +136,9 @@ const ProfileHeader = ({
         token
       );
       toast.success(res?.data?.message);
+      window.location.hash = '#/dashboard';
     } catch (error) {
       toast.error(error?.response?.data?.message);
-    } finally {
-      window.location.reload();
     }
   };
 
@@ -152,18 +152,15 @@ const ProfileHeader = ({
     try {
       const res = await unlikeProfile(childId, { profile: id }, token);
       toast.success(res?.data?.message);
-      setIsLiked(false); // Mark profile as unliked
-      localStorage.setItem(`liked_${id}`, JSON.stringify(false)); // Save isLiked state to localStorage
+      setIsLiked(false);
+      window.location.hash = '#/dashboard';
     } catch (error) {
       toast.error(error?.response?.data?.message);
-    } finally {
-      window.location.reload();
     }
   };
 
   const handleCancelMatch = async () => {
     try {
-      // setIsDisabled(true);
       const res = await cancelMatch(
         childId,
         {
@@ -181,13 +178,12 @@ const ProfileHeader = ({
       matchDetails?.requstedByYou
         ? setIsDisabled(true)
         : setIsDisabled(false);
+
+      window.location.hash = '#/dashboard';
     } catch (error) {
       toast.error(error?.response?.data?.message);
-    } finally {
-      window.location.reload();
     }
   };
-  
 
   return (
     <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between py-8 gap-10">
@@ -254,7 +250,6 @@ const ProfileHeader = ({
           )}
           {!isDashboard && showButton === 'initator' && (
             <>
-              
               <button
                 onClick={handleUnlike}
                 disabled={isDisabled}
