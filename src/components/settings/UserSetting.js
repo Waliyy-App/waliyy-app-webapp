@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import { toast } from 'react-toastify';
 import CustomTabPanel from '../../common/CustomTabPanel';
@@ -19,7 +18,6 @@ import { capitalize } from '../../utils.js';
 const UserSetting = ({ value, child }) => {
   const { token } = useAuthContext();
   const childId = localStorage.getItem('childId');
-  const navigate = useNavigate();
 
   const initialValues = {
     weight: child?.weight,
