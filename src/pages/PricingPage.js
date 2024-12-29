@@ -35,8 +35,6 @@ const PricingPage = () => {
     handlePlans();
   }, []);
 
-  console.log(plans);
-
   const handlePayment = async (price, planId) => {
     setLoading(true);
     try {
