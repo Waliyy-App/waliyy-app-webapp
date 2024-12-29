@@ -52,7 +52,7 @@ export const Filters = () => {
   }, [childId, token]);
 
   const initialValues = {
-    minAge: childPref?.minAge ? childPref?.minAge : undefined,
+    minAge: childPref?.minAge ? childPref?.minAge : "18",
     maxAge: childPref?.maxAge ? childPref?.maxAge : undefined,
     genotypes: childPref?.genotypes ? childPref?.genotypes : [],
     minHeight: childPref?.minHeight ? childPref?.minHeight : undefined,
@@ -104,6 +104,7 @@ export const Filters = () => {
         ? await updateFilter(newValues, token, childId)
         : await filterSuitors(newValues, token, childId);
       toast.success(res?.message);
+      console.log(newValues)
       navigate("/dashboard");
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -138,7 +139,7 @@ export const Filters = () => {
                       label="Min Age"
                       name="minAge"
                       type="text"
-                      placeholder={childPref?.minAge}
+                      placeholder={childPref?.minAge ? childPref?.minAge : '18'}
                     />
                     <TextInput
                       label="Max Age"
@@ -223,7 +224,7 @@ export const Filters = () => {
                           selectedMaritalStatus.length > 0
                             ? selectedMaritalStatus
                                 .map((item) => item.label)
-                                .join(", ")
+                                .join(', ')
                             : childPref?.maritalStatus, // Fallback placeholder
                       }}
                     />
