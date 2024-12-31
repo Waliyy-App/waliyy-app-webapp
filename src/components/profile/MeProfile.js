@@ -38,11 +38,11 @@ const MeProfile = ({
         <div className="flex flex-col gap-6 text-[#2D133A] w-full sm:w-4/5">
           <div>
             <p className="mb-[10px] text-lg font-semibold">About Me!</p>
-            <p>{about}</p>
+            <div className="whitespace-pre-wrap">{about}</div>
           </div>
           <div>
             <p className="mb-[10px] text-lg font-semibold">How do I dress?</p>
-            <p>{dressing}</p>
+            <div className="whitespace-pre-wrap">{dressing}</div>
           </div>
         </div>
 

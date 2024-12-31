@@ -47,16 +47,22 @@ const UserSetting = ({ value, child }) => {
       <Formik
         initialValues={initialValues}
         onSubmit={async (values) => {
-          const newValues = {
+          const updatedValues = {
             ...values,
+            speakersListenedTo: Array.isArray(values.speakersListenedTo)
+              ? values.speakersListenedTo
+              : values.speakersListenedTo
+                  ?.split(',')
+                  .map((speaker) => speaker.trim())
+                  .filter((speaker) => speaker), // Remove empty strings
           };
 
           try {
-            const res = await updateUserProfile(newValues, childId, token);
+            const res = await updateUserProfile(updatedValues, childId, token);
             toast.success(res?.message);
             window.location.reload();
           } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error(error.response?.data?.message || 'An error occurred');
           }
         }}
       >

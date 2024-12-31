@@ -39,17 +39,17 @@ const EduProfile = ({
             <p className="mb-[10px] text-lg font-semibold">
               About my education and profession!
             </p>
-            <p>
+            <div className="whitespace-pre-wrap">
               {eduProf}
-            </p>
+            </div>
           </div>
           <div>
             <p className="mb-[10px] text-lg font-semibold">
               My short/medium term qualification and professional plans
             </p>
-            <p>
+            <div className="whitespace-pre-wrap">
               {plans}
-            </p>
+            </div>
           </div>
 
           {isWillingToRelocate && (
