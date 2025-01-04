@@ -18,7 +18,7 @@ export const educationOptions = [
   { label: 'None', value: 'NONE' },
   { label: 'Primary Education', value: 'PRIMARY' },
   { label: 'Secondary Education', value: 'SECONDARY' },
-  { label: "Bachelor's Degree", value: 'UNDERGRADUATE' },
+  { label: "Bachelor's Degree", value: 'BACHELORS' },
   { label: 'Postgraduate Diploma', value: 'POSTGRADUATE_DIPLOMA' },
   { label: "Master's Degree", value: 'MASTERS' },
   { label: 'PhD', value: 'PHD' },

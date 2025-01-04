@@ -54,7 +54,7 @@ const UserSetting = ({ value, child }) => {
               : values.speakersListenedTo
                   ?.split(',')
                   .map((speaker) => speaker.trim())
-                  .filter((speaker) => speaker), // Remove empty strings
+                  .filter((speaker) => speaker),
           };
 
           try {
