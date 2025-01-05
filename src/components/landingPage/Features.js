@@ -90,7 +90,7 @@ const Features = () => {
       </div>
 
       <Link
-        to="/"
+        to="/sign-up"
         className="flex justify-center items-center w-4/5 sm:w-[350px] mx-auto mt-16 rounded-3xl h-12 bg-[#BA9FFE] text-white hover:bg-[#a37eff] font-medium box-shadow-profile transition-all duration-300 capitalize"
       >
         find your match
