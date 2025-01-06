@@ -98,7 +98,7 @@ const PricingPage = () => {
                     <div className="bg-[#dacdff] h-6 w-6 rounded-full flex items-center justify-center">
                       <FiCheck className="text-[#2D133A]" />
                     </div>
-                    <p className="text-[#667085]">Add up to 4 children</p>
+                    <p className="text-[#667085]">Add up to 2 children</p>
                   </div>
                 </div>
 
