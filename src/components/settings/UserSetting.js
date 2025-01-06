@@ -310,7 +310,7 @@ const UserSetting = ({ value, child }) => {
 
             <div className="flex flex-col sm:flex-row justify-between gap-12">
               <TextArea
-                label="What are you short and medium term qualification and professional plans?"
+                label="What are your short and medium term qualification and professional plans?"
                 name="professionalPlans"
                 rows="10"
                 placeholder="Enter..."
