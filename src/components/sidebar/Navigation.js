@@ -3,11 +3,12 @@ import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
 import { getChild } from '../../services/index.js';
 import { useAuthContext } from '../../context/AuthContext.js';
 import { toast } from 'react-toastify';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
 import PersonIcon from '@mui/icons-material/Person';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { getChildren, logoutFunc } from '../../services';
 import { ThreeDots } from 'react-loader-spinner';
 import Logo from '../../assets/logo/Untitled-1-01.jpg';
@@ -15,6 +16,7 @@ import Logo from '../../assets/logo/Untitled-1-01.jpg';
 const Navigation = () => {
   const [child, setChild] = useState({});
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [children, setChildren] = useState([]);
@@ -91,7 +93,7 @@ const Navigation = () => {
   );
 
   return (
-    <div className="flex justify-between items-center p-8 shadow-xl  text-[#2D133A] sticky top-0 bg-white w-full z-[100]">
+    <div className="flex justify-between items-center p-8 shadow-xl text-[#2D133A] sticky top-0 bg-white w-full z-[100]">
       {loading ? (
         username
       ) : (
@@ -114,7 +116,10 @@ const Navigation = () => {
 
         {openDropdown && (
           <div className="flex flex-col bg-white p-4 rounded-2xl absolute top-16 right-0 w-[200px] z-[100] shadow">
-            <Link className="flex sm:hidden h-[50px] w-[50px] mx-auto" to="/dashboard">
+            <Link
+              className="flex sm:hidden h-[50px] w-[50px] mx-auto"
+              to="/dashboard"
+            >
               <img
                 src={Logo}
                 alt="logo"
@@ -149,6 +154,13 @@ const Navigation = () => {
             </NavLink>
 
             <div className="border border-[#2D133A] w-full mt-10 mb-4"></div>
+
+            <NavLink
+              to="/settings"
+              className='flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300'
+            >
+              <SettingsIcon /> Settings
+            </NavLink>
 
             <button
               className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"

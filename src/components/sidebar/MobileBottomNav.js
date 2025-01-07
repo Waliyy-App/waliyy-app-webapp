@@ -4,7 +4,6 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import HomeIcon from '@mui/icons-material/Home';
-import SettingsIcon from '@mui/icons-material/Settings';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 const MobileNav = () => {
@@ -68,16 +67,7 @@ const MobileNav = () => {
         <AccountBoxIcon />
       </NavLink>
 
-      <NavLink
-        to="/settings"
-        className={`flex justify-center items-center py-2 px-3 h-12 w-12 rounded-full font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300  ${
-          location.pathname === '/settings'
-            ? 'text-white bg-[#BA9FFE] box-shadow-style'
-            : 'text-[#2D133A]'
-        }`}
-      >
-        <SettingsIcon />
-      </NavLink>
+      
     </div>
   );
 };
