@@ -3,7 +3,7 @@ import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
 import { getChild } from '../../services/index.js';
 import { useAuthContext } from '../../context/AuthContext.js';
 import { toast } from 'react-toastify';
-import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
 import PersonIcon from '@mui/icons-material/Person';
@@ -16,7 +16,6 @@ import Logo from '../../assets/logo/Untitled-1-01.jpg';
 const Navigation = () => {
   const [child, setChild] = useState({});
   const navigate = useNavigate();
-  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [children, setChildren] = useState([]);
@@ -157,7 +156,7 @@ const Navigation = () => {
 
             <NavLink
               to="/settings"
-              className='flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300'
+              className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"
             >
               <SettingsIcon /> Settings
             </NavLink>
