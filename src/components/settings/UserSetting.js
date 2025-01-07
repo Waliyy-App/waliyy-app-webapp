@@ -10,6 +10,7 @@ import {
   employmentStatusOptions,
   maritalStatusOption,
   salatOptions,
+  citizenshipOptions,
 } from '../../data/formValues';
 import { updateUserProfile } from '../../services';
 import { useAuthContext } from '../../context/AuthContext';
@@ -21,9 +22,15 @@ const UserSetting = ({ value, child }) => {
 
   const initialValues = {
     weight: child?.weight,
+    height: child?.height,
     maritalStatus: child?.maritalStatus,
+    citizenship: child?.citizenship,
     countryofResidence: child?.countryofResidence,
     educationLevel: child?.educationLevel,
+    hasChildren: child?.hasChildren,
+    isSmoker: child?.isSmoker,
+    isDrinker: child?.isDrinker,
+    hasAddictions: child?.hasAddictions,
 
     lga: child?.lga,
     descriptionOfIslamicPractice: child?.descriptionOfIslamicPractice,
@@ -34,6 +41,7 @@ const UserSetting = ({ value, child }) => {
     professionalPlans: child?.professionalPlans,
     isWillingToRelocate: child?.isWillingToRelocate,
     relocationPlans: child?.relocationPlans,
+    isARevert: child?.isARevert,
     belongsToIslamicOrganization: child?.belongsToIslamicOrganization,
     islamicOrganizationName: child?.islamicOrganizationName,
     speakersListenedTo: child?.speakersListenedTo,
@@ -123,15 +131,7 @@ const UserSetting = ({ value, child }) => {
                 ))}
               </SelectInput>
 
-              <div className={`flex flex-col w-full gap-4 relative`}>
-                <p className="text-sm font-medium  text-[#2D133A]">
-                  Height (m)
-                </p>
-                <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
-                  {child.height}
-                </p>
-              </div>
-
+              <TextInput label="Height (m)" name="height" type="height" />
               <TextInput label="Weight (kg)" name="weight" type="number" />
             </div>
             <div className="flex flex-col sm:flex-row justify-between gap-12">
@@ -146,42 +146,46 @@ const UserSetting = ({ value, child }) => {
                 ))}
               </SelectInput>
 
-              <div className={`flex flex-col w-full gap-4 relative`}>
-                <p className="text-sm font-medium  text-[#2D133A]">
-                  Do you have children?
-                </p>
-                <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
-                  {child.hasChildren === true ? 'Yes' : 'No'}
-                </p>
-              </div>
+              <SelectInput
+                label="Do you have children?"
+                name="hasChildren"
+                defaultValue={String(child.hasChildren)}
+              >
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </SelectInput>
             </div>
 
             <div className="flex flex-col gap-4">
               <p className="text-[#665e6b] text-lg font-semibold">Do you...</p>
 
               <div className="flex flex-col sm:flex-row justify-between gap-12">
-                <div className={`flex flex-col w-full gap-4 relative`}>
-                  <p className="text-sm font-medium  text-[#2D133A]">Smoke?</p>
-                  <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
-                    {child.isSmoker === true ? 'Yes' : 'No'}
-                  </p>
-                </div>
+                <SelectInput
+                  label="Smoke?"
+                  name="isSmoker"
+                  defaultValue={String(child.isSmoker)}
+                >
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </SelectInput>
 
-                <div className={`flex flex-col w-full gap-4 relative`}>
-                  <p className="text-sm font-medium  text-[#2D133A]">Drink?</p>
-                  <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
-                    {child.isDrinker === true ? 'Yes' : 'No'}
-                  </p>
-                </div>
+                <SelectInput
+                  label="Drink?"
+                  name="isDrinker"
+                  defaultValue={String(child.isDrinker)}
+                >
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </SelectInput>
 
-                <div className={`flex flex-col w-full gap-4 relative`}>
-                  <p className="text-sm font-medium  text-[#2D133A]">
-                    Have any addiction?
-                  </p>
-                  <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
-                    {child.hasAddictions === true ? 'Yes' : 'No'}
-                  </p>
-                </div>
+                <SelectInput
+                  label="Have any addiction?"
+                  name="hasAddictions"
+                  defaultValue={String(child.hasAddictions)}
+                >
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </SelectInput>
               </div>
             </div>
           </React.Fragment>
@@ -200,14 +204,16 @@ const UserSetting = ({ value, child }) => {
             </div>
 
             <div className="flex flex-col sm:flex-row justify-between gap-12">
-              <div className={`flex flex-col w-full gap-4 relative`}>
-                <p className="text-sm font-medium  text-[#2D133A]">
-                  Citizenship
-                </p>
-                <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
-                  {child.citizenship}
-                </p>
-              </div>
+              <SelectInput label="Citizenship" name="citizenship">
+                <option value={child.citizenship}>
+                  {capitalize(child.citizenship)}
+                </option>
+                {citizenshipOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </SelectInput>
 
               <div className={`flex flex-col w-full gap-4 relative`}>
                 <p className="text-sm font-medium  text-[#2D133A]">
@@ -353,14 +359,14 @@ const UserSetting = ({ value, child }) => {
             </div>
 
             <div className="flex flex-col sm:flex-row justify-between gap-12">
-              <div className={`flex flex-col w-full gap-4 relative`}>
-                <p className="text-sm font-medium  text-[#2D133A]">
-                  Are you a revert?
-                </p>
-                <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
-                  {child.isARevert === true ? 'Yes' : 'No'}
-                </p>
-              </div>
+              <SelectInput
+                label="Are you a revert?"
+                name="isARevert"
+                defaultValue={String(child.isARevert)}
+              >
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </SelectInput>
 
               <div className={`flex flex-col w-full gap-4 relative`}>
                 <p className="text-sm font-medium  text-[#2D133A]">
