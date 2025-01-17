@@ -82,7 +82,7 @@ const Register = () => {
           </p>
           <div className="flex flex-col gap-2">
             <p className="text-[#665e6b] font-bold">
-              *SISTERS - Register with your Wali's details, this is the
+              *SISTERS - Register with your Mahram's details, this is the
               information that will be sent to Brothers interested in you.
             </p>
             <p className="text-[#665e6b] font-bold">
