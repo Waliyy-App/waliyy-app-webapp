@@ -3,7 +3,7 @@ export const faq = [
     id: 1,
     question: 'What is WaliyyApp?',
     answer:
-      'WaliyyApp is a marriage platform where guardians are given priority in supporting their wards find their ever after spouses.',
+      'WaliyyApp is a marriage platform where eligible Muslim bachelors and ladies find their forever spouses. WaliyyApp encourages the full participation of mahaarim in the process.',
   },
   {
     id: 2,
@@ -12,9 +12,9 @@ export const faq = [
   },
   {
     id: 3,
-    question: 'Can I register for more than one child/ward?',
+    question: 'Can I register more than one person?',
     answer:
-      'Of course! We at WaliyyApp understand that guardians have multiple wards who need to get married.',
+      'Of course! We at waliyyApp understand that there may be multiple individuals in a family who wish to get married.',
   },
   {
     id: 4,
@@ -43,7 +43,7 @@ export const faq = [
     id: 8,
     question: 'Can I chat with someone I like on the platform?',
     answer:
-      'WaliyyApp protects the interests of sisters; as such, the Waliyy should make contact in the first instance and set up supervised meetings for their wards.',
+      'WaliyyApp protects your interests. As such, the mahaarim should be contacted by the young man in the first instance in order to set up supervised meetings for the pair to chat.',
   },
   {
     id: 9,

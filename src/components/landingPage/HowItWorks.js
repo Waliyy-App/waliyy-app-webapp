@@ -21,7 +21,8 @@ const HowItWorks = () => {
               at the top right corner of our homepage. Provide some basic
               information, then check your email for a welcome message with a
               unique verification code. Enter this code to activate your account
-              and ensure your security.
+              and ensure your security. <br /> ❗
+              <strong>Sisters must sign up with their mahram's details.</strong>
             </p>
           </div>
         </div>

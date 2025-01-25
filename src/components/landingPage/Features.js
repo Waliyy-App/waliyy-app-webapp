@@ -34,8 +34,8 @@ const Features = () => {
           <div className="text-[#2d133a] flex flex-col gap-2">
             <p className="text-xl font-bold">Smart Filter</p>
             <p className="">
-              Our filters help you set your children’s preferences to quickly
-              identify compatible matches tailored just for them.
+              Our filters help you set your preferences to quickly identify
+              compatible matches tailored just for you.
             </p>
           </div>
         </div>
