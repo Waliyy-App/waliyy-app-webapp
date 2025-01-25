@@ -156,7 +156,7 @@ const Navigation = () => {
 
             <NavLink
               to="/settings"
-              className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"
+              className="flex sm:hidden items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"
             >
               <SettingsIcon /> Settings
             </NavLink>
