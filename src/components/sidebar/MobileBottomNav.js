@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import HomeIcon from '@mui/icons-material/Home';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 const MobileNav = () => {
@@ -20,7 +20,7 @@ const MobileNav = () => {
             : 'text-[#2D133A]'
         }`}
       >
-        <HomeIcon />
+        <AutoAwesomeIcon />
       </NavLink>
 
       <NavLink

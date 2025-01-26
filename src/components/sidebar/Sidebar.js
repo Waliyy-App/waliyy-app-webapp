@@ -6,10 +6,10 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import HomeIcon from '@mui/icons-material/Home';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
 const SidebarComponent = ({ isOpen, toggleMenu }) => {
   const location = useLocation();
@@ -55,7 +55,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
                     : 'text-[#2D133A]'
                 }`}
               >
-                <HomeIcon /> {isOpen ? '' : 'Home'}
+                <AutoAwesomeIcon /> {isOpen ? '' : 'Recommended'}
               </NavLink>
 
               <NavLink
