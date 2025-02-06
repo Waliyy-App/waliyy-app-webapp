@@ -14,13 +14,13 @@ const Explore = () => {
 
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
   const [loading, setLoading] = useState(false);
-  const [recommedations, setRecommendations] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
   const [currRecommendations, setCurrRecommendations] = useState([]);
   const [endPage, setEndPage] = useState(PAGE_NUMBER);
   const [pageStart, setPageStart] = useState(0);
   const { token } = useAuthContext();
 
-  const usersLength = recommedations?.length;
+  const usersLength = recommendations?.length;
 
   useEffect(() => {
     const getSuitors = async () => {
@@ -40,10 +40,10 @@ const Explore = () => {
 
   useEffect(() => {
     setCurrRecommendations(() => {
-      const curr = recommedations?.slice(pageStart, endPage);
+      const curr = recommendations?.slice(pageStart, endPage);
       return curr;
     });
-  }, [recommedations, pageStart, endPage]);
+  }, [recommendations, pageStart, endPage]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);

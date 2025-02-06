@@ -96,7 +96,7 @@ const ProfileHeader = ({
       window.location.hash = '#/likes';
     } catch (error) {
       toast.error(error?.response?.data?.message);
-    } 
+    }
     // finally {
     //   window.location.reload();
     // }
@@ -165,19 +165,15 @@ const ProfileHeader = ({
         childId,
         {
           match: matchDetails?.match_id,
-          action:
-            matchDetails?.status === 'PENDING_CANCELLATION' &&
-            !matchDetails?.requstedByYou
-              ? 'confirm'
-              : 'initiate',
+          action: 'confirm',
         },
         token
       );
       toast.success(res?.message);
-      matchDetails?.status === 'PENDING_CANCELLATION' &&
-      matchDetails?.requstedByYou
-        ? setIsDisabled(true)
-        : setIsDisabled(false);
+      // matchDetails?.status === 'PENDING_CANCELLATION' &&
+      // matchDetails?.requstedByYou
+      //   ? setIsDisabled(true)
+      //   : setIsDisabled(false);
 
       window.location.hash = '#/dashboard';
     } catch (error) {

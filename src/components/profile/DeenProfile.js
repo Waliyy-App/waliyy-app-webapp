@@ -22,19 +22,22 @@ const DeenProfile = ({
             <p>{practiceDesc}</p>
           </div>
 
-          {speakers ? (
+          {Array.isArray(speakers) && speakers.length > 0 && (
             <div>
               <p className="mb-[10px] text-lg font-semibold">
                 Speakers and Scholars I listen to
               </p>
-              <div className="flex gap-3">
+              <div className="flex gap-3 flex-wrap">
                 {speakers.map((speaker) => (
-                  <p key={speaker}>{speaker}</p>
+                  <p
+                    key={speaker}
+                    className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold"
+                  >
+                    {speaker}
+                  </p>
                 ))}
               </div>
             </div>
-          ) : (
-            ''
           )}
         </div>
 
@@ -58,7 +61,9 @@ const DeenProfile = ({
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold">
               {startedPracticingIn === 'NOT_PRACTICING'
                 ? 'I am not practicing'
-                : `I started practicing in my ${capitalize(startedPracticingIn)}`}
+                : `I started practicing in my ${capitalize(
+                    startedPracticingIn
+                  )}`}
             </div>
           </div>
         </div>
