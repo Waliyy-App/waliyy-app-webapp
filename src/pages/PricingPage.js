@@ -35,23 +35,29 @@ const PricingPage = () => {
     handlePlans();
   }, []);
 
-  const handlePayment = async (price, planId) => {
+  const handlePayment = async (provider, planId) => {
     setLoading(true);
     try {
       const res = await makePayment(
         {
-          amount: price,
+          provider: provider,
         },
         token,
         planId
       );
-      window.location.href = res?.data?.data?.authorization_url;
+      // console.log(res)
+      window.location.href =
+        provider === 'paystack'
+          ? res?.data?.data?.authorization_url
+          : res?.data?.paymentLink;
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }
   };
+
+  console.log(handlePayment);
 
   return (
     <div className="flex flex-col sm:flex-row">
@@ -120,7 +126,12 @@ const PricingPage = () => {
                       {plan.planName} plan
                     </p>
                     <p className="text-4xl text-[#2D133A] font-bold">
-                      ₦{plan.amount}/annum
+                      {plan.currency === 'NGN'
+                        ? '₦'
+                        : plan.currency === 'USD'
+                        ? '$'
+                        : '£'}
+                      {plan.amount}/annum
                     </p>
                     <p className="text-[#667085]">
                       Do so much more than just browsing.
@@ -149,9 +160,18 @@ const PricingPage = () => {
 
                   <button
                     className="w-full text-white font-semibold hover:bg-[#a37eff] bg-[#BA9FFE] h-12 rounded-lg transition-all duration-300"
-                    onClick={() => handlePayment(plan?.amount, plan?._id)}
+                    onClick={() =>
+                      handlePayment(
+                        plan?.currency === 'NGN'
+                          ? 'paystack'
+                          : plan?.currency === 'USD'
+                          ? 'paypal'
+                          : 'paypal',
+                        plan?._id
+                      )
+                    }
                   >
-                    Get started
+                    Get Started
                   </button>
                 </div>
               ))}
