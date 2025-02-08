@@ -34,6 +34,7 @@ import NoPage from './screens/404Page';
 import UserList from './screens/UserList';
 import { useAuthContext } from './context/AuthContext.js';
 import { getCurrentPlan } from './services/index.js';
+import PaymentConfirmation from './pages/PaymentConfirmation.js';
 
 export const AppLayout = ({ children }) => {
   useResetScrollPosition();
@@ -113,6 +114,11 @@ function App() {
               />
               <Route exact path="/settings" element={<SettingsPage />} />
               <Route exact path="/pricing" element={<PricingPage />} />
+              <Route
+                exact
+                path="/confirm-payment"
+                element={<PaymentConfirmation />}
+              />
               <Route exact path="/get-started" element={<ProfileSetupForm />} />
               <Route exact path="/select-child" element={<UserList />} />
               <Route exact path="/filter" element={<Filters />} />
