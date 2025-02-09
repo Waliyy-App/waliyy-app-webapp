@@ -10,17 +10,14 @@ import Loader from '../components/Loader.js';
 import Navigation from '../components/sidebar/Navigation.js';
 
 const Explore = () => {
-  const PAGE_NUMBER = 12;
+  const PAGE_SIZE = 9;
 
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
   const [loading, setLoading] = useState(false);
   const [recommendations, setRecommendations] = useState([]);
-  const [currRecommendations, setCurrRecommendations] = useState([]);
-  const [endPage, setEndPage] = useState(PAGE_NUMBER);
-  const [pageStart, setPageStart] = useState(0);
+  const [visibleProfiles, setVisibleProfiles] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const { token } = useAuthContext();
-
-  const usersLength = recommendations?.length;
 
   useEffect(() => {
     const getSuitors = async () => {
@@ -28,6 +25,7 @@ const Explore = () => {
       try {
         const res = await getAllUsers(token);
         setRecommendations(res?.data);
+        setVisibleProfiles(res?.data.slice(0, PAGE_SIZE)); // Load first 9
       } catch (error) {
         toast.error(error?.response?.data?.message);
       } finally {
@@ -38,83 +36,51 @@ const Explore = () => {
     getSuitors();
   }, [token]);
 
-  useEffect(() => {
-    setCurrRecommendations(() => {
-      const curr = recommendations?.slice(pageStart, endPage);
-      return curr;
-    });
-  }, [recommendations, pageStart, endPage]);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const loadMore = () => {
+    const newCount = visibleCount + PAGE_SIZE;
+    setVisibleProfiles(recommendations.slice(0, newCount));
+    setVisibleCount(newCount);
   };
-
-  function handlePrev() {
-    if (pageStart === 0) return;
-    setPageStart((prev) => prev - PAGE_NUMBER);
-    setEndPage((prev) => prev - PAGE_NUMBER);
-    window.scrollTo(0, 0);
-  }
-
-  function handleNext() {
-    if (endPage < usersLength) {
-      setPageStart((prev) => prev + PAGE_NUMBER);
-      setEndPage((prev) => prev + PAGE_NUMBER);
-      window.scrollTo(0, 0);
-    }
-  }
 
   return (
     <div className="flex flex-col sm:flex-row">
-      <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
+      <SidebarComponent isOpen={isOpen} toggleMenu={() => setIsOpen(!isOpen)} />
       <main
         className={`${
           isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
-        }  w-full transition-all duration-300 bg-[#d4c4fb1d]`}
+        } w-full transition-all duration-300 bg-[#d4c4fb1d]`}
       >
         <Navigation />
         {loading ? (
           <Loader />
         ) : (
-          <React.Fragment>
-            <div className="flex flex-col gap-y-8 py-[64px] px-8">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {currRecommendations?.map((items) => (
-                  <ProfileCard
-                    key={items.id}
-                    id={items.id}
-                    age={items.age}
-                    lga={items.lga}
-                    firstName={items.firstName}
-                    residence={items.countryofResidence}
-                    about={items.about}
-                    profession={items.profession}
-                    gender={items.gender}
-                    displayID={items?.displayId}
-                    href={`/explore/${items.id}`}
-                  />
-                ))}
-              </div>
-              {currRecommendations?.length > 0 && (
-                <div className="self-end flex items-center gap-x-4">
-                  <button
-                    onClick={handlePrev}
-                    disabled={pageStart === 0}
-                    className="hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2"
-                  >
-                    Prev
-                  </button>
-                  <button
-                    onClick={handleNext}
-                    disabled={usersLength === endPage}
-                    className="hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2"
-                  >
-                    Next
-                  </button>
-                </div>
-              )}
+          <div className="flex flex-col gap-y-8 py-[64px] px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {visibleProfiles.map((items) => (
+                <ProfileCard
+                  key={items.id}
+                  id={items.id}
+                  age={items.age}
+                  lga={items.lga}
+                  firstName={items.firstName}
+                  residence={items.countryofResidence}
+                  about={items.about}
+                  profession={items.profession}
+                  gender={items.gender}
+                  displayID={items?.displayId}
+                  href={`/explore/${items.id}`}
+                />
+              ))}
             </div>
-          </React.Fragment>
+            {visibleCount < recommendations.length && (
+              <button
+                onClick={loadMore}
+                className="self-center bg-[#BA9FFE] hover:bg-[#a37eff] text-white font-medium px-6 py-3 rounded-lg shadow-md"
+              >
+                Load More
+              </button>
+            )}
+          </div>
         )}
       </main>
       <MobileNav />
