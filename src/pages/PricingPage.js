@@ -45,19 +45,19 @@ const PricingPage = () => {
         token,
         planId
       );
-      // console.log(res)
+
+      localStorage.setItem('selectedOrderId', res.data.id);
+
       window.location.href =
         provider === 'paystack'
           ? res?.data?.data?.authorization_url
           : res?.data?.paymentLink;
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response.data.message || 'Payment failed');
     } finally {
       setLoading(false);
     }
   };
-
-  console.log(handlePayment);
 
   return (
     <div className="flex flex-col sm:flex-row">
