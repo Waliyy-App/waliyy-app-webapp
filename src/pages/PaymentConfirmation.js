@@ -29,7 +29,7 @@ const PaymentConfirmation = () => {
     };
 
     fetchOrderID();
-  }, [token, planID]);
+  }, [token, planID, orderID]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
