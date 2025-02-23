@@ -78,14 +78,15 @@ const Register = () => {
       <div className="w-[360px] sm:w-[480px] px-5 sm:px-0 mx-auto py-24">
         <div className="flex flex-col items-center jutify-center mb-20">
           <p className="text-2xl text-center text-[#2D133A] font-medium mb-8">
-            Create your Account - Embark on a journey of love, faith, and connection...
+            Create your Account - Embark on a journey of love, faith, and
+            connection...
           </p>
-          <div className="flex flex-col gap-2">
-            <p className="text-[#665e6b] font-bold">
+          <div className="flex flex-col gap-2 bg-[#2D133A] text-white p-6 text-xl rounded">
+            <p className="font-bold">
               *SISTERS - Register with your Mahram's details, this is the
               information that will be sent to Brothers interested in you.
             </p>
-            <p className="text-[#665e6b] font-bold">
+            <p className="font-bold">
               *BROTHERS - Register with your details.
             </p>
           </div>

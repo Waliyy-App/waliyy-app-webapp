@@ -23,15 +23,13 @@ const About = () => {
           our children and the society.
         </p>
         <p>
-          You are here because you either have a child/children or wards who are
-          ready to marry or should be married and you are actively seeking
-          suitable Muslim spouses for them as Allah has commanded us. We wish to
-          support you to achieve this objective in line with the dictates of the
-          Qur’an and Sunnah.
+          You are here because you are searching for a spouse for yourself or
+          you have young people who are ready to marry and you are actively
+          seeking suitable Muslim singles. We wish to support you to achieve
+          this objective in line with the dictates of the Qur’an and Sunnah.
         </p>
         <p>
-          We wish to support you to achieve this objective in line with the
-          dictates of the Qur’an and Sunnah. In order to do this, members need
+          In order to do this, members need
           to familiarise themselves with simple group rules and follow them as
           diligently as possible. This is a learning process for us all and the
           group admins are open to suggestions for improvement to better improve
