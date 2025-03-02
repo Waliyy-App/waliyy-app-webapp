@@ -17,11 +17,11 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
 
   return (
     <React.Fragment>
-      <div className="h-screen hidden sm:flex">
+      <div className="h-screen hidden sm:flex ">
         <aside
           className={` ${
             isOpen ? 'w-[100px] px-2' : 'w-[280px] px-8'
-          } bg-[#F2EEFB] py-8 flex flex-col justify-between 2xl:justify-start fixed inset-y-0 left-0 h-screen 2xl:h-full transition-all duration-300`}
+          } bg-[#F2EEFB] py-8 flex flex-col justify-between 2xl:justify-start fixed inset-y-0 left-0 h-screen 2xl:h-full transition-all duration-300 overflow-y-auto`}
         >
           <div className="flex flex-col">
             <div className="w-100 flex justify-between items-center transition-all duration-300 mb-11">
