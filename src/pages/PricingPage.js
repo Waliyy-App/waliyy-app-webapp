@@ -48,10 +48,8 @@ const PricingPage = () => {
 
       localStorage.setItem('selectedOrderId', res.data.id);
 
-      window.location.href =
-        provider === 'paystack'
-          ? res?.data?.data?.authorization_url
-          : res?.data?.paymentLink;
+      window.location.href = res?.data?.data?.authorization_url;
+      // : res?.data?.paymentLink;
     } catch (error) {
       toast.error(error.response.data.message || 'Payment failed');
     } finally {
@@ -165,8 +163,8 @@ const PricingPage = () => {
                         plan?.currency === 'NGN'
                           ? 'paystack'
                           : plan?.currency === 'USD'
-                          ? 'paypal'
-                          : 'paypal',
+                          ? 'paystack'
+                          : 'paystack',
                         plan?._id
                       )
                     }
