@@ -6,8 +6,6 @@ import Footer from '../components/landingPage/Footer';
 import Features from '../components/landingPage/Features';
 import HowItWorks from '../components/landingPage/HowItWorks';
 import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
