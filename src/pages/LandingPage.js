@@ -79,7 +79,7 @@ const LandingPage = () => {
                 </div>
                 <p className="text-xl font-bold">Singles</p>
                 <p className="">
-                  You to add and manage up to four singles on WaliyyApp
+                  You can add and manage up to four singles on WaliyyApp
                 </p>
               </div>
             </div>
