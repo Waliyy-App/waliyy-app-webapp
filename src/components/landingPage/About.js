@@ -29,12 +29,12 @@ const About = () => {
           this objective in line with the dictates of the Qur’an and Sunnah.
         </p>
         <p>
-          In order to do this, members need
-          to familiarise themselves with simple group rules and follow them as
-          diligently as possible. This is a learning process for us all and the
-          group admins are open to suggestions for improvement to better improve
-          the process and outcomes in shaa Allah. However, we shall not hesitate
-          to evict anyone violating the rules, particularly after warning.
+          In order to do this, members need to familiarise themselves with
+          simple group rules and follow them as diligently as possible. This is
+          a learning process for us all and the group admins are open to
+          suggestions for improvement to better improve the process and outcomes
+          in shaa Allah. However, we shall not hesitate to evict anyone
+          violating the rules, particularly after warning.
         </p>
       </div>
 
@@ -72,6 +72,34 @@ const About = () => {
           the app.
         </li>
       </ol>
+
+      <h2 className="text-3xl font-bold">Waliyy Role</h2>
+      <div className="flex flex-col gap-8 text-lg mb-10">
+        <p>
+          Mabrook and congratulations, your ward has found a match! <br /> Not
+          sure what to do next? Here are a few suggestions.
+        </p>
+        <ol className="flex flex-col gap-3 text-lg list-disc list-outside px-6">
+          <li>
+            The young man should make an initial contact with you to introduce
+            himself.
+          </li>
+          <li>
+            Set up a meeting at a time convenient for your ward, the suitor and
+            of course, yourself.
+          </li>
+          <li>Attend the meeting and subsequent ones.</li>
+        </ol>
+        <p>
+          They like each other and want to get married… <br /> Excellent news!
+          <br />
+          <br />
+          Contact your local masjid and follow their nikah process. Don’t forget
+          that all important pre-marriage counselling. <br />
+          <br />
+          WaliyyApp wishes you a happy married life.
+        </p>
+      </div>
     </div>
   );
 };
