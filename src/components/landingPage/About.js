@@ -91,13 +91,14 @@ const About = () => {
           <li>Attend the meeting and subsequent ones.</li>
         </ol>
         <p>
-          They like each other and want to get married… <br /> Excellent news!
+          They like each other and want to get married… <br /> Excellent
+          news!🎈🥳
           <br />
           <br />
           Contact your local masjid and follow their nikah process. Don’t forget
           that all important pre-marriage counselling. <br />
           <br />
-          WaliyyApp wishes you a happy married life.
+          WaliyyApp wishes you a happy married life🎊
         </p>
       </div>
     </div>
