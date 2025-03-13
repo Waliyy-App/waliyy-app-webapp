@@ -17,6 +17,12 @@ export const faq = [
       'Of course! We at waliyyApp understand that there may be multiple individuals in a family who wish to get married.',
   },
   {
+    id: 10,
+    question: 'What if i have more than 4 people?',
+    answer:
+      'Kindly contact admin and we will sort you out!',
+  },
+  {
     id: 4,
     question: 'Is my data safe?',
     answer:

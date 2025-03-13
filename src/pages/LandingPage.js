@@ -13,6 +13,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import PersonIcon from '@mui/icons-material/Person';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
+import LogoIcon from '../assets/logo/logo-nobg-cropped.png';
 
 const LandingPage = () => {
   const currentYear = new Date().getFullYear();
@@ -81,6 +82,12 @@ const LandingPage = () => {
                 <p className="">
                   You can add and manage up to four singles on WaliyyApp
                 </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl px-4 py-8">
+              <div className="text-[#2d133a] flex flex-col items-center text-center">
+                <img src={LogoIcon} alt="logo" className="" />
               </div>
             </div>
 
