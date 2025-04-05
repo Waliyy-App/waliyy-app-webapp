@@ -11,6 +11,7 @@ import Loader from '../components/Loader';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [count, setCount] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ const Register = () => {
       setLoading(true);
       try {
         const data = await getUsersCount();
-        console.log(data.data);
+        setCount(data.data);
       } catch (error) {
         toast.error(error.response.data.message);
       } finally {
@@ -63,6 +64,8 @@ const Register = () => {
     };
     showCounter();
   }, []);
+
+  const newCount = 100 - count;
 
   const handleRegistration = async (values) => {
     setLoading(true);
@@ -91,6 +94,11 @@ const Register = () => {
   return (
     <div className="w-100 bg-white">
       <div className="w-[360px] sm:w-[480px] px-5 sm:px-0 mx-auto py-24">
+        <div className="bg-[#2D133A] text-white py-6 px-4 text-md rounded mb-8">
+          <p className="font-bold">
+            ONLY {newCount} SPOTS REMAINING FOR FREE REGISTRATION
+          </p>
+        </div>
         <div className="flex flex-col items-center jutify-center mb-20">
           <p className="text-2xl text-center text-[#2D133A] font-medium mb-8">
             Create your Account - Embark on a journey of love, faith, and
@@ -163,6 +171,16 @@ const Register = () => {
             className="font-bold text-[#2D133A] hover:text-[#7e26aa] transition-all duration-300"
           >
             Log in
+          </Link>{' '}
+        </p>
+
+        <p className="text-center text-sm">
+          Back to the{' '}
+          <Link
+            to="/"
+            className="font-bold text-[#2D133A] hover:text-[#7e26aa] transition-all duration-300"
+          >
+            Website
           </Link>{' '}
         </p>
       </div>
