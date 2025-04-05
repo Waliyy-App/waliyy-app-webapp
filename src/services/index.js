@@ -16,6 +16,15 @@ export const register = async (payload) => {
   }
 };
 
+export const getUsersCount = async () => {
+  try {
+    const response = await apiService.get('counter');
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const login = async (payload) => {
   try {
     const response = await apiService.post('/auth/login', payload);

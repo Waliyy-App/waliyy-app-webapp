@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -6,7 +6,7 @@ import { TextInput } from '../common/form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
-import { register } from '../services';
+import { getUsersCount, register } from '../services';
 import Loader from '../components/Loader';
 
 const Register = () => {
@@ -49,6 +49,21 @@ const Register = () => {
       .oneOf([Yup.ref('password')], 'Passwords do not match'),
   });
 
+  useEffect(() => {
+    const showCounter = async () => {
+      setLoading(true);
+      try {
+        const data = await getUsersCount();
+        console.log(data.data);
+      } catch (error) {
+        toast.error(error.response.data.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    showCounter();
+  }, []);
+
   const handleRegistration = async (values) => {
     setLoading(true);
     try {
@@ -86,9 +101,7 @@ const Register = () => {
               *SISTERS - Register with your Mahram's details, this is the
               information that will be sent to Brothers interested in you.
             </p>
-            <p className="font-bold">
-              *BROTHERS - Register with your details.
-            </p>
+            <p className="font-bold">*BROTHERS - Register with your details.</p>
           </div>
         </div>
         <Formik
