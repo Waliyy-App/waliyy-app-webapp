@@ -16,7 +16,7 @@ const About = () => {
         </p>
         <p>
           We are striving to carry out our duties and responsibilities as
-          parents to help our wards find good Muslim spouses and contribute to
+          parents to help our singles find good Muslim spouses and contribute to
           reducing the fitna of Zina and divorce in our communities. For too
           long, we have left our youths to find spouses by themselves without
           any assistance from parents and this has created so many problems for
@@ -76,7 +76,7 @@ const About = () => {
       <h2 className="text-3xl font-bold">Waliyy Role</h2>
       <div className="flex flex-col gap-8 text-lg mb-10">
         <p>
-          Mabrook and congratulations, your ward has found a match! <br /> Not
+          Mabrook and congratulations, your single has found a match! <br /> Not
           sure what to do next? Here are a few suggestions.
         </p>
         <ol className="flex flex-col gap-3 text-lg list-disc list-outside px-6">
@@ -85,7 +85,7 @@ const About = () => {
             himself.
           </li>
           <li>
-            Set up a meeting at a time convenient for your ward, the suitor and
+            Set up a meeting at a time convenient for your single, the suitor and
             of course, yourself.
           </li>
           <li>Attend the meeting and subsequent ones.</li>
