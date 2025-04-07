@@ -94,9 +94,10 @@ const Register = () => {
   return (
     <div className="w-100 bg-white">
       <div className="w-[360px] sm:w-[480px] px-5 sm:px-0 mx-auto py-24">
-        <div className="bg-[#2D133A] text-white py-6 px-4 text-md rounded mb-8">
-          <p className="font-bold">
-            ONLY {newCount} SPOTS REMAINING FOR FREE REGISTRATION
+        <div className="bg-[#6d2f8d] text-white py-6 px-4 rounded mb-8">
+          <p className="font-bold text-center">
+            Only <span className="font-bold text-xl">{newCount}</span> free
+            membership left
           </p>
         </div>
         <div className="flex flex-col items-center jutify-center mb-20">
@@ -104,7 +105,7 @@ const Register = () => {
             Create your Account - Embark on a journey of love, faith, and
             connection...
           </p>
-          <div className="flex flex-col gap-2 bg-[#2D133A] text-white p-6 text-xl rounded">
+          <div className="flex flex-col gap-2 bg-[#c9b3ff] text-[#2D133A] p-6 text-xl rounded">
             <p className="font-bold">
               *SISTERS - Register with your Mahram's details, this is the
               information that will be sent to Brothers interested in you.
