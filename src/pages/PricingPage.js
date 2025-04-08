@@ -81,7 +81,7 @@ const PricingPage = () => {
                 <div className="flex flex-col gap-2 items-center">
                   <p className="text-xl text-[#2D133A] font-bold">Free plan</p>
                   <p className="text-4xl text-[#2D133A] font-bold">₦0/annum</p>
-                  <p className="text-[#667085]">Our most popular plan.</p>
+                  <p className="text-[#667085]">Limited to browsing only.</p>
                 </div>
 
                 <div className="flex flex-col pt-8 pb-10 gap-4">
