@@ -50,22 +50,22 @@ const Register = () => {
       .oneOf([Yup.ref('password')], 'Passwords do not match'),
   });
 
-  useEffect(() => {
-    const showCounter = async () => {
-      setLoading(true);
-      try {
-        const data = await getUsersCount();
-        setCount(data.data);
-      } catch (error) {
-        toast.error(error.response.data.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    showCounter();
-  }, []);
+  // useEffect(() => {
+  //   const showCounter = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const data = await getUsersCount();
+  //       setCount(data.data);
+  //     } catch (error) {
+  //       toast.error(error.response.data.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   showCounter();
+  // }, []);
 
-  const newCount = 100 - count;
+  // const newCount = 100 - count;
 
   const handleRegistration = async (values) => {
     setLoading(true);
@@ -96,8 +96,7 @@ const Register = () => {
       <div className="w-[360px] sm:w-[480px] px-5 sm:px-0 mx-auto py-24">
         <div className="bg-[#6d2f8d] text-white py-6 px-4 rounded mb-8">
           <p className="font-bold text-center">
-            Only <span className="font-bold text-xl">{newCount}</span> free
-            membership left
+            100 free subscriptions complete!!!
           </p>
         </div>
         <div className="flex flex-col items-center jutify-center mb-20">
