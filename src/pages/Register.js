@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -6,12 +6,12 @@ import { TextInput } from '../common/form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
-import { getUsersCount, register } from '../services';
+import { register } from '../services';
 import Loader from '../components/Loader';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [count, setCount] = useState(false);
+  //const [count, setCount] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
