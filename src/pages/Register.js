@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -6,12 +6,12 @@ import { TextInput } from '../common/form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
-import { register } from '../services';
+import { register, getUsersCount } from '../services';
 import Loader from '../components/Loader';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  //const [count, setCount] = useState(false);
+  const [count, setCount] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -50,22 +50,22 @@ const Register = () => {
       .oneOf([Yup.ref('password')], 'Passwords do not match'),
   });
 
-  // useEffect(() => {
-  //   const showCounter = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const data = await getUsersCount();
-  //       setCount(data.data);
-  //     } catch (error) {
-  //       toast.error(error.response.data.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   showCounter();
-  // }, []);
+  useEffect(() => {
+    const showCounter = async () => {
+      setLoading(true);
+      try {
+        const data = await getUsersCount();
+        setCount(data.data);
+      } catch (error) {
+        toast.error(error.response.data.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    showCounter();
+  }, []);
 
-  // const newCount = 100 - count;
+  const newCount = 200 - count;
 
   const handleRegistration = async (values) => {
     setLoading(true);
@@ -96,7 +96,7 @@ const Register = () => {
       <div className="w-[360px] sm:w-[480px] px-5 sm:px-0 mx-auto py-24">
         <div className="bg-[#6d2f8d] text-white py-6 px-4 rounded mb-8">
           <p className="font-bold text-center">
-            100 free subscriptions complete!!!
+            50% discount available for the next {newCount} subscribers!
           </p>
         </div>
         <div className="flex flex-col items-center jutify-center mb-20">

@@ -4,7 +4,7 @@ import SidebarComponent from '../components/sidebar/Sidebar';
 import { FiCheck } from 'react-icons/fi';
 import { usePersistedState } from '../utils.js';
 import MobileNav from '../components/sidebar/MobileBottomNav.js';
-import { getPlans, makePayment } from '../services/index.js';
+import { getPlans, getUsersCount, makePayment } from '../services/index.js';
 import { useAuthContext } from '../context/AuthContext.js';
 import Loader from '../components/Loader.js';
 import Navigation from '../components/sidebar/Navigation.js';
@@ -12,6 +12,7 @@ import Navigation from '../components/sidebar/Navigation.js';
 const PricingPage = () => {
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
   const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(false);
   const [plans, setPlans] = useState([]);
   const { token } = useAuthContext();
 
@@ -34,6 +35,23 @@ const PricingPage = () => {
 
     handlePlans();
   }, []);
+
+  useEffect(() => {
+      const showCounter = async () => {
+        setLoading(true);
+        try {
+          const data = await getUsersCount();
+          setCount(data.data);
+        } catch (error) {
+          toast.error(error.response.data.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+      showCounter();
+    }, []);
+  
+const newCount = 200 - count;
 
   const handlePayment = async (provider, planId) => {
     setLoading(true);
@@ -123,14 +141,41 @@ const PricingPage = () => {
                     <p className="text-xl text-[#2D133A] font-bold">
                       {plan.planName} plan
                     </p>
-                    <p className="text-4xl text-[#2D133A] font-bold">
-                      {plan.currency === 'NGN'
-                        ? '₦'
-                        : plan.currency === 'USD'
-                        ? '$'
-                        : '£'}
-                      {plan.amount}/annum
-                    </p>
+                    <div className="flex flex-col items-center">
+                      {count < 200 ? (
+                        <>
+                          <p className="text-2xl text-gray-700 line-through">
+                            {plan.currency === 'NGN'
+                              ? '₦'
+                              : plan.currency === 'USD'
+                              ? '$'
+                              : '£'}
+                            {plan.amount}
+                          </p>
+                          <p className="text-4xl text-[#2D133A] font-bold">
+                            {plan.currency === 'NGN'
+                              ? '₦'
+                              : plan.currency === 'USD'
+                              ? '$'
+                              : '£'}
+                            {plan.amount / 2}/annum
+                          </p>
+                          <p className="text-[#BA9FFE] text-sm font-medium text-center">
+                            Limited-time 50% off - only for the first {newCount} new users!
+                          </p>
+                        </>
+                      ) : (
+                        <p className="text-4xl text-[#2D133A] font-bold">
+                          {plan.currency === 'NGN'
+                            ? '₦'
+                            : plan.currency === 'USD'
+                            ? '$'
+                            : '£'}
+                          {plan.amount}/annum
+                        </p>
+                      )}
+                    </div>
+
                     <p className="text-[#667085]">
                       Do so much more than just browsing.
                     </p>

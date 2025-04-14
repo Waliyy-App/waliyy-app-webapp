@@ -18,7 +18,7 @@ export const register = async (payload) => {
 
 export const getUsersCount = async () => {
   try {
-    const response = await apiService.get('counter');
+    const response = await apiService.get('counter/discounted');
     return response.data;
   } catch (error) {
     throw error;
