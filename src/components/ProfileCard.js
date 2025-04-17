@@ -22,6 +22,7 @@ const ProfileCard = ({
   gender,
   state,
   href,
+  onClick,
   displayID,
   matchID,
 }) => {
@@ -35,6 +36,7 @@ const ProfileCard = ({
     <Link
       to={href || `/recommended/${id}`}
       state={{ from: state ? state : '', matchID }}
+      onClick={onClick}
       className="profile-card bg-[#FFF4F6] rounded-2xl px-6 pt-6 pb-8 flex flex-col gap-8 w-full cursor-pointer"
     >
       <div className="mb-auto flex flex-col gap-y-8">

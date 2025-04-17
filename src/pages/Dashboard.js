@@ -15,7 +15,9 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [recommendations, setRecommendations] = useState([]);
   const [visibleProfiles, setVisibleProfiles] = useState([]);
-  const [loadedCount, setLoadedCount] = useState(PAGE_SIZE);
+  const [loadedCount, setLoadedCount] = useState(() => {
+    return parseInt(sessionStorage.getItem('visibleCount')) || PAGE_SIZE;
+  });
   const { token } = useAuthContext();
   const childId = localStorage.getItem('childId');
 
@@ -40,6 +42,25 @@ const Dashboard = () => {
     const nextBatch = recommendations.slice(0, loadedCount + PAGE_SIZE);
     setVisibleProfiles(nextBatch);
     setLoadedCount(nextBatch.length);
+  };
+
+  // Restore scroll position after profiles have rendered
+  useEffect(() => {
+    const savedScrollPos = parseInt(sessionStorage.getItem('scrollPos'));
+    if (savedScrollPos && visibleProfiles.length > 0) {
+      setTimeout(() => {
+        window.scrollTo({ top: savedScrollPos, behavior: 'instant' });
+      }, 0);
+    }
+  }, [visibleProfiles]);
+
+  const handleProfileClick = () => {
+    sessionStorage.setItem('scrollPos', window.scrollY);
+    sessionStorage.setItem('loadedCount', loadedCount);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const toggleMenu = () => {
@@ -73,6 +94,7 @@ const Dashboard = () => {
                   about={item.about}
                   profession={item.profession}
                   gender={item.gender}
+                  onClick={handleProfileClick}
                 />
               ))}
             </div>
@@ -87,6 +109,12 @@ const Dashboard = () => {
                 </button>
               </div>
             )}
+            <button
+              onClick={scrollToTop}
+              className="fixed bottom-6 right-6 bg-[#BA9FFE] hover:bg-[#a37eff] text-white px-4 py-2 rounded-full shadow-md"
+            >
+              ↑ Top
+            </button>
           </div>
         )}
       </main>
