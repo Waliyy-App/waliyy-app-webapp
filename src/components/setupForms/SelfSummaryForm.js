@@ -10,9 +10,10 @@ export default function SelfSummaryForm() {
           label="Tell us about you*"
           name="aboutYou"
           rows="10"
-          placeholder="Tell us about yourself and who you would like to marry. Tell us fun things about you, your hobbies and interests, your goals and aspirations, your relationship with your family, your current lifestyle and so on...
-        Note: Do not include personal information like your full name, email address or phone number.
-          "
+          placeholder={
+            `Tell us about yourself and who you would like to marry. Tell us fun things about you, your hobbies and interests, your goals and aspirations, your relationship with your family, your current lifestyle and so on...
+
+Note: Do not include personal information like your name, email address or phone number.`}
         />
 
         <TextArea

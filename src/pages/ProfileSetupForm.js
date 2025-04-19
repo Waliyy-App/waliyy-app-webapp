@@ -62,7 +62,7 @@ const formSections = [
     id: 'summary',
     icon: <RecordVoiceOverIcon />,
     label:
-      'Self Summary (Do not include personal information like your full name, email address or phone number)',
+      'Self Summary (Do not include personal information like your name, email address or phone number)',
     component: SelfSummaryForm,
   },
 ];
