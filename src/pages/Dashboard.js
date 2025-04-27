@@ -11,13 +11,12 @@ import Navigation from '../components/sidebar/Navigation.js';
 
 const Dashboard = () => {
   const PAGE_SIZE = 9;
+
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
   const [loading, setLoading] = useState(false);
   const [recommendations, setRecommendations] = useState([]);
   const [visibleProfiles, setVisibleProfiles] = useState([]);
-  const [loadedCount, setLoadedCount] = useState(() => {
-    return parseInt(sessionStorage.getItem('visibleCount')) || PAGE_SIZE;
-  });
+  const [page, setPage] = useState(1); // page count
   const { token } = useAuthContext();
   const childId = localStorage.getItem('childId');
 
@@ -38,13 +37,32 @@ const Dashboard = () => {
     fetchRecommendations();
   }, [token, childId]);
 
-  const handleLoadMore = () => {
-    const nextBatch = recommendations.slice(0, loadedCount + PAGE_SIZE);
-    setVisibleProfiles(nextBatch);
-    setLoadedCount(nextBatch.length);
+  const loadMoreProfiles = () => {
+    const nextPage = page + 1;
+    const start = (nextPage - 1) * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    const moreProfiles = recommendations.slice(start, end);
+
+    if (moreProfiles.length > 0) {
+      setVisibleProfiles((prev) => [...prev, ...moreProfiles]);
+      setPage(nextPage);
+    }
   };
 
-  // Restore scroll position after profiles have rendered
+  const handleScroll = () => {
+    const scrollTop = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const fullHeight = document.documentElement.scrollHeight;
+
+    if (scrollTop + windowHeight >= fullHeight - 100) {
+      loadMoreProfiles();
+    }
+  };
+
+  const handleProfileClick = () => {
+    sessionStorage.setItem('scrollPos', window.scrollY);
+  };
+
   useEffect(() => {
     const savedScrollPos = parseInt(sessionStorage.getItem('scrollPos'));
     if (savedScrollPos && visibleProfiles.length > 0) {
@@ -54,10 +72,12 @@ const Dashboard = () => {
     }
   }, [visibleProfiles]);
 
-  const handleProfileClick = () => {
-    sessionStorage.setItem('scrollPos', window.scrollY);
-    sessionStorage.setItem('loadedCount', loadedCount);
-  };
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [visibleProfiles, page]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -99,16 +119,6 @@ const Dashboard = () => {
               ))}
             </div>
 
-            {loadedCount < recommendations.length && (
-              <div className="self-center">
-                <button
-                  onClick={handleLoadMore}
-                  className="hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style px-5 flex items-center gap-2"
-                >
-                  Load More
-                </button>
-              </div>
-            )}
             <button
               onClick={scrollToTop}
               className="fixed bottom-6 right-6 bg-[#BA9FFE] hover:bg-[#a37eff] text-white px-4 py-2 rounded-full shadow-md"
