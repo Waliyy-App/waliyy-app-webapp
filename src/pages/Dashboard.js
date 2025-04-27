@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import SidebarComponent from '../components/sidebar/Sidebar';
 import { usePersistedState } from '../utils.js';
@@ -11,81 +11,81 @@ import Navigation from '../components/sidebar/Navigation.js';
 
 const Dashboard = () => {
   const PAGE_SIZE = 9;
-
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
   const [loading, setLoading] = useState(false);
   const [recommendations, setRecommendations] = useState([]);
   const [visibleProfiles, setVisibleProfiles] = useState([]);
-  const [page, setPage] = useState(1); // page count
+  const [page, setPage] = useState(1);
   const { token } = useAuthContext();
   const childId = localStorage.getItem('childId');
 
+  // Initial fetch
   useEffect(() => {
     const fetchRecommendations = async () => {
       setLoading(true);
       try {
         const res = await getRecommedations(childId, token);
-        setRecommendations(res?.data || []);
-        setVisibleProfiles(res?.data?.slice(0, PAGE_SIZE) || []);
+        const data = res?.data || [];
+        setRecommendations(data);
+        setVisibleProfiles(data.slice(0, PAGE_SIZE));
       } catch (error) {
-        toast.error(error.response?.data?.message || 'Error fetching data');
+        toast.error(error?.response?.data?.message || 'Error fetching data');
       } finally {
         setLoading(false);
       }
     };
-
     fetchRecommendations();
   }, [token, childId]);
 
-  const loadMoreProfiles = () => {
+  // Load more profiles (next page of PAGE_SIZE)
+  const loadMoreProfiles = useCallback(() => {
     const nextPage = page + 1;
     const start = (nextPage - 1) * PAGE_SIZE;
     const end = start + PAGE_SIZE;
-    const moreProfiles = recommendations.slice(start, end);
-
-    if (moreProfiles.length > 0) {
-      setVisibleProfiles((prev) => [...prev, ...moreProfiles]);
+    const more = recommendations.slice(start, end);
+    if (more.length > 0) {
+      setVisibleProfiles((prev) => [...prev, ...more]);
       setPage(nextPage);
     }
-  };
+  }, [page, recommendations]);
 
-  const handleScroll = () => {
+  // Handle scroll for infinite loading
+  const handleScroll = useCallback(() => {
+    if (loading) return;
     const scrollTop = window.scrollY;
     const windowHeight = window.innerHeight;
     const fullHeight = document.documentElement.scrollHeight;
-
     if (scrollTop + windowHeight >= fullHeight - 100) {
       loadMoreProfiles();
     }
-  };
+  }, [loading, loadMoreProfiles]);
 
+  // Attach scroll listener
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  // Save scroll position when clicking a profile
   const handleProfileClick = () => {
     sessionStorage.setItem('scrollPos', window.scrollY);
   };
 
+  // Restore scroll position after profiles render
   useEffect(() => {
-    const savedScrollPos = parseInt(sessionStorage.getItem('scrollPos'));
-    if (savedScrollPos && visibleProfiles.length > 0) {
+    const savedPos = parseInt(sessionStorage.getItem('scrollPos'), 10);
+    if (!isNaN(savedPos) && visibleProfiles.length > 0) {
       setTimeout(() => {
-        window.scrollTo({ top: savedScrollPos, behavior: 'instant' });
+        window.scrollTo({ top: savedPos, behavior: 'auto' });
       }, 0);
     }
   }, [visibleProfiles]);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [visibleProfiles, page]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
     <div className="flex flex-col sm:flex-row">
@@ -96,7 +96,7 @@ const Dashboard = () => {
         } w-full transition-all duration-300 bg-[#d4c4fb1d] min-h-screen`}
       >
         <Navigation />
-        {loading ? (
+        {loading && page === 1 ? (
           <Loader />
         ) : (
           <div className="px-8 py-[64px] flex flex-col gap-y-8">
@@ -109,16 +109,15 @@ const Dashboard = () => {
                   age={item.age}
                   lga={item.lga}
                   firstName={item.firstName}
-                  displayID={item?.displayId}
                   residence={item.countryofResidence}
                   about={item.about}
                   profession={item.profession}
                   gender={item.gender}
+                  displayID={item?.displayId}
                   onClick={handleProfileClick}
                 />
               ))}
             </div>
-
             <button
               onClick={scrollToTop}
               className="fixed bottom-6 right-6 bg-[#BA9FFE] hover:bg-[#a37eff] text-white px-4 py-2 rounded-full shadow-md"
