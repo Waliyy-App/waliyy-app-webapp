@@ -31,7 +31,6 @@ const Explore = () => {
         setLoading(true);
         try {
           const res = await getAllUsers(token, pageNum, limitNum);
-          console.log(res)
           setTotalCount(res?.data?.totalCount)
           const data = res?.data?.children || [];
 
