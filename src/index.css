@@ -4,13 +4,39 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap');
 
-html{
+html {
   scroll-behavior: smooth;
 }
 
 body,
 main {
   font-family: 'Nunito', sans-serif !important;
+}
+
+.card-body {
+  background-color: #d1beff;
+  /* background-image: radial-gradient(
+      at 47% 33%,
+      hsl(280, 51%, 15%) 0,
+      transparent 59%
+    ),
+    radial-gradient(at 82% 65%, hsl(257.54, 100%, 87%) 0, transparent 55%); */
+}
+
+/* Glassmorphism card effect */
+.card {
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(45, 19, 58, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.white-card {
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
 }
 
 .box-shadow-style {
@@ -75,7 +101,7 @@ main {
     overflow-x: scroll !important;
     padding: 0 12px;
   }
-  .css-101ok93-MuiButtonBase-root-MuiTab-root{
+  .css-101ok93-MuiButtonBase-root-MuiTab-root {
     padding: 12px !important;
   }
 }
@@ -98,7 +124,6 @@ main {
   }
 }
 
-
-.hero-section{
- background: linear-gradient(to bottom, #a37eff37, #FFF4F6);
+.hero-section {
+  background: linear-gradient(to bottom, #a37eff37, #fff4f6);
 }
