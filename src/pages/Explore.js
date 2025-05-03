@@ -20,8 +20,6 @@ const Explore = () => {
   const [hasMore, setHasMore] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
 
-  console.log(profiles);
-
   const [page, setPage] = useState(
     () => parseInt(sessionStorage.getItem('explorepage')) || 1
   );
