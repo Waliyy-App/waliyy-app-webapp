@@ -117,7 +117,8 @@ const Explore = () => {
     const getSuitors = async () => {
       setLoading(true);
       try {
-        const res = await getAllUsers(token);
+        const res = await getAllUsers(token, 1);
+        console.log(res)
         setRecommendations(res?.data);
         setVisibleProfiles(res?.data.slice(0, visibleCount));
       } catch (error) {
