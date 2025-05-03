@@ -18,6 +18,9 @@ const Explore = () => {
   const [loading, setLoading] = useState(false);
   const [profiles, setProfiles] = useState([]);
   const [hasMore, setHasMore] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
+
+  console.log(profiles);
 
   const [page, setPage] = useState(
     () => parseInt(sessionStorage.getItem('explorepage')) || 1
@@ -34,6 +37,7 @@ const Explore = () => {
       setLoading(true);
       try {
         const res = await getAllUsers(token, pageNum, limitNum);
+        setTotalCount(res?.data?.totalCount);
         const data = res?.data?.children || [];
 
         if (data?.length === 0) {
@@ -127,7 +131,7 @@ const Explore = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const hideLoadMoreButton = profiles?.length % 100 !== 0 && page !== 1;
+  const hideLoadMoreButton = profiles.length >= totalCount;
 
   return (
     <div className="flex flex-col sm:flex-row">
@@ -169,7 +173,7 @@ const Explore = () => {
                   Load More
                 </button>
               )}
-              {(profiles.length > BASE_LIMIT || page > 1) && (
+              {(profiles?.length > BASE_LIMIT || page > 1) && (
                 <button
                   onClick={loadLess}
                   className="self-center bg-[#E0D7FF] hover:bg-[#c2b9f5] text-[#2D1E64] font-medium px-6 py-3 rounded-lg shadow-md"
