@@ -18,9 +18,10 @@ const Explore = () => {
   const [loading, setLoading] = useState(false);
   const [profiles, setProfiles] = useState([]);
   const [hasMore, setHasMore] = useState(true);
+  const [totalCount, setTotalCount] = useState(0)
 
-  const [page, setPage] = useState(() => parseInt(sessionStorage.getItem('page')) || 1);
-  const [limit, setLimit] = useState(() => parseInt(sessionStorage.getItem('limit')) || BASE_LIMIT);
+  const [page, setPage] = useState(() => parseInt(sessionStorage.getItem('explorepage')) || 1);
+  const [limit, setLimit] = useState(() => parseInt(sessionStorage.getItem('explorelimit')) || BASE_LIMIT);
 
   const hasRestoredScroll = useRef(false);
   const { token } = useAuthContext();
@@ -30,6 +31,8 @@ const Explore = () => {
         setLoading(true);
         try {
           const res = await getAllUsers(token, pageNum, limitNum);
+          console.log(res)
+          setTotalCount(res?.data?.totalCount)
           const data = res?.data?.children || [];
 
           if (data?.length === 0) {
@@ -71,14 +74,14 @@ const Explore = () => {
       if (limit + STEP <= MAX_LIMIT) {
         const newLimit = limit + STEP;
         setLimit(newLimit);
-        sessionStorage.setItem('limit', newLimit);
+        sessionStorage.setItem('explorelimit', newLimit);
         await fetchUsers(page, newLimit);
       } else {
         const nextPage = page + 1;
         setPage(nextPage);
         setLimit(BASE_LIMIT);
-        sessionStorage.setItem('page', nextPage);
-        sessionStorage.setItem('limit', BASE_LIMIT);
+        sessionStorage.setItem('explorepage', nextPage);
+        sessionStorage.setItem('explorelimit', String(BASE_LIMIT));
         await fetchUsers(nextPage, BASE_LIMIT, true);
       }
     }
@@ -93,6 +96,8 @@ const Explore = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // console.log(profiles.length)
 
   return (
       <div className="flex flex-col sm:flex-row">
@@ -125,7 +130,7 @@ const Explore = () => {
                       />
                   ))}
                 </div>
-                {hasMore && (
+                {(hasMore && profiles?.length < totalCount) && (
                     <button
                         onClick={loadMore}
                         className="self-center bg-[#BA9FFE] hover:bg-[#a37eff] text-white font-medium px-6 py-3 rounded-lg shadow-md"
