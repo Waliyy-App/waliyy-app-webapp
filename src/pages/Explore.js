@@ -18,8 +18,6 @@ const Explore = () => {
   const [loading, setLoading] = useState(false);
   const [profiles, setProfiles] = useState([]);
   const [hasMore, setHasMore] = useState(true);
-  // eslint-disable-next-line no-unused-vars
-  const [totalCount, setTotalCount] = useState(0);
 
   const [page, setPage] = useState(
     () => parseInt(sessionStorage.getItem('explorepage')) || 1
@@ -36,7 +34,6 @@ const Explore = () => {
       setLoading(true);
       try {
         const res = await getAllUsers(token, pageNum, limitNum);
-        setTotalCount(res?.data?.totalCount);
         const data = res?.data?.children || [];
 
         if (data?.length === 0) {
