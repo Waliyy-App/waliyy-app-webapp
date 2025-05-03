@@ -18,39 +18,44 @@ const Explore = () => {
   const [loading, setLoading] = useState(false);
   const [profiles, setProfiles] = useState([]);
   const [hasMore, setHasMore] = useState(true);
-  const [totalCount, setTotalCount] = useState(0)
+  // eslint-disable-next-line no-unused-vars
+  const [totalCount, setTotalCount] = useState(0);
 
-  const [page, setPage] = useState(() => parseInt(sessionStorage.getItem('explorepage')) || 1);
-  const [limit, setLimit] = useState(() => parseInt(sessionStorage.getItem('explorelimit')) || BASE_LIMIT);
+  const [page, setPage] = useState(
+    () => parseInt(sessionStorage.getItem('explorepage')) || 1
+  );
+  const [limit, setLimit] = useState(
+    () => parseInt(sessionStorage.getItem('explorelimit')) || BASE_LIMIT
+  );
 
   const hasRestoredScroll = useRef(false);
   const { token } = useAuthContext();
 
   const fetchUsers = useCallback(
-      async (pageNum, limitNum, isNewPage = false) => {
-        setLoading(true);
-        try {
-          const res = await getAllUsers(token, pageNum, limitNum);
-          setTotalCount(res?.data?.totalCount)
-          const data = res?.data?.children || [];
+    async (pageNum, limitNum, isNewPage = false) => {
+      setLoading(true);
+      try {
+        const res = await getAllUsers(token, pageNum, limitNum);
+        setTotalCount(res?.data?.totalCount);
+        const data = res?.data?.children || [];
 
-          if (data?.length === 0) {
-            setHasMore(false);
-            return;
-          }
-
-          setProfiles((prev) => {
-            const existingIds = new Set(prev.map((p) => p.id));
-            const newProfiles = data.filter((p) => !existingIds.has(p.id));
-            return [...prev, ...newProfiles];
-          });
-        } catch (error) {
-          toast.error(error?.response?.data?.message || 'Failed to load users');
-        } finally {
-          setLoading(false);
+        if (data?.length === 0) {
+          setHasMore(false);
+          return;
         }
-      },
-      [token]
+
+        setProfiles((prev) => {
+          const existingIds = new Set(prev.map((p) => p.id));
+          const newProfiles = data.filter((p) => !existingIds.has(p.id));
+          return [...prev, ...newProfiles];
+        });
+      } catch (error) {
+        toast.error(error?.response?.data?.message || 'Failed to load users');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [token]
   );
 
   useEffect(() => {
@@ -61,7 +66,11 @@ const Explore = () => {
   // Scroll restore after profiles are rendered
   useEffect(() => {
     const savedScroll = parseInt(sessionStorage.getItem('scrollPos'), 10);
-    if (!isNaN(savedScroll) && profiles.length > 0 && !hasRestoredScroll.current) {
+    if (
+      !isNaN(savedScroll) &&
+      profiles.length > 0 &&
+      !hasRestoredScroll.current
+    ) {
       hasRestoredScroll.current = true;
       setTimeout(() => {
         window.scrollTo({ top: savedScroll, behavior: 'auto' });
@@ -111,7 +120,6 @@ const Explore = () => {
     }
   };
 
-
   const handleProfileClick = () => {
     sessionStorage.setItem('scrollPos', String(window.scrollY));
     sessionStorage.setItem('page', page);
@@ -125,65 +133,66 @@ const Explore = () => {
   const hideLoadMoreButton = profiles?.length % 100 !== 0 && page !== 1;
 
   return (
-      <div className="flex flex-col sm:flex-row">
-        <SidebarComponent isOpen={isOpen} toggleMenu={() => setIsOpen(!isOpen)} />
-        <main
-            className={`${
-                isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
-            } w-full transition-all duration-300 bg-[#d4c4fb1d]`}
-        >
-          <Navigation />
-          {loading && profiles.length === 0 ? (
-              <Loader />
-          ) : (
-              <div className="flex flex-col gap-y-8 py-[64px] px-8">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  {profiles.map((items) => (
-                      <ProfileCard
-                          key={items.id}
-                          id={items.id}
-                          age={items.age}
-                          lga={items.lga}
-                          firstName={items.firstName}
-                          residence={items.countryofResidence}
-                          about={items.about}
-                          profession={items.profession}
-                          gender={items.gender}
-                          displayID={items?.displayId}
-                          href={`/explore/${items.id}`}
-                          onClick={handleProfileClick}
-                      />
-                  ))}
-                </div>
-                <div className="flex items-center gap-x-4 justify-center">{(hasMore && !hideLoadMoreButton) && (
-                    <button
-                        onClick={loadMore}
-                        className="self-center bg-[#BA9FFE] hover:bg-[#a37eff] text-white font-medium px-6 py-3 rounded-lg shadow-md"
-                    >
-                      Load More
-                    </button>
-                )}
-                  {(profiles.length > BASE_LIMIT || page > 1) && (
-                      <button
-                          onClick={loadLess}
-                          className="self-center bg-[#E0D7FF] hover:bg-[#c2b9f5] text-[#2D1E64] font-medium px-6 py-3 rounded-lg shadow-md"
-                      >
-                        Load Less
-                      </button>
-                  )}</div>
-
-
+    <div className="flex flex-col sm:flex-row">
+      <SidebarComponent isOpen={isOpen} toggleMenu={() => setIsOpen(!isOpen)} />
+      <main
+        className={`${
+          isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
+        } w-full transition-all duration-300 bg-[#d4c4fb1d]`}
+      >
+        <Navigation />
+        {loading && profiles.length === 0 ? (
+          <Loader />
+        ) : (
+          <div className="flex flex-col gap-y-8 py-[64px] px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {profiles.map((items) => (
+                <ProfileCard
+                  key={items.id}
+                  id={items.id}
+                  age={items.age}
+                  lga={items.lga}
+                  firstName={items.firstName}
+                  residence={items.countryofResidence}
+                  about={items.about}
+                  profession={items.profession}
+                  gender={items.gender}
+                  displayID={items?.displayId}
+                  href={`/explore/${items.id}`}
+                  onClick={handleProfileClick}
+                />
+              ))}
+            </div>
+            <div className="flex items-center gap-x-4 justify-center">
+              {hasMore && !hideLoadMoreButton && (
                 <button
-                    onClick={scrollToTop}
-                    className="fixed bottom-6 right-6 bg-[#BA9FFE] hover:bg-[#a37eff] text-white px-4 py-2 rounded-full shadow-md"
+                  onClick={loadMore}
+                  className="self-center bg-[#BA9FFE] hover:bg-[#a37eff] text-white font-medium px-6 py-3 rounded-lg shadow-md"
                 >
-                  ↑ Top
+                  Load More
                 </button>
-              </div>
-          )}
-        </main>
-        <MobileNav />
-      </div>
+              )}
+              {(profiles.length > BASE_LIMIT || page > 1) && (
+                <button
+                  onClick={loadLess}
+                  className="self-center bg-[#E0D7FF] hover:bg-[#c2b9f5] text-[#2D1E64] font-medium px-6 py-3 rounded-lg shadow-md"
+                >
+                  Load Less
+                </button>
+              )}
+            </div>
+
+            <button
+              onClick={scrollToTop}
+              className="fixed bottom-6 right-6 bg-[#BA9FFE] hover:bg-[#a37eff] text-white px-4 py-2 rounded-full shadow-md"
+            >
+              ↑ Top
+            </button>
+          </div>
+        )}
+      </main>
+      <MobileNav />
+    </div>
   );
 };
 
