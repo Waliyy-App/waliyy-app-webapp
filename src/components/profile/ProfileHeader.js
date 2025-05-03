@@ -43,8 +43,6 @@ const ProfileHeader = ({
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(showButton);
-
   // Retrieve isLiked from localStorage when the component mounts
   useEffect(() => {
     const likedStatus = localStorage.getItem(`liked_${id}`);

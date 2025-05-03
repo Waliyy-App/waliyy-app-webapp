@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import SidebarComponent from '../components/sidebar/Sidebar';
 import { usePersistedState } from '../utils.js';
@@ -10,60 +10,84 @@ import Loader from '../components/Loader.js';
 import Navigation from '../components/sidebar/Navigation.js';
 
 const Explore = () => {
-  const PAGE_SIZE = 9;
+  const BASE_LIMIT = 9;
+  const STEP = 6;
+  const MAX_LIMIT = 100;
 
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
   const [loading, setLoading] = useState(false);
-  const [recommendations, setRecommendations] = useState([]);
-  const [visibleProfiles, setVisibleProfiles] = useState([]);
+  const [profiles, setProfiles] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
 
-  const [visibleCount, setVisibleCount] = useState(() => {
-    return parseInt(sessionStorage.getItem('visibleCount')) || PAGE_SIZE;
-  });
+  const [page, setPage] = useState(() => parseInt(sessionStorage.getItem('page')) || 1);
+  const [limit, setLimit] = useState(() => parseInt(sessionStorage.getItem('limit')) || BASE_LIMIT);
 
-  const { token } = useAuthContext();
   const hasRestoredScroll = useRef(false);
+  const { token } = useAuthContext();
+
+  const fetchUsers = useCallback(
+      async (pageNum, limitNum, isNewPage = false) => {
+        setLoading(true);
+        try {
+          const res = await getAllUsers(token, pageNum, limitNum);
+          const data = res?.data?.children || [];
+
+          if (data?.length === 0) {
+            setHasMore(false);
+            return;
+          }
+
+          setProfiles((prev) => {
+            const existingIds = new Set(prev.map((p) => p.id));
+            const newProfiles = data.filter((p) => !existingIds.has(p.id));
+            return [...prev, ...newProfiles];
+          });
+        } catch (error) {
+          toast.error(error?.response?.data?.message || 'Failed to load users');
+        } finally {
+          setLoading(false);
+        }
+      },
+      [token]
+  );
 
   useEffect(() => {
-    const getSuitors = async () => {
-      setLoading(true);
-      try {
-        const res = await getAllUsers(token, 1);
-        const data = res?.data?.children || [];
-        setRecommendations(data);
-        setVisibleProfiles(data.slice(0, visibleCount));
-      } catch (error) {
-        toast.error(error?.response?.data?.message || 'Failed to load users');
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetchUsers(page, limit);
+  }, []);
 
-    getSuitors();
-  }, [token, visibleCount]);
-
-  // Restore scroll position after profiles render — only once
+  // Scroll restore after profiles are rendered
   useEffect(() => {
-    const savedScrollPos = parseInt(sessionStorage.getItem('scrollPos'), 10);
-    if (!isNaN(savedScrollPos) && visibleProfiles.length > 0 && !hasRestoredScroll.current) {
+    const savedScroll = parseInt(sessionStorage.getItem('scrollPos'), 10);
+    if (!isNaN(savedScroll) && profiles.length > 0 && !hasRestoredScroll.current) {
       hasRestoredScroll.current = true;
       setTimeout(() => {
-        window.scrollTo({ top: savedScrollPos, behavior: 'auto' });
+        window.scrollTo({ top: savedScroll, behavior: 'auto' });
       }, 0);
     }
-  }, [visibleProfiles]);
+  }, [profiles]);
 
-  const loadMore = () => {
-    const newCount = visibleCount + PAGE_SIZE;
-    setVisibleCount(newCount);
-    sessionStorage.setItem('visibleCount', newCount);
-    setVisibleProfiles(recommendations.slice(0, newCount));
+  const loadMore = async () => {
+    if (!loading && hasMore) {
+      if (limit + STEP <= MAX_LIMIT) {
+        const newLimit = limit + STEP;
+        setLimit(newLimit);
+        sessionStorage.setItem('limit', newLimit);
+        await fetchUsers(page, newLimit);
+      } else {
+        const nextPage = page + 1;
+        setPage(nextPage);
+        setLimit(BASE_LIMIT);
+        sessionStorage.setItem('page', nextPage);
+        sessionStorage.setItem('limit', BASE_LIMIT);
+        await fetchUsers(nextPage, BASE_LIMIT, true);
+      }
+    }
   };
 
   const handleProfileClick = () => {
     sessionStorage.setItem('scrollPos', String(window.scrollY));
-    sessionStorage.setItem('visibleCount', String(visibleCount));
-    sessionStorage.removeItem('restoredScroll'); // optional cleanup
+    sessionStorage.setItem('page', page);
+    sessionStorage.setItem('limit', limit);
   };
 
   const scrollToTop = () => {
@@ -79,12 +103,12 @@ const Explore = () => {
             } w-full transition-all duration-300 bg-[#d4c4fb1d]`}
         >
           <Navigation />
-          {loading ? (
+          {loading && profiles.length === 0 ? (
               <Loader />
           ) : (
               <div className="flex flex-col gap-y-8 py-[64px] px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  {visibleProfiles.map((items) => (
+                  {profiles.map((items) => (
                       <ProfileCard
                           key={items.id}
                           id={items.id}
@@ -101,7 +125,7 @@ const Explore = () => {
                       />
                   ))}
                 </div>
-                {visibleCount < recommendations.length && (
+                {hasMore && (
                     <button
                         onClick={loadMore}
                         className="self-center bg-[#BA9FFE] hover:bg-[#a37eff] text-white font-medium px-6 py-3 rounded-lg shadow-md"

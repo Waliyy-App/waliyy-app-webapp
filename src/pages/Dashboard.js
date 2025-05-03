@@ -19,54 +19,81 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [profiles, setProfiles] = useState([]);
   const [hasMore, setHasMore] = useState(true);
+  const [hasRenderedOnce, setHasRenderedOnce] = useState(false);
+
+  const [page, setPage] = useState(() =>
+      parseInt(sessionStorage.getItem('page')) || 1
+  );
+  const [limit, setLimit] = useState(() =>
+      parseInt(sessionStorage.getItem('limit')) || BASE_LIMIT
+  );
 
   const { token } = useAuthContext();
   const childId = localStorage.getItem('childId');
-
   const restoredRef = useRef(false);
 
-  const fetchRecommendations = useCallback(async (pageNumber, currentLimit) => {
-    setLoading(true);
-    try {
-      const res = await getRecommedations(childId, token, pageNumber, currentLimit);
-      const data = res?.data?.recommendations || [];
+  const fetchRecommendations = useCallback(
+      async (pageNumber, currentLimit) => {
+        setLoading(true);
+        try {
+          const res = await getRecommedations(childId, token, pageNumber, currentLimit);
+          const data = res?.data?.recommendations || [];
 
-      if (data?.length === 0) {
-        setHasMore(false);
-        return;
-      }
+          if (data.length === 0) {
+            setHasMore(false);
+            return;
+          }
 
-      setProfiles((prev) => {
-        const existingIds = new Set(prev?.map((p) => p.id));
-        const newProfiles = data?.filter((p) => !existingIds?.has(p.id));
-        return [...prev, ...newProfiles];
-      });
-    } catch (error) {
-      toast.error(error?.response?.data?.message || 'Error fetching recommendations');
-    } finally {
-      setLoading(false);
-    }
-  }, [childId, token]);
+          setProfiles((prev) => {
+            const existingIds = new Set(prev.map((p) => p.id));
+            const newProfiles = data.filter((p) => !existingIds.has(p.id));
+            return [...prev, ...newProfiles];
+          });
+        } catch (error) {
+          toast.error(error?.response?.data?.message || 'Error fetching recommendations');
+        } finally {
+          setLoading(false);
+          setHasRenderedOnce(true);
+        }
+      },
+      [childId, token]
+  );
 
   useEffect(() => {
-    fetchRecommendations(1, BASE_LIMIT);
-  }, [fetchRecommendations]);
+    fetchRecommendations(page, limit);
+  }, []); // Only on initial mount
 
-  useInfiniteScroll(fetchRecommendations, BASE_LIMIT, loading, hasMore, MAX_LIMIT, STEP);
+  useInfiniteScroll(
+      async (nextPage, nextLimit, isNewPage = false) => {
+        await fetchRecommendations(nextPage, nextLimit);
+        sessionStorage.setItem('page', nextPage);
+        sessionStorage.setItem('limit', nextLimit);
+        setPage(nextPage);
+        setLimit(nextLimit);
+      },
+      page,
+      limit,
+      BASE_LIMIT,
+      STEP,
+      MAX_LIMIT,
+      loading,
+      hasMore
+  );
 
-  // Scroll restore
   useEffect(() => {
     const savedPos = parseInt(sessionStorage.getItem('scrollPos'), 10);
-    if (!isNaN(savedPos) && profiles.length > 0 && !restoredRef.current) {
+    if (!isNaN(savedPos) && profiles.length > 0 && hasRenderedOnce && !restoredRef.current) {
       restoredRef.current = true;
       setTimeout(() => {
         window.scrollTo({ top: savedPos, behavior: 'auto' });
       }, 0);
     }
-  }, [profiles]);
+  }, [profiles, hasRenderedOnce]);
 
   const handleProfileClick = () => {
     sessionStorage.setItem('scrollPos', String(window.scrollY));
+    sessionStorage.setItem('page', String(page));
+    sessionStorage.setItem('limit', String(limit));
   };
 
   const scrollToTop = () => {

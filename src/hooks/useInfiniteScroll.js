@@ -1,51 +1,51 @@
-import { useEffect, useRef } from "react";
+// useInfiniteScroll.js
+import { useEffect, useRef } from 'react';
 
 const debounce = (func, delay) => {
-    let timeoutId;
-    return function (...args) {
-        if (timeoutId) clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => func(...args), delay);
-    };
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), delay);
+  };
 };
 
 export const useInfiniteScroll = (
     fetchData,
+    currentPage,
+    currentLimit,
     baseLimit,
-    loading,
-    hasMore,
+    step,
     maxLimit,
-    step
+    loading,
+    hasMore
 ) => {
-  const pageRef = useRef(1);
-  const limitRef = useRef(baseLimit);
+  const pageRef = useRef(currentPage);
+  const limitRef = useRef(currentLimit);
 
-  const loadMore = async () => {
-    if (!loading && hasMore) {
-      if (limitRef.current + step <= maxLimit) {
-        limitRef.current += step;
-        await fetchData(pageRef.current, limitRef.current);
-      } else {
-        pageRef.current += 1;
-        limitRef.current = baseLimit;
-        await fetchData(pageRef.current, baseLimit);
-      }
-    }
-  };
+  useEffect(() => {
+    pageRef.current = currentPage;
+    limitRef.current = currentLimit;
+  }, [currentPage, currentLimit]);
 
   const handleScroll = debounce(async () => {
-    const bottomReached =
-      Math.ceil(window.innerHeight + window.scrollY) >=
-      document.documentElement.scrollHeight - 200;
+    if (loading || !hasMore) return;
+    const scrollTop = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight;
 
-    if (bottomReached) {
-      await loadMore();
+    if (scrollTop + windowHeight >= docHeight - 200) {
+      if (limitRef.current + step <= maxLimit) {
+        const nextLimit = limitRef.current + step;
+        await fetchData(pageRef.current, nextLimit);
+      } else {
+        const nextPage = pageRef.current + 1;
+        await fetchData(nextPage, baseLimit, true);
+      }
     }
   }, 300);
 
-  
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handleScroll]);
 };
