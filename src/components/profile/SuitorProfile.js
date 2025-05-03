@@ -92,7 +92,8 @@ const ProfileDetails = () => {
         setLoading(true);
         try {
           const res = await getRecommedations(childId, token);
-          const currentChild = res?.data?.filter(
+          const data = res?.data?.recommendations;
+          const currentChild = data?.filter(
             (child) => child?.id === id
           )?.[0];
           setChild(currentChild);
