@@ -88,6 +88,31 @@ const Explore = () => {
     }
   };
 
+  const loadLess = async () => {
+    if (loading || (page === 1 && limit === BASE_LIMIT)) return;
+
+    if (limit > BASE_LIMIT) {
+      const newLimit = limit - STEP;
+      setLimit(newLimit);
+      sessionStorage.setItem('explorelimit', newLimit);
+
+      // Remove extra profiles from the bottom
+      setProfiles((prev) => prev.slice(0, prev.length - STEP));
+    } else if (page > 1) {
+      const previousPage = page - 1;
+      setPage(previousPage);
+      setLimit(MAX_LIMIT);
+      sessionStorage.setItem('explorepage', previousPage);
+      sessionStorage.setItem('explorelimit', MAX_LIMIT);
+
+      // Remove current page's profiles
+      setProfiles((prev) => prev.slice(0, prev.length - limit));
+
+      await fetchUsers(previousPage, MAX_LIMIT);
+    }
+  };
+
+
   const handleProfileClick = () => {
     sessionStorage.setItem('scrollPos', String(window.scrollY));
     sessionStorage.setItem('page', page);
@@ -98,7 +123,7 @@ const Explore = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // console.log(profiles.length)
+  const hideLoadMoreButton = profiles?.length % 100 !== 0 && page !== 1;
 
   return (
       <div className="flex flex-col sm:flex-row">
@@ -131,7 +156,7 @@ const Explore = () => {
                       />
                   ))}
                 </div>
-                {(hasMore && profiles?.length < totalCount) && (
+                <div className="flex items-center gap-x-4 justify-center">{(hasMore && !hideLoadMoreButton) && (
                     <button
                         onClick={loadMore}
                         className="self-center bg-[#BA9FFE] hover:bg-[#a37eff] text-white font-medium px-6 py-3 rounded-lg shadow-md"
@@ -139,6 +164,16 @@ const Explore = () => {
                       Load More
                     </button>
                 )}
+                  {(profiles.length > BASE_LIMIT || page > 1) && (
+                      <button
+                          onClick={loadLess}
+                          className="self-center bg-[#E0D7FF] hover:bg-[#c2b9f5] text-[#2D1E64] font-medium px-6 py-3 rounded-lg shadow-md"
+                      >
+                        Load Less
+                      </button>
+                  )}</div>
+
+
                 <button
                     onClick={scrollToTop}
                     className="fixed bottom-6 right-6 bg-[#BA9FFE] hover:bg-[#a37eff] text-white px-4 py-2 rounded-full shadow-md"
