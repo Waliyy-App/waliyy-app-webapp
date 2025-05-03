@@ -290,7 +290,7 @@ export const getChild = async (id, accessToken) => {
   }
 };
 
-export const getRecommedations = async (id, accessToken, page = 1, limit=9) => {
+export const getRecommedations = async (id, accessToken, page, limit) => {
   try {
     const response = await apiService.get(
       `/parent/child/${id}/recommendations?page=${page}&limit=${limit}`,
@@ -306,9 +306,9 @@ export const getRecommedations = async (id, accessToken, page = 1, limit=9) => {
   }
 };
 
-export const getAllUsers = async (accessToken, page = 1) => {
+export const getAllUsers = async (accessToken, page, limit) => {
   try {
-    const response = await apiService.get(`/parent/?page=${page}`, {
+    const response = await apiService.get(`/parent/?page=${page}&limit=${limit}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
