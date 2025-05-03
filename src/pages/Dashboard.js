@@ -61,6 +61,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchRecommendations(page, limit);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only on initial mount
 
   useInfiniteScroll(

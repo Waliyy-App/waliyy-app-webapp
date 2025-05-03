@@ -56,6 +56,7 @@ const Explore = () => {
 
   useEffect(() => {
     fetchUsers(page, limit);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Scroll restore after profiles are rendered
