@@ -29,16 +29,16 @@ const Dashboard = () => {
     setLoading(true);
     try {
       const res = await getRecommedations(childId, token, pageNumber, currentLimit);
-      const data = res?.data || [];
+      const data = res?.data?.recommendations || [];
 
-      if (data.length === 0) {
+      if (data?.length === 0) {
         setHasMore(false);
         return;
       }
 
       setProfiles((prev) => {
-        const existingIds = new Set(prev.map((p) => p.id));
-        const newProfiles = data.filter((p) => !existingIds.has(p.id));
+        const existingIds = new Set(prev?.map((p) => p.id));
+        const newProfiles = data?.filter((p) => !existingIds?.has(p.id));
         return [...prev, ...newProfiles];
       });
     } catch (error) {
