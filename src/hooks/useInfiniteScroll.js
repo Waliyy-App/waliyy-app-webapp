@@ -43,7 +43,8 @@ export const useInfiniteScroll = (
     }, 300);
 
     useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+      // eslint-disable-next-line
     }, []);
 };
