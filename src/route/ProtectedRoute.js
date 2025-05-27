@@ -20,7 +20,7 @@ const ProtectedRoute = () => {
     return true;
   };
 
-  if (authLoading) return null; // or show spinner
+  if (authLoading) return null;
 
   const isValidated = Boolean(user) && isLoggedIn && checkTokenExpiration();
 
