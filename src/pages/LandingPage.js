@@ -16,9 +16,8 @@ import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
 import LogoIcon from '../assets/logo/logo-nobg-cropped.png';
 
 const LandingPage = () => {
-  const currentYear = new Date().getFullYear();
   return (
-    <div className="py-12 bg-white dark:bg-white">
+    <div className="pt-12 bg-white dark:bg-white">
       <Navbar />
       <Header />
       <br />
@@ -150,13 +149,6 @@ const LandingPage = () => {
       <FrequentlyAskedQuestions />
       <Footer />
 
-      <div className="flex justify-between items-center mt-8 text-[#2D133A] bg-white dark:bg-white px-12">
-        <p className="">
-          Get In Touch with us:
-          <a href="mailto:waliyyapp@gmail.com"> waliyyapp@gmail.com</a>
-        </p>
-        <p className="">{`© ${currentYear} WaliyyApp. All rights reserved.`}</p>
-      </div>
     </div>
   );
 };
