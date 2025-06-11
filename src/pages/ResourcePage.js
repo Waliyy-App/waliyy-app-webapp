@@ -6,11 +6,11 @@ import MaleIcon from '../assets/illustrations/muslim_founder.svg';
 import { FaYoutube, FaBookOpen, FaLaptopCode } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-const ResourcePage = () => {
+const ResourcePage = () => {   
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-[#f8f9fa] dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800">
       <Navbar />
-
+<div></div>
       <div className="w-11/12 max-w-6xl mx-auto px-4 py-12">
         {/* Page Header */}
         <div className="text-center mb-16 animate-fadeIn">
