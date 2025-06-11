@@ -9,6 +9,7 @@ import { getAllUsers } from "../services";
 import Loader from "../components/Loader.js";
 import Navigation from "../components/sidebar/Navigation.js";
 
+
 const Explore = () => {
   const BASE_LIMIT = 9;
   const STEP = 6;
