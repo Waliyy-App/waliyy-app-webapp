@@ -4,96 +4,40 @@ import Footer from '../components/landingPage/Footer';
 import FemaleIcon from '../assets/illustrations/muslim_lady_founder.svg';
 import MaleIcon from '../assets/illustrations/muslim_founder.svg';
 import { FaYoutube, FaBookOpen, FaLaptopCode } from 'react-icons/fa';
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-
-
-
-// Animation variants
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.5, ease: "easeOut" }
-  }
-};
-
-const fadeIn = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.8 } }
-};
-
-
 const ResourcePage = () => {
-
-   return (
+  return (
     <div className="min-h-screen bg-gradient-to-b from-white to-[#f8f9fa] dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800">
-       <Navbar /> 
+      <Navbar />
 
       <div className="w-11/12 max-w-6xl mx-auto px-4 py-12">
         {/* Page Header */}
-        <motion.div 
-          className="text-center mb-16"
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-        >
-          <motion.h1 
-            className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-700 mb-4"
-            variants={itemVariants}
-          >
+        <div className="text-center mb-16 animate-fadeIn">
+          <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-700 mb-4">
             Resources Center
-          </motion.h1>
-          <motion.p 
-            className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
-            variants={itemVariants}
-          >
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Get inspired with our collection of resources
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* Founder's Bio */}
-        <motion.div 
-          className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-16 flex flex-col md:flex-row items-center gap-8"
-          initial="hidden"
-          animate="visible"
-          variants={itemVariants}
-          whileHover={{ y: -5 }}
-          transition={{ type: "spring", stiffness: 300 }}
-        >
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-16 flex flex-col md:flex-row items-center gap-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
           <div className="md:w-1/4 flex justify-center">
-            <motion.div 
-              className="w-48 h-48 rounded-full bg-gradient-to-br from-purple-100 to-indigo-200 overflow-hidden shadow-lg"
-              variants={fadeIn}
-              whileHover={{ scale: 1.03 }}
-            >
-              {/* Replace with actual founder image */}
-              <img src={MaleIcon} alt="user icon" className="w-full h-full border-2 border-dashed rounded-full" />
-            </motion.div>
+            <div className="w-48 h-48 rounded-full bg-gradient-to-br from-purple-100 to-indigo-200 overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
+              <img 
+                src={MaleIcon} 
+                alt="Sponsor" 
+                className="w-full h-full border-2 border-dashed rounded-full" 
+              />
+            </div>
           </div>
           <div className="md:w-3/4">
-            <motion.h2 
-              className="text-2xl font-bold mb-4 text-gray-800 dark:text-white"
-              variants={fadeIn}
-            >
+            <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
               Meet Our Sponsor
-            </motion.h2>
-            <motion.p 
-              className="text-gray-700 dark:text-gray-300 mb-4"
-              variants={fadeIn}
-            >
+            </h2>
+            <p className="text-gray-700 dark:text-gray-300 mb-4">
               Olanlege Adebayo AbdulFattah is an engineer with over 25 years
               experience in manufacturing, construction and Oil and Gas sector
               at the technical and management levels. He graduated from the
@@ -107,40 +51,25 @@ const ResourcePage = () => {
               children and passionate about Youth issues. He is from Ijebu Ode
               in Ogun State, based mainly in Ibadan, Nigeria but has family also
               in the US and the UK.
-            </motion.p>
+            </p>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div 
-          className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-16 flex flex-col md:flex-row-reverse items-center gap-8"
-          initial="hidden"
-          animate="visible"
-          variants={itemVariants}
-          whileHover={{ y: -5 }}
-          transition={{ type: "spring", stiffness: 300 }}
-        >
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-16 flex flex-col md:flex-row-reverse items-center gap-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
           <div className="md:w-1/4 flex justify-center">
-            <motion.div 
-              className="w-48 h-48 rounded-full bg-gradient-to-br from-pink-100 to-rose-200 overflow-hidden shadow-lg"
-              variants={fadeIn}
-              whileHover={{ scale: 1.03 }}
-            >
-              {/* Replace with actual founder image */}
-              <img src={FemaleIcon} alt="user icon" className="w-full h-full border-2 border-dashed rounded-full" />
-
-            </motion.div>
+            <div className="w-48 h-48 rounded-full bg-gradient-to-br from-pink-100 to-rose-200 overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
+              <img 
+                src={FemaleIcon} 
+                alt="Sponsor" 
+                className="w-full h-full border-2 border-dashed rounded-full" 
+              />
+            </div>
           </div>
           <div className="md:w-3/4">
-            <motion.h2 
-              className="text-2xl font-bold mb-4 text-gray-800 dark:text-white"
-              variants={fadeIn}
-            >
+            <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
               Meet Our Sponsor
-            </motion.h2>
-            <motion.p 
-              className="text-gray-700 dark:text-gray-300 mb-4"
-              variants={fadeIn}
-            >
+            </h2>
+            <p className="text-gray-700 dark:text-gray-300 mb-4">
               Rasheedah Raji is a retired teacher. She spends her time
               volunteering for community projects which empower the youth and
               ladies. With a degree in Social Policy and decades of experience
@@ -151,23 +80,14 @@ const ResourcePage = () => {
               concern of the challenges currently facing Muslim youth all over
               the world, and in particular those of Nigerian descent who wish to
               marry fellow Nigerians but struggle to achieve their desire.
-            </motion.p>
+            </p>
           </div>
-        </motion.div>
+        </div>
 
         {/* Three Column Resources */}
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {/* YouTube Column */}
-          <motion.div 
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all"
-            variants={itemVariants}
-            whileHover={{ y: -8, scale: 1.02 }}
-          >
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
             <div className="p-6 h-full flex flex-col">
               <div className="flex items-center mb-4">
                 <div className="p-3 rounded-full bg-red-100 dark:bg-red-900/30 mr-3">
@@ -193,14 +113,10 @@ const ResourcePage = () => {
                 Visit Our Channel
               </a>
             </div>
-          </motion.div>
+          </div>
 
           {/* Tutorials Column */}
-          <motion.div 
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all"
-            variants={itemVariants}
-            whileHover={{ y: -8, scale: 1.02 }}
-          >
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
             <div className="p-6 h-full flex flex-col">
               <div className="flex items-center mb-4">
                 <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 mr-3">
@@ -229,14 +145,10 @@ const ResourcePage = () => {
                 </button>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Blog Column */}
-          <motion.div 
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all"
-            variants={itemVariants}
-            whileHover={{ y: -8, scale: 1.02 }}
-          >
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
             <div className="p-6 h-full flex flex-col">
               <div className="flex items-center mb-4">
                 <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30 mr-3">
@@ -254,16 +166,11 @@ const ResourcePage = () => {
                 Read Articles
               </button>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Call to Action */}
-        <motion.div 
-          className="text-center rounded-2xl p-8 mb-12 bg-gradient-to-r from-indigo-500 to-purple-600 shadow-xl"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-        >
+        <div className="text-center rounded-2xl p-8 mb-12 bg-gradient-to-r from-indigo-500 to-purple-600 shadow-xl animate-fadeIn">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
             Ready to Find Your Other Half the Halal Way?
           </h2>
@@ -278,10 +185,10 @@ const ResourcePage = () => {
           >
             Get Started
           </Link>
-        </motion.div>
+        </div>
       </div>
 
-      <Footer /> 
+      <Footer />
     </div>
   );
 };
