@@ -36,6 +36,8 @@ import { useAuthContext } from './context/AuthContext.js';
 import { getCurrentPlan } from './services/index.js';
 import PaymentConfirmation from './pages/PaymentConfirmation.js';
 import ResourcePage from './pages/ResourcePage.js';
+import Blogpage from './pages/Blogpage.js';
+
 
 export const AppLayout = ({ children }) => {
   useResetScrollPosition();
@@ -82,6 +84,7 @@ function App() {
             <Route exact path="/" element={<LandingPage />} />
             <Route exact path="/about" element={<AboutLandingPage />} />
             <Route exact path="/resources" element={<ResourcePage />} /> 
+            <Route exact path="/blog" element={<Blogpage />} /> 
             <Route exact path="*" element={<NoPage />} />
 
             <Route element={<UnProtectedRoute />}>
