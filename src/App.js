@@ -86,6 +86,7 @@ function App() {
             <Route exact path="/resources" element={<ResourcePage />} /> 
             <Route exact path="/blog" element={<Blogpage />} /> 
             <Route exact path="*" element={<NoPage />} />
+            
 
             <Route element={<UnProtectedRoute />}>
               <Route exact path="/sign-up" element={<Register />} />
