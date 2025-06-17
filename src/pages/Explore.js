@@ -11,7 +11,7 @@ import Navigation from "../components/sidebar/Navigation.js";
 
 const Explore = () => {
   const BASE_LIMIT = 9;
-  const STEP = 6;
+  const STEP = 9;
   const MAX_LIMIT = 100;
 
   const [isOpen, setIsOpen] = usePersistedState("isOpen", false);

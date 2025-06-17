@@ -10,7 +10,7 @@ import EduProfile from "./EduProfile";
 import DeenProfile from "./DeenProfile";
 import { usePersistedState, a11yProps } from "../../utils.js";
 import MobileNav from "../sidebar/MobileBottomNav.js";
-import { getAllUsers, getMatch } from "../../services";
+import { getMatch, getUserById } from "../../services";
 import { useAuthContext } from "../../context/AuthContext";
 import Loader from "../Loader.js";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -55,10 +55,8 @@ const GeneralProfile = () => {
       async function getChildDetails() {
         setLoading(true);
         try {
-          const res = await getAllUsers(token);
-          const data = res?.data?.children || [];
-          const currentChild = data?.filter((child) => child?.id === id)?.[0];
-          setChild(currentChild);
+          const res = await getUserById(id, token);
+          setChild(res?.data);
         } catch (err) {
           throw new Error(err);
         } finally {
