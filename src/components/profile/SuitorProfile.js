@@ -10,7 +10,7 @@ import EduProfile from "./EduProfile";
 import DeenProfile from "./DeenProfile";
 import { usePersistedState, a11yProps } from "../../utils.js";
 import MobileNav from "../sidebar/MobileBottomNav.js";
-import { getRecommedations, getMatch, getLikes } from "../../services";
+import { getMatch, getLikes, getUserById } from "../../services";
 import { useAuthContext } from "../../context/AuthContext";
 import Loader from "../Loader.js";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -37,7 +37,7 @@ const ProfileDetails = () => {
     setValue(newValue);
   };
 
-  // console.log(matchID, 'match clicked');
+  console.log("id: ", id);
 
   useEffect(() => {
     const from = location.state?.from;
@@ -92,10 +92,8 @@ const ProfileDetails = () => {
       async function getChildDetails() {
         setLoading(true);
         try {
-          const res = await getRecommedations(childId, token);
-          const data = res?.data?.recommendations;
-          const currentChild = data?.filter((child) => child?.id === id)?.[0];
-          setChild(currentChild);
+          const res = await getUserById(id, token);
+          setChild(res?.data);
         } catch (err) {
           throw new Error(err);
         } finally {
