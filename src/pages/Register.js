@@ -11,7 +11,6 @@ import Loader from '../components/Loader';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  // const [count, setCount] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -23,6 +22,7 @@ const Register = () => {
     phoneNumber: '',
     password: '',
     confirmPassword: '',
+    acceptTerms: false, // Added for terms acceptance
   };
 
   const phoneRegExp = /^\+[0-9]+$/;
@@ -48,24 +48,10 @@ const Register = () => {
     confirmPassword: Yup.string()
       .required('Confirm your password')
       .oneOf([Yup.ref('password')], 'Passwords do not match'),
+    acceptTerms: Yup.boolean()
+      .oneOf([true], 'You must accept the terms and conditions') // Require checkbox to be checked
+      .required('You must accept the terms and conditions'),
   });
-
-  // useEffect(() => {
-  //   const showCounter = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const data = await getUsersCount();
-  //       setCount(data.data);
-  //     } catch (error) {
-  //       toast.error(error.response.data.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   showCounter();
-  // }, []);
-
-  // const newCount = 200 - count;
 
   const handleRegistration = async (values) => {
     setLoading(true);
@@ -113,51 +99,81 @@ const Register = () => {
           validationSchema={validationSchema}
           onSubmit={(values) => handleRegistration(values)}
         >
-          <Form className="flex flex-col gap-5">
-            <TextInput label="First Name*" name="fname" type="text" />
-            <TextInput label="Last Name*" name="lname" type="text" />
-            <TextInput
-              label="Email Address*"
-              name="emailAddress"
-              type="email"
-            />
-            <TextInput label="Phone Number*" name="phoneNumber" type="text" />
-
-            <div className="relative">
+          {({ errors, touched, values, handleChange }) => (
+            <Form className="flex flex-col gap-5">
+              <TextInput label="First Name*" name="fname" type="text" />
+              <TextInput label="Last Name*" name="lname" type="text" />
               <TextInput
-                label="Password*"
-                name="password"
-                type={showPassword ? 'text' : 'password'}
+                label="Email Address*"
+                name="emailAddress"
+                type="email"
               />
-              <div
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-1 cursor-pointer top-10"
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </div>
-            </div>
+              <TextInput label="Phone Number*" name="phoneNumber" type="text" />
 
-            <div className="relative">
-              <TextInput
-                label="Confirm Password*"
-                name="confirmPassword"
-                type={showConfirmPassword ? 'text' : 'password'}
-              />
-              <div
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-1 cursor-pointer top-10"
-              >
-                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              <div className="relative">
+                <TextInput
+                  label="Password*"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                />
+                <div
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-1 cursor-pointer top-10"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
               </div>
-            </div>
 
-            <button
-              type="submit"
-              className="my-11 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300"
-            >
-              Create account
-            </button>
-          </Form>
+              <div className="relative">
+                <TextInput
+                  label="Confirm Password*"
+                  name="confirmPassword"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                />
+                <div
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-1 cursor-pointer top-10"
+                >
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
+              </div>
+
+              {/* Terms and Conditions Checkbox */}
+              <div className="flex items-start mt-4">
+                <div className="flex items-center h-5">
+                  <input
+                    id="acceptTerms"
+                    name="acceptTerms"
+                    type="checkbox"
+                    checked={values.acceptTerms}
+                    onChange={handleChange}
+                    className="w-4 h-4 text-[#BA9FFE] bg-gray-100 border-gray-300 rounded focus:ring-[#BA9FFE]"
+                  />
+                </div>
+                <div className="ml-3 text-sm">
+                  <label htmlFor="acceptTerms" className="text-[#2D133A]">
+                    I agree to the{' '}
+                    <Link 
+                      to="/terms" 
+                      className="font-medium text-[#7e26aa] hover:underline"
+                    >
+                      Terms and Conditions
+                    </Link>
+                  </label>
+                  {errors.acceptTerms && touched.acceptTerms && (
+                    <div className="text-red-600 text-sm mt-1">{errors.acceptTerms}</div>
+                  )}
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="my-6 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300"
+              >
+                Create account
+              </button>
+            </Form>
+          )}
         </Formik>
 
         <p className="text-center text-sm">

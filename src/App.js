@@ -37,6 +37,8 @@ import { getCurrentPlan } from './services/index.js';
 import PaymentConfirmation from './pages/PaymentConfirmation.js';
 import ResourcePage from './pages/ResourcePage.js';
 import Blogpage from './pages/Blogpage.js';
+import Terms from './pages/Terms.js';
+
 
 
 export const AppLayout = ({ children }) => {
@@ -85,6 +87,7 @@ function App() {
             <Route exact path="/about" element={<AboutLandingPage />} />
             <Route exact path="/resources" element={<ResourcePage />} /> 
             <Route exact path="/blog" element={<Blogpage />} /> 
+            <Route exact path="/terms" element={<Terms />} /> 
             <Route exact path="*" element={<NoPage />} />
             
 
