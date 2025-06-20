@@ -160,7 +160,7 @@ const Terms = () => {
         {/* Back to Register */}
         <div className="text-center mb-10">
           <Link
-            to="/register"
+            to="/sign-up"
             className="inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-full hover:opacity-90 transition-opacity shadow-md"
           >
             Back to Registration
