@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Terms = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b pt-12 from-white to-[#f8f9fa] dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-b pt-12 from-white to-[#f8f9fa] ">
       <Navbar />
       
       <div className="w-11/12 max-w-4xl mx-auto px-4 py-10">
