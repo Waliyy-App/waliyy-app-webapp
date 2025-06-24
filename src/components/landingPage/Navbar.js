@@ -7,11 +7,12 @@ const Navbar = () => {
   const location = useLocation();
   const [toggleMobileMenu, setToggleMobileMenu] = useState(false);
 
-  const handleToggle = () => {
-    setToggleMobileMenu(!toggleMobileMenu);
-  };
-  return (
-    <div className="px-6 sm:px-12 gap-4 flex justify-between items-center w-4/5 mx-auto bg-white dark:bg-white pb-4">
+	const handleToggle = () => {
+		setToggleMobileMenu(!toggleMobileMenu);
+	};
+	return (
+    <div className="px-6 sm:px-12 gap-4 flex justify-between items-center mx-auto bg-white dark:bg-white pb-4">
+
       <NavLink to="/">
         <img src={Logo} alt="logo" className="w-20" />
       </NavLink>
@@ -25,9 +26,11 @@ const Navbar = () => {
             <NavLink
               to="/"
               className={`${
-                location.pathname === "/"
-                  ? "text-[#a37eff]"
-                  : "text-[#2D133A] hover:text-[#a37eff]"
+
+                location.pathname === '/'
+                  ? 'text-[#a37eff]'
+                  : 'text-[#2D133A] hover:text-[#a37eff]'
+
               }  text-lg font-semibold transition-all duration-500`}
             >
               Home
@@ -35,13 +38,26 @@ const Navbar = () => {
             <NavLink
               to="/about"
               className={` ${
-                location.pathname === "/about"
-                  ? "text-[#a37eff]"
-                  : "text-[#2D133A] hover:text-[#a37eff]"
+                location.pathname === '/about'
+                  ? 'text-[#a37eff]'
+                  : 'text-[#2D133A] hover:text-[#a37eff]'
+
               }  text-lg font-semibold transition-all duration-500`}
             >
               About
             </NavLink>
+
+            <NavLink
+              to="/resources"
+              className={` ${
+                location.pathname === '/resources'
+                  ? 'text-[#a37eff]'
+                  : 'text-[#2D133A] hover:text-[#a37eff]'
+              }  text-lg font-semibold transition-all duration-500`}
+            >
+              Resources
+            </NavLink>
+
             <Link
               to="/login"
               className="flex items-center justify-center w-[120px] rounded-3xl h-12 border border-[#BA9FFE] hover:bg-[#BA9FFE] text-[#a37eff] hover:text-white font-medium box-shadow-style transition-all duration-300"
@@ -58,43 +74,56 @@ const Navbar = () => {
           </div>
         )}
       </div>
+     
+        <div className="hidden sm:flex items-center gap-6">
+          <NavLink
+            to="/"
+            className={`${
+              location.pathname === '/'
+                ? 'text-[#a37eff]'
+                : 'text-[#2D133A] hover:text-[#a37eff]'
+            }  text-lg font-semibold transition-all duration-500`}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={` ${
+              location.pathname === '/about'
+                ? 'text-[#a37eff]'
+                : 'text-[#2D133A] hover:text-[#a37eff]'
+            }  text-lg font-semibold transition-all duration-500`}
+          >
+            About
+          </NavLink>
+          <NavLink
+            to="/resources"
+            className={` ${
+              location.pathname === '/resources'
+                ? 'text-[#a37eff]'
+                : 'text-[#2D133A] hover:text-[#a37eff]'
+            }  text-lg font-semibold transition-all duration-500`}
+          >
+            Resources
+          </NavLink>
+        </div>
 
-      <div className="hidden sm:flex items-center gap-6">
-        <NavLink
-          to="/"
-          className={`${
-            location.pathname === "/"
-              ? "text-[#a37eff]"
-              : "text-[#2D133A] hover:text-[#a37eff]"
-          }  text-lg font-semibold transition-all duration-500`}
-        >
-          Home
-        </NavLink>
-        <NavLink
-          to="/about"
-          className={` ${
-            location.pathname === "/about"
-              ? "text-[#a37eff]"
-              : "text-[#2D133A] hover:text-[#a37eff]"
-          }  text-lg font-semibold transition-all duration-500`}
-        >
-          About
-        </NavLink>
-        <Link
-          to="/login"
-          className="flex items-center justify-center w-[120px] rounded-3xl h-12 border border-[#BA9FFE] hover:bg-[#BA9FFE] text-[#a37eff] hover:text-white font-medium box-shadow-style transition-all duration-300"
-        >
-          Sign In
-        </Link>
+        <div className="hidden sm:flex items-center gap-6">
+          <Link
+            to="/login"
+            className="flex items-center justify-center w-[120px] rounded-3xl h-12 border border-[#BA9FFE] hover:bg-[#BA9FFE] text-[#a37eff] hover:text-white font-medium box-shadow-style transition-all duration-300"
+          >
+            Sign In
+          </Link>
 
-        <Link
-          to="/sign-up"
-          className="flex items-center justify-center w-[120px] rounded-3xl h-12 bg-[#BA9FFE] text-white hover:bg-[#a37eff] font-medium box-shadow-style transition-all duration-300"
-        >
-          Sign Up
-        </Link>
+          <Link
+            to="/sign-up"
+            className="flex items-center justify-center w-[120px] rounded-3xl h-12 bg-[#BA9FFE] text-white hover:bg-[#a37eff] font-medium box-shadow-style transition-all duration-300"
+          >
+            Sign Up
+          </Link>
+        </div>
       </div>
-    </div>
   );
 };
 
