@@ -12,7 +12,7 @@ import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 
 const Dashboard = () => {
   const BASE_LIMIT = 9;
-  const STEP = 6;
+  const STEP = 9;
   const MAX_LIMIT = 100;
 
   const [isOpen, setIsOpen] = usePersistedState("isOpen", false);

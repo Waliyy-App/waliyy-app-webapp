@@ -4,14 +4,15 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const Navbar = () => {
-	const location = useLocation();
-	const [toggleMobileMenu, setToggleMobileMenu] = useState(false);
+  const location = useLocation();
+  const [toggleMobileMenu, setToggleMobileMenu] = useState(false);
 
 	const handleToggle = () => {
 		setToggleMobileMenu(!toggleMobileMenu);
 	};
 	return (
     <div className="px-6 sm:px-12 gap-4 flex justify-between items-center mx-auto bg-white dark:bg-white pb-4">
+
       <NavLink to="/">
         <img src={Logo} alt="logo" className="w-20" />
       </NavLink>
@@ -25,9 +26,11 @@ const Navbar = () => {
             <NavLink
               to="/"
               className={`${
+
                 location.pathname === '/'
                   ? 'text-[#a37eff]'
                   : 'text-[#2D133A] hover:text-[#a37eff]'
+
               }  text-lg font-semibold transition-all duration-500`}
             >
               Home
@@ -38,10 +41,12 @@ const Navbar = () => {
                 location.pathname === '/about'
                   ? 'text-[#a37eff]'
                   : 'text-[#2D133A] hover:text-[#a37eff]'
+
               }  text-lg font-semibold transition-all duration-500`}
             >
               About
             </NavLink>
+
             <NavLink
               to="/resources"
               className={` ${
@@ -52,6 +57,7 @@ const Navbar = () => {
             >
               Resources
             </NavLink>
+
             <Link
               to="/login"
               className="flex items-center justify-center w-[120px] rounded-3xl h-12 border border-[#BA9FFE] hover:bg-[#BA9FFE] text-[#a37eff] hover:text-white font-medium box-shadow-style transition-all duration-300"
@@ -68,7 +74,6 @@ const Navbar = () => {
           </div>
         )}
       </div>
-
      
         <div className="hidden sm:flex items-center gap-6">
           <NavLink
@@ -119,7 +124,6 @@ const Navbar = () => {
           </Link>
         </div>
       </div>
-
   );
 };
 
