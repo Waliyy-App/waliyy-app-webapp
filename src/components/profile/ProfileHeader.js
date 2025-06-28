@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { BsFillDiamondFill } from 'react-icons/bs';
-import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
-import ThumbDownIcon from '@mui/icons-material/ThumbDownAlt';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import NotInterestedIcon from '@mui/icons-material/NotInterested';
-import MaleIcon from '../../assets/illustrations/male-illus.svg';
-import FemaleIcon from '../../assets/illustrations/female-illus.svg';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import { BsFillDiamondFill } from "react-icons/bs";
+import ThumbUpIcon from "@mui/icons-material/ThumbUpAlt";
+import ThumbDownIcon from "@mui/icons-material/ThumbDownAlt";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import NotInterestedIcon from "@mui/icons-material/NotInterested";
+import MaleIcon from "../../assets/illustrations/male-illus.svg";
+import FemaleIcon from "../../assets/illustrations/female-illus.svg";
 import {
   likeProfile,
   unlikeProfile,
@@ -15,8 +15,8 @@ import {
   cancelMatch,
   getMatch,
   reactToLike,
-} from '../../services';
-import { useAuthContext } from '../../context/AuthContext';
+} from "../../services";
+import { useAuthContext } from "../../context/AuthContext";
 
 const ProfileHeader = ({
   firstName,
@@ -37,7 +37,7 @@ const ProfileHeader = ({
   const [matchDetails, setMatchDetails] = useState(null);
   const [isLiked, setIsLiked] = useState(false); // State to track if profile is liked
   const { token } = useAuthContext();
-  const childId = localStorage.getItem('childId');
+  const childId = localStorage.getItem("childId");
   const { id } = useParams();
   const isChild = Boolean(childId === id);
   const navigate = useNavigate();
@@ -52,8 +52,8 @@ const ProfileHeader = ({
   }, [id]);
 
   useEffect(() => {
-    if (location?.state?.from === 'match') setIsMatchPage(true);
-    else if (location?.state?.from === 'dashboard') setIsDashboard(true);
+    if (location?.state?.from === "match") setIsMatchPage(true);
+    else if (location?.state?.from === "dashboard") setIsDashboard(true);
   }, [location.state]);
 
   useEffect(() => {
@@ -82,8 +82,8 @@ const ProfileHeader = ({
 
   const handleLike = async () => {
     if (!activePlan) {
-      toast.warning('No current plan. Upgrade to like suitors');
-      navigate('/pricing');
+      toast.warning("No current plan. Upgrade to like suitors");
+      navigate("/pricing");
       return;
     }
     try {
@@ -91,7 +91,7 @@ const ProfileHeader = ({
       const res = await likeProfile(childId, { profile: id }, token);
       toast.success(res?.data?.message);
       setIsLiked(true);
-      window.location.hash = '#/likes';
+      navigate("/likes");
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
@@ -102,19 +102,19 @@ const ProfileHeader = ({
 
   const handleAcceptLike = async () => {
     if (!activePlan) {
-      toast.warning('No current plan. Upgrade to like suitors');
-      navigate('/pricing');
+      toast.warning("No current plan. Upgrade to like suitors");
+      navigate("/pricing");
       return;
     }
     try {
       setIsDisabled(true);
       const res = await reactToLike(
         childId,
-        { like: matchID, reaction: 'accept' },
+        { like: matchID, reaction: "accept" },
         token
       );
       toast.success(res?.data?.message);
-      window.location.hash = '#/match';
+      navigate("/match");
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
@@ -122,19 +122,19 @@ const ProfileHeader = ({
 
   const handleRejectLike = async () => {
     if (!activePlan) {
-      toast.warning('No current plan. Upgrade to like suitors');
-      navigate('/pricing');
+      toast.warning("No current plan. Upgrade to like suitors");
+      navigate("/pricing");
       return;
     }
     try {
       setIsDisabled(true);
       const res = await reactToLike(
         childId,
-        { like: matchID, reaction: 'reject' },
+        { like: matchID, reaction: "reject" },
         token
       );
       toast.success(res?.data?.message);
-      window.location.hash = '#/dashboard';
+      navigate("/dashboard");
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
@@ -142,8 +142,8 @@ const ProfileHeader = ({
 
   const handleUnlike = async () => {
     if (!activePlan) {
-      toast.warning('No current plan. Upgrade to unlike suitors');
-      navigate('/pricing');
+      toast.warning("No current plan. Upgrade to unlike suitors");
+      navigate("/pricing");
       return;
     }
     setIsDisabled(true);
@@ -151,7 +151,7 @@ const ProfileHeader = ({
       const res = await unlikeProfile(childId, { profile: id }, token);
       toast.success(res?.data?.message);
       setIsLiked(false);
-      window.location.hash = '#/dashboard';
+      navigate("/dashboard");
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
@@ -163,7 +163,7 @@ const ProfileHeader = ({
         childId,
         {
           match: matchDetails?.match_id,
-          action: 'confirm',
+          action: "confirm",
         },
         token
       );
@@ -173,7 +173,7 @@ const ProfileHeader = ({
       //   ? setIsDisabled(true)
       //   : setIsDisabled(false);
 
-      window.location.hash = '#/dashboard';
+      navigate("/dashboard");
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
@@ -184,7 +184,7 @@ const ProfileHeader = ({
       <div className="flex flex-col sm:flex-row sm:justify-start items-center gap-4">
         <div className="flex items-center justify-center h-[155px] w-[155px] rounded-full border border-[#0000000d] bg-white box-shadow-profile z-30 relative overflow-hidden">
           <img
-            src={gender?.toLowerCase() === 'male' ? MaleIcon : FemaleIcon}
+            src={gender?.toLowerCase() === "male" ? MaleIcon : FemaleIcon}
             alt="user icon"
             className="w-24 h-24 z-40"
           />
@@ -197,7 +197,7 @@ const ProfileHeader = ({
                 ? firstName
                 : !isChild && displayID
                 ? displayID
-                : 'Waliyy User'}
+                : "Waliyy User"}
             </p>
             <BsFillDiamondFill className="h-2 w-2" />
             <p>{age}</p>
@@ -224,7 +224,7 @@ const ProfileHeader = ({
               <ThumbUpIcon /> Interested
             </button>
           )}
-          {!isDashboard && showButton === 'receiver' && (
+          {!isDashboard && showButton === "receiver" && (
             <>
               <button
                 onClick={handleAcceptLike}
@@ -242,7 +242,7 @@ const ProfileHeader = ({
               </button>
             </>
           )}
-          {!isDashboard && showButton === 'initator' && (
+          {!isDashboard && showButton === "initator" && (
             <>
               <button
                 onClick={handleUnlike}

@@ -1,15 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_BASE_URL = 'https://api.waliyyapp.com/api/v1';
+const API_BASE_URL = "https://api.waliyyapp.com/api/v1";
 
 const apiService = axios.create({
   baseURL: API_BASE_URL,
-  responseType: 'json',
+  responseType: "json",
 });
 
 export const register = async (payload) => {
   try {
-    const response = await apiService.post('/auth/signup', payload);
+    const response = await apiService.post("/auth/signup", payload);
     return response.data;
   } catch (error) {
     throw error;
@@ -18,7 +18,7 @@ export const register = async (payload) => {
 
 export const getUsersCount = async () => {
   try {
-    const response = await apiService.get('counter/discounted');
+    const response = await apiService.get("counter/discounted");
     return response.data;
   } catch (error) {
     throw error;
@@ -27,7 +27,7 @@ export const getUsersCount = async () => {
 
 export const login = async (payload) => {
   try {
-    const response = await apiService.post('/auth/login', payload);
+    const response = await apiService.post("/auth/login", payload);
     return response.data.data;
   } catch (error) {
     throw error;
@@ -36,7 +36,7 @@ export const login = async (payload) => {
 
 export const forgotPassword = async (payload) => {
   try {
-    const response = await apiService.put('/auth/forgot-password', payload);
+    const response = await apiService.put("/auth/forgot-password", payload);
     return response.data;
   } catch (error) {
     throw error;
@@ -63,7 +63,7 @@ export const verifyOtp = async (payload) => {
 
 export const changePassword = async (payload, token) => {
   try {
-    const response = await apiService.put('/account/change-password', payload, {
+    const response = await apiService.put("/account/change-password", payload, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -76,7 +76,7 @@ export const changePassword = async (payload, token) => {
 
 export const logoutFunc = async (accessToken) => {
   try {
-    const response = await apiService.delete('/auth/logout', {
+    const response = await apiService.delete("/auth/logout", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -89,7 +89,7 @@ export const logoutFunc = async (accessToken) => {
 
 export const userRegistration = async (payload, accessToken) => {
   try {
-    const response = await apiService.post('/parent/child', payload, {
+    const response = await apiService.post("/parent/child", payload, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -266,7 +266,7 @@ export const getChildPreferences = async (accessToken, id) => {
 
 export const getChildren = async (accessToken) => {
   try {
-    const response = await apiService.get('parent/children', {
+    const response = await apiService.get("parent/children", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -306,9 +306,9 @@ export const getRecommedations = async (id, accessToken, page, limit) => {
   }
 };
 
-export const getAllUsers = async (accessToken, page, limit) => {
+export const getUserById = async (id, accessToken) => {
   try {
-    const response = await apiService.get(`/parent/?page=${page}&limit=${limit}`, {
+    const response = await apiService.get(`/recommendation/${id}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -319,9 +319,25 @@ export const getAllUsers = async (accessToken, page, limit) => {
   }
 };
 
+export const getAllUsers = async (accessToken, page, limit) => {
+  try {
+    const response = await apiService.get(
+      `/parent/?page=${page}&limit=${limit}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getPlans = async () => {
   try {
-    const response = await apiService.get('/plans/');
+    const response = await apiService.get("/plans/");
     return response.data;
   } catch (error) {
     throw error;
@@ -330,7 +346,7 @@ export const getPlans = async () => {
 
 export const getCurrentPlan = async (token) => {
   try {
-    const response = await apiService.get('/subscriptions/active', {
+    const response = await apiService.get("/subscriptions/active", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -373,7 +389,7 @@ export const getOrderID = async (id, accessToken) => {
 
 export const getPaymentHistory = async (token) => {
   try {
-    const response = await apiService.get('/payment/payments', {
+    const response = await apiService.get("/payment/payments", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -385,7 +401,7 @@ export const getPaymentHistory = async (token) => {
 };
 export const getSubHistory = async (token) => {
   try {
-    const response = await apiService.get('/subscriptions', {
+    const response = await apiService.get("/subscriptions", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
