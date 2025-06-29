@@ -23,6 +23,7 @@ const Register = () => {
     phoneNumber: "",
     password: "",
     confirmPassword: "",
+    acceptTerms: false, // Added for terms acceptance
   };
 
   const phoneRegExp = /^\+[0-9]+$/;
@@ -157,6 +158,36 @@ const Register = () => {
                   className="absolute right-1 cursor-pointer top-10"
                 >
                   {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
+              </div>
+
+              {/* Terms and Conditions Checkbox */}
+              <div className="flex items-start mt-4">
+                <div className="flex items-center h-5">
+                  <input
+                    id="acceptTerms"
+                    name="acceptTerms"
+                    type="checkbox"
+                    checked={values.acceptTerms}
+                    onChange={handleChange}
+                    className="w-4 h-4 text-[#BA9FFE] bg-gray-100 border-gray-300 rounded focus:ring-[#BA9FFE]"
+                  />
+                </div>
+                <div className="ml-3 text-sm">
+                  <label htmlFor="acceptTerms" className="text-[#2D133A]">
+                    I agree to the{" "}
+                    <Link
+                      to="/terms"
+                      className="font-medium text-[#7e26aa] hover:underline"
+                    >
+                      Terms and Conditions
+                    </Link>
+                  </label>
+                  {errors.acceptTerms && touched.acceptTerms && (
+                    <div className="text-red-600 text-sm mt-1">
+                      {errors.acceptTerms}
+                    </div>
+                  )}
                 </div>
               </div>
 
