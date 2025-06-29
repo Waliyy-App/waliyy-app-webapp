@@ -14,6 +14,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
 import LogoIcon from '../assets/logo/logo-nobg-cropped.png';
+import PricingSection from '../components/landingPage/PrincingSection';
 
 const LandingPage = () => {
   return (
@@ -145,10 +146,10 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
-
+      <PricingSection />
+      <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-indigo-600 mx-auto rounded-full my-4"></div>
       <FrequentlyAskedQuestions />
       <Footer />
-
     </div>
   );
 };
