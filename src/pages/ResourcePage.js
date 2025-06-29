@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../components/landingPage/Navbar';
 import Footer from '../components/landingPage/Footer';
-import { FaYoutube, FaBookOpen, FaLaptopCode, FaLaptop } from 'react-icons/fa';
+import { FaYoutube, FaBookOpen, FaLaptop } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import ResourceColumn from '../common/ResourceColumn';
 
