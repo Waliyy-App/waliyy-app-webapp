@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import { TextInput } from '../common/form';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { TextInput } from "../common/form";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
+import axios from "axios";
 
-import { register } from '../services';
-import Loader from '../components/Loader';
+import { register } from "../services";
+import Loader from "../components/Loader";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,37 +18,37 @@ const Register = () => {
   const navigate = useNavigate();
 
   const initialValues = {
-    fname: '',
-    lname: '',
-    emailAddress: '',
-    phoneNumber: '',
-    password: '',
-    confirmPassword: '',
+    fname: "",
+    lname: "",
+    emailAddress: "",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
   };
 
   const phoneRegExp = /^\+[0-9]+$/;
 
   const validationSchema = Yup.object({
     fname: Yup.string()
-      .min(2, 'Must be 5 characters or more')
-      .required('Enter Full Name'),
+      .min(2, "Must be 5 characters or more")
+      .required("Enter Full Name"),
     lname: Yup.string()
-      .min(2, 'Must be 5 characters or more')
-      .required('Enter Full Name'),
+      .min(2, "Must be 5 characters or more")
+      .required("Enter Full Name"),
     emailAddress: Yup.string()
-      .email('Invalid Email Address')
-      .required('Enter Email Address'),
+      .email("Invalid Email Address")
+      .required("Enter Email Address"),
     phoneNumber: Yup.string()
-      .matches(phoneRegExp, 'Must start with a valid country code')
-      .min(10, 'Too short')
-      .max(15, 'Too long')
-      .required('Enter Phone Number'),
+      .matches(phoneRegExp, "Must start with a valid country code")
+      .min(10, "Too short")
+      .max(15, "Too long")
+      .required("Enter Phone Number"),
     password: Yup.string()
-      .min(8, 'Must be 8 characters or more')
-      .required('Create a password'),
+      .min(8, "Must be 8 characters or more")
+      .required("Create a password"),
     confirmPassword: Yup.string()
-      .required('Confirm your password')
-      .oneOf([Yup.ref('password')], 'Passwords do not match'),
+      .required("Confirm your password")
+      .oneOf([Yup.ref("password")], "Passwords do not match"),
   });
 
   // useEffect(() => {
@@ -67,19 +68,42 @@ const Register = () => {
 
   // const newCount = 200 - count;
 
+  async function checkEmail(email) {
+    try {
+      const response = await axios.get(
+        `https://fakefilter.net/api/is/fakeemail/${email}`
+      );
+      const result = response?.data;
+
+      if (result?.isFakeDomain === false) {
+        return false; // allow sign up
+      }
+
+      return true; // block sign up
+    } catch (error) {
+      console.error("Email validation error:", error.message || error);
+      throw new Error("Could not validate email");
+    }
+  }
+
   const handleRegistration = async (values) => {
     setLoading(true);
     try {
-      const data = await register({
-        firstName: values.fname,
-        lastName: values.lname,
-        email: values.emailAddress,
-        phoneNumber: values.phoneNumber,
-        password: values.password,
-        confirmPassword: values.confirmPassword,
-      });
-      toast.success(data?.message);
-      navigate('/verify-email');
+      const invalidEmail = await checkEmail(values.emailAddress);
+      if (!invalidEmail) {
+        const data = await register({
+          firstName: values.fname,
+          lastName: values.lname,
+          email: values.emailAddress,
+          phoneNumber: values.phoneNumber,
+          password: values.password,
+          confirmPassword: values.confirmPassword,
+        });
+        toast.success(data?.message);
+        navigate("/verify-email");
+      } else {
+        toast.error("Invalid email. Please use a standard email.");
+      }
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
@@ -94,7 +118,6 @@ const Register = () => {
   return (
     <div className="w-100 bg-white">
       <div className="w-[360px] sm:w-[480px] px-5 sm:px-0 mx-auto py-24">
-      
         <div className="flex flex-col items-center jutify-center mb-20">
           <p className="text-2xl text-center text-[#2D133A] font-medium mb-8">
             Create your Account - Embark on a journey of love, faith, and
@@ -127,7 +150,7 @@ const Register = () => {
               <TextInput
                 label="Password*"
                 name="password"
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
               />
               <div
                 onClick={() => setShowPassword(!showPassword)}
@@ -141,7 +164,7 @@ const Register = () => {
               <TextInput
                 label="Confirm Password*"
                 name="confirmPassword"
-                type={showConfirmPassword ? 'text' : 'password'}
+                type={showConfirmPassword ? "text" : "password"}
               />
               <div
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -161,23 +184,23 @@ const Register = () => {
         </Formik>
 
         <p className="text-center text-sm">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <Link
             to="/login"
             className="font-bold text-[#2D133A] hover:text-[#7e26aa] transition-all duration-300"
           >
             Log in
-          </Link>{' '}
+          </Link>{" "}
         </p>
 
         <p className="text-center text-sm">
-          Back to the{' '}
+          Back to the{" "}
           <Link
             to="/"
             className="font-bold text-[#2D133A] hover:text-[#7e26aa] transition-all duration-300"
           >
             Website
-          </Link>{' '}
+          </Link>{" "}
         </p>
       </div>
     </div>
