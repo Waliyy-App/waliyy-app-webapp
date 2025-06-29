@@ -1,9 +1,51 @@
 import React from 'react';
+import FemaleIcon from '../../assets/illustrations/muslim_lady_founder.svg';
+import MaleIcon from '../../assets/illustrations/muslim_founder.svg';
+import FounderBio from '../../common/FounderBio';
 
 const About = () => {
   return (
-    <div className="flex flex-col gap-10 w-4/5 lg:w-3/5 mx-auto my-24 text-[#2D133A] bg-white dark:bg-white">
-      <h2 className="text-3xl font-bold">About WaliyyApp</h2>
+    <div className="flex flex-col gap-10 w-4/5 lg:w-4/5 mx-auto my-24 text-[#2D133A] bg-white dark:bg-white">
+      <h2 className="text-3xl text-center font-bold">Meet our Founders</h2>
+      <FounderBio
+        imageSrc={MaleIcon}
+        bio="Olanlege Adebayo AbdulFattah is an engineer with over 25 years
+          experience in manufacturing, construction and Oil and Gas sector
+          at the technical and management levels. He graduated from the
+          prestigious Obafemi Awolowo University, Ile Ife from the
+          department of Chemical Engineering. While in OAU, he held several
+          executive positions at the branch and Area Unit levels of MSSN and
+          was also MCAN coordinator at Ikot Abasi, Akwa Ibom State where he
+          served. He also served at various executive levels in UNIFEMGA
+          (University of Ife Muslim Graduates Association) where he is the
+          immediate past Global President. He is happily married with
+          children and passionate about Youth issues. He is from Ijebu Ode
+          in Ogun State, based mainly in Ibadan, Nigeria but has family also
+          in the US and the UK."
+        imageOnLeft={true}
+        gradientFrom="from-purple-700"
+        gradientTo="to-indigo-500"
+      />
+
+      <FounderBio
+        imageSrc={FemaleIcon}
+        bio="Rasheedah Raji is a retired teacher. She spends her time
+          volunteering for community projects which empower the youth and
+          ladies. With a degree in Social Policy and decades of experience
+          acquired from supporting young people, she has good understanding
+          of the importance of family relationships and bonds; and the need
+          for youngsters to get married in order to protect themselves
+          according to Islamic principles. WaliyyApp was borne out of
+          concern of the challenges currently facing Muslim youth all over
+          the world, and in particular those of Nigerian descent who wish to
+          marry fellow Nigerians but struggle to achieve their desire."
+        imageOnLeft={false}
+        gradientFrom="from-pink-700"
+        gradientTo="to-rose-500"
+      />
+
+      <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-indigo-600 mx-auto rounded-full my-4"></div>
+      <h2 className="text-3xl text-center font-bold">About WaliyyApp</h2>
       <div className="flex flex-col gap-8 text-lg mb-10">
         <p>
           WaliyyApp is aimed at eligible Muslim bachelors and ladies who are
@@ -38,7 +80,8 @@ const About = () => {
         </p>
       </div>
 
-      <h2 className="text-3xl font-bold">Rules of WaliyyApp</h2>
+      <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-indigo-600 mx-auto rounded-full my-4"></div>
+      <h2 className="text-3xl text-center font-bold">Rules of WaliyyApp</h2>
       <ol className="flex flex-col gap-6 text-lg mb-10 list-decimal list-outside px-6">
         <li>
           Have the consciousness of Allah with all your dealings and be honest
@@ -73,7 +116,8 @@ const About = () => {
         </li>
       </ol>
 
-      <h2 className="text-3xl font-bold">Waliyy Role</h2>
+      <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-indigo-600 mx-auto rounded-full my-4"></div>
+      <h2 className="text-3xl text-center font-bold">Waliyy Role</h2>
       <div className="flex flex-col gap-8 text-lg mb-10">
         <p>
           Mabrook and congratulations, your single has found a match! <br /> Not
@@ -85,8 +129,8 @@ const About = () => {
             himself.
           </li>
           <li>
-            Set up a meeting at a time convenient for your single, the suitor and
-            of course, yourself.
+            Set up a meeting at a time convenient for your single, the suitor
+            and of course, yourself.
           </li>
           <li>Attend the meeting and subsequent ones.</li>
         </ol>

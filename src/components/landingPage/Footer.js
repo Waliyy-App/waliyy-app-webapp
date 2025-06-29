@@ -160,10 +160,18 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-[#3E1D4D] pt-6 text-center text-gray-400">
-          <p>
+        <div className="flex flex-col md:flex-row justify-between items-center text-gray-300 mb-6 border-t border-[#3E1D4D] pt-6">
+          <p className="text-sm">
             &copy; {new Date().getFullYear()} WaliyyApp. All rights reserved.
           </p>
+          <div className="flex space-x-4">
+            <NavLink
+              to="/terms"
+              className="text-sm hover:text-white transition-colors"
+            >
+              Terms of Service
+            </NavLink>
+          </div>
         </div>
       </div>
     </footer>

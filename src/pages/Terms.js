@@ -7,7 +7,7 @@ const Terms = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b pt-12 from-white to-[#f8f9fa]">
       <Navbar />
-      
+
       <div className="w-11/12 max-w-4xl mx-auto px-4 py-8 md:py-12">
         {/* Page Header */}
         <div className="text-center mb-8 md:mb-12">
@@ -27,19 +27,23 @@ const Terms = () => {
           <div className="prose prose-lg max-w-none">
             <div className="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded mb-8">
               <p className="italic text-gray-700 m-0">
-                WaliyyApp is dedicated to single Muslims of Nigerian heritage who are seriously searching for spouses in a halal and respectful manner. As such it is expected that subscribers fully engage on the platform.
+                WaliyyApp is dedicated to single Muslims of Nigerian heritage
+                who are seriously searching for spouses in a halal and
+                respectful manner. As such it is expected that subscribers fully
+                engage on the platform.
               </p>
             </div>
 
             <div className="space-y-10">
-              {[1,2,3,4,5,6,7,8,9,10].map((section) => (
-                <div key={section} className="border-l-2 border-purple-100 pl-4 md:pl-6">
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((section) => (
+                <div
+                  key={section}
+                  className="border-l-2 border-purple-100 pl-4 md:pl-6"
+                >
                   <h2 className="text-xl md:text-2xl font-bold text-indigo-800 mb-3">
-                    {section}. {sectionTitles[section-1]}
+                    {section}. {sectionTitles[section - 1]}
                   </h2>
-                  <div className="text-gray-700">
-                    {sectionContent(section)}
-                  </div>
+                  <div className="text-gray-700">{sectionContent(section)}</div>
                 </div>
               ))}
 
@@ -49,7 +53,8 @@ const Terms = () => {
                   Agreement
                 </h2>
                 <p className="text-indigo-700">
-                  By creating an account or using WaliyyApp, you agree to be bound by these Terms and Conditions.
+                  By creating an account or using WaliyyApp, you agree to be
+                  bound by these Terms and Conditions.
                 </p>
               </div>
             </div>
@@ -60,10 +65,19 @@ const Terms = () => {
         <div className="text-center mb-10">
           <Link
             to="/sign-up"
-            className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-lg hover:opacity-90 transition-opacity shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+            className="flex items-center justify-center w-[340px] mx-auto rounded-3xl h-12 bg-[#BA9FFE] text-white hover:bg-[#a37eff] font-medium box-shadow-profile transition-all duration-300"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 mr-2"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                clipRule="evenodd"
+              />
             </svg>
             Back to Registration
           </Link>

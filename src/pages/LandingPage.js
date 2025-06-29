@@ -147,9 +147,9 @@ const LandingPage = () => {
         </div>
       </div>
       <PricingSection />
+      <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-indigo-600 mx-auto rounded-full my-4"></div>
       <FrequentlyAskedQuestions />
       <Footer />
-
     </div>
   );
 };
