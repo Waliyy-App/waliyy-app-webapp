@@ -114,7 +114,7 @@ const ResourcePage = () => {
           </p>
           <Link
             to="/sign-up"
-            className="flex items-center justify-center w-[340px] mx-auto rounded-3xl h-12 bg-[#BA9FFE] text-white hover:bg-[#a37eff] font-medium box-shadow-profile transition-all duration-300"
+            className="flex items-center justify-center w-auto sm:w-[340px] mx-auto rounded-3xl h-12 bg-[#BA9FFE] text-white hover:bg-[#a37eff] font-medium box-shadow-profile transition-all duration-300"
           >
             Get Started
           </Link>

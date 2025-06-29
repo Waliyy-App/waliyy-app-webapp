@@ -13,7 +13,7 @@ const ResourceColumn = ({
         <div className={`p-3 rounded-full ${iconBgColor} mr-3`}>
           <Icon className={iconColor} size={24} />
         </div>
-        <h3 className="text-xl font-bold text-gray-800 dark:text-white">
+        <h3 className="text-xl font-bold text-white">
           {title}
         </h3>
       </div>

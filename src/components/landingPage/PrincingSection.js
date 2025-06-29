@@ -34,11 +34,6 @@ export default function PricingSection() {
                 )}
               </div>
             </div>
-<<<<<<< HEAD
-            
-          
-=======
->>>>>>> 61d13f3b3ae632d839787b8a28070bf58596a2da
           </div>
 
           {/* Premium Plan - Enhanced */}
@@ -75,11 +70,6 @@ export default function PricingSection() {
                   ))}
                 </div>
               </div>
-<<<<<<< HEAD
-
-          
-=======
->>>>>>> 61d13f3b3ae632d839787b8a28070bf58596a2da
             </div>
           </div>
         </div>
