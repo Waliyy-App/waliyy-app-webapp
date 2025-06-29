@@ -39,11 +39,7 @@ export default function PricingSection() {
               </div>
             </div>
             
-            <Link to="/sign-up">
-            <button className="w-full py-3.5 rounded-xl border-2 border-[#8b5cf6] text-[#6d28d9] font-semibold transition-all hover:bg-[#f5f3ff] hover:border-[#7c3aed]">
-              Get Started Free
-            </button>
-            </Link>
+          
           </div>
 
           {/* Premium Plan - Enhanced */}
@@ -83,11 +79,7 @@ export default function PricingSection() {
                 </div>
               </div>
 
-             <Link to="">
-              <button className="w-full py-3.5 rounded-xl bg-white text-[#6d28d9] font-bold transition-all hover:bg-[#f5f3ff] hover:scale-[1.02]">
-                Get Premium
-              </button>
-            </Link> 
+          
             </div>
           </div>
         </div>
