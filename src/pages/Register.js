@@ -12,7 +12,6 @@ import Loader from "../components/Loader";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  // const [count, setCount] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -49,24 +48,10 @@ const Register = () => {
     confirmPassword: Yup.string()
       .required("Confirm your password")
       .oneOf([Yup.ref("password")], "Passwords do not match"),
+    acceptTerms: Yup.boolean()
+      .oneOf([true], "You must accept the terms and conditions") // Require checkbox to be checked
+      .required("You must accept the terms and conditions"),
   });
-
-  // useEffect(() => {
-  //   const showCounter = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const data = await getUsersCount();
-  //       setCount(data.data);
-  //     } catch (error) {
-  //       toast.error(error.response.data.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   showCounter();
-  // }, []);
-
-  // const newCount = 200 - count;
 
   async function checkEmail(email) {
     try {
@@ -76,10 +61,10 @@ const Register = () => {
       const result = response?.data;
 
       if (result?.isFakeDomain === false) {
-        return false; // allow sign up
+        return false; // allow signup
       }
 
-      return true; // block sign up
+      return true; // block signup
     } catch (error) {
       console.error("Email validation error:", error.message || error);
       throw new Error("Could not validate email");
@@ -136,51 +121,53 @@ const Register = () => {
           validationSchema={validationSchema}
           onSubmit={(values) => handleRegistration(values)}
         >
-          <Form className="flex flex-col gap-5">
-            <TextInput label="First Name*" name="fname" type="text" />
-            <TextInput label="Last Name*" name="lname" type="text" />
-            <TextInput
-              label="Email Address*"
-              name="emailAddress"
-              type="email"
-            />
-            <TextInput label="Phone Number*" name="phoneNumber" type="text" />
-
-            <div className="relative">
+          {({ errors, touched, values, handleChange }) => (
+            <Form className="flex flex-col gap-5">
+              <TextInput label="First Name*" name="fname" type="text" />
+              <TextInput label="Last Name*" name="lname" type="text" />
               <TextInput
-                label="Password*"
-                name="password"
-                type={showPassword ? "text" : "password"}
+                label="Email Address*"
+                name="emailAddress"
+                type="email"
               />
-              <div
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-1 cursor-pointer top-10"
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </div>
-            </div>
+              <TextInput label="Phone Number*" name="phoneNumber" type="text" />
 
-            <div className="relative">
-              <TextInput
-                label="Confirm Password*"
-                name="confirmPassword"
-                type={showConfirmPassword ? "text" : "password"}
-              />
-              <div
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-1 cursor-pointer top-10"
-              >
-                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              <div className="relative">
+                <TextInput
+                  label="Password*"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                />
+                <div
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-1 cursor-pointer top-10"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
               </div>
-            </div>
 
-            <button
-              type="submit"
-              className="my-11 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300"
-            >
-              Create account
-            </button>
-          </Form>
+              <div className="relative">
+                <TextInput
+                  label="Confirm Password*"
+                  name="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                />
+                <div
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-1 cursor-pointer top-10"
+                >
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="my-6 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300"
+              >
+                Create account
+              </button>
+            </Form>
+          )}
         </Formik>
 
         <p className="text-center text-sm">
