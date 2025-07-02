@@ -12,9 +12,7 @@ export default function PricingSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto mb-10">
           {/* Free Plan - Most Popular */}
           <div className="relative rounded-2xl overflow-hidden">
-            <div className="absolute top-0 right-0 bg-gradient-to-r from-[#8b5cf6] to-[#6d28d9] text-white text-xs font-bold px-4 py-1 rounded-bl-lg">
-              MOST POPULAR
-            </div>
+            
             <div className="bg-[#a37eff37] text-[#2D133A] rounded-2xl shadow-xl p-8 border border-[#e9defe] transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 h-full">
               <div className="mb-6">
                 <h3 className="text-2xl font-bold text-[#2D133A] mb-2">
