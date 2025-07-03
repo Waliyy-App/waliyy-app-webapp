@@ -15,11 +15,14 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
 import LogoIcon from '../assets/logo/logo-nobg-cropped.png';
 import PricingSection from '../components/landingPage/PrincingSection';
+import MaintenanceBanner from '../common/MaintananceBanner';
 
 const LandingPage = () => {
   return (
     <div className="pt-12 bg-white dark:bg-white">
       <Navbar />
+      {/* Maintance Banner */}
+      <MaintenanceBanner/>   
       <Header />
       <br />
       <br />
