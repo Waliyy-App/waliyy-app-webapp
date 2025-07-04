@@ -59,14 +59,14 @@ const Navbar = () => {
             </NavLink>
 
             <Link
-              to="/login"
+              to="/notice"
               className="flex items-center justify-center w-[120px] rounded-3xl h-12 border border-[#BA9FFE] hover:bg-[#BA9FFE] text-[#a37eff] hover:text-white font-medium box-shadow-style transition-all duration-300"
             >
               Sign In
             </Link>
 
             <Link
-              to="/sign-up"
+              to="/notice"
               className="flex items-center justify-center w-[120px] rounded-3xl h-12 bg-[#BA9FFE] text-white hover:bg-[#a37eff] font-medium box-shadow-style transition-all duration-300"
             >
               Sign Up
@@ -110,14 +110,14 @@ const Navbar = () => {
 
         <div className="hidden sm:flex items-center gap-6">
           <Link
-            to="/login"
+            to="/notice"
             className="flex items-center justify-center w-[120px] rounded-3xl h-12 border border-[#BA9FFE] hover:bg-[#BA9FFE] text-[#a37eff] hover:text-white font-medium box-shadow-style transition-all duration-300"
           >
             Sign In
           </Link>
 
           <Link
-            to="/sign-up"
+            to="/notice"
             className="flex items-center justify-center w-[120px] rounded-3xl h-12 bg-[#BA9FFE] text-white hover:bg-[#a37eff] font-medium box-shadow-style transition-all duration-300"
           >
             Sign Up
