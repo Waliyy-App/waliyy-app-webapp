@@ -8,7 +8,7 @@ const MaintenanceBanner = () => {
     <div className="bg-yellow-500 text-yellow-900 mt-4 w-auto">
       <div className="container mx-auto px-4 py-3">
         <div className="flex flex-wrap items-center justify-between">
-          <div className="flex items-center  flex-1 w-0 min-w-[200px]">
+          <div className="flex items-center justify-center flex-1 w-0 min-w-[200px]">
             <span className="flex p-2 rounded-lg bg-yellow-400">
               <FaExclamationTriangle className="text-xl" />
             </span>
