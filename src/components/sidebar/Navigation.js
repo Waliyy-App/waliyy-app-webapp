@@ -5,7 +5,7 @@ import { useAuthContext } from '../../context/AuthContext.js';
 import { toast } from 'react-toastify';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
-import AddIcon from '@mui/icons-material/Add';
+// import AddIcon from '@mui/icons-material/Add';
 import PersonIcon from '@mui/icons-material/Person';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -145,12 +145,7 @@ const Navigation = () => {
               </div>
             )}
 
-            <NavLink
-              to="/get-started"
-              className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300"
-            >
-              <AddIcon /> Add Account
-            </NavLink>
+          
 
             <div className="border border-[#2D133A] w-full mt-10 mb-4"></div>
 

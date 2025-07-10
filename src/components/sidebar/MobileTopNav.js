@@ -3,7 +3,7 @@ import Logo from '../../assets/logo/Untitled-1-01.jpg';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import SettingsIcon from '@mui/icons-material/Settings';
-import AddIcon from '@mui/icons-material/Add';
+// import AddIcon from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
@@ -100,12 +100,7 @@ const MobileTopNav = () => {
                 </div>
               )}
 
-              <NavLink
-                to="/get-started"
-                className="flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 mt-4"
-              >
-                <AddIcon /> Add Account
-              </NavLink>
+           
 
               <div className="border border-[#2D133A] w-full mt-10"></div>
 
