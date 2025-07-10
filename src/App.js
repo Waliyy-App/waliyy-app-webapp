@@ -39,9 +39,8 @@ import ResourcePage from './pages/ResourcePage.js';
 import Blogpage from './pages/Blogpage.js';
 import BlogPostPage from './pages/BlogPostPage';
 import Terms from './pages/Terms.js';
-import MaintenanceNotice from './common/MaintananceNotice.js';
+// import MaintenanceNotice from './common/MaintananceNotice.js';
 import NotionTest from './services/NotionTest.js';
-
 
 
 export const AppLayout = ({ children }) => {
