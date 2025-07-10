@@ -22,7 +22,7 @@ const LandingPage = () => {
     <div className="pt-12 bg-white dark:bg-white">
       <Navbar />
       {/* Maintance Banner */}
-      <MaintenanceBanner/>   
+      {/* <MaintenanceBanner/>    */}
       <Header />
       <br />
       <br />

@@ -37,8 +37,10 @@ import { getCurrentPlan } from './services/index.js';
 import PaymentConfirmation from './pages/PaymentConfirmation.js';
 import ResourcePage from './pages/ResourcePage.js';
 import Blogpage from './pages/Blogpage.js';
+import BlogPostPage from './pages/BlogPostPage';
 import Terms from './pages/Terms.js';
 import MaintenanceNotice from './common/MaintananceNotice.js';
+import NotionTest from './services/NotionTest.js';
 
 
 
@@ -89,7 +91,9 @@ function App() {
             <Route exact path="/resources" element={<ResourcePage />} /> 
             <Route exact path="/blog" element={<Blogpage />} /> 
             <Route exact path="/terms" element={<Terms />} /> 
-            <Route exact path="/notice" element={<MaintenanceNotice />} /> 
+            {/* <Route exact path="/notice" element={<MaintenanceNotice />} />  */}
+             <Route path="/blog/:slug" element={<BlogPostPage />} />
+             <Route path="/test" element={<NotionTest />} />
             <Route exact path="*" element={<NoPage />} />
             
 
