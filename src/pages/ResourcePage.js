@@ -57,7 +57,7 @@ const ResourcePage = () => {
             title="Tutorials"
             button={
               <a
-                href="https://drive.google.com/file/d/1Q0mIxhwgNw5BmpEF9vxBa_guoexn8FFQ/view?usp=sharing"
+                href="https://drive.google.com/file/d/1aBc7s7Y9RdUWQcjHF4uh22iJ1raf6eqp/view"
                 rel="noopener noreferrer"
                 target="_blank"
                 className="w-full flex items-center justify-center py-3 bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-xl hover:opacity-90 transition-opacity shadow-md mt-auto"
@@ -84,12 +84,14 @@ const ResourcePage = () => {
             iconColor="text-blue-600"
             title="Blog & Articles"
             button={
-              <Link
-                to="/blog"
+              <a
+                href="https://medium.com/@waliyyapp"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-auto py-3 w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:opacity-90 transition-opacity shadow-md flex justify-center items-center"
               >
                 Read Articles
-              </Link>
+              </a>
             }
           >
             <div className="aspect-video mb-4 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
