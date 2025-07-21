@@ -81,9 +81,9 @@ const LandingPage = () => {
                 <div className="flex items-center justify-center h-10 w-10 bg-[#2d133a] text-white rounded-full">
                   <PersonIcon className="text-white text-xl" />
                 </div>
-                <p className="text-xl font-bold">Singles</p>
+                <p className="text-xl font-bold">Single</p>
                 <p className="">
-                  You can add and manage up to four singles on WaliyyApp
+                 This icon shows you the current profile you're on and gives you the option to logout of WaliyyApp.
                 </p>
               </div>
             </div>
