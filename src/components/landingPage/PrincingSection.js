@@ -102,7 +102,7 @@ export default function PricingSection() {
                 Premium Plan
               </h3>
               <div className="flex items-end justify-center">
-                <span className="text-4xl font-bold">₦10,000</span>
+                <span className="text-4xl font-bold">₦30,000</span>
                 <span className="text-[#2D133A] ml-1">/annum</span>
               </div>
             </div>
