@@ -94,7 +94,17 @@ export const validationSchema = Yup.object({
   ),
   salat: Yup.string().required("Select your pattern of salat"),
   islamicPractice: Yup.string().required("Tell us about your Islamic practice"),
-  aboutYou: Yup.string().required("Tell us about you"),
+  aboutYou: Yup.string()
+    .required("Tell us about you")
+    .test(
+      "minWords",
+      "Your description must be at least 150 words",
+      (value) => {
+        if (!value) return false;
+        const wordCount = value.trim().split(/\s+/).length;
+        return wordCount >= 150;
+      }
+    ),
   aboutEducationAndJob: Yup.string().required(
     "Tell us about your education and job"
   ),
