@@ -97,6 +97,12 @@ export default function PersonalDetailsForm() {
             <option value="true">Yes</option>
             <option value="false">No</option>
           </SelectInput>
+
+          <SelectInput label="Are you open to polygamy?*" name="polygamy">
+            <option value="">Select option</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </SelectInput>
         </div>
 
         <div className="flex flex-col gap-4">

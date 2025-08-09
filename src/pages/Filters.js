@@ -76,6 +76,7 @@ export const Filters = () => {
     patternOfSalat: childPref?.patternOfSalat ? childPref?.patternOfSalat : [],
     sect: childPref?.sect ? childPref?.sect : [],
     hasChildren: childPref?.hasChildren ? childPref?.hasChildren : null,
+    polygamy: childPref?.polygamy ? childPref?.polygamy : null,
     isRevert: childPref?.isRevert ? childPref?.isRevert : null,
     isSmoker: childPref?.isSmoker ? childPref?.isSmoker : null,
     isDrinker: childPref?.isDrinker ? childPref?.isDrinker : null,
@@ -110,7 +111,6 @@ export const Filters = () => {
       toast.error(error?.response?.data?.message);
     }
   }
-
   return (
     <React.Fragment>
       <Box
@@ -339,6 +339,9 @@ export const Filters = () => {
                 <div className="flex flex-wrap gap-8">
                   <CheckboxInputTwo name="hasChildren">
                     Has Children
+                  </CheckboxInputTwo>
+                  <CheckboxInputTwo name="polygamy">
+                    Open to polygamy
                   </CheckboxInputTwo>
                   <CheckboxInputTwo name="willingnessToRelocate">
                     Willing to relocate
