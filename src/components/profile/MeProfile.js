@@ -31,7 +31,6 @@ const MeProfile = ({
   nationality,
   state,
 }) => {
-
   return (
     <CustomTabPanel value={value} index={0}>
       <div className="flex flex-col items-start gap-10 py-8">
@@ -77,15 +76,39 @@ const MeProfile = ({
             )}
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
-              {hasChildren ? <StrollerIcon /> : <NoStrollerIcon />}
+              {hasChildren ? (
+                <>
+                  <StrollerIcon /> Has Children
+                </>
+              ) : (
+                <>
+                  <NoStrollerIcon /> Doesn't have Children
+                </>
+              )}
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
-              {smoke ? <SmokingRoomsIcon /> : <SmokeFreeIcon />}
+              {smoke ? (
+                <>
+                  <SmokingRoomsIcon /> Smokes
+                </>
+              ) : (
+                <>
+                  <SmokeFreeIcon /> Doesn't Smoke
+                </>
+              )}
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
-              {drink ? <LocalBarIcon /> : <NoDrinksIcon />}
+              {drink ? (
+                <>
+                  <LocalBarIcon /> Drinks Alcohol
+                </>
+              ) : (
+                <>
+                  <NoDrinksIcon /> Doesn't Drink Alcohol
+                </>
+              )}
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
