@@ -94,8 +94,7 @@ function App() {
              <Route path="/blog/:slug" element={<BlogPostPage />} />
              <Route path="/test" element={<NotionTest />} />
             <Route exact path="*" element={<NoPage />} />
-              <Route exact path="/get-started" element={<ProfileSetupForm />} />
-                           
+            
 
             <Route element={<UnProtectedRoute />}>
               <Route exact path="/sign-up" element={<Register />} />
