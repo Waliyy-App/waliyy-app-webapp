@@ -98,7 +98,7 @@ export default function PersonalDetailsForm() {
             <option value="false">No</option>
           </SelectInput>
 
-          <SelectInput label="Are you open to polygamy?*" name="polygamy">
+          <SelectInput label="Are you open to polygamy?*" name="isPolygamous">
             <option value="">Select option</option>
             <option value="true">Yes</option>
             <option value="false">No</option>

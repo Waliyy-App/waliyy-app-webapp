@@ -28,7 +28,7 @@ const UserSetting = ({ value, child }) => {
     countryofResidence: child?.countryofResidence,
     educationLevel: child?.educationLevel,
     hasChildren: child?.hasChildren,
-    polygamy: child?.polygamy,
+    isPolygamous: child?.isPolygamous,
 
     isSmoker: child?.isSmoker,
     isDrinker: child?.isDrinker,
@@ -159,8 +159,8 @@ const UserSetting = ({ value, child }) => {
 
               <SelectInput
                 label="Are you open to polygamy?"
-                name="polygamy"
-                defaultValue={String(child.polygamy)}
+                name="isPolygamous"
+                defaultValue={String(child.isPolygamous)}
               >
                 <option value="true">Yes</option>
                 <option value="false">No</option>

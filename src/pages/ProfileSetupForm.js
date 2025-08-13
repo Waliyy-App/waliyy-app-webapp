@@ -155,7 +155,7 @@ export default function ProfileSetupForm() {
           about: values.aboutYou,
           aboutEducationAndJob: values.aboutEducationAndJob,
           aboutDressing: values.dressing,
-          polygamy: values.polygamy
+          isPolygamous: values.isPolygamous
         },
         token
       );

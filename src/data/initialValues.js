@@ -104,7 +104,7 @@ export const validationSchema = Yup.object({
       (value) => {
         if (!value) return false;
         const wordCount = value.trim().split(/\s+/).length;
-        return wordCount >= 150;
+        return wordCount >= 200;
       }
     ),
   aboutEducationAndJob: Yup.string().required(
