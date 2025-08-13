@@ -94,6 +94,7 @@ const ProfileDetails = () => {
                 height={child.height}
                 weight={child.weight}
                 hasChildren={child.hasChildren}
+                isPolygamous={child.isPolygamous}
                 smoke={child.isSmoker}
                 drink={child.isDrinker}
                 state={child.state}

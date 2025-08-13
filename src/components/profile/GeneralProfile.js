@@ -71,7 +71,6 @@ const GeneralProfile = () => {
   const goBack = () => {
     navigate(-1);
   };
-
   return (
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
@@ -133,6 +132,7 @@ const GeneralProfile = () => {
                 mixedEthnicityDescription={child?.mixedEthnicityDescription}
                 isMixedEthnicity={child?.isMixedEthnicity}
                 addictions={child?.hasAddictions}
+                isPolygamous={child?.isPolygamous}
                 value={value}
               />
 
@@ -146,6 +146,7 @@ const GeneralProfile = () => {
                 isWillingToRelocate={child?.isWillingToRelocate}
                 relocationPlans={child?.relocationPlans}
               />
+                {console.log(child?.isPolygamous)}
 
               <DeenProfile
                 practiceDesc={child?.descriptionOfIslamicPractice}
