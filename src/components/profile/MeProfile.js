@@ -12,6 +12,8 @@ import SmokingRoomsIcon from '@mui/icons-material/SmokingRooms';
 import NoDrinksIcon from '@mui/icons-material/NoDrinks';
 import LocalBarIcon from '@mui/icons-material/LocalBar';
 import VaccinesIcon from '@mui/icons-material/Vaccines';
+import GroupsSharpIcon from '@mui/icons-material/GroupsSharp';
+import GroupSharpIcon from '@mui/icons-material/GroupSharp';
 import { capitalize } from '../../utils.js';
 
 const MeProfile = ({
@@ -112,10 +114,19 @@ const MeProfile = ({
               )}
             </div>
 
-             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
-              {isPolygamous ? 'Open to Polygamy' : 'Not Open to Polygamy'}
+            <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
+              {isPolygamous ? (
+                <>
+                  <GroupsSharpIcon />
+                  Open to Polygamy
+                </>
+              ) : (
+                <>
+                  <GroupSharpIcon /> Not Open to Polygamy
+                </>
+              )}
             </div>
-             {console.log(isPolygamous)}
+
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
               <VaccinesIcon />
               {addictions ? '' : 'No Addictions'}
