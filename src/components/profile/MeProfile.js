@@ -30,6 +30,7 @@ const MeProfile = ({
   maritalStatus,
   nationality,
   state,
+  isPolygamous
 }) => {
   return (
     <CustomTabPanel value={value} index={0}>
@@ -111,6 +112,10 @@ const MeProfile = ({
               )}
             </div>
 
+             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
+              {isPolygamous ? 'Open to Polygamy' : 'Not Open to Polygamy'}
+            </div>
+             {console.log(isPolygamous)}
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
               <VaccinesIcon />
               {addictions ? '' : 'No Addictions'}

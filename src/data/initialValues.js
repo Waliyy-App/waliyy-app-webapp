@@ -10,6 +10,7 @@ export const initialValues = {
   weight: "",
   maritalStatus: "",
   haveChildren: "",
+  polygamy:"",
   smoke: "",
   drink: "",
   addiction: "",
@@ -67,6 +68,7 @@ export const validationSchema = Yup.object({
   weight: Yup.number().required("Weight is required"),
   maritalStatus: Yup.string().required("Marital Status is required"),
   haveChildren: Yup.string().required("This field is required"),
+  polygamy: Yup.string().required("This field is required"),
   smoke: Yup.string().required("This field is required"),
   drink: Yup.string().required("This field is required"),
   addiction: Yup.string().required("This field is required"),
@@ -93,10 +95,38 @@ export const validationSchema = Yup.object({
     "State when you started practising Islam"
   ),
   salat: Yup.string().required("Select your pattern of salat"),
-  islamicPractice: Yup.string().required("Tell us about your Islamic practice"),
-  aboutYou: Yup.string().required("Tell us about you"),
-  aboutEducationAndJob: Yup.string().required(
-    "Tell us about your education and job"
+  islamicPractice: Yup.string().required("Tell us about your Islamic practice")
+  .matches(
+    /^(?!.*\d{3,})[A-Za-z0-9 .,!?'-]*$/,
+    "No special characters allowed and don't include more than 2 consecutive digits"
   ),
-  dressing: Yup.string().required("Tell us about your dressing"),
+
+  aboutYou: Yup.string()
+    .required("Tell us about you")
+    .matches(
+    /^(?!.*\d{3,})[A-Za-z0-9 .,!?'-]*$/,
+    "No special characters allowed and don't include more than 2 consecutive digits"
+  )
+   .test(
+      "minWords",
+      "Your description must be at least 200 words",
+      (value) => {
+        if (!value) return false;
+        const wordCount = value.trim().split(/\s+/).length;
+        return wordCount >= 200;
+      }
+    ),
+
+aboutEducationAndJob: Yup.string()
+  .required("Tell us about your education and job")
+  .matches(
+    /^(?!.*\d{3,})[A-Za-z0-9 .,!?'-]*$/,
+    "No special characters allowed and don't include more than 2 consecutive digits"
+  ),
+  
+  dressing: Yup.string().required("Tell us about your dressing")
+  .matches(
+    /^(?!.*\d{3,})[A-Za-z0-9 .,!?'-]*$/,
+    "No special characters allowed and don't include more than 2 consecutive digits"
+  ),
 });

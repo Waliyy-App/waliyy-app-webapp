@@ -17,6 +17,9 @@ export default function AboutDeenForm(){
             <option value="">Select option</option>
             <option value="SUNNI">Sunni</option>
             <option value="SHIA">Shi'a</option>
+            <option value="SALAFI">Salafi</option>
+            <option value="QADIRIYYAH">Qadiriyyah</option>
+            <option value="TIJANIYYAH">Tijaniyyah</option>
           </SelectInput>
         </div>
 

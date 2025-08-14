@@ -76,6 +76,7 @@ export const Filters = () => {
     patternOfSalat: childPref?.patternOfSalat ? childPref?.patternOfSalat : [],
     sect: childPref?.sect ? childPref?.sect : [],
     hasChildren: childPref?.hasChildren ? childPref?.hasChildren : null,
+    isPolygamous: childPref?.isPolygamous ? childPref?.isPolygamous : null,
     isRevert: childPref?.isRevert ? childPref?.isRevert : null,
     isSmoker: childPref?.isSmoker ? childPref?.isSmoker : null,
     isDrinker: childPref?.isDrinker ? childPref?.isDrinker : null,
@@ -85,6 +86,9 @@ export const Filters = () => {
   const sectOptions = [
     { label: "Sunni", value: "SUNNI" },
     { label: "Shi'a", value: "SHIA" },
+    { label: "Salafi", value: "SALAFI" },
+    { label: "Qadiriyyah", value: "QADIRIYYAH" },
+    { label: "Tijaniyyah", value: "TIJANIYYAH" },
   ];
 
   async function handleSubmit(values) {
@@ -110,7 +114,6 @@ export const Filters = () => {
       toast.error(error?.response?.data?.message);
     }
   }
-
   return (
     <React.Fragment>
       <Box
@@ -339,6 +342,9 @@ export const Filters = () => {
                 <div className="flex flex-wrap gap-8">
                   <CheckboxInputTwo name="hasChildren">
                     Has Children
+                  </CheckboxInputTwo>
+                  <CheckboxInputTwo name="isPolygamous">
+                    Open to polygamy
                   </CheckboxInputTwo>
                   <CheckboxInputTwo name="willingnessToRelocate">
                     Willing to relocate
