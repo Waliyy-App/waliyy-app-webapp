@@ -160,7 +160,7 @@ const UserSetting = ({ value, child }) => {
               <SelectInput
                 label="Are you open to polygamy?"
                 name="isPolygamous"
-                defaultValue={String(child.isPolygamous)}
+                defaultValue="Null"
               >
               {console.log(child.isPolygamous)}
                 <option value="true">Yes</option>
