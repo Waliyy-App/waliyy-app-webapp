@@ -162,6 +162,7 @@ const UserSetting = ({ value, child }) => {
                 name="isPolygamous"
                 defaultValue={String(child.isPolygamous)}
               >
+              {console.log(child.isPolygamous)}
                 <option value="true">Yes</option>
                 <option value="false">No</option>
               </SelectInput>
@@ -379,15 +380,19 @@ const UserSetting = ({ value, child }) => {
                 <option value="false">No</option>
               </SelectInput>
 
-              <div className={`flex flex-col w-full gap-4 relative`}>
-                <p className="text-sm font-medium  text-[#2D133A]">
-                  Are you Sunni or Shi'a?
-                </p>
-                <p className="text-input w-full h-9 border-b border-b-[#CDD1D0]">
-                  {capitalize(child.sect)}
-                </p>
-              </div>
-            </div>
+
+         <SelectInput
+                label="Which Sect do you belong to?"
+                name="sect"
+                defaultValue={String(child.sect)}
+              >
+            <option value="SUNNI">Sunni</option>
+            <option value="SHIA">Shi'a</option>
+            <option value="SALAFI">Salafi</option>
+            <option value="QADIRIYYAH">Qadiriyyah</option>
+            <option value="TIJANIYYAH">Tijaniyyah</option>
+          </SelectInput>
+        </div>
 
             <div className="flex flex-col sm:flex-row justify-between gap-12">
               <SelectInput
