@@ -13,31 +13,36 @@ const Billing = ({ value }) => {
   const [activePlan, setActivePlan] = useState(null);
   const { token } = useAuthContext();
 
-  useEffect(() => {
-    const getHistory = async () => {
-      try {
-        const res = await getSubHistory(token);
-        setHasSubscription(res?.data);
-      } catch (error) {
-        toast.error(error.response.data.message);
-      }
-    };
+useEffect(() => {
+  const getHistory = async () => {
+    try {
+      const res = await getSubHistory(token);
+      setHasSubscription(res?.data);
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Error fetching history");
+    }
+  };
 
+  if (token) {
     getHistory();
-  }, [token, hasSubscription]);
+  }
+}, [token]);
 
-  useEffect(() => {
-    const getActivePlan = async () => {
-      try {
-        const res = await getCurrentPlan(token);
-        setActivePlan(res?.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+useEffect(() => {
+  const getActivePlan = async () => {
+    try {
+      const res = await getCurrentPlan(token);
+      setActivePlan(res?.data);
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Error fetching active plan");
+    }
+  };
 
+  if (token) {
     getActivePlan();
-  }, [token, hasSubscription]);
+  }
+}, [token]);
+
 
   return (
     <CustomTabPanel value={value} index={1} className="w-full">
