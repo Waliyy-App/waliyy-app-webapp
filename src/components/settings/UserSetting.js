@@ -163,6 +163,7 @@ const UserSetting = ({ value, child }) => {
                 defaultValue="Null"
               >
               {console.log(child.isPolygamous)}
+                <option value="">Select Option</option>
                 <option value="true">Yes</option>
                 <option value="false">No</option>
               </SelectInput>
