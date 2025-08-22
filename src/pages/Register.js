@@ -114,7 +114,7 @@ const Register = () => {
               *SISTERS - Register with your Mahram's details, this is the
               information that will be sent to Brothers interested in you.
             </p>
-            <p className="font-bold">*BROTHERS - Register with your details. Also note that this platform is not for married men.</p>
+            <p className="font-bold">*BROTHERS - Register with your details.</p>
           </div>
         </div>
         <Formik
