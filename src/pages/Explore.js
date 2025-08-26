@@ -9,46 +9,62 @@ import { getAllUsers } from "../services";
 import Loader from "../components/Loader.js";
 import Navigation from "../components/sidebar/Navigation.js";
 
+// Import React Icons
+import { FaSearch, FaTimes, FaFrown, FaArrowUp } from "react-icons/fa";
 
 const Explore = () => {
-  const BASE_LIMIT = 9;
-  const STEP = 9;
-  const MAX_LIMIT = 100;
+  const ITEMS_PER_PAGE = 15;
+  const MAX_VISIBLE_PAGES = 5;
 
   const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
   const [loading, setLoading] = useState(false);
+  const [searchLoading, setSearchLoading] = useState(false);
   const [profiles, setProfiles] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
+  const [allProfiles, setAllProfiles] = useState([]); // Store all profiles for search
+  const [filteredProfiles, setFilteredProfiles] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const [page, setPage] = useState(
-    () => parseInt(sessionStorage.getItem("explorepage")) || 1
+  const [currentPage, setCurrentPage] = useState(
+    () => parseInt(sessionStorage.getItem("explorePage")) || 1
   );
-  const [limit, setLimit] = useState(
-    () => parseInt(sessionStorage.getItem("explorelimit")) || BASE_LIMIT
-  );
+  const [totalPages, setTotalPages] = useState(1);
 
   const hasRestoredScroll = useRef(false);
   const { token } = useAuthContext();
 
+  // Fetch all users for searching
+  const fetchAllUsers = useCallback(async () => {
+    setSearchLoading(true);
+    try {
+      const res = await getAllUsers(token, 1, totalCount || 1000); // Use a large limit to get all users
+      const data = res?.data?.children || [];
+      setAllProfiles(data);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Failed to load users for search");
+    } finally {
+      setSearchLoading(false);
+    }
+  }, [token, totalCount]);
+
+  // Fetch users for pagination
   const fetchUsers = useCallback(
-    async (pageNum, limitNum, isNewPage = false) => {
+    async (page) => {
       setLoading(true);
       try {
-        const res = await getAllUsers(token, pageNum, limitNum);
+        const res = await getAllUsers(token, page, ITEMS_PER_PAGE);
         setTotalCount(res?.data?.totalCount);
         const data = res?.data?.children || [];
-
-        if (data?.length === 0) {
-          setHasMore(false);
-          return;
-        }
-
-        setProfiles((prev) => {
-          const existingIds = new Set(prev.map((p) => p.id));
-          const newProfiles = data.filter((p) => !existingIds.has(p.id));
-          return [...prev, ...newProfiles];
-        });
+        
+        // Calculate total pages
+        const calculatedTotalPages = Math.ceil(res?.data?.totalCount / ITEMS_PER_PAGE);
+        setTotalPages(calculatedTotalPages);
+        
+        setProfiles(data);
+        setFilteredProfiles(data);
+        
+        // Save current page to session storage
+        sessionStorage.setItem("explorePage", page);
       } catch (error) {
         toast.error(error?.response?.data?.message || "Failed to load users");
       } finally {
@@ -59,9 +75,30 @@ const Explore = () => {
   );
 
   useEffect(() => {
-    fetchUsers(page, limit);
+    fetchUsers(currentPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Fetch all users when totalCount is available
+  useEffect(() => {
+    if (totalCount > 0) {
+      fetchAllUsers();
+    }
+  }, [totalCount, fetchAllUsers]);
+
+  // Filter profiles based on search term
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      // If no search term, show paginated results
+      setFilteredProfiles(profiles);
+    } else {
+      // If search term exists, filter through all profiles
+      const filtered = allProfiles.filter(profile => 
+        profile.displayId && profile.displayId.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredProfiles(filtered);
+    }
+  }, [searchTerm, profiles, allProfiles]);
 
   // Scroll restore after profiles are rendered
   useEffect(() => {
@@ -78,59 +115,45 @@ const Explore = () => {
     }
   }, [profiles]);
 
-  const loadMore = async () => {
-    if (!loading && hasMore) {
-      if (limit + STEP <= MAX_LIMIT) {
-        const newLimit = limit + STEP;
-        setLimit(newLimit);
-        sessionStorage.setItem("explorelimit", newLimit);
-        await fetchUsers(page, newLimit);
-      } else {
-        const nextPage = page + 1;
-        setPage(nextPage);
-        setLimit(BASE_LIMIT);
-        sessionStorage.setItem("explorepage", nextPage);
-        sessionStorage.setItem("explorelimit", String(BASE_LIMIT));
-        await fetchUsers(nextPage, BASE_LIMIT, true);
-      }
-    }
-  };
-
-  const loadLess = async () => {
-    if (loading || (page === 1 && limit === BASE_LIMIT)) return;
-
-    if (limit > BASE_LIMIT) {
-      const newLimit = limit - STEP;
-      setLimit(newLimit);
-      sessionStorage.setItem("explorelimit", newLimit);
-
-      // Remove extra profiles from the bottom
-      setProfiles((prev) => prev.slice(0, prev.length - STEP));
-    } else if (page > 1) {
-      const previousPage = page - 1;
-      setPage(previousPage);
-      setLimit(MAX_LIMIT);
-      sessionStorage.setItem("explorepage", previousPage);
-      sessionStorage.setItem("explorelimit", MAX_LIMIT);
-
-      // Remove current page's profiles
-      setProfiles((prev) => prev.slice(0, prev.length - limit));
-
-      await fetchUsers(previousPage, MAX_LIMIT);
-    }
+  const handlePageChange = async (newPage) => {
+    if (newPage < 1 || newPage > totalPages || newPage === currentPage) return;
+    
+    // Save scroll position before changing page
+    sessionStorage.setItem("scrollPos", String(window.scrollY));
+    
+    setCurrentPage(newPage);
+    await fetchUsers(newPage);
+    
+    // Scroll to top after page change for better UX
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleProfileClick = () => {
     sessionStorage.setItem("scrollPos", String(window.scrollY));
-    sessionStorage.setItem("page", page);
-    sessionStorage.setItem("limit", limit);
+    sessionStorage.setItem("page", currentPage);
   };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const hideLoadMoreButton = profiles.length >= totalCount;
+  // Generate page numbers to display
+  const getPageNumbers = () => {
+    const half = Math.floor(MAX_VISIBLE_PAGES / 2);
+    let start = Math.max(1, currentPage - half);
+    let end = Math.min(totalPages, start + MAX_VISIBLE_PAGES - 1);
+    
+    // Adjust if we're near the end
+    if (end - start + 1 < MAX_VISIBLE_PAGES) {
+      start = Math.max(1, end - MAX_VISIBLE_PAGES + 1);
+    }
+    
+    const pages = [];
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+    return pages;
+  };
 
   return (
     <div className="flex flex-col sm:flex-row">
@@ -144,72 +167,164 @@ const Explore = () => {
         {loading && profiles.length === 0 ? (
           <Loader />
         ) : (
-          <div className="flex flex-col gap-y-8 py-[64px] px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {profiles.map((items) => (
-                <ProfileCard
-                  key={items.id}
-                  id={items.id}
-                  age={items.age}
-                  lga={items.lga}
-                  firstName={items.firstName}
-                  residence={items.countryofResidence}
-                  about={items.about}
-                  profession={items.profession}
-                  gender={items.gender}
-                  displayID={items?.displayId}
-                  href={`/explore/${items.id}`}
-                  onClick={handleProfileClick}
+          <div className="flex flex-col gap-y-8 py-[64px] px-4 sm:px-8">
+            {/* Search Bar */}
+            <div className="relative max-w-md mx-auto w-full">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <FaSearch className="w-5 h-5 text-gray-500" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search by User ID..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#BA9FFE] focus:border-transparent outline-none transition-all"
                 />
-              ))}
-            </div>
-            <div className="flex items-center gap-x-4 justify-center">
-              {hasMore && !hideLoadMoreButton && (
-                <button
-                  onClick={loadMore}
-                  disabled={loading}
-                  className="self-center flex items-center gap-x-2.5 bg-[#BA9FFE] hover:bg-[#a37eff] text-white font-medium px-6 py-3 rounded-lg shadow-md"
-                >
-                  {loading ? (
-                    <>
-                      <svg
-                        aria-hidden="true"
-                        className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-200"
-                        viewBox="0 0 100 101"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                          fill="currentColor"
-                        />
-                        <path
-                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                          fill="currentFill"
-                        />
-                      </svg>
-                      <span>Loading...</span>
-                    </>
-                  ) : (
-                    "Load More"
-                  )}
-                </button>
-              )}
-              {(profiles?.length > BASE_LIMIT || page > 1) && (
-                <button
-                  onClick={loadLess}
-                  className="self-center bg-[#E0D7FF] hover:bg-[#c2b9f5] text-[#2D1E64] font-medium px-6 py-3 rounded-lg shadow-md"
-                >
-                  Load Less
-                </button>
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm("")}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                  >
+                    <FaTimes className="w-5 h-5 text-gray-500 hover:text-gray-700" />
+                  </button>
+                )}
+              </div>
+              {(searchLoading) && (
+                <div className="absolute inset-x-0 bottom-0 flex justify-center">
+                  <div className="w-6 h-6 border-t-2 border-r-2 border-[#BA9FFE] rounded-full animate-spin"></div>
+                </div>
               )}
             </div>
 
+            {/* Results Count */}
+            <div className="text-center">
+              {searchTerm ? (
+                <p className="text-gray-600">
+                  Found {filteredProfiles.length} user{filteredProfiles.length !== 1 ? 's' : ''} matching "{searchTerm}"
+                </p>
+              ) : (
+                <p className="text-gray-600">
+                  Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1} to{" "}
+                  {Math.min(currentPage * ITEMS_PER_PAGE, totalCount)} of{" "}
+                  {totalCount} users
+                </p>
+              )}
+            </div>
+
+            {/* Profile Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredProfiles.length > 0 ? (
+                filteredProfiles.map((items) => (
+                  <ProfileCard
+                    key={items.id}
+                    id={items.id}
+                    age={items.age}
+                    lga={items.lga}
+                    firstName={items.firstName}
+                    residence={items.countryofResidence}
+                    about={items.about}
+                    profession={items.profession}
+                    gender={items.gender}
+                    displayID={items?.displayId}
+                    href={`/explore/${items.id}`}
+                    onClick={handleProfileClick}
+                  />
+                ))
+              ) : searchTerm ? (
+                <div className="col-span-full text-center py-12">
+                  <FaFrown className="w-16 h-16 mx-auto text-gray-400" />
+                  <p className="mt-4 text-gray-600 text-lg">No users found with this ID</p>
+                  <button
+                    onClick={() => setSearchTerm("")}
+                    className="mt-4 text-[#BA9FFE] hover:text-[#a37eff] font-medium"
+                  >
+                    Clear search
+                  </button>
+                </div>
+              ) : null}
+            </div>
+
+            {/* Pagination Controls - Only show if not searching */}
+            {!searchTerm && totalPages > 1 && (
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8">
+                <div className="text-sm text-gray-600">
+                  Page {currentPage} of {totalPages}
+                </div>
+                
+                <div className="flex items-center gap-2 flex-wrap justify-center">
+                  {/* Previous Button */}
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="px-3 py-2 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Previous
+                  </button>
+                  
+                  {/* First Page */}
+                  {currentPage > Math.floor(MAX_VISIBLE_PAGES / 2) + 1 && (
+                    <>
+                      <button
+                        onClick={() => handlePageChange(1)}
+                        className="px-3 py-2 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 transition-colors hidden sm:block"
+                      >
+                        1
+                      </button>
+                      {currentPage > Math.floor(MAX_VISIBLE_PAGES / 2) + 2 && (
+                        <span className="px-1">...</span>
+                      )}
+                    </>
+                  )}
+                  
+                  {/* Page Numbers */}
+                  {getPageNumbers().map((page) => (
+                    <button
+                      key={page}
+                      onClick={() => handlePageChange(page)}
+                      className={`px-3 py-2 rounded-lg border transition-colors ${
+                        page === currentPage
+                          ? "border-[#BA9FFE] bg-[#BA9FFE] text-white"
+                          : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                  
+                  {/* Last Page */}
+                  {currentPage < totalPages - Math.floor(MAX_VISIBLE_PAGES / 2) && (
+                    <>
+                      {currentPage < totalPages - Math.floor(MAX_VISIBLE_PAGES / 2) - 1 && (
+                        <span className="px-1">...</span>
+                      )}
+                      <button
+                        onClick={() => handlePageChange(totalPages)}
+                        className="px-3 py-2 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 transition-colors hidden sm:block"
+                      >
+                        {totalPages}
+                      </button>
+                    </>
+                  )}
+                  
+                  {/* Next Button */}
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="px-3 py-2 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            )}
+
             <button
               onClick={scrollToTop}
-              className="fixed bottom-6 right-6 bg-[#BA9FFE] hover:bg-[#a37eff] text-white px-4 py-2 rounded-full shadow-md"
+              className="fixed bottom-6 right-6 bg-[#BA9FFE] hover:bg-[#a37eff] text-white w-12 h-12 flex items-center justify-center rounded-full shadow-md transition-transform hover:scale-105 z-10"
+              aria-label="Scroll to top"
             >
-              ↑ Top
+              <FaArrowUp />
             </button>
           </div>
         )}
