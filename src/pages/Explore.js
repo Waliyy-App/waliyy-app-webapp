@@ -10,7 +10,7 @@ import Loader from "../components/Loader.js";
 import Navigation from "../components/sidebar/Navigation.js";
 
 // Import React Icons
-import { FaSearch, FaTimes, FaFrown, FaArrowUp, FaSpinner } from "react-icons/fa";
+import { FaSearch, FaTimes, FaFrown, FaArrowUp } from "react-icons/fa";
 
 const Explore = () => {
   const ITEMS_PER_PAGE = 15;
@@ -18,7 +18,9 @@ const Explore = () => {
 
   const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
   const [loading, setLoading] = useState(false);
+  const [searchLoading, setSearchLoading] = useState(false);
   const [profiles, setProfiles] = useState([]);
+  const [allProfiles, setAllProfiles] = useState([]); // Store all profiles for search
   const [filteredProfiles, setFilteredProfiles] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
@@ -31,6 +33,21 @@ const Explore = () => {
   const hasRestoredScroll = useRef(false);
   const { token } = useAuthContext();
 
+  // Fetch all users for searching
+  const fetchAllUsers = useCallback(async () => {
+    setSearchLoading(true);
+    try {
+      const res = await getAllUsers(token, 1, totalCount || 1000); // Use a large limit to get all users
+      const data = res?.data?.children || [];
+      setAllProfiles(data);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Failed to load users for search");
+    } finally {
+      setSearchLoading(false);
+    }
+  }, [token, totalCount]);
+
+  // Fetch users for pagination
   const fetchUsers = useCallback(
     async (page) => {
       setLoading(true);
@@ -62,17 +79,26 @@ const Explore = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Fetch all users when totalCount is available
+  useEffect(() => {
+    if (totalCount > 0) {
+      fetchAllUsers();
+    }
+  }, [totalCount, fetchAllUsers]);
+
   // Filter profiles based on search term
   useEffect(() => {
     if (searchTerm.trim() === "") {
+      // If no search term, show paginated results
       setFilteredProfiles(profiles);
     } else {
-      const filtered = profiles.filter(profile => 
+      // If search term exists, filter through all profiles
+      const filtered = allProfiles.filter(profile => 
         profile.displayId && profile.displayId.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredProfiles(filtered);
     }
-  }, [searchTerm, profiles]);
+  }, [searchTerm, profiles, allProfiles]);
 
   // Scroll restore after profiles are rendered
   useEffect(() => {
@@ -164,9 +190,27 @@ const Explore = () => {
                   </button>
                 )}
               </div>
+              {(searchLoading) && (
+                <div className="absolute inset-x-0 bottom-0 flex justify-center">
+                  <div className="w-6 h-6 border-t-2 border-r-2 border-[#BA9FFE] rounded-full animate-spin"></div>
+                </div>
+              )}
             </div>
 
-           
+            {/* Results Count */}
+            <div className="text-center">
+              {searchTerm ? (
+                <p className="text-gray-600">
+                  Found {filteredProfiles.length} user{filteredProfiles.length !== 1 ? 's' : ''} matching "{searchTerm}"
+                </p>
+              ) : (
+                <p className="text-gray-600">
+                  Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1} to{" "}
+                  {Math.min(currentPage * ITEMS_PER_PAGE, totalCount)} of{" "}
+                  {totalCount} users
+                </p>
+              )}
+            </div>
 
             {/* Profile Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -200,23 +244,6 @@ const Explore = () => {
                 </div>
               ) : null}
             </div>
-            
-
-              {/* Results Count */}
-            <div className="text-center">
-              {searchTerm ? (
-                <p className="text-gray-600">
-                  Found {filteredProfiles.length} user{filteredProfiles.length !== 1 ? 's' : ''} matching "{searchTerm}"
-                </p>
-              ) : (
-                <p className="text-gray-600">
-                  Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1} to{" "}
-                  {Math.min(currentPage * ITEMS_PER_PAGE, totalCount)} of{" "}
-                  {totalCount} users
-                </p>
-              )}
-            </div>
-
 
             {/* Pagination Controls - Only show if not searching */}
             {!searchTerm && totalPages > 1 && (
