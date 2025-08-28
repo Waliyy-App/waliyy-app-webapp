@@ -13,8 +13,8 @@ import Navigation from "../components/sidebar/Navigation.js";
 import { FaSearch, FaTimes, FaFrown, FaArrowUp } from "react-icons/fa";
 
 const Explore = () => {
-  const ITEMS_PER_PAGE = 15;
-  const MAX_VISIBLE_PAGES = 5;
+  const ITEMS_PER_PAGE = 40;
+  const MAX_VISIBLE_PAGES = 4;
 
   const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
   const [loading, setLoading] = useState(false);
