@@ -40,7 +40,7 @@ import Blogpage from './pages/Blogpage.js';
 import BlogPostPage from './pages/BlogPostPage';
 import Terms from './pages/Terms.js';
 // import MaintenanceNotice from './common/MaintananceNotice.js';
-import NotionTest from './services/NotionTest.js';
+
 
 
 export const AppLayout = ({ children }) => {
@@ -92,7 +92,7 @@ function App() {
             <Route exact path="/terms" element={<Terms />} /> 
             {/* <Route exact path="/notice" element={<MaintenanceNotice />} />  */}
              <Route path="/blog/:slug" element={<BlogPostPage />} />
-             <Route path="/test" element={<NotionTest />} />
+             {/* <Route path="/test" element={<Test/>} /> */}
             <Route exact path="*" element={<NoPage />} />
             
 

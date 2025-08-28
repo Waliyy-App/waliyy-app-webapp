@@ -8,52 +8,97 @@ import { useAuthContext } from "../context/AuthContext.js";
 import { getRecommedations } from "../services";
 import Loader from "../components/Loader.js";
 import Navigation from "../components/sidebar/Navigation.js";
-// Import React Icons
-import { FaSearch, FaTimes, FaFrown, FaArrowUp } from "react-icons/fa";
+// Icons
+import { FaFrown, FaArrowUp } from "react-icons/fa";
 
 const Dashboard = () => {
-  const ITEMS_PER_PAGE = 15;
+  // Pagination configuration
+  const ITEMS_PER_PAGE = 40;
   const MAX_VISIBLE_PAGES = 3;
 
+  // Sidebar state (persisted in localStorage/sessionStorage)
   const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
+
+  // Loading indicator
   const [loading, setLoading] = useState(false);
-  const [profiles, setProfiles] = useState([]);
-  const [filteredProfiles, setFilteredProfiles] = useState([]);
+
+  // Profile data states
+  const [profiles, setProfiles] = useState([]);         // Paginated profiles
+  const [allProfiles, setAllProfiles] = useState([]);   // All profiles (used for searching)
+  const [filteredProfiles, setFilteredProfiles] = useState([]); // Filtered results (search/pagination)
+
+  // Total count of recommendations
   const [totalCount, setTotalCount] = useState(0);
+
+  // Search term input
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Pagination states
   const [currentPage, setCurrentPage] = useState(
     () => parseInt(sessionStorage.getItem("dashboardPage")) || 1
   );
   const [totalPages, setTotalPages] = useState(1);
 
+  // Auth context (for API authentication)
   const { token } = useAuthContext();
+
+  // Child ID for API request
   const childId = localStorage?.getItem("childId");
+
+  // Ref to track if scroll position is already restored
   const restoredRef = useRef(false);
+
+  // Tracks if at least one render cycle has completed
   const [hasRenderedOnce, setHasRenderedOnce] = useState(false);
 
+  /**
+   * Fetches *all* recommendations (mainly for searching purposes)
+   */
+  const fetchAllRecommendations = useCallback(async () => {
+    try {
+      const res = await getRecommedations(
+        childId,
+        token,
+        1,
+        totalCount || 1000 // Get all available profiles
+      );
+      const data = res?.data?.recommendations || [];
+      setAllProfiles(data);
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.message || "Error fetching all recommendations"
+      );
+    }
+  }, [childId, token, totalCount]);
+
+  /**
+   * Fetch paginated recommendations for the current page
+   */
   const fetchRecommendations = useCallback(
     async (page) => {
       setLoading(true);
       try {
-        const res = await getRecommedations(
-          childId,
-          token,
-          page,
-          ITEMS_PER_PAGE
-        );
+        const res = await getRecommedations(childId, token, page, ITEMS_PER_PAGE);
         const data = res?.data?.recommendations || [];
         const total = res?.data?.totalCount || 0;
-        
+
         setTotalCount(total);
-        // Calculate total pages
+
+        // Calculate total pages for pagination
         const calculatedTotalPages = Math.ceil(total / ITEMS_PER_PAGE);
         setTotalPages(calculatedTotalPages);
-        
-        setProfiles(data);
+
+        // Avoid duplicate profiles by checking IDs
+        setProfiles((prev) => {
+          const existingIds = new Set(prev?.map((p) => p?.id));
+          const newProfiles = data?.filter((p) => !existingIds?.has(p.id));
+          return [...prev, ...newProfiles];
+        });
+
+        // For displaying in the grid (current page only)
         setFilteredProfiles(data);
-        
-        // Save current page to session storage
+
+        // Save the current page in session storage
         sessionStorage.setItem("dashboardPage", page);
       } catch (error) {
         toast.error(
@@ -64,26 +109,39 @@ const Dashboard = () => {
         setHasRenderedOnce(true);
       }
     },
-    [childId, token]
+    [childId, token, ITEMS_PER_PAGE]
   );
 
+  // Fetch recommendations on component mount
   useEffect(() => {
     fetchRecommendations(currentPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Filter profiles based on search term
+  // Fetch all recommendations once totalCount is known
+  useEffect(() => {
+    if (totalCount > 0) {
+      fetchAllRecommendations();
+    }
+  }, [totalCount, fetchAllRecommendations]);
+
+  // Handle search filtering
   useEffect(() => {
     if (searchTerm.trim() === "") {
+      // Show current paginated results when search is empty
       setFilteredProfiles(profiles);
     } else {
-      const filtered = profiles.filter(profile => 
-        profile.displayId && profile.displayId.toLowerCase().includes(searchTerm.toLowerCase())
+      // Filter all profiles by displayId
+      const filtered = allProfiles.filter(
+        (profile) =>
+          profile.displayId &&
+          profile.displayId.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredProfiles(filtered);
     }
-  }, [searchTerm, profiles]);
+  }, [searchTerm, profiles, allProfiles]);
 
+  // Restore scroll position when navigating back to this page
   useEffect(() => {
     const savedPos = parseInt(sessionStorage?.getItem("scrollPos"), 10);
     if (
@@ -99,41 +157,55 @@ const Dashboard = () => {
     }
   }, [profiles, hasRenderedOnce]);
 
+  /**
+   * Handle changing the current page (pagination)
+   */
   const handlePageChange = async (newPage) => {
     if (newPage < 1 || newPage > totalPages || newPage === currentPage) return;
-    
-    // Save scroll position before changing page
+
+    // Save current scroll position before navigating
     sessionStorage.setItem("scrollPos", String(window.scrollY));
-    
+
     setCurrentPage(newPage);
     await fetchRecommendations(newPage);
-    
-    // Scroll to top after page change for better UX
+
+    // Scroll to top for better user experience
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  /**
+   * Save scroll position when profile card is clicked
+   */
   const handleProfileClick = () => {
     sessionStorage.setItem("scrollPos", String(window.scrollY));
     sessionStorage.setItem("page", currentPage);
   };
 
+  /**
+   * Scroll back to top button
+   */
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  /**
+   * Toggle sidebar menu
+   */
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Generate page numbers to display
+  /**
+   * Generate visible pagination numbers (with "..." where needed)
+   */
   const getPageNumbers = () => {
     const half = Math.floor(MAX_VISIBLE_PAGES / 2);
     let start = Math.max(1, currentPage - half);
     let end = Math.min(totalPages, start + MAX_VISIBLE_PAGES - 1);
-    
-    // Adjust if we're near the end
+
+    // Adjust range if near the end
     if (end - start + 1 < MAX_VISIBLE_PAGES) {
       start = Math.max(1, end - MAX_VISIBLE_PAGES + 1);
     }
-    
+
     const pages = [];
     for (let i = start; i <= end; i++) {
       pages.push(i);
@@ -143,46 +215,28 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col sm:flex-row">
+      {/* Sidebar */}
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
+
       <main
         className={`${
           isOpen ? "ml-0 sm:ml-[100px]" : "ml-0 sm:ml-[280px]"
         } w-full transition-all duration-300 bg-[#d4c4fb1d] min-h-screen`}
       >
         <Navigation />
+
+        {/* Loader when no profiles yet */}
         {loading && profiles?.length === 0 ? (
           <Loader />
         ) : (
           <div className="px-4 sm:px-8 py-[64px] flex flex-col gap-y-8">
-            {/* Search Bar */}
-            <div className="relative max-w-md mx-auto w-full">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <FaSearch className="w-5 h-5 text-gray-500" />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Search by User ID..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#BA9FFE] focus:border-transparent outline-none transition-all"
-                />
-                {searchTerm && (
-                  <button
-                    onClick={() => setSearchTerm("")}
-                    className="absolute inset-y-0 right-0 flex items-center pr-3"
-                  >
-                    <FaTimes className="w-5 h-5 text-gray-500 hover:text-gray-700" />
-                  </button>
-                )}
-              </div>
-            </div>
-
             {/* Results Count */}
             <div className="text-center">
               {searchTerm ? (
                 <p className="text-gray-600">
-                  Found {filteredProfiles.length} user{filteredProfiles.length !== 1 ? 's' : ''} matching "{searchTerm}"
+                  Found {filteredProfiles.length} user
+                  {filteredProfiles.length !== 1 ? "s" : ""} matching "
+                  {searchTerm}"
                 </p>
               ) : (
                 <p className="text-gray-600">
@@ -213,9 +267,12 @@ const Dashboard = () => {
                   />
                 ))
               ) : searchTerm ? (
+                // No results message when searching
                 <div className="col-span-full text-center py-12">
                   <FaFrown className="w-16 h-16 mx-auto text-gray-400" />
-                  <p className="mt-4 text-gray-600 text-lg">No recommendations found with this ID</p>
+                  <p className="mt-4 text-gray-600 text-lg">
+                    No recommendations found with this ID
+                  </p>
                   <button
                     onClick={() => setSearchTerm("")}
                     className="mt-4 text-[#BA9FFE] hover:text-[#a37eff] font-medium"
@@ -225,14 +282,14 @@ const Dashboard = () => {
                 </div>
               ) : null}
             </div>
-            
-            {/* Pagination Controls - Only show if not searching */}
+
+            {/* Pagination Controls (only show when not searching) */}
             {!searchTerm && totalPages > 1 && (
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8">
                 <div className="text-sm text-gray-600">
                   Page {currentPage} of {totalPages}
                 </div>
-                
+
                 <div className="flex items-center gap-2 flex-wrap justify-center">
                   {/* Previous Button */}
                   <button
@@ -242,8 +299,8 @@ const Dashboard = () => {
                   >
                     Previous
                   </button>
-                  
-                  {/* First Page */}
+
+                  {/* First Page + Dots */}
                   {currentPage > Math.floor(MAX_VISIBLE_PAGES / 2) + 1 && (
                     <>
                       <button
@@ -257,7 +314,7 @@ const Dashboard = () => {
                       )}
                     </>
                   )}
-                  
+
                   {/* Page Numbers */}
                   {getPageNumbers().map((page) => (
                     <button
@@ -272,8 +329,8 @@ const Dashboard = () => {
                       {page}
                     </button>
                   ))}
-                  
-                  {/* Last Page */}
+
+                  {/* Last Page + Dots */}
                   {currentPage < totalPages - Math.floor(MAX_VISIBLE_PAGES / 2) && (
                     <>
                       {currentPage < totalPages - Math.floor(MAX_VISIBLE_PAGES / 2) - 1 && (
@@ -287,7 +344,7 @@ const Dashboard = () => {
                       </button>
                     </>
                   )}
-                  
+
                   {/* Next Button */}
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}
@@ -300,6 +357,7 @@ const Dashboard = () => {
               </div>
             )}
 
+            {/* Scroll to Top Button */}
             <button
               onClick={scrollToTop}
               className="fixed bottom-6 right-6 bg-[#BA9FFE] hover:bg-[#a37eff] text-white w-12 h-12 flex items-center justify-center rounded-full shadow-md transition-transform hover:scale-105 z-10"
@@ -310,6 +368,8 @@ const Dashboard = () => {
           </div>
         )}
       </main>
+
+      {/* Mobile Bottom Nav */}
       <MobileNav />
     </div>
   );

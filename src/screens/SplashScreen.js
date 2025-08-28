@@ -37,8 +37,7 @@ const SplashScreen = () => {
                 Welcome to WaliyyApp
               </p>
               <p className="text-[#665e6b] text-center font-normal">
-                Where waliyy play matchmakers, and hearts find their forever
-                homes.
+                A meeting platform where hearts find their forever homes.
               </p>
             </div>
           </div>
