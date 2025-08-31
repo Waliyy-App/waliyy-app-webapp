@@ -19,10 +19,9 @@ const Features = () => {
             <img src={Halal} alt="" className="h-full w-full object-cover" />
           </div>
           <div className="text-[#2d133a] flex flex-col gap-2">
-            <p className="text-xl font-bold">Halal Matchmaking</p>
+            <p className="text-xl font-bold">Halal Meeting Platform</p>
             <p className="">
-              Our platform is dedicated to providing a halal matchmaking
-              experience, adhering to Islamic principles and values.
+              Our platform is dedicated to providing a halal meeting place whilst adhering to Islamic principles and values.
             </p>
           </div>
         </div>
