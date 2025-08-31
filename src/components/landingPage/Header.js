@@ -13,7 +13,7 @@ const Header = () => {
           <p className="text-center text-lg font-medium">
             Say Salaam to meaningful connections! WaliyyApp is revolutionising
             the Nikah process by providing a platform where eligible Muslim
-            bachelors connect with mahaarim of Muslim ladies in order to find
+            bachelors connect with Muslim ladies through their Mahaarim in order to find
             like-minded prospects. (Mahram/Mahaarim: father and brothers of a
             Muslim lady or her paternal grandfather or uncles).
           </p>

@@ -10,7 +10,7 @@ const HeroSection = () => {
         </h1>
         <p className="text-center text-lg font-medium">
           Say Salaam to meaningful connections! WaliyyApp is revolutionising the
-          Nikah process by handing back responsibility to guardians to support
+          Nikaah process by handing back responsibility to guardians to support
           their wards in finding like-minded prospects.
         </p>
         <Link
