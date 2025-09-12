@@ -69,6 +69,7 @@ function App() {
       try {
         const res = await getCurrentPlan(token);
         setActivePlan(res?.data);
+        console.log(res?.data);
       } catch (err) {
         console.error(err);
       }

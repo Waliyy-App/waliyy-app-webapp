@@ -95,19 +95,19 @@ export const validationSchema = Yup.object({
     "State when you started practising Islam"
   ),
   salat: Yup.string().required("Select your pattern of salat"),
-  islamicPractice: Yup.string().required("Tell us about your Islamic practice")
+islamicPractice: Yup.string()
+  .required("Tell us about your Islamic practice")
   .matches(
-    /^(?!.*\d{3,})[A-Za-z0-9 .,!?'-]*$/,
-    "No special characters allowed and don't include more than 2 consecutive digits"
+    /^(?!.*\d{2,})[^@]*$/,
+    "Don't use '@' and don't put two digits consecutively"
   ),
 
   aboutYou: Yup.string()
     .required("Tell us about you")
-    .matches(
-    /^(?!.*\d{3,})[A-Za-z0-9 .,!?'-]*$/,
-    "No special characters allowed and don't include more than 2 consecutive digits"
-  )
-   .test(
+  .matches(
+    /^(?!.*\d{2,})[^@]*$/,
+    "Don't use '@' and don't put two digits consecutively"
+  ).test(
       "minWords",
       "Your description must be at least 200 words",
       (value) => {
@@ -120,13 +120,13 @@ export const validationSchema = Yup.object({
 aboutEducationAndJob: Yup.string()
   .required("Tell us about your education and job")
   .matches(
-    /^(?!.*\d{3,})[A-Za-z0-9 .,!?'-]*$/,
-    "No special characters allowed and don't include more than 2 consecutive digits"
+    /^(?!.*\d{2,})[^@]*$/,
+    "Don't use '@' and don't put two digits consecutively"
   ),
   
   dressing: Yup.string().required("Tell us about your dressing")
   .matches(
-    /^(?!.*\d{3,})[A-Za-z0-9 .,!?'-]*$/,
-    "No special characters allowed and don't include more than 2 consecutive digits"
+    /^(?!.*\d{2,})[^@]*$/,
+    "Don't use '@' and don't put two digits consecutively"
   ),
 });
