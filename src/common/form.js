@@ -76,6 +76,12 @@ export const SelectInput = ({ label, ...props }) => {
 
 export const TextArea = ({ label, classname, ...props }) => {
   const [field, meta] = useField(props);
+
+  const charCount = field.value ? field.value.length : 0;
+  const minChars = props.minChars || 100; // 👈 fallback if not passed
+
+  const isBelowMin = charCount < minChars;
+
   return (
     <div className={`flex flex-col w-full relative ${classname}`}>
       <label
@@ -84,6 +90,7 @@ export const TextArea = ({ label, classname, ...props }) => {
       >
         {label}
       </label>
+
       <div className="w-full">
         <textarea
           className="relative text-input w-full border rounded py-[10px] px-[14px] border-[#CDD1D0] focus:outline-none focus:border-b focus:border-b-[#BA9FFE]"
@@ -92,10 +99,19 @@ export const TextArea = ({ label, classname, ...props }) => {
         />
       </div>
 
+      {/* ✅ Character counter */}
+      <div
+        className={`text-xs mt-1 ${
+          isBelowMin ? "text-red-500" : "text-green-600"
+        }`}
+      >
+        {charCount} / {minChars} characters
+      </div>
+
+      {/* ✅ Validation error */}
       {meta.touched && meta.error ? (
         <div className="error text-red-600 text-xs">{meta.error}</div>
       ) : null}
     </div>
   );
 };
-

@@ -393,6 +393,7 @@ export const getPaymentHistory = async (token) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      
     });
     return response.data;
   } catch (error) {
@@ -407,6 +408,7 @@ export const getSubHistory = async (token) => {
       },
     });
     return response.data;
+
   } catch (error) {
     throw error;
   }

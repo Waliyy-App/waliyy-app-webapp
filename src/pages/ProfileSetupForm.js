@@ -71,7 +71,6 @@ export default function ProfileSetupForm() {
   const navigate = useNavigate();
 
   const showBackButton = location.state?.from !== "/login-successful";
-
   const LOCAL_STORAGE_KEY = "profileSetupForm";
 
   const [formData, setFormData] = useState(() => {
@@ -81,6 +80,7 @@ export default function ProfileSetupForm() {
 
   const formikRef = useRef();
 
+  // Save to localStorage every 1 second
   useEffect(() => {
     if (formikRef.current) {
       const subscription = setInterval(() => {
@@ -88,7 +88,7 @@ export default function ProfileSetupForm() {
         if (values) {
           localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
         }
-      }, 1000); // throttle to once a second
+      }, 1000);
 
       return () => clearInterval(subscription);
     }
@@ -103,9 +103,10 @@ export default function ProfileSetupForm() {
     completed: false,
     loading: false,
   });
+
   const { token, handleChildId } = useAuthContext();
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
     setState((prevState) => ({ ...prevState, loading: true }));
 
     const date = new Date(values.dateOfBirth);
@@ -114,7 +115,9 @@ export default function ProfileSetupForm() {
 
     const speakers = Array.isArray(values.speakers)
       ? values.speakers
-      : values.speakers.split(",").map((item) => item.trim());
+      : values.speakers
+      ? values.speakers.split(",").map((item) => item.trim())
+      : [];
 
     try {
       const res = await userRegistration(
@@ -155,16 +158,19 @@ export default function ProfileSetupForm() {
           about: values.aboutYou,
           aboutEducationAndJob: values.aboutEducationAndJob,
           aboutDressing: values.dressing,
-          isPolygamous: values.isPolygamous
+          isPolygamous: values.isPolygamous, // ✅ fixed field name
         },
         token
       );
+
       handleChildId(res?.data);
       toast.success(res?.message);
       localStorage.removeItem(LOCAL_STORAGE_KEY);
+      resetForm();
       setFormData(initialValues);
+      setState((prevState) => ({ ...prevState, completed: true }));
     } catch (error) {
-      toast.error(error?.response?.data?.message);
+      toast.error(error?.response?.data?.message || "Something went wrong");
     } finally {
       setState((prevState) => ({ ...prevState, loading: false }));
     }
@@ -172,7 +178,6 @@ export default function ProfileSetupForm() {
 
   const renderForm = () => {
     const { activeStep, loading, completed } = state;
-    console.log(activeStep);
 
     if (loading) {
       return (
@@ -254,5 +259,5 @@ export default function ProfileSetupForm() {
     );
   };
 
-  return <React.Fragment>{renderForm()}</React.Fragment>;
+  return <>{renderForm()}</>;
 }

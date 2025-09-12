@@ -69,6 +69,7 @@ function App() {
       try {
         const res = await getCurrentPlan(token);
         setActivePlan(res?.data);
+        console.log(res?.data);
       } catch (err) {
         console.error(err);
       }
@@ -94,8 +95,7 @@ function App() {
              <Route path="/blog/:slug" element={<BlogPostPage />} />
              {/* <Route path="/test" element={<Test/>} /> */}
             <Route exact path="*" element={<NoPage />} />
-            
-
+      
             <Route element={<UnProtectedRoute />}>
               <Route exact path="/sign-up" element={<Register />} />
               <Route exact path="/login" element={<Login />} />
