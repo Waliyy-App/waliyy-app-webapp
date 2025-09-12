@@ -4,22 +4,21 @@ import SidebarComponent from '../components/sidebar/Sidebar';
 import { FiCheck } from 'react-icons/fi';
 import { usePersistedState } from '../utils.js';
 import MobileNav from '../components/sidebar/MobileBottomNav.js';
-import { getPlans } from '../services/index.js';
+import { getPlans, makePayment } from '../services/index.js';
 import { useAuthContext } from '../context/AuthContext.js';
 import Loader from '../components/Loader.js';
 import Navigation from '../components/sidebar/Navigation.js';
-import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
-import axios from 'axios';
 
 const PricingPage = () => {
   const [isOpen, setIsOpen] = usePersistedState('isOpen', false);
   const [loading, setLoading] = useState(false);
+  // const [count, setCount] = useState(false);
   const [plans, setPlans] = useState([]);
   const { token } = useAuthContext();
 
-  const [selectedPlan, setSelectedPlan] = useState(null);
-
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   useEffect(() => {
     const handlePlans = async () => {
@@ -37,59 +36,43 @@ const PricingPage = () => {
     handlePlans();
   }, []);
 
-  // Build Flutterwave config based on selected plan
-  const flutterwaveConfig = selectedPlan
-    ? {
-        public_key: 'FLWPUBK_TEST-ec84603d310ebb74874cb52aa4563352-X', // replace with your public test key
-        tx_ref: Date.now(),
-        amount: selectedPlan.amount,
-        currency: selectedPlan.currency,
-        payment_options: 'card,mobilemoney,ussd',
-        customer: {
-          email: 'customer@example.com', // replace with logged-in user's email
-          phone_number: '07012345678',
-          name: 'John Doe',
+  //   useEffect(() => {
+  //       const showCounter = async () => {
+  //         setLoading(true);
+  //         try {
+  //           const data = await getUsersCount();
+  //           setCount(data.data);
+  //         } catch (error) {
+  //           toast.error(error.response.data.message);
+  //         } finally {
+  //           setLoading(false);
+  //         }
+  //       };
+  //       showCounter();
+  //     }, []);
+
+  // const newCount = 200 - count;
+
+  const handlePayment = async (provider, planId) => {
+    setLoading(true);
+    try {
+      const res = await makePayment(
+        {
+          provider: provider,
         },
-        customizations: {
-          title: 'Subscription Payment',
-          description: `Payment for ${selectedPlan.planName} plan`,
-          logo: 'https://flutterwave.com/images/logo-colored.svg',
-        },
-      }
-    : null;
+        token,
+        planId
+      );
 
-  const handleFlutterPayment = useFlutterwave(flutterwaveConfig || {});
+      localStorage.setItem('selectedOrderId', res.data.id);
 
-  useEffect(() => {
-    if (!selectedPlan || !flutterwaveConfig) return;
-
-    handleFlutterPayment({
-      callback: async (response) => {
-        console.log('Flutterwave Response:', response);
-        closePaymentModal();
-
-        try {
-          // Call backend to verify payment
-          const res = await axios.post(
-            'http://localhost:5000/api/verify-payment',
-            { transaction_id: response.transaction_id },
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-
-          console.log('Verification:', res.data);
-          toast.success('Payment verified successfully!');
-        } catch (err) {
-          toast.error('Payment verification failed');
-        } finally {
-          setSelectedPlan(null); // reset after payment
-        }
-      },
-      onClose: () => console.log('Payment modal closed'),
-    });
-  }, [selectedPlan]); // runs every time a plan is selected
-
-  const handlePayment = (plan) => {
-    setSelectedPlan(plan);
+      window.location.href = res?.data?.data?.authorization_url;
+      // : res?.data?.paymentLink;
+    } catch (error) {
+      toast.error(error.response.data.message || 'Payment failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -108,11 +91,10 @@ const PricingPage = () => {
             <div className="flex flex-col items-center justify-center gap-2 text-center px-8 pt-8 pb-[64px]">
               <p className="text-[#BA9FFE] font-bold">Pricing</p>
               <p className="text-[#2D133A] font-bold text-4xl">
-                You are a step away from finding your future spouse nn.
+                You are a step away from finding your future spouse.
               </p>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-8">
-              {/* Free Plan */}
               <div className="w-[400px] bg-[#F9FAFB] rounded-lg p-8">
                 <div className="flex flex-col gap-2 items-center">
                   <p className="text-xl text-[#2D133A] font-bold">Free plan</p>
@@ -150,14 +132,11 @@ const PricingPage = () => {
                 </button>
               </div>
 
-              {/* Paid Plans */}
               {plans?.map((plan, index) => (
                 <div
                   className="w-[400px] bg-[#F9FAFB] rounded-lg p-8"
                   key={index}
                 >
-                {console.log(plans)}
-
                   <div className="flex flex-col gap-2 items-center">
                     <p className="text-xl text-[#2D133A] font-bold">
                       {plan.planName} plan
@@ -182,8 +161,8 @@ const PricingPage = () => {
                     {plan.planDescription
                       .trim()
                       .split('\n')
-                      .map((line, idx) => (
-                        <div key={idx} className="flex items-center gap-3">
+                      .map((line, index) => (
+                        <div key={index} className="flex items-center gap-3">
                           <div className="bg-[#dacdff] h-6 w-6 rounded-full flex items-center justify-center">
                             <FiCheck className="text-[#2D133A]" />
                           </div>
@@ -200,7 +179,16 @@ const PricingPage = () => {
 
                   <button
                     className="w-full text-white font-semibold hover:bg-[#a37eff] bg-[#BA9FFE] h-12 rounded-lg transition-all duration-300"
-                    onClick={() => handlePayment(plan)}
+                    onClick={() =>
+                      handlePayment(
+                        plan?.currency === 'NGN'
+                          ? 'paystack'
+                          : plan?.currency === 'USD'
+                          ? 'paystack'
+                          : 'paystack',
+                        plan?._id
+                      )
+                    }
                   >
                     Get Started
                   </button>
