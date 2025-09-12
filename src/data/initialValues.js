@@ -98,29 +98,29 @@ export const validationSchema = Yup.object({
 
   islamicPractice: Yup.string()
     .required("Tell us about your Islamic practice")
-    .matches(
-      /^(?!.*\d{2,})(?!.*[@+]).*$/,
-      "Don't use '@' or '+' and don't put two digits consecutively"
-    ),
+      .matches(
+    /^(?!.*\d{2})(?!.*[@+])[A-Za-z0-9\s.,'-]*$/,
+    "Don't use '@' or '+' and don't put two digits consecutively"
+  ),
 
   aboutYou: Yup.string()
     .required("Tell us about you")
-    .matches(
-      /^(?!.*\d{2,})(?!.*[@+]).*$/,
-      "Don't use '@' or '+' and don't put two digits consecutively"
-    ),
+     .matches(
+    /^(?!.*\d{2})(?!.*[@+])[A-Za-z0-9\s.,'-]*$/,
+    "Don't use '@' or '+' and don't put two digits consecutively"
+  ),
 
   aboutEducationAndJob: Yup.string()
     .required("Tell us about your education and job")
-    .matches(
-      /^(?!.*\d{2,})(?!.*[@+]).*$/,
-      "Don't use '@' or '+' and don't put two digits consecutively"
-    ),
+      .matches(
+    /^(?!.*\d{2})(?!.*[@+])[A-Za-z0-9\s.,'-]*$/,
+    "Don't use '@' or '+' and don't put two digits consecutively"
+  ),
 
-  dressing: Yup.string()
-    .required("Tell us about your dressing")
-    .matches(
-      /^(?!.*\d{2,})(?!.*[@+]).*$/,
-      "Don't use '@' or '+' and don't put two digits consecutively"
-    ),
+dressing: Yup.string()
+  .required("Tell us about your dressing")
+  .matches(
+    /^(?!.*\d{2})(?!.*[@+])[A-Za-z0-9\s.,'-]*$/,
+    "Don't use '@' or '+' and don't put two digits consecutively"
+  ),
 });
