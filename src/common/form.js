@@ -78,7 +78,7 @@ export const TextArea = ({ label, classname, ...props }) => {
   const [field, meta] = useField(props);
 
   const charCount = field.value ? field.value.length : 0;
-  const minChars = props.minChars || 30; // 👈 fallback if not passed
+  const minChars = props.minChars || 20; // 👈 fallback if not passed
 
   const isBelowMin = charCount < minChars;
 
