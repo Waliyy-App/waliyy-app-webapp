@@ -78,7 +78,7 @@ export const TextArea = ({ label, classname, ...props }) => {
   const [field, meta] = useField(props);
 
   const charCount = field.value ? field.value.length : 0;
-  const minChars = props.minChars || 100; // 👈 fallback if not passed
+  const minChars = props.minChars || 20; // 👈 fallback if not passed
 
   const isBelowMin = charCount < minChars;
 
@@ -100,13 +100,15 @@ export const TextArea = ({ label, classname, ...props }) => {
       </div>
 
       {/* ✅ Character counter */}
-      <div
-        className={`text-xs mt-1 ${
-          isBelowMin ? "text-red-500" : "text-green-600"
-        }`}
-      >
-        {charCount} / {minChars} characters
-      </div>
+     <div
+      className={`text-xs mt-1 ${
+        isBelowMin ? "text-red-500" : "text-green-600"
+      }`}
+    >
+      {isBelowMin
+        ? `At least ${minChars} characters required`
+        : `✅ Looks good! You have ${charCount} characters`}
+    </div>
 
       {/* ✅ Validation error */}
       {meta.touched && meta.error ? (
