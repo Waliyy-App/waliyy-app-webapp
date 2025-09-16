@@ -107,20 +107,20 @@ export const validationSchema = Yup.object({
     .required("Tell us about you")
      .matches(
     /^(?!.*\d{2})(?!.*[@+])[A-Za-z0-9\s.,'-]*$/,
-    "Don't use '@' or '+' and don't put two digits consecutively"
+    "Don't use special characters like'@' or '+' and don't put two digits consecutively"
   ),
 
   aboutEducationAndJob: Yup.string()
     .required("Tell us about your education and job")
       .matches(
     /^(?!.*\d{2})(?!.*[@+])[A-Za-z0-9\s.,'-]*$/,
-    "Don't use '@' or '+' and don't put two digits consecutively"
+    "Don't use special characters like '@' or '+' and don't put two digits consecutively"
   ),
 
 dressing: Yup.string()
   .required("Tell us about your dressing")
   .matches(
     /^(?!.*\d{2})(?!.*[@+])[A-Za-z0-9\s.,'-]*$/,
-    "Don't use '@' or '+' and don't put two digits consecutively"
+    "Don't use special characters like '@' or '+' and don't put two digits consecutively"
   ),
 });

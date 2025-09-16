@@ -52,9 +52,13 @@ const Terms = () => {
                 <h2 className="text-xl font-bold text-indigo-800 mb-3">
                   Agreement
                 </h2>
-                <p className="text-indigo-700">
+                <p className="text-indigo-700 mb-2">
                   By creating an account or using WaliyyApp, you agree to be
                   bound by these Terms and Conditions.
+                </p>
+                <p className="text-indigo-700">
+                  You also agree to receive messages via Email, Whatsapp and SMS from WaliyyApp as part of your use of the
+                  platform.
                 </p>
               </div>
             </div>
