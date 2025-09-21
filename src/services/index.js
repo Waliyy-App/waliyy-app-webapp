@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "https://api.waliyyapp.com/api/v1";
+const API_BASE_URL = "http://localhost:9292/api/v1";
 
 const apiService = axios.create({
   baseURL: API_BASE_URL,
@@ -357,22 +357,67 @@ export const getCurrentPlan = async (token) => {
   }
 };
 
-export const makePayment = async (payload, accessToken, id) => {
+//new check if user has subscribed
+export const getSubscribedUser = async (token, email) => {
   try {
-    const response = await apiService.post(
-      `/payment/make-payment/${id}`,
-      payload,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    const response = await apiService.get("/sub/premium-content", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: { email }, 
+    });
     return response.data;
   } catch (error) {
+    console.error("getSubscribedUser error:", {
+      status: error.response?.status,
+      data: error.response?.data,
+      message: error.message,
+    });
     throw error;
   }
 };
+
+// Make Payment flutter wave
+export const verifyPaidSubscription = async (
+  { txId, plan, amount, currency, email },
+  token
+) => {
+  const res = await axios.post(
+    `http://localhost:9292/api/v1/sub/verify-payment`,
+    {
+      txId,
+      plan,
+      amount,
+      currency,
+      email,
+    },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+
+  return res.data; // return backend response
+};
+
+
+// make payment for paystack commented, since we are not using it again
+
+// export const makePayment = async (payload, accessToken, id) => {
+//   try {
+//     const response = await apiService.post(
+//       `/payment/make-payment/${id}`,
+//       payload,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${accessToken}`,
+//         },
+//       }
+//     );
+//     return response.data;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 export const getOrderID = async (id, accessToken) => {
   try {
