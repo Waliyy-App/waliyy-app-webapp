@@ -53,7 +53,7 @@ function App() {
   const navigate = useNavigate();
   const { token, user } = useAuthContext();
   const [activePlan, setActivePlan] = useState(false);
-  const [test, setTest]=useState(false)
+  const [test, setTest]=useState(false) // just for you to be able to test the flutterwave api, because the pricing page will not dispay if you've paid.
 
   useEffect(() => {
     const checkActivePlan = async () => {
