@@ -9,6 +9,7 @@ import { useAuthContext } from "../context/AuthContext.js";
 import Loader from "../components/Loader.js";
 import Navigation from "../components/sidebar/Navigation.js";
 import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
+import { Link } from "react-router-dom";
 
 const PricingPage = () => {
   const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
@@ -35,10 +36,10 @@ const PricingPage = () => {
     fetchPlans();
   }, []);
 
-  
+  const FLW_PUBLIC_KEY = "FLWPUBK_TEST-ec84603d310ebb74874cb52aa4563352-X"
 
   const getFlutterwaveConfig = (plan) => ({
-    public_key: process.env.REACT_APP_FLW_PUBLIC_KEY,
+    public_key: process.env.REACT_APP_FLW_PUBLIC_KEY || FLW_PUBLIC_KEY ,
     tx_ref: `tx-${Date.now()}`,
     amount: plan.amount,
     currency: plan.currency,
@@ -90,7 +91,7 @@ const PricingPage = () => {
         {loading ? (
           <Loader />
         ) : (
-          <div className="py-[64px] px-8">
+          <div className="py-[32px] px-8">
             <div className="flex flex-col items-center justify-center gap-4 text-center px-8 pt-8 pb-[64px]">
               <p className="text-[#BA9FFE] font-semibold uppercase tracking-wider">
                 Pricing
@@ -102,6 +103,15 @@ const PricingPage = () => {
                 Choose a plan that best fits your needs. Upgrade anytime.
               </p>
             </div>
+
+            <div className="flex justify-center my-5">
+            <Link
+                 to="/subscription-status" // your route
+                className="px-6 py-3 bg-[#BA9FFE] hover:bg-[#a37eff] text-white font-semibold rounded-lg transition-colors duration-300"
+                 >
+                    Check Payment Status
+            </Link>
+           </div>
 
             <div className="flex flex-wrap items-center justify-center gap-8">
               {/* Free Plan */}

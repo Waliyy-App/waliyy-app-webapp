@@ -38,6 +38,7 @@ import ResourcePage from "./pages/ResourcePage.js";
 import Blogpage from "./pages/Blogpage.js";
 import BlogPostPage from "./pages/BlogPostPage";
 import Terms from "./pages/Terms.js";
+import SubscriptionStatus from "./pages/SubscriptionStatus.js";
 
 export const AppLayout = ({ children }) => {
   useResetScrollPosition();
@@ -62,12 +63,13 @@ function App() {
 
         // 1️⃣ Check current plan endpoint previous check
         const res1 = await getCurrentPlan(token);
+        console.log(res1)
         if (res1?.data) {
           isActive = true;
         }
         // 2️⃣ Check premium content endpoint flutterwave
         const res2 = await getSubscribedUser(token, user.email);
-        console.log(res2?.status)
+        //console.log(res2)
         if (res2?.status === "active") isActive = true;
         setActivePlan(isActive);
       } catch (err) {
@@ -107,6 +109,7 @@ function App() {
 
             <Route element={<ProtectedRoute />}>
               <Route exact path="/dashboard" element={<Dashboard />} />
+              <Route exact path="/subscription-status" element={<SubscriptionStatus />} />
               <Route exact path="/explore" element={<Explore />} />
               <Route
                 exact

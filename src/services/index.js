@@ -344,6 +344,7 @@ export const getPlans = async () => {
   }
 };
 
+// old check if user has subscribed {Paystack}
 export const getCurrentPlan = async (token) => {
   try {
     const response = await apiService.get("/subscriptions/active", {
@@ -357,14 +358,13 @@ export const getCurrentPlan = async (token) => {
   }
 };
 
-//new check if user has subscribed
-export const getSubscribedUser = async (token, email) => {
+//new check if user has subscribed {flutterwave}
+export const getSubscribedUser = async (token) => {
   try {
-    const response = await apiService.get("/sub/premium-content", {
+    const response = await apiService.get("/subscriptions/access", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      params: { email }, 
     });
     return response.data;
   } catch (error) {
@@ -383,7 +383,7 @@ export const verifyPaidSubscription = async (
   token
 ) => {
   const res = await axios.post(
-    `http://localhost:9292/api/v1/sub/verify-payment`,
+    `https://api.waliyyapp.com/api/v1/payment/verify-payment`,
     {
       txId,
       plan,
