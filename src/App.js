@@ -54,8 +54,8 @@ function App() {
   const navigate = useNavigate();
   const { token, user } = useAuthContext();
   const [activePlan, setActivePlan] = useState(false);
-  const [test, setTest]=useState(false) // just for you to be able to test the flutterwave api, because the pricing page will not dispay if you've paid.
-//.
+ 
+  // isActive will be set back to true after testing.
   useEffect(() => {
     const checkActivePlan = async () => {
       try {
@@ -63,14 +63,13 @@ function App() {
 
         // 1️⃣ Check current plan endpoint previous check
         const res1 = await getCurrentPlan(token);
-        console.log(res1)
         if (res1?.data) {
-          isActive = true;
+          isActive = false;
         }
         // 2️⃣ Check premium content endpoint flutterwave
         const res2 = await getSubscribedUser(token, user.email);
-        //console.log(res2)
-        if (res2?.status === "active") isActive = true;
+
+        if (res2?.status === "active") isActive = false;
         setActivePlan(isActive);
       } catch (err) {
         console.error("Error checking active plan:", err);
@@ -114,12 +113,12 @@ function App() {
               <Route
                 exact
                 path="/likes"
-                element={test ? <LikePage /> : <PricingPage />}
+                element={activePlan ? <LikePage /> : <PricingPage />}
               />
               <Route
                 exact
                 path="/match"
-                element={test ? <MatchPage /> : <PricingPage />}
+                element={activePlan ? <MatchPage /> : <PricingPage />}
               />
               <Route exact path="/settings" element={<SettingsPage />} />
               <Route exact path="/pricing" element={<PricingPage />} />
