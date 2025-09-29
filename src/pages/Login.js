@@ -38,7 +38,6 @@ const Login = () => {
         email: values.emailAddress,
         password: values.password,
       });
-     console.log(data)
       if (data) {
         storeAuthCookie(data);
       }
