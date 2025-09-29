@@ -55,9 +55,6 @@ function App() {
   const { token, user } = useAuthContext();
   const [activePlan, setActivePlan] = useState(false);
   const [test, setTest]=useState(false) // just for you to be able to test the flutterwave api, because the pricing page will not dispay if you've paid.
-  
-  //for testing, it will be removed 
-  setTest(false)
 
   useEffect(() => {
     const checkActivePlan = async () => {
@@ -66,7 +63,7 @@ function App() {
 
         // 1️⃣ Check current plan endpoint previous check
         const res1 = await getCurrentPlan(token);
-        console.log(res1, activePlan)
+        console.log(res1)
         if (res1?.data) {
           isActive = true;
         }
@@ -84,7 +81,7 @@ function App() {
     if (token && user?.email) {
       checkActivePlan();
     }
-  }, [token, user, activePlan]);
+  }, [token, user]);
 
   return (
     <ErrorBoundary FallbackComponent={NetworkError} onReset={() => navigate("/dashboard")}>
