@@ -379,7 +379,7 @@ export const getSubscribedUser = async (token) => {
 
 // Make Payment flutter wave
 export const verifyPaidSubscription = async (
-  { txId, plan, amount, currency, email },
+  { txId, plan, amount, currency, email, childId }, // ✅ added childId
   token
 ) => {
   const res = await axios.post(
@@ -390,6 +390,7 @@ export const verifyPaidSubscription = async (
       amount,
       currency,
       email,
+      childId, // ✅ include in request body
     },
     {
       headers: { Authorization: `Bearer ${token}` },
@@ -398,6 +399,7 @@ export const verifyPaidSubscription = async (
 
   return res.data; // return backend response
 };
+
 
 
 // make payment for paystack commented, since we are not using it again
