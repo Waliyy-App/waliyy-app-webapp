@@ -26,7 +26,7 @@ const Dashboard = () => {
   const [profiles, setProfiles] = useState([]);         // Paginated profiles
   const [allProfiles, setAllProfiles] = useState([]);   // All profiles (used for searching)
   const [filteredProfiles, setFilteredProfiles] = useState([]); // Filtered results (search/pagination)
-
+console.log(filteredProfiles)
   // Total count of recommendations
   const [totalCount, setTotalCount] = useState(0);
 
@@ -263,6 +263,7 @@ const Dashboard = () => {
                     profession={item.profession}
                     gender={item.gender}
                     displayID={item?.displayId}
+                    isSubscribed={item?.isSubscribed}
                     onClick={handleProfileClick}
                   />
                 ))

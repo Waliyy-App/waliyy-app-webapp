@@ -26,7 +26,7 @@ const GeneralProfile = () => {
 
   const navigate = useNavigate();
   const { token } = useAuthContext();
-
+console.log(childId)
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -67,7 +67,7 @@ const GeneralProfile = () => {
       getChildDetails();
     }
   }, [childId, token, id, location.state]);
-
+console.log(child)
   const goBack = () => {
     navigate(-1);
   };

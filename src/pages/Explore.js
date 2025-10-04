@@ -154,7 +154,7 @@ const Explore = () => {
     }
     return pages;
   };
-
+console.log(filteredProfiles)
   return (
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={() => setIsOpen(!isOpen)} />
@@ -227,6 +227,7 @@ const Explore = () => {
                     profession={items.profession}
                     gender={items.gender}
                     displayID={items?.displayId}
+                    isSubscribed={items?.isSubscribed}
                     href={`/explore/${items.id}`}
                     onClick={handleProfileClick}
                   />

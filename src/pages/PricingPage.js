@@ -10,6 +10,7 @@ import Loader from "../components/Loader.js";
 import Navigation from "../components/sidebar/Navigation.js";
 import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
 import { Link } from "react-router-dom";
+import { FaCrown } from "react-icons/fa"
 
 const PricingPage = () => {
   const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
@@ -17,6 +18,11 @@ const PricingPage = () => {
   const [plans, setPlans] = useState([]);
   const [loadingPlan, setLoadingPlan] = useState(null); // track currently loading plan
   const { token, user } = useAuthContext();
+
+console.log(user.id)
+
+  const childId = localStorage.getItem("childId");
+console.log(childId)
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -26,6 +32,7 @@ const PricingPage = () => {
       try {
         const res = await getPlans();
         setPlans(res.data);
+        console.log(res)
       } catch (error) {
         console.error(error);
         toast.error("Failed to fetch plans");
@@ -36,48 +43,50 @@ const PricingPage = () => {
     fetchPlans();
   }, []);
 
-  const FLW_PUBLIC_KEY = "FLWPUBK_TEST-ec84603d310ebb74874cb52aa4563352-X"
+  const FLW_PUBLIC_KEY = "FLWPUBK_TEST-209be538668eb2ceab3996f9aa2ce0e8-X"
 
-  const getFlutterwaveConfig = (plan) => ({
-    public_key: process.env.REACT_APP_FLW_PUBLIC_KEY || FLW_PUBLIC_KEY ,
-    tx_ref: `tx-${Date.now()}`,
-    amount: plan.amount,
-    currency: plan.currency,
-    payment_options: "card,ussd,banktransfer",
-    customer: {
-      email: user.email,
-      phonenumber: user.phone,
-      name: user.fullName,
-    },
-   customizations: {
-  title: `Payment for ${plan.planName} by ${user.fullName || "User"}`,
-  description: `Payment for ${plan.planName} by ${user.fullName || "User"}`,
-},
-    callback: async (response) => {
-      closePaymentModal();
-      const txId = response.transaction_id;
-      setLoadingPlan(null);
-      try {
-        const data = await verifyPaidSubscription(
-          {
-            txId,
-            plan: plan.planName,
-            amount: plan.amount,
-            currency: plan.currency,
-            email: user.email,
-          },
-          token
-        );
-        toast.success(data.message);
-      } catch (err) {
-        console.error(err.response?.data || err.message);
-        toast.error("Payment verification failed");
-      }
-    },
-    onClose: () => {
-      setLoadingPlan(null);
-    },
-  });
+const getFlutterwaveConfig = (plan) => ({
+  public_key: process.env.REACT_APP_FLW_PUBLIC_KEY || FLW_PUBLIC_KEY,
+  tx_ref: `tx-${Date.now()}`,
+  amount: plan.amount,
+  currency: plan.currency,
+  payment_options: "card,ussd,banktransfer",
+  customer: {
+    email: user.email,
+    phonenumber: user.phone,
+    name: user.fullName,
+  },
+  customizations: {
+    title: `Payment for ${plan.planName} by ${user.fullName || "User"}`,
+    description: `Payment for ${plan.planName} by ${user.fullName || "User"}`,
+  },
+  callback: async (response) => {
+    closePaymentModal();
+    const txId = response.transaction_id;
+    setLoadingPlan(null);
+    try {
+      const data = await verifyPaidSubscription(
+        {
+          txId,
+          plan: plan.planName,
+          amount: plan.amount,
+          currency: plan.currency,
+          email: user.email,
+          childId: childId, // ✅ Add this line (or user.childId if that’s the correct reference)
+        },
+        token
+      );
+      toast.success(data.message);
+    } catch (err) {
+      console.error(err.response?.data || err.message);
+      toast.error("Payment verification failed");
+    }
+  },
+  onClose: () => {
+    setLoadingPlan(null);
+  },
+});
+
 
   return (
     <div className="flex flex-col sm:flex-row">
@@ -114,35 +123,6 @@ const PricingPage = () => {
            </div>
 
             <div className="flex flex-wrap items-center justify-center gap-8">
-              {/* Free Plan */}
-              <div className="w-[350px] sm:w-[400px] bg-white shadow-lg rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 border border-[#eaeaea]">
-                <div className="flex flex-col gap-2 items-center">
-                  <p className="text-xl text-[#2D133A] font-bold">Free Plan</p>
-                  <p className="text-4xl text-[#2D133A] font-extrabold">₦0</p>
-                  <p className="text-[#667085]">Limited to browsing only</p>
-                </div>
-
-                <div className="flex flex-col pt-8 pb-10 gap-4">
-                  {["View profiles", "Receive likes from others", "Add up to 2 singles"].map((feature, idx) => (
-                    <div key={idx} className="flex items-center gap-3">
-                      <div className="bg-[#dacdff] h-6 w-6 rounded-full flex items-center justify-center">
-                        <FiCheck className="text-[#2D133A]" />
-                      </div>
-                      <p className="text-[#667085]">{feature}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <button
-                  className={`w-full h-12 rounded-lg font-semibold transition-all duration-300 ${
-                    loadingPlan === "Free"
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-[#BA9FFE] hover:bg-[#a37eff]"
-                  } text-white`}
-                  >
-                  {loadingPlan === "Free" ? "Processing..." : "Subscribe"}
-                </button>
-              </div>
 
               {/* Paid Plans */}
               {plans.map((plan, index) => (
@@ -151,17 +131,17 @@ const PricingPage = () => {
                   key={index}
                 >
                   <div className="flex flex-col gap-2 items-center">
-                    <p className="text-xl text-[#2D133A] font-bold">
-                      {plan.planName} Plan
+                    <p className="flex items-center gap-2 text-xl text-[#2D133A] font-bold">
+                        {plan.planName} 
+                   <FaCrown className="text-yellow-500" />
                     </p>
                     <p className="text-4xl text-[#2D133A] font-extrabold">
                       {plan.currency === "NGN"
-                        ? "₦"
+                        ? "₦10,000"
                         : plan.currency === "USD"
-                        ? "$"
-                        : "£"}
-                      {plan.amount}
-                      <span className="text-base text-[#667085]">/year</span>
+                        ? "$20"
+                        : "£15"}
+                      <span className="text-base text-[#667085]">/annum</span>
                     </p>
                     <p className="text-[#667085] text-center">
                       Do so much more than just browsing.
