@@ -154,7 +154,7 @@ const Explore = () => {
     }
     return pages;
   };
-console.log(filteredProfiles)
+
   return (
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={() => setIsOpen(!isOpen)} />

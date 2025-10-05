@@ -63,13 +63,12 @@ function App() {
 
         // 1️⃣ Check current plan endpoint previous check
         const res1 = await getCurrentPlan(token);
-        console.log(res1)
         if (res1?.data) {
-          isActive = true;
+          isActive = false;
+        setActivePlan(isActive);
         }
         // 2️⃣ Check premium content endpoint flutterwave
         const res2 = await getSubscribedUser(token);
-        console.log(res2)
 
         if (res2?.status === "active") isActive = false;
         setActivePlan(isActive);
