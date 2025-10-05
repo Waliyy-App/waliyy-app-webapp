@@ -17,7 +17,6 @@ const SubscriptionStatus = () => {
       try {
         const res = await getSubscribedUser(token); // your endpoint
         setStatus(res.status); // assuming backend returns { paymentStatus: "pending" }
-        console.log(res.status)
       } catch (err) {
         console.error(err);
         toast.error("Failed to fetch subscription status");

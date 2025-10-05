@@ -19,10 +19,8 @@ const PricingPage = () => {
   const [loadingPlan, setLoadingPlan] = useState(null); // track currently loading plan
   const { token, user } = useAuthContext();
 
-console.log(user.id)
 
   const childId = localStorage.getItem("childId");
-console.log(childId)
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -43,7 +41,7 @@ console.log(childId)
     fetchPlans();
   }, []);
 
-  const FLW_PUBLIC_KEY = "FLWPUBK_TEST-209be538668eb2ceab3996f9aa2ce0e8-X"
+  const FLW_PUBLIC_KEY = "FLWPUBK-089e41d5b1a22d520c93c7f47151e53e-X"
 
 const getFlutterwaveConfig = (plan) => ({
   public_key: process.env.REACT_APP_FLW_PUBLIC_KEY || FLW_PUBLIC_KEY,
