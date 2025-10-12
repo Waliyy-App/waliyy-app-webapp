@@ -21,6 +21,8 @@ const PricingPage = () => {
 
 
   const childId = localStorage.getItem("childId");
+  const isNaira = "NGN";
+
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -30,7 +32,6 @@ const PricingPage = () => {
       try {
         const res = await getPlans();
         setPlans(res.data);
-        console.log(res)
       } catch (error) {
         console.error(error);
         toast.error("Failed to fetch plans");
@@ -48,7 +49,7 @@ const getFlutterwaveConfig = (plan) => ({
   tx_ref: `tx-${Date.now()}`,
   amount: plan.amount,
   currency: plan.currency,
-  payment_options: "card,ussd,banktransfer",
+  payment_options: isNaira ==="NGN" ? "card, ussd,banktransfer": "card",
   customer: {
     email: user.email,
     phonenumber: user.phone,
@@ -75,6 +76,7 @@ const getFlutterwaveConfig = (plan) => ({
         token
       );
       toast.success(data.message);
+      console.log(plan.currency)
     } catch (err) {
       console.error(err.response?.data || err.message);
       toast.error("Payment verification failed");
