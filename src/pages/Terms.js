@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../components/landingPage/Navbar';
 import Footer from '../components/landingPage/Footer';
 import { Link } from 'react-router-dom';
+import { FiRefreshCcw } from 'react-icons/fi';
 
 const Terms = () => {
   return (
@@ -61,6 +62,18 @@ const Terms = () => {
                   platform.
                 </p>
               </div>
+
+              <div className="flex justify-center mt-6">
+              <Link
+               to="/refund"
+               className="flex items-center gap-2 font-semibold text-indigo-700 hover:text-purple-700 transition-colors duration-200"
+                >
+              <FiRefreshCcw className="text-2xl text-indigo-700" />
+               <span className="text-lg">View Refund Policy</span>
+              </Link>
+            </div>
+
+
             </div>
           </div>
         </div>

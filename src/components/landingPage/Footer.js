@@ -128,12 +128,20 @@ const Footer = () => {
                   About
                 </NavLink>
               </li>
-              <li>
+              <li className="mb-2">
                 <NavLink
                   to="/resources"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
                   Resources
+                </NavLink>
+              </li>
+               <li>
+                <NavLink
+                  to="/terms"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  Terms of service
                 </NavLink>
               </li>
             </ul>

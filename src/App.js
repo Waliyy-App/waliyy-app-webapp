@@ -39,6 +39,7 @@ import Blogpage from "./pages/Blogpage.js";
 import BlogPostPage from "./pages/BlogPostPage";
 import Terms from "./pages/Terms.js";
 import SubscriptionStatus from "./pages/SubscriptionStatus.js";
+import RefundPolicy from "./pages/RefundPolicy.js";
 
 export const AppLayout = ({ children }) => {
   useResetScrollPosition();
@@ -64,13 +65,13 @@ function App() {
         // 1️⃣ Check current plan endpoint previous check
         const res1 = await getCurrentPlan(token);
         if (res1?.data) {
-          isActive = false;
+          isActive = true;
         setActivePlan(isActive);
         }
         // 2️⃣ Check premium content endpoint flutterwave
         const res2 = await getSubscribedUser(token);
 
-        if (res2?.status === "active") isActive = false;
+        if (res2?.status === "active") isActive = true;
         setActivePlan(isActive);
 
       } catch (err) {
@@ -96,6 +97,7 @@ function App() {
             <Route exact path="/resources" element={<ResourcePage />} />
             <Route exact path="/blog" element={<Blogpage />} />
             <Route exact path="/terms" element={<Terms />} />
+            <Route exact path="/refund" element={<RefundPolicy />} />
             <Route exact path="/get-started" element={<ProfileSetupForm />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route exact path="*" element={<NoPage />} />
