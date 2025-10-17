@@ -57,4 +57,10 @@ export const faq = [
     answer:
       'Yes, you can update most of your information. However, certain details, like your date of birth, cannot be changed directly. If you need to update your date of birth, please send us an email at waliyyapp@gmail.com.',
   },
+   {
+    id: 10,
+    question: 'Will I get a refund after subscribtion?',
+    answer:
+      'No, subscription payments are non-refundable. See our Refund Policy for more information.',
+  },
 ];

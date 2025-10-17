@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../components/landingPage/Navbar';
 import Footer from '../components/landingPage/Footer';
 import { Link } from 'react-router-dom';
+import { FiRefreshCcw } from 'react-icons/fi';
 
 const RefundPolicy = () => {
   return (
@@ -13,9 +14,12 @@ const RefundPolicy = () => {
         <div className="text-center mb-8 md:mb-12">
           <div className="mb-4">
             <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-indigo-600 mx-auto rounded-full mb-4"></div>
-            <h1 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-700">
-              Refund Policy
-            </h1>
+           <div className="flex justify-center items-center gap-2">
+                       <FiRefreshCcw className="text-2xl text-indigo-700" />
+                   <h1 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-700">
+                   Refund Policy
+                   </h1>
+              </div>
           </div>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Last updated: June 28, 2025
@@ -69,7 +73,7 @@ const RefundPolicy = () => {
         {/* Back to Registration */}
         <div className="text-center mb-10">
           <Link
-            to="/sign-up"
+            to="/"
             className="flex items-center justify-center w-auto sm:w-[340px] mx-auto rounded-3xl h-12 bg-[#BA9FFE] text-white hover:bg-[#a37eff] font-medium box-shadow-profile transition-all duration-300"
           >
             <svg
@@ -84,7 +88,7 @@ const RefundPolicy = () => {
                 clipRule="evenodd"
               />
             </svg>
-            Back to Registration
+            Back to Home page
           </Link>
         </div>
       </div>
