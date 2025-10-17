@@ -69,7 +69,7 @@ const Terms = () => {
                className="flex items-center gap-2 font-semibold text-indigo-700 hover:text-purple-700 transition-colors duration-200"
                 >
               <FiRefreshCcw className="text-2xl text-indigo-700" />
-               <span className="text-lg">Refund Policy</span>
+               <span className="text-lg">View Refund Policy</span>
               </Link>
             </div>
 
