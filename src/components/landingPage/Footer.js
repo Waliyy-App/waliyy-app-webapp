@@ -55,6 +55,7 @@ import {
   FaInstagram,
   FaEnvelope,
 } from 'react-icons/fa';
+import { FiMapPin } from 'react-icons/fi';
 
 const Footer = () => {
   return (
@@ -63,51 +64,62 @@ const Footer = () => {
         {/* Main Footer Content - Flex container */}
         <div className="flex flex-col md:flex-row justify-between items-start mb-8">
           {/* Logo and Contact Info */}
-          <div className="mb-6 md:mb-0">
-            <NavLink to="/" className="flex items-center mb-4">
-              <img src={Logo} alt="logo" className="w-20" />
-            </NavLink>
-            <p className="text-gray-300 mb-4">
-              Embark on a journey of love, faith and connection.
+         <div className="mb-6 md:mb-0">
+                {/* Logo */}
+        <NavLink to="/" className="flex items-center mb-4">
+         <img src={Logo} alt="logo" className="w-20" />
+         </NavLink>
+
+           {/* Address */}
+        <p className="flex items-start gap-2 mb-4 text-gray-300 leading-relaxed">
+            <FiMapPin className="text-xl text-[#BA9FFE] mt-1" />
+             Olanlege Street, Agberu Avenue, Elebu Area, Ibadan, Nigeria.
             </p>
 
-            <div className="flex items-center mb-4 text-gray-300 hover:text-white transition-colors">
-              <FaEnvelope className="mr-2" />
-              <a href="mailto:admin@waliyyapp.com">admin@waliyyapp.com</a>
-            </div>
-            <div className="flex items-center mb-4 text-gray-300 hover:text-white transition-colors">
-              <FaEnvelope className="mr-2" />
-              <a href="mailto:waliyyapp@gmail.com">waliyyapp@gmail.com</a>
-            </div>
+           {/* Tagline */}
+          <p className="text-gray-300 mb-4 italic">
+             Embark on a journey of love, faith, and connection.
+           </p>
 
-            <div className="flex space-x-4">
-              <a
-                href="https://web.facebook.com/people/Waliyy-App/61558344552005/"
-                target="_blank"
-                rel="noreferrer"
-                className="text-gray-300 hover:text-white transition-colors"
-              >
-                <FaFacebook size={20} />
-              </a>
-              <a
-                href="https://www.instagram.com/waliyy_app?igsh=MW9kZDYycTJ5eng5bA%3D%3D"
-                target="_blank"
-                rel="noreferrer"
-                className="text-gray-300 hover:text-white transition-colors"
-              >
-                <FaInstagram size={20} />
-              </a>
-              <a
-                href="https://www.tiktok.com/@waliyy.app?is_from_webapp=1&sender_device=pc"
-                target="_blank"
-                rel="noreferrer"
-                className="text-gray-300 hover:text-white transition-colors"
-              >
-                <FaTiktok size={20} />
-              </a>
+            {/* Emails */}
+        <div className="flex items-center mb-3 text-gray-300 hover:text-white transition-colors">
+         <FaEnvelope className="mr-2 text-[#BA9FFE]" />
+            <a href="mailto:admin@waliyyapp.com">admin@waliyyapp.com</a>
             </div>
+        <div className="flex items-center mb-4 text-gray-300 hover:text-white transition-colors">
+         <FaEnvelope className="mr-2 text-[#BA9FFE]" />
+          <a href="mailto:waliyyapp@gmail.com">waliyyapp@gmail.com</a>
+        </div>
+
+      {/* Social Links */}
+  <div className="flex space-x-4">
+    <a
+      href="https://web.facebook.com/people/Waliyy-App/61558344552005/"
+      target="_blank"
+      rel="noreferrer"
+      className="text-gray-300 hover:text-[#BA9FFE] transition-colors"
+    >
+      <FaFacebook size={20} />
+    </a>
+    <a
+      href="https://www.instagram.com/waliyy_app?igsh=MW9kZDYycTJ5eng5bA%3D%3D"
+      target="_blank"
+      rel="noreferrer"
+      className="text-gray-300 hover:text-[#BA9FFE] transition-colors"
+    >
+      <FaInstagram size={20} />
+    </a>
+    <a
+      href="https://www.tiktok.com/@waliyy.app?is_from_webapp=1&sender_device=pc"
+      target="_blank"
+      rel="noreferrer"
+      className="text-gray-300 hover:text-[#BA9FFE] transition-colors"
+    >
+      <FaTiktok size={20} />
+    </a>
+  </div>
+
           </div>
-
           {/* Quick Links */}
           <div className="mb-6 md:mb-0">
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
@@ -138,10 +150,10 @@ const Footer = () => {
               </li>
                <li>
                 <NavLink
-                  to="/terms"
+                  to="/refund"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Terms of service
+                  Refund Policy
                 </NavLink>
               </li>
             </ul>
