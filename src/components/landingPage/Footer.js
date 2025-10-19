@@ -49,12 +49,7 @@
 import React from 'react';
 import Logo from '../../assets/logo/Untitled-1-01.jpg';
 import { Link, NavLink } from 'react-router-dom';
-import {
-  FaFacebook,
-  FaTiktok,
-  FaInstagram,
-  FaEnvelope,
-} from 'react-icons/fa';
+import { FaFacebook, FaTiktok, FaInstagram, FaEnvelope } from 'react-icons/fa';
 import { FiMapPin } from 'react-icons/fi';
 
 const Footer = () => {
@@ -62,64 +57,48 @@ const Footer = () => {
     <footer className="bg-[#2D133A] text-white mt-16 px-6 sm:px-12">
       <div className="container mx-auto px-4 py-12">
         {/* Main Footer Content - Flex container */}
-        <div className="flex flex-col md:flex-row justify-between items-start mb-8">
+        <div className="flex flex-wrap justify-between items-start mb-8">
           {/* Logo and Contact Info */}
-         <div className="mb-6 md:mb-0">
-                {/* Logo */}
-        <NavLink to="/" className="flex items-center mb-4">
-         <img src={Logo} alt="logo" className="w-20" />
-         </NavLink>
+          <div className="mb-6 md:mb-0">
+            {/* Logo */}
+            <NavLink to="/" className="flex items-center mb-4">
+              <img src={Logo} alt="logo" className="w-20" />
+            </NavLink>
 
-           {/* Address */}
-        <p className="flex items-start gap-2 mb-4 text-gray-300 leading-relaxed">
-            <FiMapPin className="text-xl text-[#BA9FFE] mt-1" />
-             Olanlege Street, Agberu Avenue, Elebu Area, Ibadan, Nigeria.
+            {/* Tagline */}
+            <p className="text-gray-300 mb-4 italic w-[300px]">
+              Embark on a journey of love, faith, and connection.
             </p>
 
-           {/* Tagline */}
-          <p className="text-gray-300 mb-4 italic">
-             Embark on a journey of love, faith, and connection.
-           </p>
-
-            {/* Emails */}
-        <div className="flex items-center mb-3 text-gray-300 hover:text-white transition-colors">
-         <FaEnvelope className="mr-2 text-[#BA9FFE]" />
-            <a href="mailto:admin@waliyyapp.com">admin@waliyyapp.com</a>
+            {/* Social Links */}
+            <div className="flex space-x-4">
+              <a
+                href="https://web.facebook.com/people/Waliyy-App/61558344552005/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-gray-300 hover:text-[#BA9FFE] transition-colors"
+              >
+                <FaFacebook size={20} />
+              </a>
+              <a
+                href="https://www.instagram.com/waliyy_app?igsh=MW9kZDYycTJ5eng5bA%3D%3D"
+                target="_blank"
+                rel="noreferrer"
+                className="text-gray-300 hover:text-[#BA9FFE] transition-colors"
+              >
+                <FaInstagram size={20} />
+              </a>
+              <a
+                href="https://www.tiktok.com/@waliyy.app?is_from_webapp=1&sender_device=pc"
+                target="_blank"
+                rel="noreferrer"
+                className="text-gray-300 hover:text-[#BA9FFE] transition-colors"
+              >
+                <FaTiktok size={20} />
+              </a>
             </div>
-        <div className="flex items-center mb-4 text-gray-300 hover:text-white transition-colors">
-         <FaEnvelope className="mr-2 text-[#BA9FFE]" />
-          <a href="mailto:waliyyapp@gmail.com">waliyyapp@gmail.com</a>
-        </div>
-
-      {/* Social Links */}
-  <div className="flex space-x-4">
-    <a
-      href="https://web.facebook.com/people/Waliyy-App/61558344552005/"
-      target="_blank"
-      rel="noreferrer"
-      className="text-gray-300 hover:text-[#BA9FFE] transition-colors"
-    >
-      <FaFacebook size={20} />
-    </a>
-    <a
-      href="https://www.instagram.com/waliyy_app?igsh=MW9kZDYycTJ5eng5bA%3D%3D"
-      target="_blank"
-      rel="noreferrer"
-      className="text-gray-300 hover:text-[#BA9FFE] transition-colors"
-    >
-      <FaInstagram size={20} />
-    </a>
-    <a
-      href="https://www.tiktok.com/@waliyy.app?is_from_webapp=1&sender_device=pc"
-      target="_blank"
-      rel="noreferrer"
-      className="text-gray-300 hover:text-[#BA9FFE] transition-colors"
-    >
-      <FaTiktok size={20} />
-    </a>
-  </div>
-
           </div>
+
           {/* Quick Links */}
           <div className="mb-6 md:mb-0">
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
@@ -148,15 +127,30 @@ const Footer = () => {
                   Resources
                 </NavLink>
               </li>
-               <li>
-                <NavLink
-                  to="/refund"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Refund Policy
-                </NavLink>
-              </li>
             </ul>
+          </div>
+
+          {/* Get in touch */}
+          <div className="mb-6 md:mb-0">
+            <h3 className="text-lg font-semibold mb-4">Get In Touch</h3>
+            {/* Address */}
+            <div className="flex items-center mb-3 text-gray-300 hover:text-white transition-colors">
+              <FiMapPin className="mr-2 text-[#BA9FFE]" />
+              <p>
+                Olanlege Street, Agberu Avenue, <br /> Elebu Area, Ibadan,
+                Nigeria.
+              </p>
+            </div>
+
+            {/* Emails */}
+            <div className="flex items-center mb-3 text-gray-300 hover:text-white transition-colors">
+              <FaEnvelope className="mr-2 text-[#BA9FFE]" />
+              <a href="mailto:admin@waliyyapp.com">admin@waliyyapp.com</a>
+            </div>
+            <div className="flex items-center mb-4 text-gray-300 hover:text-white transition-colors">
+              <FaEnvelope className="mr-2 text-[#BA9FFE]" />
+              <a href="mailto:waliyyapp@gmail.com">waliyyapp@gmail.com</a>
+            </div>
           </div>
 
           {/* Auth Buttons */}
@@ -184,10 +178,16 @@ const Footer = () => {
           <p className="text-sm">
             &copy; {new Date().getFullYear()} WaliyyApp. All rights reserved.
           </p>
+          <NavLink
+            to="/refund"
+            className="text-sm text-white transition-colors font-bold"
+          >
+            Refund Policy
+          </NavLink>
           <div className="flex space-x-4">
             <NavLink
               to="/terms"
-              className="text-sm hover:text-white transition-colors"
+              className=" text-sm text-white font-bold transition-colors"
             >
               Terms of Service
             </NavLink>
