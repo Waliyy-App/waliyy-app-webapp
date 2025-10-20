@@ -14,7 +14,7 @@ const Footer = () => {
         {/* ===========================
             MAIN FOOTER CONTENT
         ============================ */}
-        <div className="flex flex-col md:flex-row justify-between items-start mb-8">
+        <div className="flex flex-col md:flex-row justify-between items-start  mb-8">
 
           {/* ---------- Logo + Tagline + Socials ---------- */}
           <div className="mb-5 md:mb-0">
