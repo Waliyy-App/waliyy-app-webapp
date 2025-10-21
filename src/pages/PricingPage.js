@@ -10,22 +10,28 @@ import Loader from "../components/Loader.js";
 import Navigation from "../components/sidebar/Navigation.js";
 import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
 import { Link } from "react-router-dom";
-import { FaCrown } from "react-icons/fa"
+import { FaCrown } from "react-icons/fa";
 
 const PricingPage = () => {
   const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
   const [loading, setLoading] = useState(false);
   const [plans, setPlans] = useState([]);
-  const [loadingPlan, setLoadingPlan] = useState(null); // track currently loading plan
+  const [loadingPlan, setLoadingPlan] = useState(null);
   const { token, user } = useAuthContext();
 
-
   const childId = localStorage.getItem("childId");
-  const isNaira = "NGN";
-
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  // ✅ Manual conversion rates (can later be made dynamic)
+  const conversionRates = {
+    USD_TO_NGN: 1600, // 1 USD = ₦1600
+    GBP_TO_NGN: 1900, // 1 GBP = ₦1900
+  };
+
+   const FLW_PUBLIC_KEY = "FLWPUBK-089e41d5b1a22d520c93c7f47151e53e-X"
+   
+  // ✅ Fetch plans
   useEffect(() => {
     const fetchPlans = async () => {
       setLoading(true);
@@ -42,51 +48,67 @@ const PricingPage = () => {
     fetchPlans();
   }, []);
 
-  const FLW_PUBLIC_KEY = "FLWPUBK-089e41d5b1a22d520c93c7f47151e53e-X"
+  // ✅ Flutterwave payment configuration with currency conversion
+  const getFlutterwaveConfig = (plan) => {
+    let payAmount = plan.amount;
+    let payCurrency = plan.currency;
 
-const getFlutterwaveConfig = (plan) => ({
-  public_key: process.env.REACT_APP_FLW_PUBLIC_KEY || FLW_PUBLIC_KEY,
-  tx_ref: `tx-${Date.now()}`,
-  amount: plan.amount,
-  currency: plan.currency,
-  payment_options: isNaira ==="NGN" ? "card, ussd,banktransfer": "card",
-  customer: {
-    email: user.email,
-    phonenumber: user.phone,
-    name: user.fullName,
-  },
-  customizations: {
-    title: `Payment for ${plan.planName} by ${user.fullName || "User"}`,
-    description: `Payment for ${plan.planName} by ${user.fullName || "User"}`,
-  },
-  callback: async (response) => {
-    closePaymentModal();
-    const txId = response.transaction_id;
-    setLoadingPlan(null);
-    try {
-      const data = await verifyPaidSubscription(
-        {
-          txId,
-          plan: plan.planName,
-          amount: plan.amount,
-          currency: plan.currency,
-          email: user.email,
-          childId: childId, // ✅ Add this line (or user.childId if that’s the correct reference)
-        },
-        token
-      );
-      toast.success(data.message);
-      console.log(plan.currency)
-    } catch (err) {
-      console.error(err.response?.data || err.message);
-      toast.error("Payment verification failed");
+    // 🔄 Convert USD/GBP → NGN for Flutterwave
+    if (plan.currency === "USD") {
+      payAmount = plan.amount * conversionRates.USD_TO_NGN;
+      payCurrency = "NGN";
+    } else if (plan.currency === "GBP") {
+      payAmount = plan.amount * conversionRates.GBP_TO_NGN;
+      payCurrency = "NGN";
     }
-  },
-  onClose: () => {
-    setLoadingPlan(null);
-  },
-});
 
+    console.log(
+      `Converting ${plan.amount} ${plan.currency} → ${payAmount} ${payCurrency}`
+    );
+
+    return {
+      public_key: process.env.REACT_APP_FLW_PUBLIC_KEY || FLW_PUBLIC_KEY,
+      tx_ref: `tx-${Date.now()}`,
+      amount: payAmount,
+      currency: payCurrency,
+      payment_options:
+        payCurrency === "NGN" ? "card, ussd, banktransfer" : "card",
+      customer: {
+        email: user.email,
+        phonenumber: user.phone,
+        name: user.fullName,
+      },
+      customizations: {
+        title: `Payment for ${plan.planName} by ${user.fullName || "User"}`,
+        description: `Payment for ${plan.planName} in ${plan.currency}`,
+      },
+      callback: async (response) => {
+        closePaymentModal();
+        const txId = response.transaction_id;
+        setLoadingPlan(null);
+        try {
+          const data = await verifyPaidSubscription(
+            {
+              txId,
+              plan: plan.planName,
+              amount: payAmount, // Amount charged in NGN
+              currency: plan.currency, // Original currency stored
+              email: user.email,
+              childId: childId,
+            },
+            token
+          );
+          toast.success(data.message);
+        } catch (err) {
+          console.error(err.response?.data || err.message);
+          toast.error("Payment verification failed");
+        }
+      },
+      onClose: () => {
+        setLoadingPlan(null);
+      },
+    };
+  };
 
   return (
     <div className="flex flex-col sm:flex-row">
@@ -101,6 +123,7 @@ const getFlutterwaveConfig = (plan) => ({
           <Loader />
         ) : (
           <div className="py-[32px] px-8">
+            {/* Header */}
             <div className="flex flex-col items-center justify-center gap-4 text-center px-8 pt-8 pb-[64px]">
               <p className="text-[#BA9FFE] font-semibold uppercase tracking-wider">
                 Pricing
@@ -113,18 +136,18 @@ const getFlutterwaveConfig = (plan) => ({
               </p>
             </div>
 
+            {/* Payment status link */}
             <div className="flex justify-center my-5">
-            <Link
-                 to="/subscription-status" // your route
+              <Link
+                to="/subscription-status"
                 className="px-6 py-3 bg-[#BA9FFE] hover:bg-[#a37eff] text-white font-semibold rounded-lg transition-colors duration-300"
-                 >
-                    Check Payment Status
-            </Link>
-           </div>
+              >
+                Check Payment Status
+              </Link>
+            </div>
 
+            {/* Plans Section */}
             <div className="flex flex-wrap items-center justify-center gap-8">
-
-              {/* Paid Plans */}
               {plans.map((plan, index) => (
                 <div
                   className="w-[350px] sm:w-[400px] bg-white shadow-lg rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 border border-[#eaeaea]"
@@ -132,9 +155,10 @@ const getFlutterwaveConfig = (plan) => ({
                 >
                   <div className="flex flex-col gap-2 items-center">
                     <p className="flex items-center gap-2 text-xl text-[#2D133A] font-bold">
-                        {plan.planName} 
-                   <FaCrown className="text-yellow-500" />
+                      {plan.planName}
+                      <FaCrown className="text-yellow-500" />
                     </p>
+
                     <p className="text-4xl text-[#2D133A] font-extrabold">
                       {plan.currency === "NGN"
                         ? "₦10,000"
@@ -148,6 +172,7 @@ const getFlutterwaveConfig = (plan) => ({
                     </p>
                   </div>
 
+                  {/* Plan features */}
                   <div className="flex flex-col pt-8 pb-10 gap-4">
                     {plan.planDescription
                       .trim()
@@ -168,6 +193,7 @@ const getFlutterwaveConfig = (plan) => ({
                     </div>
                   </div>
 
+                  {/* Pay button */}
                   <FlutterWaveButton
                     {...getFlutterwaveConfig(plan)}
                     className={`w-full h-12 rounded-lg font-semibold transition-all duration-300 ${
@@ -178,7 +204,9 @@ const getFlutterwaveConfig = (plan) => ({
                     onClick={() => setLoadingPlan(plan.planName)}
                     disabled={loadingPlan === plan.planName}
                   >
-                    {loadingPlan === plan.planName ? "Processing..." : "Subscribe"}
+                    {loadingPlan === plan.planName
+                      ? "Processing..."
+                      : "Subscribe"}
                   </FlutterWaveButton>
                 </div>
               ))}
