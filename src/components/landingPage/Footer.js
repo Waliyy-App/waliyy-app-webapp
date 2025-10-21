@@ -61,14 +61,9 @@ const Footer = () => {
           {/* Logo and Contact Info */}
           <div className="mb-6 md:mb-0">
             {/* Logo */}
-            <NavLink to="/" className="flex items-center mb-4">
-              <img src={Logo} alt="logo" className="w-20" />
+            <NavLink to="/" className="flex items-center mb-10">
+              <img src={Logo} alt="logo" className="w-20 rounded-md" />
             </NavLink>
-
-            {/* Tagline */}
-            <p className="text-gray-300 mb-4 italic w-[300px]">
-              Embark on a journey of love, faith, and connection.
-            </p>
 
             {/* Social Links */}
             <div className="flex space-x-4">
@@ -76,7 +71,7 @@ const Footer = () => {
                 href="https://web.facebook.com/people/Waliyy-App/61558344552005/"
                 target="_blank"
                 rel="noreferrer"
-                className="text-gray-300 hover:text-[#BA9FFE] transition-colors"
+                className="text-white hover:text-[#BA9FFE] transition-colors"
               >
                 <FaFacebook size={20} />
               </a>
@@ -84,7 +79,7 @@ const Footer = () => {
                 href="https://www.instagram.com/waliyy_app?igsh=MW9kZDYycTJ5eng5bA%3D%3D"
                 target="_blank"
                 rel="noreferrer"
-                className="text-gray-300 hover:text-[#BA9FFE] transition-colors"
+                className="text-white hover:text-[#BA9FFE] transition-colors"
               >
                 <FaInstagram size={20} />
               </a>
@@ -92,7 +87,7 @@ const Footer = () => {
                 href="https://www.tiktok.com/@waliyy.app?is_from_webapp=1&sender_device=pc"
                 target="_blank"
                 rel="noreferrer"
-                className="text-gray-300 hover:text-[#BA9FFE] transition-colors"
+                className="text-white hover:text-[#BA9FFE] transition-colors"
               >
                 <FaTiktok size={20} />
               </a>
@@ -134,7 +129,7 @@ const Footer = () => {
           <div className="mb-6 md:mb-0">
             <h3 className="text-lg font-semibold mb-4">Get In Touch</h3>
             {/* Address */}
-            <div className="flex items-center mb-3 text-gray-300 hover:text-white transition-colors">
+            <div className="flex items-center mb-3 text-gray-300">
               <FiMapPin className="mr-2 text-[#BA9FFE]" />
               <p>
                 Olanlege Street, Agberu Avenue, <br /> Elebu Area, Ibadan,
@@ -180,18 +175,17 @@ const Footer = () => {
           </p>
           <NavLink
             to="/refund"
-            className="text-sm text-white transition-colors font-bold"
+            className="text-sm text-white hover:text-[#BA9FFE] transition-colors font-bold"
           >
             Refund Policy
           </NavLink>
-          <div className="flex space-x-4">
-            <NavLink
-              to="/terms"
-              className=" text-sm text-white font-bold transition-colors"
-            >
-              Terms of Service
-            </NavLink>
-          </div>
+
+          <NavLink
+            to="/terms"
+            className=" text-sm text-white hover:text-[#BA9FFE] font-bold transition-colors"
+          >
+            Terms of Service
+          </NavLink>
         </div>
       </div>
     </footer>
