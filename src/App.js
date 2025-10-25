@@ -54,7 +54,7 @@ function App() {
 
   const navigate = useNavigate();
   const { token, user } = useAuthContext();
-  const [activePlan, setActivePlan] = useState(false);
+  const [activePlan, setActivePlan] = useState(null);
  
   // isActive will be set back to true after testing.
   useEffect(() => {
@@ -64,13 +64,13 @@ function App() {
 
         // 1️⃣ Check current plan endpoint previous check
         const res1 = await getCurrentPlan(token);
-        if (res1?.data) {
-          isActive = true;
-        setActivePlan(isActive);
-        }
+        //console.log(res1)
+        setActivePlan(res1?.data);
+        
+
         // 2️⃣ Check premium content endpoint flutterwave
         const res2 = await getSubscribedUser(token);
-
+        //console.log(res2)
         if (res2?.status === "active") isActive = true;
         setActivePlan(isActive);
 
