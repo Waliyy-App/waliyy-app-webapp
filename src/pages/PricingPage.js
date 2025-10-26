@@ -62,9 +62,9 @@ const PricingPage = () => {
       payCurrency = "NGN";
     }
 
-    console.log(
-      `Converting ${plan.amount} ${plan.currency} → ${payAmount} ${payCurrency}`
-    );
+    // console.log(
+    //   `Converting ${plan.amount} ${plan.currency} → ${payAmount} ${payCurrency}`
+    // );
 
     return {
       public_key: process.env.REACT_APP_FLW_PUBLIC_KEY || FLW_PUBLIC_KEY,
