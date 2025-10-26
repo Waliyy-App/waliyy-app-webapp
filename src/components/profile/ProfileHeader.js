@@ -74,24 +74,31 @@ const ProfileHeader = ({
   try {
     let isActive = false;
 
-    // 1️⃣ Check current plan endpoint previous check
+    // 1️⃣ Check current plan endpoint (main check)
     const res1 = await getCurrentPlan(token);
-    if (res1?.data){
-     isActive = true;
-      }
-    
-    // 2️⃣ Check curent plan end point flutterwave
-    const res2 = await getSubscribedUser(token, user.email);
+    //  console.log(res1?.data?.payment?.status);
 
-    if (res2?.status === "active") isActive = true;
+    if (res1?.data?.payment?.status === "SUCCESS") {
+      isActive = true;
+      setActivePlan(true);
+      return; 
+    }
+
+    // 2️⃣ Check current plan endpoint (Flutterwave) — only runs if first one fails
+    const res2 = await getSubscribedUser(token, user.email);
+    if (res2?.status === "active") {
+      isActive = true;
+    }
 
     // ✅ Set active plan as boolean (true/false)
     setActivePlan(isActive);
+
   } catch (err) {
     console.error("Error getting active plan:", err);
     setActivePlan(false);
   }
 };
+
     getActivePlan();
   }, [token, user]);
 
