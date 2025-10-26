@@ -59,26 +59,34 @@ function App() {
   // isActive will be set back to true after testing.
   useEffect(() => {
     const checkActivePlan = async () => {
-      try {
-        let isActive = false;
+  try {
+    let isActive = false;
 
-        // 1️⃣ Check current plan endpoint previous check
-        const res1 = await getCurrentPlan(token);
-        //console.log(res1)
-        setActivePlan(res1?.data);
-        
+    // 1️⃣ Check current plan (main check)
+    const res1 = await getCurrentPlan(token);
+    // console.log(res1?.data?.payment?.status);
 
-        // 2️⃣ Check premium content endpoint flutterwave
-        const res2 = await getSubscribedUser(token);
-        //console.log(res2)
-        if (res2?.status === "active") isActive = true;
-        setActivePlan(isActive);
+    if (res1?.data?.payment?.status === "SUCCESS") {
+      isActive = true;
+      setActivePlan(true);
+      return; 
+    }
 
-      } catch (err) {
-        console.error("Error checking active plan:", err);
-        setActivePlan(false);
-      }
-    };
+    // 2️⃣ If first one fails, check premium content endpoint (backup check)
+    const res2 = await getSubscribedUser(token);
+    // console.log(res2);
+
+    if (res2?.status === "active") {
+      isActive = true;
+    }
+
+    setActivePlan(isActive);
+  } catch (err) {
+    console.error("Error checking active plan:", err);
+    setActivePlan(false);
+  }
+};
+
       checkActivePlan();
 
     if (token) {
