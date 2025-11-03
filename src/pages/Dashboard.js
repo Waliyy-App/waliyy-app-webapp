@@ -263,7 +263,7 @@ console.log(filteredProfiles)
                     profession={item.profession}
                     gender={item.gender}
                     displayID={item?.displayId}
-                    isSubscribed={item?.isSubscribed}
+                    //isSubscribed={item?.isSubscribed}
                     onClick={handleProfileClick}
                   />
                 ))
