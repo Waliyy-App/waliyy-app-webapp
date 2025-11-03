@@ -227,7 +227,7 @@ const Explore = () => {
                     profession={items.profession}
                     gender={items.gender}
                     displayID={items?.displayId}
-                    isSubscribed={items?.isSubscribed}
+                    //isSubscribed={items?.isSubscribed}
                     href={`/explore/${items.id}`}
                     onClick={handleProfileClick}
                   />
