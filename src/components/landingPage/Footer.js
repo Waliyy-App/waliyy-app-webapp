@@ -49,7 +49,7 @@
 import React from 'react';
 import Logo from '../../assets/logo/Untitled-1-01.jpg';
 import { Link, NavLink } from 'react-router-dom';
-import { FaFacebook, FaTiktok, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import { FaFacebook, FaTiktok, FaInstagram, FaEnvelope, FaPhone } from 'react-icons/fa';
 import { FiMapPin } from 'react-icons/fi';
 
 const Footer = () => {
@@ -125,28 +125,34 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Get in touch */}
-          <div className="mb-6 md:mb-0">
-            <h3 className="text-lg font-semibold mb-4">Get In Touch</h3>
-            {/* Address */}
-            <div className="flex items-center mb-3 text-gray-300">
-              <FiMapPin className="mr-2 text-[#BA9FFE]" />
-              <p>
-                Olanlege Street, Agberu Avenue, <br /> Elebu Area, Ibadan,
-                Nigeria.
-              </p>
-            </div>
+       {/* Get in touch */}
+<div className="mb-6 md:mb-0">
+  <h3 className="text-lg font-semibold mb-4">Get In Touch</h3>
 
-            {/* Emails */}
-            <div className="flex items-center mb-3 text-gray-300 hover:text-white transition-colors">
-              <FaEnvelope className="mr-2 text-[#BA9FFE]" />
-              <a href="mailto:admin@waliyyapp.com">admin@waliyyapp.com</a>
-            </div>
-            <div className="flex items-center mb-4 text-gray-300 hover:text-white transition-colors">
-              <FaEnvelope className="mr-2 text-[#BA9FFE]" />
-              <a href="mailto:waliyyapp@gmail.com">waliyyapp@gmail.com</a>
-            </div>
-          </div>
+  {/* Address */}
+  <div className="flex items-center mb-3 text-gray-300">
+    <FiMapPin className="mr-2 text-[#BA9FFE]" />
+    <p>
+      Olanlege Street, Agberu Avenue, <br /> Elebu Area, Ibadan, Nigeria.
+    </p>
+  </div>
+
+  {/* Emails */}
+  <div className="flex items-center mb-3 text-gray-300 hover:text-white transition-colors">
+    <FaEnvelope className="mr-2 text-[#BA9FFE]" />
+    <a href="mailto:admin@waliyyapp.com">admin@waliyyapp.com</a>
+  </div>
+  <div className="flex items-center mb-3 text-gray-300 hover:text-white transition-colors">
+    <FaEnvelope className="mr-2 text-[#BA9FFE]" />
+    <a href="mailto:waliyyapp@gmail.com">waliyyapp@gmail.com</a>
+  </div>
+
+  {/* Phone Number */}
+  <div className="flex items-center text-gray-300 hover:text-white transition-colors">
+    <FaPhone className="mr-2 text-[#BA9FFE]" />
+    <a href="tel:+2348108202722">+234 810 820 2722</a>
+  </div>
+</div>
 
           {/* Auth Buttons */}
           <div>
@@ -168,25 +174,35 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="flex flex-col md:flex-row justify-between items-center text-gray-300 mb-6 border-t border-[#3E1D4D] pt-6">
-          <p className="text-sm">
-            &copy; {new Date().getFullYear()} WaliyyApp. All rights reserved.
-          </p>
-          <NavLink
-            to="/refund"
-            className="text-sm text-white hover:text-[#BA9FFE] transition-colors font-bold"
-          >
-            Refund Policy
-          </NavLink>
+     {/* Copyright */}
+<div className="flex flex-col md:flex-row justify-between items-center text-gray-300 mb-6 border-t border-[#3E1D4D] pt-6">
+  <p className="text-sm">
+    &copy; {new Date().getFullYear()} WaliyyApp. All rights reserved.
+  </p>
 
-          <NavLink
-            to="/terms"
-            className=" text-sm text-white hover:text-[#BA9FFE] font-bold transition-colors"
-          >
-            Terms of Service
-          </NavLink>
-        </div>
+  <div className="flex flex-col md:flex-row gap-3 md:gap-6 mt-3 md:mt-0">
+    <NavLink
+      to="/refund"
+      className="text-sm text-white hover:text-[#BA9FFE] transition-colors font-bold"
+    >
+      Refund Policy
+    </NavLink>
+
+    <NavLink
+      to="/terms"
+      className="text-sm text-white hover:text-[#BA9FFE] transition-colors font-bold"
+    >
+      Terms of Service
+    </NavLink>
+
+    <NavLink
+      to="/privacy"
+      className="text-sm text-white hover:text-[#BA9FFE] transition-colors font-bold"
+    >
+      Privacy Policy
+    </NavLink>
+  </div>
+</div>
       </div>
     </footer>
   );
