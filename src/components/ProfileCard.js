@@ -25,7 +25,7 @@ const ProfileCard = ({
   onClick,
   displayID,
   matchID,
-  //isSubscribed,
+  //isSubscribed, 
 }) => {
   const [truncatedLoremIpsum, setTruncatedLoremIpsum] = useState('');
 
