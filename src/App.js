@@ -40,6 +40,7 @@ import BlogPostPage from "./pages/BlogPostPage";
 import Terms from "./pages/Terms.js";
 import SubscriptionStatus from "./pages/SubscriptionStatus.js";
 import RefundPolicy from "./pages/RefundPolicy.js";
+import PrivacyPolicy from "./pages/PrivacyPolicy.js";
 
 export const AppLayout = ({ children }) => {
   useResetScrollPosition();
@@ -105,6 +106,7 @@ function App() {
             <Route exact path="/resources" element={<ResourcePage />} />
             <Route exact path="/blog" element={<Blogpage />} />
             <Route exact path="/terms" element={<Terms />} />
+            <Route exact path="/privacy" element={<PrivacyPolicy />} />
             <Route exact path="/refund" element={<RefundPolicy />} />
             <Route exact path="/get-started" element={<ProfileSetupForm />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
