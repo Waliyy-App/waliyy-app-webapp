@@ -130,6 +130,12 @@ const Footer = () => {
   <h3 className="text-lg font-semibold mb-4">Get In Touch</h3>
 
   {/* Address */}
+  <div className="flex items-start mb-3 text-gray-300">
+  <div>
+    <h4 className="font-semibold text-white mb-1">WaliyyApp Counseling</h4>
+  </div>
+</div>
+  
   <div className="flex items-center mb-3 text-gray-300">
     <FiMapPin className="mr-2 text-[#BA9FFE]" />
     <p>
