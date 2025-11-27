@@ -71,6 +71,7 @@ export default function ProfileSetupForm() {
   const navigate = useNavigate();
 
   const showBackButton = location.state?.from !== "/login-successful";
+
   const LOCAL_STORAGE_KEY = "profileSetupForm";
 
   const [formData, setFormData] = useState(() => {
@@ -87,39 +88,25 @@ export default function ProfileSetupForm() {
         if (values) {
           localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
         }
-      }, 1000);
+      }, 1000); // throttle to once a second
+
       return () => clearInterval(subscription);
     }
   }, []);
 
-  const goBack = () => navigate(-1);
+  const goBack = () => {
+    navigate(-1);
+  };
 
   const [state, setState] = useState({
-    activeStep: 0,
+    activeStep: "",
     completed: false,
     loading: false,
   });
-
   const { token, handleChildId } = useAuthContext();
 
-  const nextStep = () => {
-    setState((s) => ({
-      ...s,
-      activeStep: Math.min(s.activeStep + 1, formSections.length - 1),
-    }));
-    window.scrollTo(0, 0);
-  };
-
-  const prevStep = () => {
-    setState((s) => ({
-      ...s,
-      activeStep: Math.max(s.activeStep - 1, 0),
-    }));
-    window.scrollTo(0, 0);
-  };
-
   const handleSubmit = async (values) => {
-    setState((s) => ({ ...s, loading: true }));
+    setState((prevState) => ({ ...prevState, loading: true }));
 
     const date = new Date(values.dateOfBirth);
     const getYear = date.getFullYear();
@@ -172,22 +159,20 @@ export default function ProfileSetupForm() {
         },
         token
       );
-
       handleChildId(res?.data);
       toast.success(res?.message);
       localStorage.removeItem(LOCAL_STORAGE_KEY);
       setFormData(initialValues);
-
-      setState((s) => ({ ...s, completed: true }));
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
-      setState((s) => ({ ...s, loading: false }));
+      setState((prevState) => ({ ...prevState, loading: false }));
     }
   };
 
   const renderForm = () => {
     const { activeStep, loading, completed } = state;
+    console.log(activeStep);
 
     if (loading) {
       return (
@@ -205,22 +190,16 @@ export default function ProfileSetupForm() {
       );
     }
 
-    const ActiveComponent = formSections[activeStep].component;
-
     return (
-      <Box className="mx-auto px-4 py-10 w-full md:w-4/5 transition-all duration-500">
-
-        <div className="flex flex-col mb-8 text-center md:text-left">
+      <Box
+        spacing={4}
+        className="mx-auto px-8 py-12 w-full md:w-4/5 transition-all duration-500"
+      >
+        <div className="flex flex-col mb-8">
           <p className="font-semibold text-2xl text-[#2D133A]">
             Tell us about your single
           </p>
           <p className="text-[#665e6b] text-lg">Setup the Account</p>
-        </div>
-
-        {/* Step title */}
-        <div className="text-xl font-semibold text-[#2D133A] mb-5 flex items-center gap-2">
-          {formSections[activeStep].icon}
-          {formSections[activeStep].label}
         </div>
 
         <Formik
@@ -230,59 +209,50 @@ export default function ProfileSetupForm() {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          <Form className="flex flex-col gap-8 transition-all duration-500">
-
-            {/* Show ONLY the active step */}
-            <Suspense fallback={<div>Loading...</div>}>
-              <ActiveComponent />
-            </Suspense>
-
-            {/* Navigation Buttons */}
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4 mt-10">
-
-              {activeStep > 0 && (
+          <Form className="transition-all duration-500 flex gap-8 flex-col">
+            {formSections.map(
+              ({ id, icon, label, component: FormComponent }) => (
+                <div key={id}>
+                  <div
+                    className="flex items-center transition-all duration-500 gap-3 mb-5 cursor-pointer text-lg bg-[#2D133A] text-[#FFF4F6] p-4 rounded-lg"
+                    onClick={() =>
+                      setState((prevState) => ({
+                        ...prevState,
+                        activeStep: id,
+                      }))
+                    }
+                  >
+                    {icon}
+                    {label}
+                  </div>
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <FormComponent />
+                  </Suspense>
+                </div>
+              )
+            )}
+            <div className="flex items-center w-full justify-between">
+              {showBackButton && (
                 <button
                   type="button"
-                  onClick={prevStep}
-                  className="hover:bg-gray-200 border border-[#BA9FFE] rounded-lg h-11 text-[#2D133A] font-medium transition-all duration-300 w-full md:w-[200px]"
+                  className="my-11 mb-16 hover:bg-[#2D133A] border border-[#BA9FFE] rounded-lg h-11 text-[#2D133A] hover:text-white font-medium box-shadow-style transition-all duration-300 w-[250px]"
+                  onClick={goBack}
                 >
                   Back
                 </button>
               )}
-
-              {activeStep < formSections.length - 1 ? (
-                <button
-                  type="button"
-                  onClick={nextStep}
-                  className="hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium transition-all duration-300 w-full md:w-[200px]"
-                >
-                  Next
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  className="hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium transition-all duration-300 w-full md:w-[200px]"
-                >
-                  Submit
-                </button>
-              )}
-            </div>
-
-            {showBackButton && (
               <button
-                type="button"
-                className="hover:bg-[#2D133A] border border-[#BA9FFE] rounded-lg h-11 text-[#2D133A] hover:text-white font-medium transition-all duration-300 w-full md:w-[200px] mt-6 md:mt-10"
-                onClick={goBack}
+                className="my-11 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300  w-[250px]"
+                type="submit"
               >
-                Exit
+                Submit
               </button>
-            )}
-
+            </div>
           </Form>
         </Formik>
       </Box>
     );
   };
 
-  return <>{renderForm()}</>;
+  return <React.Fragment>{renderForm()}</React.Fragment>;
 }
