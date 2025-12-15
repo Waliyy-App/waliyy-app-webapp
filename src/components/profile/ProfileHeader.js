@@ -15,7 +15,6 @@ import {
   cancelMatch,
   getMatch,
   reactToLike,
-  getSubscribedUser,
 } from "../../services";
 import { useAuthContext } from "../../context/AuthContext";
 
@@ -37,7 +36,7 @@ const ProfileHeader = ({
   const [isDashboard, setIsDashboard] = useState(null);
   const [matchDetails, setMatchDetails] = useState(null);
   const [isLiked, setIsLiked] = useState(false); // State to track if profile is liked
-   const { token, user } = useAuthContext();
+  const { token } = useAuthContext();
   const childId = localStorage.getItem("childId");
   const { id } = useParams();
   const isChild = Boolean(childId === id);
@@ -71,36 +70,15 @@ const ProfileHeader = ({
 
   useEffect(() => {
     const getActivePlan = async () => {
-  try {
-    let isActive = false;
-
-    // 1️⃣ Check current plan endpoint (main check)
-    const res1 = await getCurrentPlan(token);
-    //  console.log(res1?.data?.payment?.status);
-
-    if (res1?.data?.payment?.status === "SUCCESS") {
-      isActive = true;
-      setActivePlan(true);
-      return; 
-    }
-
-    // 2️⃣ Check current plan endpoint (Flutterwave) — only runs if first one fails
-    const res2 = await getSubscribedUser(token, user.email);
-    if (res2?.status === "active") {
-      isActive = true;
-    }
-
-    // ✅ Set active plan as boolean (true/false)
-    setActivePlan(isActive);
-
-  } catch (err) {
-    console.error("Error getting active plan:", err);
-    setActivePlan(false);
-  }
-};
-
+      try {
+        const res = await getCurrentPlan(token);
+        setActivePlan(res?.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
     getActivePlan();
-  }, [token, user]);
+  }, [token]);
 
   const handleLike = async () => {
     if (!activePlan) {
