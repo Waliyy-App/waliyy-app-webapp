@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "https://waliyy.onrender.com/api/v1";
+const API_BASE_URL = "https://api.waliyyapp.com/api/v1";
 
 const apiService = axios.create({
   baseURL: API_BASE_URL,
