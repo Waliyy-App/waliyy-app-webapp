@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import SidebarComponent from '../components/sidebar/Sidebar';
 import { FiCheck } from 'react-icons/fi';
+import { FaCrown } from 'react-icons/fa';
 import { usePersistedState } from '../utils.js';
 import MobileNav from '../components/sidebar/MobileBottomNav.js';
 import { getPlans, makePayment } from '../services/index.js';
@@ -116,12 +117,6 @@ const PricingPage = () => {
                     </div>
                     <p className="text-[#667085]">Receive likes from others</p>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="bg-[#dacdff] h-6 w-6 rounded-full flex items-center justify-center">
-                      <FiCheck className="text-[#2D133A]" />
-                    </div>
-                    <p className="text-[#667085]">Add up to 2 singles</p>
-                  </div>
                 </div>
 
                 <button
@@ -138,9 +133,10 @@ const PricingPage = () => {
                   key={index}
                 >
                   <div className="flex flex-col gap-2 items-center">
-                    <p className="text-xl text-[#2D133A] font-bold">
-                      {plan.planName} plan
-                    </p>
+                   <h3 className="flex items-center justify-center gap-2 text-2xl font-bold text-[#2D133A] mb-2">
+                                   Elite
+                                   <FaCrown className="text-yellow-500" />
+                                 </h3>
                     <div className="flex flex-col items-center">
                       <p className="text-4xl text-[#2D133A] font-bold">
                         {plan.currency === 'NGN'
@@ -169,12 +165,6 @@ const PricingPage = () => {
                           <p className="text-[#667085]">{line.trim()}</p>
                         </div>
                       ))}
-                    <div className="flex items-center gap-3">
-                      <div className="bg-[#dacdff] h-6 w-6 rounded-full flex items-center justify-center">
-                        <FiCheck className="text-[#2D133A]" />
-                      </div>
-                      <p className="text-[#667085]">Add up to 4 singles</p>
-                    </div>
                   </div>
 
                   <button
