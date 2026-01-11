@@ -197,7 +197,7 @@ export default function ProfileSetupForm() {
       >
         <div className="flex flex-col mb-8">
           <p className="font-semibold text-2xl text-[#2D133A]">
-            Tell us about your single
+            Tell us about yourself
           </p>
           <p className="text-[#665e6b] text-lg">Setup the Account</p>
         </div>
