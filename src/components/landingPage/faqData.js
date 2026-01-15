@@ -10,12 +10,12 @@ export const faq = [
     question: 'How do I join the platform?',
     answer: 'Click on the sign up button!.',
   },
-  // {
-  //   id: 3,
-  //   question: 'Can I register more than one person?',
-  //   answer:
-  //     'Of course! We at waliyyApp understand that there may be multiple individuals in a family who wish to get married.',
-  // },
+  {
+    id: 3,
+    question: 'Will WaliyyApp help me find a spouse?',
+    answer:
+      'No. WaliyyApp is not a Matchmaking service. We are a meeting platform where subscribers search for suitable spouses by themselves or with the support of their wali/mahram.',
+  },
   // {
   //   id: 10,
   //   question: 'What if i have more than 4 people?',
@@ -57,7 +57,7 @@ export const faq = [
     answer:
       'Yes, you can update most of your information. However, certain details, like your date of birth, cannot be changed directly. If you need to update your date of birth, please send us an email at waliyyapp@gmail.com.',
   },
-   {
+  {
     id: 10,
     question: 'Will I get a refund after subscribtion?',
     answer:
