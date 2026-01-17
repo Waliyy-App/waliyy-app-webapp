@@ -114,6 +114,9 @@ const About = () => {
           WaliyyApp accepts no responsibility for false information provided on
           the app.
         </li>
+        <li>
+          Do not use vulgar, sexual or inappropriate language.
+        </li>
       </ol>
 
       <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-indigo-600 mx-auto rounded-full my-4"></div>
