@@ -21,6 +21,7 @@ const Register = () => {
     lname: "",
     emailAddress: "",
     phoneNumber: "",
+    gender: "",
     password: "",
     confirmPassword: "",
     acceptTerms: false, // Added for terms acceptance
@@ -42,7 +43,10 @@ const Register = () => {
       .matches(phoneRegExp, "Must start with a valid country code")
       .min(10, "Too short")
       .max(15, "Too long")
-      .required("Enter Phone Number"),
+      .required("Required"),
+    gender: Yup.string()
+      .oneOf(["FEMALE", "MALE"], "Invalid Gender")
+      .required("Select Gender"),
     password: Yup.string()
       .min(8, "Must be 8 characters or more")
       .required("Create a password"),
@@ -82,9 +86,12 @@ const Register = () => {
           lastName: values.lname,
           email: values.emailAddress,
           phoneNumber: values.phoneNumber,
+          gender: values.gender,
           password: values.password,
           confirmPassword: values.confirmPassword,
         });
+        localStorage.setItem("temp_gender", values.gender);
+        localStorage.setItem("temp_phone", values.phoneNumber);
         toast.success(data?.message);
         navigate("/verify-email");
       } else {
@@ -111,10 +118,10 @@ const Register = () => {
           </p>
           <div className="flex flex-col gap-2 bg-[#c9b3ff] text-[#2D133A] p-6 text-xl rounded">
             <p className="font-bold">
-              *SISTERS - Register with your Mahram's details, this is the
-              information that will be sent to Brothers interested in you.
+              *SISTERS - Register with your email address and your Wali/Mahram's
+              phone number. You will provide your Wali's name and email after verification.
             </p>
-            <p className="font-bold">*BROTHERS - Register with your details.</p>
+            <p className="font-bold">*BROTHERS - Register with your own details.</p>
           </div>
         </div>
         <Formik
@@ -131,7 +138,41 @@ const Register = () => {
                 name="emailAddress"
                 type="email"
               />
-              <TextInput label="Phone Number*" name="phoneNumber" type="text" />
+              <div className="flex flex-col gap-1">
+                <label className="text-sm font-medium text-[#2D133A]">Gender*</label>
+                <div className="flex gap-4">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="MALE"
+                      checked={values.gender === "MALE"}
+                      onChange={handleChange}
+                      className="accent-[#BA9FFE]"
+                    />
+                    Male
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="FEMALE"
+                      checked={values.gender === "FEMALE"}
+                      onChange={handleChange}
+                      className="accent-[#BA9FFE]"
+                    />
+                    Female
+                  </label>
+                </div>
+                {errors.gender && touched.gender && (
+                  <div className="text-red-600 text-xs">{errors.gender}</div>
+                )}
+              </div>
+              <TextInput
+                label={values.gender === "FEMALE" ? "Wali/Mahram Phone Number*" : "Phone Number*"}
+                name="phoneNumber"
+                type="text"
+              />
 
               <div className="relative">
                 <TextInput

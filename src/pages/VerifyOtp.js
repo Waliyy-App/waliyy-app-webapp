@@ -25,7 +25,7 @@ export default function VerifyOtp() {
 		try {
 			const res = await verifyOtp({ otp: values?.otp });
 			toast.success(res.message);
-			navigate("/login");
+			navigate("/verification-success");
 		} catch (err) {
 			toast.error(err.response.data.message);
 		} finally {

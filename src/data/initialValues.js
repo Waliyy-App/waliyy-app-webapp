@@ -37,6 +37,9 @@ export const initialValues = {
   aboutYou: "",
   aboutEducationAndJob: "",
   dressing: "",
+  waliName: "",
+  waliEmail: "",
+  waliPhoneNumber: "",
 };
 
 export const validationSchema = Yup.object({
@@ -97,34 +100,53 @@ export const validationSchema = Yup.object({
   salat: Yup.string().required("Select your pattern of salat"),
 
   islamicPractice: Yup.string()
-  .required("Tell us about your Islamic practice")
-  .trim()
-  .matches(
-    /^(?!.*(\d{2}|[@+]))[\s\S]+$/,
-    "Don't use '@', '+', or two digits consecutively"
-  ),
+    .required("Tell us about your Islamic practice")
+    .trim()
+    .matches(
+      /^(?!.*(\d{2}|[@+]))[\s\S]+$/,
+      "Don't use '@', '+', or two digits consecutively"
+    ),
 
-aboutYou: Yup.string()
-  .required("Tell us about you")
-  .trim()
-  .matches(
-    /^(?!.*(\d{2}|[@+]))[\s\S]+$/,
-    "Don't use '@', '+', or two digits consecutively"
-  ),
+  aboutYou: Yup.string()
+    .required("Tell us about you")
+    .trim()
+    .matches(
+      /^(?!.*(\d{2}|[@+]))[\s\S]+$/,
+      "Don't use '@', '+', or two digits consecutively"
+    ),
 
   aboutEducationAndJob: Yup.string()
-  .required("Tell us about your education and job")
-  .trim()
-  .matches(
-    /^(?!.*(\d{2}|[@+]))[\s\S]+$/,
-    "Don't use '@', '+', or two digits consecutively"
-  ),
+    .required("Tell us about your education and job")
+    .trim()
+    .matches(
+      /^(?!.*(\d{2}|[@+]))[\s\S]+$/,
+      "Don't use '@', '+', or two digits consecutively"
+    ),
 
-dressing: Yup.string()
-  .required("Tell us about your dressing")
-  .trim()
-  .matches(
-    /^(?!.*(\d{2}|[@+]))[\s\S]+$/,
-    "Don't use '@', '+', or two digits consecutively"
-  ),
+  dressing: Yup.string()
+    .required("Tell us about your dressing")
+    .trim()
+    .matches(
+      /^(?!.*(\d{2}|[@+]))[\s\S]+$/,
+      "Don't use '@', '+', or two digits consecutively"
+    ),
+
+  waliName: Yup.string().when("gender", {
+    is: "FEMALE",
+    then: () => Yup.string().required("Wali Name is required"),
+    otherwise: () => Yup.string().notRequired(),
+  }),
+
+  waliEmail: Yup.string().when("gender", {
+    is: "FEMALE",
+    then: () =>
+      Yup.string().email("Invalid email").required("Wali Email is required"),
+    otherwise: () => Yup.string().notRequired(),
+  }),
+
+  waliPhoneNumber: Yup.string().when("gender", {
+    is: "FEMALE",
+    then: () => Yup.string().required("Wali Phone Number is required"),
+    otherwise: () => Yup.string().notRequired(),
+  }),
 });

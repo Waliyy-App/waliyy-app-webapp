@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
-import { getChild } from '../../services/index.js';
+import { FaCrown } from 'react-icons/fa';
+import { getChild, getCurrentPlan } from '../../services/index.js';
 import { useAuthContext } from '../../context/AuthContext.js';
 import { toast } from 'react-toastify';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
@@ -19,13 +20,14 @@ const Navigation = () => {
   const [loading, setLoading] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [children, setChildren] = useState([]);
+  const [activePlan, setActivePlan] = useState(null);
   const { token, logOut, handleChildId } = useAuthContext();
   const childId = localStorage.getItem('childId');
 
   const goFilter = () => {
     navigate('/filter', { state: { from: '/dashboard' } });
   };
-
+  console.log(activePlan)
   useEffect(() => {
     const fetchChildren = async () => {
       try {
@@ -54,6 +56,18 @@ const Navigation = () => {
 
     getChildDetails();
   }, [childId, token]);
+
+  useEffect(() => {
+    const fetchActivePlan = async () => {
+      try {
+        const res = await getCurrentPlan(token);
+        setActivePlan(res?.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    if (token) fetchActivePlan();
+  }, [token]);
 
   const handleChildLogin = (id) => {
     handleChildId(id);
@@ -96,7 +110,22 @@ const Navigation = () => {
       {loading ? (
         username
       ) : (
-        <p className=" text-2xl font-semibold">{child?.firstName}</p>
+        <div className="flex items-center gap-4">
+          <p className=" text-2xl font-semibold">{child?.firstName}</p>
+          {activePlan ? (
+            <div className={`flex items-center gap-2 px-4 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase shadow-md transition-all duration-300 transform hover:scale-105 ${activePlan.payment.duration === 12
+                ? 'bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#D4AF37] text-white shadow-yellow-200'
+                : 'bg-gradient-to-r from-[#C0C0C0] via-[#D3D3D3] to-[#808080] text-white shadow-gray-200'
+              }`}>
+              <FaCrown className={activePlan.payment.duration === 12 ? 'text-white' : 'text-white'} size={14} />
+              {activePlan.payment.duration === 12 ? 'Gold' : 'Silver'}
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 px-4 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase bg-gradient-to-r from-[#FF416C] to-[#FF4B2B] text-white shadow-md shadow-red-200 animate-pulse">
+              No Active Plan
+            </div>
+          )}
+        </div>
       )}
       <div className="flex gap-4 items-center relative">
         <button
@@ -145,7 +174,7 @@ const Navigation = () => {
               </div>
             )}
 
-          
+
 
             <div className="border border-[#2D133A] w-full mt-10 mb-4"></div>
 

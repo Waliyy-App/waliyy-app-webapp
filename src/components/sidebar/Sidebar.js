@@ -19,9 +19,8 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
     <React.Fragment>
       <div className="h-screen hidden sm:flex ">
         <aside
-          className={` ${
-            isOpen ? 'w-[100px] px-2' : 'w-[280px] px-8'
-          } bg-[#F2EEFB] py-8 flex flex-col justify-between 2xl:justify-start fixed inset-y-0 left-0 h-screen 2xl:h-full transition-all duration-300 overflow-y-auto`}
+          className={` ${isOpen ? 'w-[100px] px-2' : 'w-[280px] px-8'
+            } bg-[#F2EEFB] py-8 flex flex-col justify-between 2xl:justify-start fixed inset-y-0 left-0 h-screen 2xl:h-full transition-all duration-300 overflow-y-auto`}
         >
           <div className="flex flex-col">
             <div className="w-100 flex justify-between items-center transition-all duration-300 mb-11">
@@ -47,52 +46,44 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
             <div className="flex flex-col gap-3">
               <NavLink
                 to="/dashboard"
-                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${
-                  isOpen && 'justify-center'
-                }  ${
-                  location.pathname === '/dashboard'
+                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${isOpen && 'justify-center'
+                  }  ${location.pathname === '/dashboard'
                     ? 'text-white bg-[#BA9FFE] box-shadow-style'
                     : 'text-[#2D133A]'
-                }`}
+                  }`}
               >
                 <AutoAwesomeIcon /> {isOpen ? '' : 'Recommended'}
               </NavLink>
 
               <NavLink
                 to="/likes"
-                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${
-                  isOpen && 'justify-center'
-                }  ${
-                  location.pathname === '/likes'
+                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${isOpen && 'justify-center'
+                  }  ${location.pathname === '/likes'
                     ? 'text-white bg-[#BA9FFE] box-shadow-style'
                     : 'text-[#2D133A]'
-                }`}
+                  }`}
               >
                 <ThumbUpIcon /> {isOpen ? '' : 'Likes'}
               </NavLink>
 
               <NavLink
                 to="/match"
-                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${
-                  isOpen && 'justify-center'
-                }  ${
-                  location.pathname === '/match'
+                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${isOpen && 'justify-center'
+                  }  ${location.pathname === '/match'
                     ? 'text-white bg-[#BA9FFE] box-shadow-style'
                     : 'text-[#2D133A]'
-                }`}
+                  }`}
               >
                 <FavoriteIcon /> {isOpen ? '' : 'Match'}
               </NavLink>
 
               <NavLink
                 to="/explore"
-                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${
-                  isOpen && 'justify-center'
-                }  ${
-                  location.pathname === '/explore'
+                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${isOpen && 'justify-center'
+                  }  ${location.pathname === '/explore'
                     ? 'text-white bg-[#BA9FFE] box-shadow-style'
                     : 'text-[#2D133A]'
-                }`}
+                  }`}
               >
                 <PersonSearchIcon /> {isOpen ? '' : 'Explore'}
               </NavLink>
@@ -100,13 +91,11 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
               <NavLink
                 to={`/profile/${childId}`}
                 state={{ from: 'profile' }}
-                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 cursor-pointer ${
-                  isOpen && 'justify-center'
-                }  ${
-                  location.pathname === `/profile/${childId}`
+                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 cursor-pointer ${isOpen && 'justify-center'
+                  }  ${location.pathname === `/profile/${childId}`
                     ? 'text-white bg-[#BA9FFE] box-shadow-style'
                     : 'text-[#2D133A]'
-                }`}
+                  }`}
               >
                 <AccountBoxIcon />
                 {isOpen ? '' : 'Profile'}
@@ -115,13 +104,11 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
               <NavLink
                 to={`/settings`}
                 state={{ from: 'profile' }}
-                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 cursor-pointer ${
-                  isOpen && 'justify-center'
-                }  ${
-                  location.pathname === `/settings`
+                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 cursor-pointer ${isOpen && 'justify-center'
+                  }  ${location.pathname === `/settings`
                     ? 'text-white bg-[#BA9FFE] box-shadow-style'
                     : 'text-[#2D133A]'
-                }`}
+                  }`}
               >
                 <SettingsIcon />
                 {isOpen ? '' : 'Settings'}

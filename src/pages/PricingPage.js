@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import SidebarComponent from '../components/sidebar/Sidebar';
 import { FiCheck } from 'react-icons/fi';
@@ -16,7 +17,11 @@ const PricingPage = () => {
   // const [count, setCount] = useState(false);
   const [plans, setPlans] = useState([]);
   const { token } = useAuthContext();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const interval = queryParams.get('interval') || 'annual'; // default to annual if not specified
 
+  console.log(plans)
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -80,9 +85,8 @@ const PricingPage = () => {
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
       <main
-        className={`${
-          isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
-        } flex-1 overflow-y-auto transition-all duration-300 bg-[#d4c4fb1d]`}
+        className={`${isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
+          } flex-1 overflow-y-auto transition-all duration-300 bg-[#d4c4fb1d]`}
       >
         <Navigation />
         {loading ? (
@@ -127,63 +131,63 @@ const PricingPage = () => {
                 </button>
               </div>
 
-              {plans?.map((plan, index) => (
-                <div
-                  className="w-[400px] bg-[#F9FAFB] rounded-lg p-8"
-                  key={index}
-                >
-                  <div className="flex flex-col gap-2 items-center">
-                   <h3 className="flex items-center justify-center gap-2 text-2xl font-bold text-[#2D133A] mb-2">
-                                   Elite
-                                   <FaCrown className="text-yellow-500" />
-                                 </h3>
-                    <div className="flex flex-col items-center">
-                      <p className="text-4xl text-[#2D133A] font-bold">
-                        {plan.currency === 'NGN'
-                          ? '₦'
-                          : plan.currency === 'USD'
-                          ? '$'
-                          : '£'}
-                        {plan.amount}/annum
+              {plans
+                ?.filter((plan) => {
+                  return plan.interval === interval;
+                })
+                .map((plan, index) => (
+                  <div
+                    className="w-[400px] bg-[#F9FAFB] rounded-lg p-8"
+                    key={index}
+                  >
+                    <div className="flex flex-col gap-2 items-center">
+                      <h3 className="flex items-center justify-center gap-2 text-2xl font-bold text-[#2D133A] mb-2">
+                        {interval === 'annual' ? 'Gold' : 'Silver'}
+                        <FaCrown className={interval === 'annual' ? 'text-yellow-500' : 'text-gray-400'} />
+                      </h3>
+                      <div className="flex flex-col items-center">
+                        <p className="text-4xl text-[#2D133A] font-bold">
+                          {plan.currency === 'NGN'
+                            ? '₦'
+                            : plan.currency === 'USD'
+                              ? '$'
+                              : '£'}
+                          {plan.amount}/{interval === 'annual' ? 'annum' : 'month'}
+                        </p>
+                      </div>
+
+                      <p className="text-[#667085]">
+                        Do so much more than just browsing.
                       </p>
                     </div>
 
-                    <p className="text-[#667085]">
-                      Do so much more than just browsing.
-                    </p>
-                  </div>
-
-                  <div className="flex flex-col pt-8 pb-10 gap-4">
-                    {plan.planDescription
-                      .trim()
-                      .split('\n')
-                      .map((line, index) => (
-                        <div key={index} className="flex items-center gap-3">
-                          <div className="bg-[#dacdff] h-6 w-6 rounded-full flex items-center justify-center">
-                            <FiCheck className="text-[#2D133A]" />
+                    <div className="flex flex-col pt-8 pb-10 gap-4">
+                      {plan.planDescription
+                        .trim()
+                        .split('\n')
+                        .map((line, index) => (
+                          <div key={index} className="flex items-center gap-3">
+                            <div className="bg-[#dacdff] h-6 w-6 rounded-full flex items-center justify-center">
+                              <FiCheck className="text-[#2D133A]" />
+                            </div>
+                            <p className="text-[#667085]">{line.trim()}</p>
                           </div>
-                          <p className="text-[#667085]">{line.trim()}</p>
-                        </div>
-                      ))}
-                  </div>
+                        ))}
+                    </div>
 
-                  <button
-                    className="w-full text-white font-semibold hover:bg-[#a37eff] bg-[#BA9FFE] h-12 rounded-lg transition-all duration-300"
-                    onClick={() =>
-                      handlePayment(
-                        plan?.currency === 'NGN'
-                          ? 'paystack'
-                          : plan?.currency === 'USD'
-                          ? 'paystack'
-                          : 'paystack',
-                        plan?._id
-                      )
-                    }
-                  >
-                    Get Started
-                  </button>
-                </div>
-              ))}
+                    <button
+                      className="w-full text-white font-semibold hover:bg-[#a37eff] bg-[#BA9FFE] h-12 rounded-lg transition-all duration-300"
+                      onClick={() =>
+                        handlePayment(
+                          'paystack',
+                          plan?._id
+                        )
+                      }
+                    >
+                      Get Started
+                    </button>
+                  </div>
+                ))}
             </div>
           </div>
         )}

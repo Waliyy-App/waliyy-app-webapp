@@ -4,7 +4,7 @@ import { Navigate, Outlet, useLocation } from "react-router";
 import { decodeToken } from "../utils.js";
 
 const ProtectedRoute = () => {
-  const { user, isLoggedIn, token, logOut, authLoading } = useAuthContext();
+  const { user, isLoggedIn, token, logOut, authLoading, data } = useAuthContext();
   const location = useLocation();
 
   const checkTokenExpiration = () => {
@@ -23,6 +23,17 @@ const ProtectedRoute = () => {
   if (authLoading) return null;
 
   const isValidated = Boolean(user) && isLoggedIn && checkTokenExpiration();
+
+  // Profile completion check
+  const hasProfile = data?.children && data.children.length > 0;
+  const isAllowedPath =
+    location.pathname === "/get-started" ||
+    location.pathname === "/profile-required" ||
+    location.pathname === "/verification-success";
+
+  if (isValidated && !hasProfile && !isAllowedPath) {
+    return <Navigate to="/profile-required" replace />;
+  }
 
   return isValidated ? (
     <Outlet />
