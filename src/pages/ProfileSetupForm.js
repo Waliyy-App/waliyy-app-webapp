@@ -165,7 +165,6 @@ export default function ProfileSetupForm() {
       handleChildId(res?.data);
 
       // Update local storage and context data with the new child
-      const userData = JSON.parse(localStorage.getItem("user"));
       const currentChildren = JSON.parse(localStorage.getItem("children")) || [];
       const newChildren = [...currentChildren, { id: res?.data, firstName: values.firstName }]; // Minimal data needed
 
