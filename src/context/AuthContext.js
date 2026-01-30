@@ -5,8 +5,8 @@ import { decodeToken } from "../utils.js";
 export const AuthContext = React.createContext({
   isLoggedIn: false,
   token: "",
-  storeAuthCookie: (data) => {},
-  logOut: () => {},
+  storeAuthCookie: (data) => { },
+  logOut: () => { },
 });
 
 export const AuthContextProvider = ({ children }) => {
@@ -40,6 +40,7 @@ export const AuthContextProvider = ({ children }) => {
       maxAge: 3600 * 24 * 1, // 1 day
     });
     localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("children", JSON.stringify(data.children)); // 🆕 Persist children
     setUser(data.user);
     setData(data);
     setIsLoggedIn(true);
@@ -58,7 +59,9 @@ export const AuthContextProvider = ({ children }) => {
         setToken(cookies.waliyy_user);
         setIsLoggedIn(true);
         const userData = JSON.parse(localStorage.getItem("user"));
+        const childrenData = JSON.parse(localStorage.getItem("children")); // 🆕 Retrieve children
         setUser(userData);
+        setData((prev) => ({ ...prev, children: childrenData })); // 🆕 Set children in data
         checkTokenExpiration();
       }
       setAuthLoading(false);

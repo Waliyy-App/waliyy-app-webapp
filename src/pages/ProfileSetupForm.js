@@ -155,14 +155,27 @@ export default function ProfileSetupForm() {
           about: values.aboutYou,
           aboutEducationAndJob: values.aboutEducationAndJob,
           aboutDressing: values.dressing,
-          isPolygamous: values.isPolygamous
+          isPolygamous: values.isPolygamous,
+          waliName: values.waliName,
+          waliEmail: values.waliEmail,
+          waliPhoneNumber: values.waliPhoneNumber,
         },
         token
       );
       handleChildId(res?.data);
+
+      // Update local storage and context data with the new child
+      const currentChildren = JSON.parse(localStorage.getItem("children")) || [];
+      const newChildren = [...currentChildren, { id: res?.data, firstName: values.firstName }]; // Minimal data needed
+
+      localStorage.setItem("children", JSON.stringify(newChildren));
+      // You might need a way to update the context data here directly if 'setData' is available in context
+      // For now, reload or navigation will trigger InitAuth which reads from localStorage
+
       toast.success(res?.message);
       localStorage.removeItem(LOCAL_STORAGE_KEY);
       setFormData(initialValues);
+      navigate("/select-plan");
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {

@@ -15,7 +15,7 @@ const SplashScreen = () => {
       else if (data?.children?.length === 1) {
         handleChildId(data?.children?.[0]?.id);
         navigate('/dashboard');
-      } else navigate('/get-started', { state: { from: '/login-successful' } });
+      } else navigate('/profile-required');
     }, 5000);
     return () => clearTimeout(timeoutId);
   }, [data, handleChildId, navigate]);

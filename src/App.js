@@ -42,6 +42,9 @@ import BlogPostPage from './pages/BlogPostPage';
 import Terms from './pages/Terms.js';
 //import MaintenanceNotice from './common/MaintananceNotice.js';
 import NotionTest from './services/NotionTest.js';
+import ProfileRequired from './pages/ProfileRequired.js';
+import VerificationSuccess from './pages/VerificationSuccess.js';
+import SelectPlanType from './pages/SelectPlanType.js';
 
 
 
@@ -65,7 +68,7 @@ function App() {
   const navigate = useNavigate();
   const { token } = useAuthContext();
   const [activePlan, setActivePlan] = useState(null);
- console.log(activePlan)
+  console.log(activePlan)
   useEffect(() => {
     const fetchActivePlan = async () => {
       try {
@@ -90,14 +93,16 @@ function App() {
           <Routes>
             <Route exact path="/" element={<LandingPage />} />
             <Route exact path="/about" element={<AboutLandingPage />} />
-            <Route exact path="/resources" element={<ResourcePage />} /> 
-            <Route exact path="/blog" element={<Blogpage />} /> 
-            <Route exact path="/terms" element={<Terms />} /> 
+            <Route exact path="/resources" element={<ResourcePage />} />
+            <Route exact path="/blog" element={<Blogpage />} />
+            <Route exact path="/terms" element={<Terms />} />
             {/* <Route exact path="/notice" element={<MaintenanceNotice />} />  */}
-             <Route path="/blog/:slug" element={<BlogPostPage />} />
-             <Route path="/test" element={<NotionTest />} />
+            <Route path="/blog/:slug" element={<BlogPostPage />} />
+            <Route path="/test" element={<NotionTest />} />
             <Route exact path="*" element={<NoPage />} />
-            
+            <Route exact path="/profile-required" element={<ProfileRequired />} />
+            <Route exact path="/verification-success" element={<VerificationSuccess />} />
+
 
             <Route element={<UnProtectedRoute />}>
               <Route exact path="/sign-up" element={<Register />} />
@@ -122,15 +127,16 @@ function App() {
               <Route
                 exact
                 path="/likes"
-                element={activePlan ? <LikePage /> : <PricingPage />}
+                element={activePlan ? <LikePage /> : <SelectPlanType />}
               />
               <Route
                 exact
                 path="/match"
-                element={activePlan ? <MatchPage /> : <PricingPage />}
+                element={activePlan ? <MatchPage /> : <SelectPlanType />}
               />
               <Route exact path="/settings" element={<SettingsPage />} />
               <Route exact path="/pricing" element={<PricingPage />} />
+              <Route exact path="/select-plan" element={<SelectPlanType />} />
               <Route
                 exact
                 path="/confirm-payment"

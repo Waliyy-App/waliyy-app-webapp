@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useFormikContext } from 'formik';
 import { TextInput, SelectInput } from '../../common/form';
 import { genotypeOption, maritalStatusOption } from '../../data/formValues';
 import Modal from '../../common/Modal';
@@ -6,6 +7,7 @@ import HeightConverter from './HeightConverter';
 import WeightConverter from './WeightConverter';
 
 export default function PersonalDetailsForm() {
+  const { values } = useFormikContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [isModalBOpen, setIsModalBOpen] = useState(false);
@@ -125,6 +127,20 @@ export default function PersonalDetailsForm() {
             </SelectInput>
           </div>
         </div>
+
+        {values.gender === 'FEMALE' && (
+          <div className="flex flex-col gap-6 p-6 bg-purple-50 rounded-2xl border border-purple-100">
+            <p className="text-[#2D133A] text-lg font-bold">Wali/Mahram Information</p>
+            <div className="flex flex-col sm:flex-row justify-between gap-12">
+              <TextInput label="Wali Name*" name="waliName" type="text" />
+              <TextInput label="Wali Email*" name="waliEmail" type="email" />
+            </div>
+            <div className="flex flex-col sm:flex-row justify-between gap-12">
+              <TextInput label="Wali Phone Number*" name="waliPhoneNumber" type="text" />
+              <div className="w-full"></div> {/* Spacer */}
+            </div>
+          </div>
+        )}
       </div>
 
       <Modal isOpen={isModalOpen}>
