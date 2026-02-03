@@ -5,9 +5,11 @@ import { genotypeOption, maritalStatusOption } from '../../data/formValues';
 import Modal from '../../common/Modal';
 import HeightConverter from './HeightConverter';
 import WeightConverter from './WeightConverter';
+import { useAuthContext } from '../../context/AuthContext';
 
 export default function PersonalDetailsForm() {
   const { values } = useFormikContext();
+  const { user } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [isModalBOpen, setIsModalBOpen] = useState(false);
@@ -36,11 +38,7 @@ export default function PersonalDetailsForm() {
 
         <div className="flex flex-col sm:flex-row justify-between gap-12">
           <TextInput label="Date of Birth*" name="dateOfBirth" type="date" />
-          <SelectInput label="Gender*" name="gender">
-            <option value="">Select option</option>
-            <option value="FEMALE">Female</option>
-            <option value="MALE">Male</option>
-          </SelectInput>
+          <div className="w-full"></div> {/* Spacer */}
         </div>
 
         <div className="flex flex-col sm:flex-row justify-between gap-12">
@@ -128,7 +126,7 @@ export default function PersonalDetailsForm() {
           </div>
         </div>
 
-        {values.gender === 'FEMALE' && (
+        {user?.gender === 'FEMALE' && (
           <div className="flex flex-col gap-6 p-6 bg-purple-50 rounded-2xl border border-purple-100">
             <p className="text-[#2D133A] text-lg font-bold">Wali/Mahram Information</p>
             <div className="flex flex-col sm:flex-row justify-between gap-12">
