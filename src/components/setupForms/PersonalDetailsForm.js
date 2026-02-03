@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useFormikContext } from 'formik';
 import { TextInput, SelectInput } from '../../common/form';
 import { genotypeOption, maritalStatusOption } from '../../data/formValues';
 import Modal from '../../common/Modal';
@@ -8,7 +7,6 @@ import WeightConverter from './WeightConverter';
 import { useAuthContext } from '../../context/AuthContext';
 
 export default function PersonalDetailsForm() {
-  const { values } = useFormikContext();
   const { user } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
