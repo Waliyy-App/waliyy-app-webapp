@@ -103,7 +103,7 @@ export default function ProfileSetupForm() {
     completed: false,
     loading: false,
   });
-  const { token, handleChildId } = useAuthContext();
+  const { token, handleChildId, user } = useAuthContext();
 
   const handleSubmit = async (values) => {
     setState((prevState) => ({ ...prevState, loading: true }));
@@ -123,7 +123,7 @@ export default function ProfileSetupForm() {
           lastName: values.lastName,
           yearOfBirth: getYear,
           monthOfBirth: getMonth,
-          gender: values.gender,
+          gender: user?.gender,
           genotype: values.genotype,
           height: values.height,
           weight: values.weight,
@@ -175,9 +175,9 @@ export default function ProfileSetupForm() {
       toast.success(res?.message);
       localStorage.removeItem(LOCAL_STORAGE_KEY);
       setFormData(initialValues);
-      navigate("/select-plan");
+      navigate("/dashboard");
     } catch (error) {
-      toast.error(error?.response?.data?.message);
+      toast.error(error?.response?.data?.message || "An error occurred during registration");
     } finally {
       setState((prevState) => ({ ...prevState, loading: false }));
     }

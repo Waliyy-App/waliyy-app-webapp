@@ -174,7 +174,11 @@ const Footer = () => {
               <a href="mailto:waliyyapp@gmail.com">waliyyapp@gmail.com</a>
             </div>
 
-            {/* Phone Number */}
+            {/* Phone Numbers */}
+            <div className="flex items-center mb-3 text-gray-300 hover:text-white transition-colors">
+              <FaPhone className="mr-2 text-[#BA9FFE]" />
+              <a href="https://wa.me/447440764400" target="_blank" rel="noreferrer">+44 7440 764400 (WhatsApp Messages only)</a>
+            </div>
             <div className="flex items-center text-gray-300 hover:text-white transition-colors">
               <FaPhone className="mr-2 text-[#BA9FFE]" />
               <a href="tel:+2348108202722">+234 810 820 2722</a>

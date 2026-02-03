@@ -4,7 +4,6 @@ export const initialValues = {
   firstName: "",
   lastName: "",
   dateOfBirth: "",
-  gender: "",
   genotype: "",
   height: "",
   weight: "",
@@ -66,9 +65,6 @@ export const validationSchema = Yup.object({
       return age >= 18;
     }),
 
-  gender: Yup.string()
-    .oneOf(["FEMALE", "MALE"], "Invalid Gender")
-    .required("Select your gender"),
 
   genotype: Yup.string().required("Select your genotype"),
   height: Yup.number().required("Height is required"),
@@ -131,22 +127,7 @@ export const validationSchema = Yup.object({
       "Don't use '@', '+', or two digits consecutively"
     ),
 
-  waliName: Yup.string().when("gender", {
-    is: "FEMALE",
-    then: () => Yup.string().required("Wali Name is required"),
-    otherwise: () => Yup.string().notRequired(),
-  }),
-
-  waliEmail: Yup.string().when("gender", {
-    is: "FEMALE",
-    then: () =>
-      Yup.string().email("Invalid email").required("Wali Email is required"),
-    otherwise: () => Yup.string().notRequired(),
-  }),
-
-  waliPhoneNumber: Yup.string().when("gender", {
-    is: "FEMALE",
-    then: () => Yup.string().required("Wali Phone Number is required"),
-    otherwise: () => Yup.string().notRequired(),
-  }),
+  waliName: Yup.string().optional(),
+  waliEmail: Yup.string().email("Invalid email").optional(),
+  waliPhoneNumber: Yup.string().optional(),
 });
