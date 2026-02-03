@@ -106,22 +106,22 @@ const Navigation = () => {
   );
 
   return (
-    <div className="flex justify-between items-center p-8 shadow-xl text-[#2D133A] sticky top-0 bg-white w-full z-[100]">
+    <div className="flex justify-between items-center p-4 sm:p-8 shadow-xl text-[#2D133A] sticky top-0 bg-white w-full z-[100]">
       {loading ? (
         username
       ) : (
-        <div className="flex items-center gap-4">
-          <p className=" text-2xl font-semibold">{child?.firstName}</p>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-4">
+          <p className="text-xl sm:text-2xl font-semibold leading-none">{child?.firstName}</p>
           {activePlan ? (
-            <div className={`flex items-center gap-2 px-4 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase shadow-md transition-all duration-300 transform hover:scale-105 ${activePlan.payment.duration === 12
-                ? 'bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#D4AF37] text-white shadow-yellow-200'
-                : 'bg-gradient-to-r from-[#C0C0C0] via-[#D3D3D3] to-[#808080] text-white shadow-gray-200'
+            <div className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-black tracking-wider uppercase shadow-md transition-all duration-300 transform hover:scale-105 ${activePlan.payment.duration === 12
+              ? 'bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#D4AF37] text-white shadow-yellow-200'
+              : 'bg-gradient-to-r from-[#C0C0C0] via-[#D3D3D3] to-[#808080] text-white shadow-gray-200'
               }`}>
-              <FaCrown className={activePlan.payment.duration === 12 ? 'text-white' : 'text-white'} size={14} />
+              <FaCrown className="text-white" size={12} sm={14} />
               {activePlan.payment.duration === 12 ? 'Gold' : 'Silver'}
             </div>
           ) : (
-            <div className="flex items-center gap-2 px-4 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase bg-gradient-to-r from-[#FF416C] to-[#FF4B2B] text-white shadow-md shadow-red-200 animate-pulse">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-black tracking-wider uppercase bg-gradient-to-r from-[#FF416C] to-[#FF4B2B] text-white shadow-md shadow-red-200 animate-pulse">
               No Active Plan
             </div>
           )}

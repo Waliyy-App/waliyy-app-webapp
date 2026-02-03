@@ -152,7 +152,7 @@ const PricingPage = () => {
                             : plan.currency === 'USD'
                               ? '$'
                               : '£'}
-                          {plan.amount}/{interval === 'annual' ? 'annum' : 'month'}
+                          {Number(plan.amount).toLocaleString()}/{interval === 'annual' ? 'annum' : 'month'}
                         </p>
                       </div>
 
