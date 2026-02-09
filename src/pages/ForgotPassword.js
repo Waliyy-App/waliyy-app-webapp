@@ -29,6 +29,7 @@ const ForgotPassword = () => {
 				email: values.email,
 			});
 			toast.success(res?.message);
+			localStorage.setItem('resetEmail', values.email);
 			navigate("/reset-password");
 		} catch (error) {
 			toast.error(error.response.data.message);
