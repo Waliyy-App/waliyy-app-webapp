@@ -81,41 +81,60 @@ const About = () => {
       </div>
 
       <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-indigo-600 mx-auto rounded-full my-4"></div>
-      <h2 className="text-3xl text-center font-bold">Rules of WaliyyApp</h2>
+      <h2 className="text-3xl text-center font-bold">Guidelines for WaliyyApp</h2>
       <ol className="flex flex-col gap-6 text-lg mb-10 list-decimal list-outside px-6">
         <li>
-          Have the consciousness of Allah with all your dealings and be honest
-          while utilizing our services.
+          <strong>Consciousness of Allah</strong>: Maintain the consciousness
+          of Allah in all your dealings and be honest while utilizing our
+          services.
         </li>
         <li>
-          Provide complete and sincere information about each candidate as per
-          the approved template.
+          <strong>Complete Your Profile</strong>: Provide complete and sincere
+          information about yourself. This is your first step to finding a
+          prospective spouse, so put your best self forward. Please note that
+          access to the platform will be denied for incomplete profiles.
         </li>
         <li>
-          While the platform is open to everyone, only the mahaarim's contact
-          will be shared with the male candidate in case of interest.
+          <strong>Respond Swiftly</strong>: Respond swiftly to LIKES and
+          interest. Be respectful and let others know whether you are
+          interested in them or not. Your swift response keeps the app
+          functioning smoothly and prevents ghosting. Persistent non-response
+          will lead to removal from the app (with no refund).
         </li>
         <li>
-          This web link can be shared to invite only Muslims of Nigerian
-          heritage.
+          <strong>Mahaarim's Role</strong>: While the platform is open to
+          everyone, only the mahram's contact details will be shared with the
+          male candidate in case of mutual interest.
         </li>
         <li>
-          We recognise that our level of imaan and understanding is different
-          and we encourage you to follow the guidance of the Qur’an and Sunnah
-          when utilizing our app and be tolerant towards others.
+          <strong>Community Focus</strong>: This platform is designed for
+          Muslims of Nigerian heritage. Please share this link only with those
+          who meet this criteria.
         </li>
         <li>
-          We highly recommend that you contact your local mosque and seek
-          further guidance/counselling towards the finalisation of your nikah
-          contract.
+          <strong>Follow Guidance</strong>: We encourage you to follow the
+          guidance of the Qur’an and Sunnah when utilizing our app and be
+          tolerant towards others.
         </li>
         <li>
-          We advise you to be diligent in researching prospective candidates,
-          WaliyyApp accepts no responsibility for false information provided on
-          the app.
+          <strong>Professional Advice</strong>: We highly recommend contacting
+          your local mosque for further guidance and counselling towards the
+          finalisation of your nikah contract.
         </li>
         <li>
-          Do not use vulgar, sexual or inappropriate language.
+          <strong>Diligence & Responsibility</strong>: Be diligent in
+          researching prospective candidates. WaliyyApp accepts no
+          responsibility for false information provided by users.
+        </li>
+        <li>
+          <strong>Respectful Communication</strong>: Avoid using vulgar,
+          sexual, or inappropriate language. Use beautiful, respectful
+          descriptions for yourself and potential spouses. Non-compliance will
+          lead to your account being closed (with no refund).
+        </li>
+        <li>
+          <strong>Check Your Spam</strong>: Regularly check your email spam
+          folder in case you miss important messages or notifications from WA.
         </li>
       </ol>
 

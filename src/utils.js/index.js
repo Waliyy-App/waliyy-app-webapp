@@ -56,10 +56,26 @@ export const useResetScrollPosition = () => {
 	return null;
 };
 
+
 export const decodeToken = (token) => {
 	try {
 		return JSON.parse(atob(token.split(".")[1]));
 	} catch (e) {
 		return null;
 	}
+};
+
+/**
+ * Shuffles an array in place using the Fisher-Yates algorithm.
+ * @param {Array} array 
+ * @returns {Array} Shuffled array
+ */
+export const shuffleArray = (array) => {
+	if (!Array.isArray(array)) return array;
+	const shuffled = [...array];
+	for (let i = shuffled.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+	}
+	return shuffled;
 };

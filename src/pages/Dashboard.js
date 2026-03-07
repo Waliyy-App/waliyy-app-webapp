@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { toast } from "react-toastify";
 import SidebarComponent from "../components/sidebar/Sidebar";
-import { usePersistedState } from "../utils.js";
+import { usePersistedState, shuffleArray } from "../utils.js";
 import MobileNav from "../components/sidebar/MobileBottomNav.js";
 import ProfileCard from "../components/ProfileCard.js";
 import { useAuthContext } from "../context/AuthContext.js";
@@ -9,7 +9,7 @@ import { getRecommedations } from "../services";
 import Loader from "../components/Loader.js";
 import Navigation from "../components/sidebar/Navigation.js";
 // Icons
-import { FaFrown, FaArrowUp } from "react-icons/fa";
+import { FaFrown, FaArrowUp, FaSearch, FaTimes } from "react-icons/fa";
 
 const Dashboard = () => {
   // Pagination configuration
@@ -21,12 +21,12 @@ const Dashboard = () => {
 
   // Loading indicator
   const [loading, setLoading] = useState(false);
+  const [searchLoading, setSearchLoading] = useState(false);
 
   // Profile data states
   const [profiles, setProfiles] = useState([]);         // Paginated profiles
   const [allProfiles, setAllProfiles] = useState([]);   // All profiles (used for searching)
   const [filteredProfiles, setFilteredProfiles] = useState([]); // Filtered results (search/pagination)
-console.log(filteredProfiles)
   // Total count of recommendations
   const [totalCount, setTotalCount] = useState(0);
 
@@ -52,84 +52,52 @@ console.log(filteredProfiles)
   const [hasRenderedOnce, setHasRenderedOnce] = useState(false);
 
   /**
-   * Fetches *all* recommendations (mainly for searching purposes)
+   * Fetch all recommendations and initialize local pagination
    */
-  const fetchAllRecommendations = useCallback(async () => {
+  const fetchRecommendations = useCallback(async () => {
+    setLoading(true);
     try {
-      const res = await getRecommedations(
-        childId,
-        token,
-        1,
-        totalCount || 1000 // Get all available profiles
-      );
+      // Fetch a large limit to grab all profiles at once
+      const res = await getRecommedations(childId, token, 1, 1000);
       const data = res?.data?.recommendations || [];
-      setAllProfiles(data);
+      const total = res?.data?.totalCount || data.length;
+
+      setTotalCount(total);
+
+      // Shuffling the entire pool provides true random distribution
+      const shuffledData = shuffleArray(data);
+      setAllProfiles(shuffledData);
+
+      // Calculate total pages for pagination
+      const calculatedTotalPages = Math.ceil(total / ITEMS_PER_PAGE);
+      setTotalPages(calculatedTotalPages);
+
     } catch (error) {
       toast.error(
-        error?.response?.data?.message || "Error fetching all recommendations"
+        error?.response?.data?.message || "Error fetching recommendations"
       );
+    } finally {
+      setLoading(false);
+      setHasRenderedOnce(true);
     }
-  }, [childId, token, totalCount]);
-
-  /**
-   * Fetch paginated recommendations for the current page
-   */
-  const fetchRecommendations = useCallback(
-    async (page) => {
-      setLoading(true);
-      try {
-        const res = await getRecommedations(childId, token, page, ITEMS_PER_PAGE);
-        const data = res?.data?.recommendations || [];
-        const total = res?.data?.totalCount || 0;
-
-        setTotalCount(total);
-
-        // Calculate total pages for pagination
-        const calculatedTotalPages = Math.ceil(total / ITEMS_PER_PAGE);
-        setTotalPages(calculatedTotalPages);
-
-        // Avoid duplicate profiles by checking IDs
-        setProfiles((prev) => {
-          const existingIds = new Set(prev?.map((p) => p?.id));
-          const newProfiles = data?.filter((p) => !existingIds?.has(p.id));
-          return [...prev, ...newProfiles];
-        });
-
-        // For displaying in the grid (current page only)
-        setFilteredProfiles(data);
-
-        // Save the current page in session storage
-        sessionStorage.setItem("dashboardPage", page);
-      } catch (error) {
-        toast.error(
-          error?.response?.data?.message || "Error fetching recommendations"
-        );
-      } finally {
-        setLoading(false);
-        setHasRenderedOnce(true);
-      }
-    },
-    [childId, token, ITEMS_PER_PAGE]
-  );
+  }, [childId, token, ITEMS_PER_PAGE]);
 
   // Fetch recommendations on component mount
   useEffect(() => {
-    fetchRecommendations(currentPage);
+    fetchRecommendations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Fetch all recommendations once totalCount is known
-  useEffect(() => {
-    if (totalCount > 0) {
-      fetchAllRecommendations();
-    }
-  }, [totalCount, fetchAllRecommendations]);
-
-  // Handle search filtering
+  // Handle search streaming & pagination
   useEffect(() => {
     if (searchTerm.trim() === "") {
       // Show current paginated results when search is empty
-      setFilteredProfiles(profiles);
+      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+      const endIndex = startIndex + ITEMS_PER_PAGE;
+      const currentSlice = allProfiles.slice(startIndex, endIndex);
+
+      setProfiles(currentSlice);
+      setFilteredProfiles(currentSlice);
     } else {
       // Filter all profiles by displayId
       const filtered = allProfiles.filter(
@@ -139,7 +107,7 @@ console.log(filteredProfiles)
       );
       setFilteredProfiles(filtered);
     }
-  }, [searchTerm, profiles, allProfiles]);
+  }, [searchTerm, allProfiles, currentPage, ITEMS_PER_PAGE]);
 
   // Restore scroll position when navigating back to this page
   useEffect(() => {
@@ -167,7 +135,7 @@ console.log(filteredProfiles)
     sessionStorage.setItem("scrollPos", String(window.scrollY));
 
     setCurrentPage(newPage);
-    await fetchRecommendations(newPage);
+    sessionStorage.setItem("dashboardPage", String(newPage));
 
     // Scroll to top for better user experience
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -219,9 +187,8 @@ console.log(filteredProfiles)
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
 
       <main
-        className={`${
-          isOpen ? "ml-0 sm:ml-[100px]" : "ml-0 sm:ml-[280px]"
-        } w-full transition-all duration-300 bg-[#d4c4fb1d] min-h-screen`}
+        className={`${isOpen ? "ml-0 sm:ml-[100px]" : "ml-0 sm:ml-[280px]"
+          } w-full transition-all duration-300 bg-[#d4c4fb1d] min-h-screen`}
       >
         <Navigation />
 
@@ -230,6 +197,35 @@ console.log(filteredProfiles)
           <Loader />
         ) : (
           <div className="px-4 sm:px-8 py-[64px] flex flex-col gap-y-8">
+            {/* Search Bar */}
+            <div className="relative max-w-md mx-auto w-full">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <FaSearch className="w-5 h-5 text-gray-500" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search by User ID..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#BA9FFE] focus:border-transparent outline-none transition-all"
+                />
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm("")}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                  >
+                    <FaTimes className="w-5 h-5 text-gray-500 hover:text-gray-700" />
+                  </button>
+                )}
+              </div>
+              {searchLoading && (
+                <div className="absolute inset-x-0 bottom-0 flex justify-center">
+                  <div className="w-6 h-6 border-t-2 border-r-2 border-[#BA9FFE] rounded-full animate-spin"></div>
+                </div>
+              )}
+            </div>
+
             {/* Results Count */}
             <div className="text-center">
               {searchTerm ? (
@@ -321,11 +317,10 @@ console.log(filteredProfiles)
                     <button
                       key={page}
                       onClick={() => handlePageChange(page)}
-                      className={`px-3 py-2 rounded-lg border transition-colors ${
-                        page === currentPage
-                          ? "border-[#BA9FFE] bg-[#BA9FFE] text-white"
-                          : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
-                      }`}
+                      className={`px-3 py-2 rounded-lg border transition-colors ${page === currentPage
+                        ? "border-[#BA9FFE] bg-[#BA9FFE] text-white"
+                        : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                        }`}
                     >
                       {page}
                     </button>

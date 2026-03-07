@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { toast } from "react-toastify";
 import SidebarComponent from "../components/sidebar/Sidebar";
-import { usePersistedState } from "../utils.js";
+import { usePersistedState, shuffleArray } from "../utils.js";
 import MobileNav from "../components/sidebar/MobileBottomNav.js";
 import ProfileCard from "../components/ProfileCard.js";
 import { useAuthContext } from "../context/AuthContext.js";
@@ -33,72 +33,55 @@ const Explore = () => {
   const hasRestoredScroll = useRef(false);
   const { token } = useAuthContext();
 
-  // Fetch all users for searching
-  const fetchAllUsers = useCallback(async () => {
-    setSearchLoading(true);
+  // Fetch all users and initialize local pagination
+  const fetchUsers = useCallback(async () => {
+    setLoading(true);
     try {
-      const res = await getAllUsers(token, 1, totalCount || 1000); // Use a large limit to get all users
+      // Fetch a large limit to grab all profiles at once
+      const res = await getAllUsers(token, 1, 1000);
       const data = res?.data?.children || [];
-      setAllProfiles(data);
-    } catch (error) {
-      toast.error(error?.response?.data?.message || "Failed to load users for search");
-    } finally {
-      setSearchLoading(false);
-    }
-  }, [token, totalCount]);
+      const total = res?.data?.totalCount || data.length;
 
-  // Fetch users for pagination
-  const fetchUsers = useCallback(
-    async (page) => {
-      setLoading(true);
-      try {
-        const res = await getAllUsers(token, page, ITEMS_PER_PAGE);
-        setTotalCount(res?.data?.totalCount);
-        const data = res?.data?.children || [];
-        
-        // Calculate total pages
-        const calculatedTotalPages = Math.ceil(res?.data?.totalCount / ITEMS_PER_PAGE);
-        setTotalPages(calculatedTotalPages);
-        
-        setProfiles(data);
-        setFilteredProfiles(data);
-        
-        // Save current page to session storage
-        sessionStorage.setItem("explorePage", page);
-      } catch (error) {
-        toast.error(error?.response?.data?.message || "Failed to load users");
-      } finally {
-        setLoading(false);
-      }
-    },
-    [token]
-  );
+      setTotalCount(total);
+
+      // Shuffling the entire pool provides true random distribution
+      const shuffledData = shuffleArray(data);
+      setAllProfiles(shuffledData);
+
+      // Calculate total pages for pagination
+      const calculatedTotalPages = Math.ceil(total / ITEMS_PER_PAGE);
+      setTotalPages(calculatedTotalPages);
+
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Failed to load users");
+    } finally {
+      setLoading(false);
+    }
+  }, [token, ITEMS_PER_PAGE]);
 
   useEffect(() => {
-    fetchUsers(currentPage);
+    fetchUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Fetch all users when totalCount is available
-  useEffect(() => {
-    if (totalCount > 0) {
-      fetchAllUsers();
-    }
-  }, [totalCount, fetchAllUsers]);
-
-  // Filter profiles based on search term
+  // Filter profiles based on search term & pagination
   useEffect(() => {
     if (searchTerm.trim() === "") {
       // If no search term, show paginated results
-      setFilteredProfiles(profiles);
+      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+      const endIndex = startIndex + ITEMS_PER_PAGE;
+      const currentSlice = allProfiles.slice(startIndex, endIndex);
+
+      setProfiles(currentSlice);
+      setFilteredProfiles(currentSlice);
     } else {
       // If search term exists, filter through all profiles
-      const filtered = allProfiles.filter(profile => 
+      const filtered = allProfiles.filter(profile =>
         profile.displayId && profile.displayId.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredProfiles(filtered);
     }
-  }, [searchTerm, profiles, allProfiles]);
+  }, [searchTerm, allProfiles, currentPage, ITEMS_PER_PAGE]);
 
   // Scroll restore after profiles are rendered
   useEffect(() => {
@@ -117,13 +100,13 @@ const Explore = () => {
 
   const handlePageChange = async (newPage) => {
     if (newPage < 1 || newPage > totalPages || newPage === currentPage) return;
-    
+
     // Save scroll position before changing page
     sessionStorage.setItem("scrollPos", String(window.scrollY));
-    
+
     setCurrentPage(newPage);
-    await fetchUsers(newPage);
-    
+    sessionStorage.setItem("explorePage", String(newPage));
+
     // Scroll to top after page change for better UX
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -142,12 +125,12 @@ const Explore = () => {
     const half = Math.floor(MAX_VISIBLE_PAGES / 2);
     let start = Math.max(1, currentPage - half);
     let end = Math.min(totalPages, start + MAX_VISIBLE_PAGES - 1);
-    
+
     // Adjust if we're near the end
     if (end - start + 1 < MAX_VISIBLE_PAGES) {
       start = Math.max(1, end - MAX_VISIBLE_PAGES + 1);
     }
-    
+
     const pages = [];
     for (let i = start; i <= end; i++) {
       pages.push(i);
@@ -159,9 +142,8 @@ const Explore = () => {
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={() => setIsOpen(!isOpen)} />
       <main
-        className={`${
-          isOpen ? "ml-0 sm:ml-[100px]" : "ml-0 sm:ml-[280px]"
-        } w-full transition-all duration-300 bg-[#d4c4fb1d]`}
+        className={`${isOpen ? "ml-0 sm:ml-[100px]" : "ml-0 sm:ml-[280px]"
+          } w-full transition-all duration-300 bg-[#d4c4fb1d]`}
       >
         <Navigation />
         {loading && profiles.length === 0 ? (
@@ -252,7 +234,7 @@ const Explore = () => {
                 <div className="text-sm text-gray-600">
                   Page {currentPage} of {totalPages}
                 </div>
-                
+
                 <div className="flex items-center gap-2 flex-wrap justify-center">
                   {/* Previous Button */}
                   <button
@@ -262,7 +244,7 @@ const Explore = () => {
                   >
                     Previous
                   </button>
-                  
+
                   {/* First Page */}
                   {currentPage > Math.floor(MAX_VISIBLE_PAGES / 2) + 1 && (
                     <>
@@ -277,22 +259,21 @@ const Explore = () => {
                       )}
                     </>
                   )}
-                  
+
                   {/* Page Numbers */}
                   {getPageNumbers().map((page) => (
                     <button
                       key={page}
                       onClick={() => handlePageChange(page)}
-                      className={`px-3 py-2 rounded-lg border transition-colors ${
-                        page === currentPage
-                          ? "border-[#BA9FFE] bg-[#BA9FFE] text-white"
-                          : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
-                      }`}
+                      className={`px-3 py-2 rounded-lg border transition-colors ${page === currentPage
+                        ? "border-[#BA9FFE] bg-[#BA9FFE] text-white"
+                        : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                        }`}
                     >
                       {page}
                     </button>
                   ))}
-                  
+
                   {/* Last Page */}
                   {currentPage < totalPages - Math.floor(MAX_VISIBLE_PAGES / 2) && (
                     <>
@@ -307,7 +288,7 @@ const Explore = () => {
                       </button>
                     </>
                   )}
-                  
+
                   {/* Next Button */}
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}
