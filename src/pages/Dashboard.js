@@ -21,7 +21,6 @@ const Dashboard = () => {
 
   // Loading indicator
   const [loading, setLoading] = useState(false);
-  const [searchLoading, setSearchLoading] = useState(false);
 
   // Profile data states
   const [profiles, setProfiles] = useState([]);         // Paginated profiles
@@ -219,11 +218,7 @@ const Dashboard = () => {
                   </button>
                 )}
               </div>
-              {searchLoading && (
-                <div className="absolute inset-x-0 bottom-0 flex justify-center">
-                  <div className="w-6 h-6 border-t-2 border-r-2 border-[#BA9FFE] rounded-full animate-spin"></div>
-                </div>
-              )}
+
             </div>
 
             {/* Results Count */}

@@ -18,7 +18,6 @@ const Explore = () => {
 
   const [isOpen, setIsOpen] = usePersistedState("isOpen", false);
   const [loading, setLoading] = useState(false);
-  const [searchLoading, setSearchLoading] = useState(false);
   const [profiles, setProfiles] = useState([]);
   const [allProfiles, setAllProfiles] = useState([]); // Store all profiles for search
   const [filteredProfiles, setFilteredProfiles] = useState([]);
@@ -172,11 +171,7 @@ const Explore = () => {
                   </button>
                 )}
               </div>
-              {(searchLoading) && (
-                <div className="absolute inset-x-0 bottom-0 flex justify-center">
-                  <div className="w-6 h-6 border-t-2 border-r-2 border-[#BA9FFE] rounded-full animate-spin"></div>
-                </div>
-              )}
+
             </div>
 
             {/* Results Count */}
