@@ -29,16 +29,9 @@ const About = () => {
 
       <FounderBio
         imageSrc={FemaleIcon}
-        bio="Rasheedah Raji is a retired teacher. She spends her time
-          volunteering for community projects which empower the youth and
-          ladies. With a degree in Social Policy and decades of experience
-          acquired from supporting young people, she has good understanding
-          of the importance of family relationships and bonds; and the need
-          for youngsters to get married in order to protect themselves
-          according to Islamic principles. WaliyyApp was borne out of
-          concern of the challenges currently facing Muslim youth all over
-          the world, and in particular those of Nigerian descent who wish to
-          marry fellow Nigerians but struggle to achieve their desire."
+        bio="Hajia Raji dedicates her time to volunteering in community initiatives that empower women and young people. With years of experience supporting the youth, she has developed a deep understanding of the importance of strong family relationships and the vital role they play in building stable communities.
+        Hajia Raji believes that marriage, guided by Islamic principles, is an important means of protecting and strengthening individuals and families and is deeply concerned about the difficulties young people face in finding suitable partners in today’s world.
+        WaliyyApp was borne out of concern of the challenges currently facing Muslim youth all over the world, and in particular those of Nigerian descent who wish to marry fellow Nigerians but struggle to achieve their desire."
         imageOnLeft={false}
         gradientFrom="from-pink-700"
         gradientTo="to-rose-500"
