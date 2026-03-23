@@ -118,8 +118,7 @@ const Register = () => {
           </p>
           <div className="flex flex-col gap-2 bg-[#c9b3ff] text-[#2D133A] p-6 text-xl rounded">
             <p className="font-bold">
-              *SISTERS - Register with your email address and your Wali/Mahram's
-              phone number. You will provide your Wali's name and email after verification.
+              *Sisters will provide Wali/Mahram's details after verification
             </p>
             <p className="font-bold">*BROTHERS - Register with your own details.</p>
           </div>
