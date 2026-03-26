@@ -40,13 +40,12 @@ import ResourcePage from './pages/ResourcePage.js';
 import Blogpage from './pages/Blogpage.js';
 import BlogPostPage from './pages/BlogPostPage';
 import Terms from './pages/Terms.js';
-//import MaintenanceNotice from './common/MaintananceNotice.js';
+import MaintenanceNotice from './common/MaintananceNotice.js';
 import NotionTest from './services/NotionTest.js';
 import ProfileRequired from './pages/ProfileRequired.js';
 import VerificationSuccess from './pages/VerificationSuccess.js';
 import SelectPlanType from './pages/SelectPlanType.js';
-
-
+const MAINTENANCE_MODE = true;
 
 export const AppLayout = ({ children }) => {
   useResetScrollPosition();
@@ -69,6 +68,8 @@ function App() {
   const { token } = useAuthContext();
   const [activePlan, setActivePlan] = useState(null);
   console.log(activePlan)
+
+
   useEffect(() => {
     const fetchActivePlan = async () => {
       try {
@@ -81,6 +82,14 @@ function App() {
     };
     fetchActivePlan();
   }, [token]);
+
+  if (MAINTENANCE_MODE) {
+    return (
+      <ThemeProvider theme={theme}>
+        <MaintenanceNotice />
+      </ThemeProvider>
+    );
+  }
 
   return (
     <ErrorBoundary
