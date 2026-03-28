@@ -45,7 +45,7 @@ import NotionTest from './services/NotionTest.js';
 import ProfileRequired from './pages/ProfileRequired.js';
 import VerificationSuccess from './pages/VerificationSuccess.js';
 import SelectPlanType from './pages/SelectPlanType.js';
-const MAINTENANCE_MODE = true;
+const MAINTENANCE_MODE = false;
 
 export const AppLayout = ({ children }) => {
   useResetScrollPosition();
@@ -121,6 +121,7 @@ function App() {
                 path="/forgot-password"
                 element={<ForgotPassword />}
               />
+
               <Route exact path="/reset-password" element={<ResetPassword />} />
               <Route
                 exact
