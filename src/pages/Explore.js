@@ -43,9 +43,27 @@ const Explore = () => {
 
       setTotalCount(total);
 
-      // Shuffling the entire pool provides true random distribution
-      const shuffledData = shuffleArray(data);
-      setAllProfiles(shuffledData);
+      // Check if we have a persisted order for this session
+      const savedOrder = sessionStorage.getItem("explore_profiles_order");
+      let finalData;
+
+      if (savedOrder) {
+        const orderIds = JSON.parse(savedOrder);
+        const orderMap = new Map(orderIds.map((id, index) => [id, index]));
+        
+        // Sort fetched data based on saved order, new items go to the end
+        finalData = [...data].sort((a, b) => {
+          const indexA = orderMap.has(a.id) ? orderMap.get(a.id) : Infinity;
+          const indexB = orderMap.has(b.id) ? orderMap.get(b.id) : Infinity;
+          return indexA - indexB;
+        });
+      } else {
+        // First time loading: shuffle and save the order
+        finalData = shuffleArray(data);
+        sessionStorage.setItem("explore_profiles_order", JSON.stringify(finalData.map(u => u.id)));
+      }
+
+      setAllProfiles(finalData);
 
       // Calculate total pages for pagination
       const calculatedTotalPages = Math.ceil(total / ITEMS_PER_PAGE);
