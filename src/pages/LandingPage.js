@@ -20,9 +20,9 @@ import PricingSection from '../components/landingPage/PrincingSection';
 
 const LandingPage = () => {
   return (
-    <div className="pt-12 bg-white dark:bg-white">
-      <Navbar />
+    <div className="pt-0 bg-white dark:bg-white">
       <AnniversaryNotice variant="banner" isClosable={false} />
+      <Navbar />
 
       {/* Notice banner for Profile Update */}
       {/* <MaintenanceBanner/> */}
