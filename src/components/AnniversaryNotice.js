@@ -69,17 +69,17 @@ const AnniversaryNotice = ({ variant = 'banner', isClosable = true }) => {
 
   // Small Banner Variant (Home Page)
   return (
-    <div className="relative w-full bg-[#2D133A] text-white py-4 px-4 flex items-center justify-center gap-3 shadow-md border-b border-[#BA9FFE]/20 z-[50]">
-      <FaStar className="text-yellow-400 text-lg animate-pulse" />
-      <p className="text-sm md:text-base font-medium tracking-wide text-center">
+    <div className="relative w-full bg-[#2D133A] text-white py-3 sm:py-4 px-4 flex items-center justify-center gap-2 sm:gap-3 shadow-md border-b border-[#BA9FFE]/20 z-[50]">
+      <FaStar className="text-yellow-400 text-sm sm:text-lg animate-pulse flex-shrink-0" />
+      <p className="text-[10px] sm:text-sm md:text-base font-medium tracking-wide text-center leading-snug max-w-[90vw] sm:max-w-none">
         Celebrating Our <span className="text-[#BA9FFE] font-bold">1st Anniversary!</span> 🎊 Build your future with WaliyyApp.
       </p>
       {isClosable && (
         <button
           onClick={handleDismiss}
-          className="ml-auto text-gray-400 hover:text-white"
+          className="ml-auto p-1 text-gray-400 hover:text-white flex-shrink-0"
         >
-          <FaTimes />
+          <FaTimes className="text-sm sm:text-base" />
         </button>
       )}
     </div>
