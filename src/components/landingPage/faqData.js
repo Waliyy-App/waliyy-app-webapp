@@ -16,12 +16,12 @@ export const faq = [
     answer:
       'No. WaliyyApp is not a Matchmaking service. We are a meeting platform where subscribers search for suitable spouses by themselves or with the support of their wali/mahram.',
   },
-  // {
-  //   id: 10,
-  //   question: 'What if i have more than 4 people?',
-  //   answer:
-  //     'Kindly contact admin and we will sort you out!',
-  // },
+  {
+    id: 11,
+    question: 'Why do I have to pay before I can read other people’s profiles?',
+    answer:
+      'Based on user feedback, there is increased engagement from members with subscription. WaliyyApp is dedicated to preventing ghosting and providing a vibrant  platform with active users.',
+  },
   {
     id: 4,
     question: 'Is my data safe?',
@@ -49,7 +49,7 @@ export const faq = [
     id: 8,
     question: 'Can I chat with someone I like on the platform?',
     answer:
-      'WaliyyApp protects your interests. As such, the mahaarim should be contacted by the young man in the first instance in order to set up supervised meetings for the pair to chat.',
+      'There is no chat function on WaliyyApp. Once a Match is made, WaliyyApp provides contact details of the sister’s wali so that the young man can make contact.',
   },
   {
     id: 9,
@@ -62,5 +62,11 @@ export const faq = [
     question: 'Will I get a refund after subscribtion?',
     answer:
       'No, subscription payments are non-refundable. See our Refund Policy for more information.',
+  },
+  {
+    id: 12,
+    question: 'How can I contact WaliyyApp?',
+    answer:
+      'You can contact us via email at admin@waliyyapp.com or waliyyapp@gmail.com, or send us a text message on WhatsApp at +44 7466 327324',
   },
 ];

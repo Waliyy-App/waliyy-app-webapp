@@ -37,6 +37,15 @@ const About = () => {
         gradientTo="to-rose-500"
       />
 
+      <FounderBio
+        imageSrc={FemaleIcon}
+        bio="Raufah is a graduate of Demography and Social Statistics from Obafemi Awolowo University, Ile-Ife, and holds a Master’s degree from the University of Ibadan. She currently works at a reputable bank as a Support Engineer, where she supports critical systems in a fast-paced environment. She enjoys quiet downtime, often resting and catching up on her favourite TV shows, she also loves spending time with friends and reading. Raufah is passionate about helping young people find meaningful relationships and is excited to contribute to the mission of the WaliyyApp team.
+"
+        imageOnLeft={true}
+        gradientFrom="from-purple-700"
+        gradientTo="to-indigo-500"
+      />
+
       <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-indigo-600 mx-auto rounded-full my-4"></div>
       <h2 className="text-3xl text-center font-bold">About WaliyyApp</h2>
       <div className="flex flex-col gap-8 text-lg mb-10">
@@ -44,10 +53,8 @@ const About = () => {
           WaliyyApp is aimed at eligible Muslim bachelors and ladies who are
           ready for marriage. As part of Islam, the mahaarim plays an important
           role in the marriage process and this is why they also have a vital
-          role on our app. You are here because you are looking for a wife for
-          yourself or a husband for your female relative. (Mahram/Mahaarim:
-          father and brothers of a Muslim lady or her paternal grandfather or
-          uncles).
+          role on our app. <br /> (Mahram/Mahaarim: father and brothers of a
+          Muslim lady or her paternal grandfather or uncles).
         </p>
         <p>
           We are striving to carry out our duties and responsibilities as
@@ -57,16 +64,11 @@ const About = () => {
           any assistance from parents and this has created so many problems for
           our children and the society.
         </p>
-        <p>
-          You are here because you are searching for a spouse for yourself or
-          you have young people who are ready to marry and you are actively
-          seeking suitable Muslim singles. We wish to support you to achieve
-          this objective in line with the dictates of the Qur’an and Sunnah.
-        </p>
+
         <p>
           In order to do this, members need to familiarise themselves with
           simple group rules and follow them as diligently as possible. This is
-          a learning process for us all and the group admins are open to
+          a learning process for us all and the WaliyyApp admins are open to
           suggestions for improvement to better improve the process and outcomes
           in shaa Allah. However, we shall not hesitate to evict anyone
           violating the rules, particularly after warning.
@@ -74,12 +76,13 @@ const About = () => {
       </div>
 
       <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-indigo-600 mx-auto rounded-full my-4"></div>
-      <h2 className="text-3xl text-center font-bold">Guidelines for WaliyyApp</h2>
+      <h2 className="text-3xl text-center font-bold">
+        Guidelines for WaliyyApp
+      </h2>
       <ol className="flex flex-col gap-6 text-lg mb-10 list-decimal list-outside px-6">
         <li>
-          <strong>Consciousness of Allah</strong>: Maintain the consciousness
-          of Allah in all your dealings and be honest while utilizing our
-          services.
+          <strong>Consciousness of Allah</strong>: Maintain the consciousness of
+          Allah in all your dealings and be honest while utilizing our services.
         </li>
         <li>
           <strong>Complete Your Profile</strong>: Provide complete and sincere
@@ -89,10 +92,10 @@ const About = () => {
         </li>
         <li>
           <strong>Respond Swiftly</strong>: Respond swiftly to LIKES and
-          interest. Be respectful and let others know whether you are
-          interested in them or not. Your swift response keeps the app
-          functioning smoothly and prevents ghosting. Persistent non-response
-          will lead to removal from the app (with no refund).
+          interest. Be respectful and let others know whether you are interested
+          in them or not. Your swift response keeps the app functioning smoothly
+          and prevents ghosting. Persistent non-response will lead to removal
+          from the app (with no refund).
         </li>
         <li>
           <strong>Mahaarim's Role</strong>: While the platform is open to
@@ -120,14 +123,15 @@ const About = () => {
           responsibility for false information provided by users.
         </li>
         <li>
-          <strong>Respectful Communication</strong>: Avoid using vulgar,
-          sexual, or inappropriate language. Use beautiful, respectful
-          descriptions for yourself and potential spouses. Non-compliance will
-          lead to your account being closed (with no refund).
+          <strong>Respectful Communication</strong>: Avoid using vulgar, sexual,
+          or inappropriate language. Use beautiful, respectful descriptions for
+          yourself and potential spouses. Non-compliance will lead to your
+          account being closed (with no refund).
         </li>
         <li>
           <strong>Check Your Spam</strong>: Regularly check your email spam
-          folder in case you miss important messages or notifications from WA.
+          folder in case you miss important messages or notifications from
+          WaliyyApp.
         </li>
       </ol>
 
@@ -135,27 +139,28 @@ const About = () => {
       <h2 className="text-3xl text-center font-bold">Waliyy Role</h2>
       <div className="flex flex-col gap-8 text-lg mb-10">
         <p>
-          Mabrook and congratulations, your single has found a match! <br /> Not
-          sure what to do next? Here are a few suggestions.
+          Mabrook and congratulations! The sister has found a match and it is
+          now time for you to play your role as her wali/mahram
+          <br /> <br />
+          Not sure what to do next? Here are a few suggestions.
         </p>
+
         <ol className="flex flex-col gap-3 text-lg list-disc list-outside px-6">
           <li>
             The young man should make an initial contact with you to introduce
             himself.
           </li>
-          <li>
-            Set up a meeting at a time convenient for your single, the suitor
-            and of course, yourself.
-          </li>
+          <li>Set up a meeting at a time convenient for all parties.</li>
           <li>Attend the meeting and subsequent ones.</li>
         </ol>
         <p>
-          They like each other and want to get married… <br /> Excellent
-          news!
+          They like each other and want to get married… <br /> Excellent news!!!
           <br />
           <br />
           Contact your local masjid and follow their nikah process. Don’t forget
-          that all important pre-marriage counselling. <br />
+          that all important pre-marriage counselling. - it is highly
+          recommended.
+          <br />
           <br />
           WaliyyApp wishes you a happy married life.
         </p>
