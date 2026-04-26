@@ -40,18 +40,7 @@ const LandingPage = () => {
             Emoji Guide
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mx-auto gap-6">
-            <div className="bg-white rounded-xl px-4 py-8">
-              <div className="text-[#2d133a] flex flex-col gap-4 items-center text-center">
-                <div className="flex items-center justify-center h-10 w-10 bg-[#2d133a] text-white rounded-full">
-                  <PersonSearchIcon className="text-white text-xl" />
-                </div>
-                <p className="text-xl font-bold">Explore</p>
-                <p className="">
-                  The Explore page allows users to browse through all profiles
-                  available on WaliyyApp.
-                </p>
-              </div>
-            </div>
+            
 
             <div className="bg-white rounded-xl px-4 py-8">
               <div className="text-[#2d133a] flex flex-col gap-4 items-center text-center">
@@ -80,23 +69,9 @@ const LandingPage = () => {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl px-4 py-8">
-              <div className="text-[#2d133a] flex flex-col gap-4 items-center text-center">
-                <div className="flex items-center justify-center h-10 w-10 bg-[#2d133a] text-white rounded-full">
-                  <PersonIcon className="text-white text-xl" />
-                </div>
-                <p className="text-xl font-bold">Single</p>
-                <p className="">
-                 This icon shows you the current profile you're on and gives you the option to logout of WaliyyApp.
-                </p>
-              </div>
-            </div>
+           
 
-            <div className="bg-white rounded-xl px-4 py-8">
-              <div className="text-[#2d133a] flex flex-col items-center text-center">
-                <img src={LogoIcon} alt="logo" className="" />
-              </div>
-            </div>
+            
 
             <div className="bg-white rounded-xl px-4 py-8">
               <div className="text-[#2d133a] flex flex-col gap-4 items-center text-center">
