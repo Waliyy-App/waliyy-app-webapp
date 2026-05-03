@@ -9,12 +9,9 @@ import HowItWorks from '../components/landingPage/HowItWorks';
 import ThumbUpIcon from '@mui/icons-material/ThumbUpAlt';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingsIcon from '@mui/icons-material/Settings';
-import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import PersonIcon from '@mui/icons-material/Person';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
-import LogoIcon from '../assets/logo/logo-nobg-cropped.png';
 import PricingSection from '../components/landingPage/PrincingSection';
 //import MaintenanceBanner from '../common/MaintananceBanner';
 
