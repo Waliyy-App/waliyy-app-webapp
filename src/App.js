@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -64,7 +64,7 @@ function App() {
   });
 
   const navigate = useNavigate();
-  const { token, activePlan } = useAuthContext();
+  const { activePlan } = useAuthContext();
 
   if (MAINTENANCE_MODE) {
     return (

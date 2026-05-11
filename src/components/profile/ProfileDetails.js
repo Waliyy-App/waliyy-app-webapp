@@ -24,8 +24,6 @@ const ProfileDetails = () => {
 
   const { token } = useAuthContext();
 
-
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -71,7 +69,6 @@ const ProfileDetails = () => {
               profession={child.profession}
               residence={child.countryofResidence}
               gender={child.gender}
-              isSubscribed={true}
             />
             <div>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -106,7 +103,6 @@ const ProfileDetails = () => {
                 isMixedEthnicity={child.isMixedEthnicity}
                 addictions={child.hasAddictions}
                 value={value}
-                isSubscribed={true}
               />
               <EduProfile
                 eduProf={child.aboutEducationAndJob}
@@ -117,7 +113,6 @@ const ProfileDetails = () => {
                 profession={child.profession}
                 isWillingToRelocate={child.isWillingToRelocate}
                 relocationPlans={child.relocationPlans}
-                isSubscribed={true}
               />
               <DeenProfile
                 practiceDesc={child.descriptionOfIslamicPractice}
@@ -127,7 +122,6 @@ const ProfileDetails = () => {
                 sect={child.sect}
                 startedPracticingIn={child.startedPracticingIn}
                 value={value}
-                isSubscribed={true}
               />
             </div>
           </div>
