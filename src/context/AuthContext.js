@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useCookies } from "react-cookie";
 import { decodeToken } from "../utils.js";
+import { getCurrentPlan } from "../services/index.js";
 
 export const AuthContext = React.createContext({
   isLoggedIn: false,
   token: "",
   storeAuthCookie: (data) => { },
   logOut: () => { },
+  activePlan: null,
+  setActivePlan: () => { },
 });
 
 export const AuthContextProvider = ({ children }) => {
@@ -17,6 +20,7 @@ export const AuthContextProvider = ({ children }) => {
   const [data, setData] = useState({});
   const [childId, setChildId] = useState("");
   const [authLoading, setAuthLoading] = useState(true); // 🆕 Track loading state
+  const [activePlan, setActivePlan] = useState(null);
 
   const checkTokenExpiration = () => {
     if (token) {
@@ -71,6 +75,20 @@ export const AuthContextProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cookies.waliyy_user]);
 
+  useEffect(() => {
+    const fetchActivePlan = async () => {
+      if (token) {
+        try {
+          const res = await getCurrentPlan(token);
+          setActivePlan(res?.data);
+        } catch (err) {
+          console.error("Error fetching active plan:", err);
+        }
+      }
+    };
+    fetchActivePlan();
+  }, [token]);
+
   return (
     <AuthContext.Provider
       value={{
@@ -84,6 +102,8 @@ export const AuthContextProvider = ({ children }) => {
         childId,
         handleChildId,
         authLoading,
+        activePlan,
+        setActivePlan,
       }}
     >
       {children}

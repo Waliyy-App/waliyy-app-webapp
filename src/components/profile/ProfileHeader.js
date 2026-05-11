@@ -29,7 +29,9 @@ const ProfileHeader = ({
   matchID,
   showButton,
   isGeneral = false,
+  isSubscribed = true,
 }) => {
+  const blurClass = !isSubscribed ? 'blur-[6px] select-none' : '';
   const [isDisabled, setIsDisabled] = useState(false);
   const [activePlan, setActivePlan] = useState(null);
   const [isMatchPage, setIsMatchPage] = useState(null);
@@ -192,7 +194,7 @@ const ProfileHeader = ({
 
         <div className="text-[#2D133A] text-center sm:text-left">
           <div className="flex items-center gap-2 text-2xl font-bold">
-            <p>
+            <p className={blurClass}>
               {isChild
                 ? firstName
                 : !isChild && displayID
@@ -200,13 +202,13 @@ const ProfileHeader = ({
                 : "Waliyy User"}
             </p>
             <BsFillDiamondFill className="h-2 w-2" />
-            <p>{age}</p>
+            <p className={blurClass}>{age}</p>
           </div>
-          <p className="text-lg font-bold capitalize">{profession}</p>
+          <p className={`text-lg font-bold capitalize ${blurClass}`}>{profession}</p>
 
           <div className="flex items-center sm:justify-start justify-center gap-1 ">
             <LocationOnIcon />
-            <p className="text-sm font-light capitalize">
+            <p className={`text-sm font-light capitalize ${blurClass}`}>
               {lga}, {residence}
             </p>
           </div>

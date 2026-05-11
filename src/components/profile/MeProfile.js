@@ -32,19 +32,20 @@ const MeProfile = ({
   maritalStatus,
   nationality,
   state,
-  isPolygamous
+  isPolygamous,
 }) => {
+
   return (
     <CustomTabPanel value={value} index={0}>
       <div className="flex flex-col items-start gap-10 py-8">
         <div className="flex flex-col gap-6 text-[#2D133A] w-full sm:w-4/5">
           <div>
             <p className="mb-[10px] text-lg font-semibold">About Me!</p>
-            <div className="whitespace-pre-wrap">{about}</div>
+            <div className={`whitespace-pre-wrap`}>{about}</div>
           </div>
           <div>
             <p className="mb-[10px] text-lg font-semibold">How do I dress?</p>
-            <div className="whitespace-pre-wrap">{dressing}</div>
+            <div className={`whitespace-pre-wrap`}>{dressing}</div>
           </div>
         </div>
 
@@ -52,40 +53,40 @@ const MeProfile = ({
           <p className="text-lg font-semibold mb-4">My Details</p>
           <div className="flex flex-wrap gap-4">
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
-              <BloodtypeIcon /> {genotype}
+              <BloodtypeIcon /> <span>{genotype}</span>
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
-              <StraightenIcon /> {`${height}m`}
+              <StraightenIcon /> <span>{`${height}m`}</span>
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
-              <FitnessCenterIcon /> {`${weight}kg`}
+              <FitnessCenterIcon /> <span>{`${weight}kg`}</span>
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
               <GiBigDiamondRing className="w-6 h-6" />
-              {capitalize(maritalStatus)}
+              <span>{capitalize(maritalStatus)}</span>
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
-              <FlagIcon /> {nationality} - {state}
+              <FlagIcon /> <span>{nationality} - {state}</span>
             </div>
 
             {isMixedEthnicity && (
               <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
-                <FlagIcon /> {mixedEthnicityDescription}
+                <FlagIcon /> <span>{mixedEthnicityDescription}</span>
               </div>
             )}
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
               {hasChildren ? (
                 <>
-                  <StrollerIcon /> Has Children
+                  <StrollerIcon /> <span>Has Children</span>
                 </>
               ) : (
                 <>
-                  <NoStrollerIcon /> Doesn't have Children
+                  <NoStrollerIcon /> <span>Doesn't have Children</span>
                 </>
               )}
             </div>
@@ -93,11 +94,11 @@ const MeProfile = ({
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
               {smoke ? (
                 <>
-                  <SmokingRoomsIcon /> Smokes
+                  <SmokingRoomsIcon /> <span>Smokes</span>
                 </>
               ) : (
                 <>
-                  <SmokeFreeIcon /> Doesn't Smoke
+                  <SmokeFreeIcon /> <span>Doesn't Smoke</span>
                 </>
               )}
             </div>
@@ -105,11 +106,11 @@ const MeProfile = ({
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
               {drink ? (
                 <>
-                  <LocalBarIcon /> Drinks Alcohol
+                  <LocalBarIcon /> <span>Drinks Alcohol</span>
                 </>
               ) : (
                 <>
-                  <NoDrinksIcon /> Doesn't Drink Alcohol
+                  <NoDrinksIcon /> <span>Doesn't Drink Alcohol</span>
                 </>
               )}
             </div>
@@ -118,18 +119,18 @@ const MeProfile = ({
               {isPolygamous ? (
                 <>
                   <GroupsSharpIcon />
-                  Open to Polygamy
+                  <span>Open to Polygamy</span>
                 </>
               ) : (
                 <>
-                  <GroupSharpIcon /> Not Open to Polygamy
+                  <GroupSharpIcon /> <span>Not Open to Polygamy</span>
                 </>
               )}
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
               <VaccinesIcon />
-              {addictions ? '' : 'No Addictions'}
+              <span>{addictions ? 'Has Addictions' : 'No Addictions'}</span>
             </div>
           </div>
         </div>

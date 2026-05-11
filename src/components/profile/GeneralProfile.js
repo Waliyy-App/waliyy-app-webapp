@@ -14,6 +14,7 @@ import { getMatch, getUserById } from "../../services";
 import { useAuthContext } from "../../context/AuthContext";
 import Loader from "../Loader.js";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { FaLock } from "react-icons/fa";
 
 const GeneralProfile = () => {
   const [value, setValue] = useState(0);
@@ -71,6 +72,10 @@ console.log(child)
   const goBack = () => {
     navigate(-1);
   };
+
+  const { activePlan } = useAuthContext();
+  const isSubscribed = !!activePlan;
+
   return (
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
@@ -90,73 +95,99 @@ console.log(child)
               <ArrowBackIcon />
               Back
             </button>
-            <ProfileHeader
-              firstName={child?.firstName}
-              age={child?.age}
-              profession={child?.profession}
-              lga={child?.lga}
-              residence={child?.countryofResidence}
-              gender={child?.gender}
-              displayID={child?.displayId}
-              isGeneral
-            />
+            <div className="relative">
+              <div className={`${!isSubscribed ? "blur-[16px] pointer-events-none select-none" : ""}`}>
+                <ProfileHeader
+                  firstName={child?.firstName}
+                  age={child?.age}
+                  profession={child?.profession}
+                  lga={child?.lga}
+                  residence={child?.countryofResidence}
+                  gender={child?.gender}
+                  displayID={child?.displayId}
+                  isGeneral
+                />
 
-            <div>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  aria-label="basic tabs example"
-                  textColor="inherit"
-                  indicatorColor="secondary"
-                  variant="scrollable"
-                  scrollButtons="auto"
-                >
-                  <Tab label="Me" {...a11yProps(0)} />
-                  <Tab label="My Education and Profession" {...a11yProps(1)} />
-                  <Tab label="My Deen" {...a11yProps(2)} />
-                </Tabs>
-              </Box>
-              <MeProfile
-                about={child?.about}
-                dressing={child?.aboutDressing}
-                genotype={child?.genotype}
-                height={child?.height}
-                weight={child?.weight}
-                hasChildren={child?.hasChildren}
-                smoke={child?.isSmoker}
-                drink={child?.isDrinker}
-                state={child?.state}
-                maritalStatus={child?.maritalStatus}
-                nationality={child?.citizenship}
-                mixedEthnicityDescription={child?.mixedEthnicityDescription}
-                isMixedEthnicity={child?.isMixedEthnicity}
-                addictions={child?.hasAddictions}
-                isPolygamous={child?.isPolygamous}
-                value={value}
-              />
+                <div>
+                  <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                    <Tabs
+                      value={value}
+                      onChange={handleChange}
+                      aria-label="basic tabs example"
+                      textColor="inherit"
+                      indicatorColor="secondary"
+                      variant="scrollable"
+                      scrollButtons="auto"
+                    >
+                      <Tab label="Me" {...a11yProps(0)} />
+                      <Tab label="My Education and Profession" {...a11yProps(1)} />
+                      <Tab label="My Deen" {...a11yProps(2)} />
+                    </Tabs>
+                  </Box>
+                  <MeProfile
+                    about={child?.about}
+                    dressing={child?.aboutDressing}
+                    genotype={child?.genotype}
+                    height={child?.height}
+                    weight={child?.weight}
+                    hasChildren={child?.hasChildren}
+                    smoke={child?.isSmoker}
+                    drink={child?.isDrinker}
+                    state={child?.state}
+                    maritalStatus={child?.maritalStatus}
+                    nationality={child?.citizenship}
+                    mixedEthnicityDescription={child?.mixedEthnicityDescription}
+                    isMixedEthnicity={child?.isMixedEthnicity}
+                    addictions={child?.hasAddictions}
+                    isPolygamous={child?.isPolygamous}
+                    value={value}
+                  />
 
-              <EduProfile
-                eduProf={child?.aboutEducationAndJob}
-                plans={child?.professionalPlans}
-                value={value}
-                educationLevel={child?.educationLevel}
-                employmentStatus={child?.employmentStatus}
-                profession={child?.profession}
-                isWillingToRelocate={child?.isWillingToRelocate}
-                relocationPlans={child?.relocationPlans}
-              />
-                {console.log(child?.isPolygamous)}
+                  <EduProfile
+                    eduProf={child?.aboutEducationAndJob}
+                    plans={child?.professionalPlans}
+                    value={value}
+                    educationLevel={child?.educationLevel}
+                    employmentStatus={child?.employmentStatus}
+                    profession={child?.profession}
+                    isWillingToRelocate={child?.isWillingToRelocate}
+                    relocationPlans={child?.relocationPlans}
+                  />
 
-              <DeenProfile
-                practiceDesc={child?.descriptionOfIslamicPractice}
-                speakers={child?.speakersListenedTo}
-                revert={child?.isARevert}
-                salatPattern={child?.salatPattern}
-                sect={child?.sect}
-                startedPracticingIn={child?.startedPracticingIn}
-                value={value}
-              />
+                  <DeenProfile
+                    practiceDesc={child?.descriptionOfIslamicPractice}
+                    speakers={child?.speakersListenedTo}
+                    revert={child?.isARevert}
+                    salatPattern={child?.salatPattern}
+                    sect={child?.sect}
+                    startedPracticingIn={child?.startedPracticingIn}
+                    value={value}
+                  />
+                </div>
+              </div>
+
+              {!isSubscribed && (
+                <div className="absolute inset-0 z-50 flex items-center justify-center p-4 sm:p-8">
+                  <div className="bg-white/90 backdrop-blur-xl p-6 sm:p-10 rounded-[2rem] sm:rounded-[3rem] shadow-2xl border border-[#FE8D9F]/30 max-w-lg w-full text-center flex flex-col items-center gap-6 sm:gap-8 transform transition-all scale-100 sm:scale-110">
+                    <div className="bg-[#FE8D9F] p-4 sm:p-6 rounded-full text-white shadow-2xl animate-pulse">
+                      <FaLock size={32} className="sm:hidden" />
+                      <FaLock size={48} className="hidden sm:block" />
+                    </div>
+                    <div>
+                      <h2 className="text-2xl sm:text-4xl font-extrabold text-[#2D133A] mb-3 sm:mb-4">Waliyy Premium</h2>
+                      <p className="text-[#2D133A]/80 text-base sm:text-xl mb-6 sm:mb-10 leading-relaxed px-2">
+                        Find your pious spouse today. Subscribe to unlock full profile details and start connecting.
+                      </p>
+                      <button 
+                        onClick={() => navigate('/select-plan')}
+                        className="w-full bg-[#2D133A] text-white py-4 sm:py-6 px-6 sm:px-10 rounded-2xl sm:rounded-3xl font-black text-lg sm:text-2xl hover:bg-[#432152] transition-all shadow-[0_15px_40px_rgba(45,19,58,0.2)] hover:shadow-[0_25px_60px_rgba(45,19,58,0.4)] active:scale-95 whitespace-nowrap"
+                      >
+                        Subscribe to View
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </React.Fragment>
         )}

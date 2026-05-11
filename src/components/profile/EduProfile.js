@@ -60,19 +60,19 @@ const EduProfile = ({
         </div>
 
         <div className="w-full sm:w-2/5">
-          <p className="text-lg font-semibold mb-4">My Details</p>
+          <p className="text-lg font-bold capitalize">{profession}</p>
           <div className="flex flex-wrap gap-4">
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold flex items-center gap-1">
               <SchoolIcon />
-              {getEmploymentStatus(employmentStatus)}
+              <span>{getEmploymentStatus(employmentStatus)}</span>
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold  flex items-center gap-1">
-              <WorkIcon /> {getEducationStatus(educationLevel)}
+              <WorkIcon /> <span>{getEducationStatus(educationLevel)}</span>
             </div>
 
             <div className="p-2 rounded-2xl bg-[#FFF4F5] text-[#2D133A] text-xs font-bold  flex items-center gap-1">
-              <BadgeIcon /> {profession}
+              <BadgeIcon /> <span>{profession}</span>
             </div>
           </div>
         </div>
