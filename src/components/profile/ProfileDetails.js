@@ -25,6 +25,7 @@ const ProfileDetails = () => {
   const { token } = useAuthContext();
 
 
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
