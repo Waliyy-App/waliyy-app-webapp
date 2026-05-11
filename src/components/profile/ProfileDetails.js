@@ -54,9 +54,8 @@ const ProfileDetails = () => {
     <div className="flex flex-col sm:flex-row">
       <SidebarComponent isOpen={isOpen} toggleMenu={toggleMenu} />
       <main
-        className={`${
-          isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
-        } w-full transition-all duration-300`}
+        className={`${isOpen ? 'ml-0 sm:ml-[100px]' : 'ml-0 sm:ml-[280px]'
+          } w-full transition-all duration-300`}
       >
         <Navigation />
         {loading ? (

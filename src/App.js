@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,7 +34,6 @@ import NetworkError from './screens/NetworkError';
 import NoPage from './screens/404Page';
 import UserList from './screens/UserList';
 import { useAuthContext } from './context/AuthContext.js';
-import { getCurrentPlan } from './services/index.js';
 import PaymentConfirmation from './pages/PaymentConfirmation.js';
 import ResourcePage from './pages/ResourcePage.js';
 import Blogpage from './pages/Blogpage.js';
@@ -65,23 +64,7 @@ function App() {
   });
 
   const navigate = useNavigate();
-  const { token } = useAuthContext();
-  const [activePlan, setActivePlan] = useState(null);
-  console.log(activePlan)
-
-
-  useEffect(() => {
-    const fetchActivePlan = async () => {
-      try {
-        const res = await getCurrentPlan(token);
-        setActivePlan(res?.data);
-        console.log(res.data)
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchActivePlan();
-  }, [token]);
+  const { activePlan } = useAuthContext();
 
   if (MAINTENANCE_MODE) {
     return (
