@@ -7,7 +7,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingsIcon from '@mui/icons-material/Settings';
-import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+// import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
@@ -77,17 +77,7 @@ const SidebarComponent = ({ isOpen, toggleMenu }) => {
                 <FavoriteIcon /> {isOpen ? '' : 'Match'}
               </NavLink>
 
-              <NavLink
-                to="/explore"
-                className={`flex items-center py-2 px-3 h-[64px] gap-3 rounded-md font-semibold hover:text-white hover:bg-[#BA9FFE] transition duration-300 ${isOpen && 'justify-center'
-                  }  ${location.pathname === '/explore'
-                    ? 'text-white bg-[#BA9FFE] box-shadow-style'
-                    : 'text-[#2D133A]'
-                  }`}
-              >
-                <PersonSearchIcon /> {isOpen ? '' : 'Explore'}
-              </NavLink>
-
+              
               <NavLink
                 to={`/profile/${childId}`}
                 state={{ from: 'profile' }}

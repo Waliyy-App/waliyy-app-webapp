@@ -8,7 +8,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import Explore from './pages/Explore';
+// import Explore from './pages/Explore';
 
 import LikePage from './pages/LikePage';
 import MatchPage from './pages/MatchPage';
@@ -116,7 +116,6 @@ function App() {
 
             <Route element={<ProtectedRoute />}>
               <Route exact path="/dashboard" element={<Dashboard />} />
-              <Route exact path="/explore" element={<Explore />} />
               <Route
                 exact
                 path="/likes"

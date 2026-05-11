@@ -22,7 +22,9 @@ const HowItWorks = () => {
               information, then check your email for a welcome message with a
               unique verification code. Enter this code to activate your account
               and ensure your security. <br /> ❗
-              <strong>Sisters must sign up with their mahram's details.</strong>
+              <strong>
+                Sisters will provide wali details once email is verified.
+              </strong>
             </p>
           </div>
         </div>
@@ -55,9 +57,8 @@ const HowItWorks = () => {
               Customize your Dashboard
             </p>
             <p>
-              Filling out your profile fully and setting your preferences allows
-              our platform to tailor recommendations to suit your preferences,
-              ensuring a more engaging and relevant experience.
+              Providing full information about yourself helps others get to know
+              you better and enhances your experience within the app.
             </p>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../components/landingPage/Navbar';
 import Footer from '../components/landingPage/Footer';
-import { FaYoutube, FaBookOpen, FaLaptop } from 'react-icons/fa';
+import { FaYoutube, FaLaptop } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import ResourceColumn from '../common/ResourceColumn';
 
@@ -19,7 +19,7 @@ const ResourcePage = () => {
         </div>
 
         {/* Three Column Resources */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-24">
           {/* YouTube Column */}
           <ResourceColumn
             Icon={FaYoutube}
@@ -76,32 +76,7 @@ const ResourcePage = () => {
               Learn how to navigate and use WaliyyApp effectively.
             </p>
           </ResourceColumn>
-
-          {/* Blog Column */}
-          <ResourceColumn
-            Icon={FaBookOpen}
-            iconBgColor="bg-blue-100"
-            iconColor="text-blue-600"
-            title="Blog & Articles"
-            button={
-              <a
-                href="https://medium.com/@waliyyapp"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-auto py-3 w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:opacity-90 transition-opacity shadow-md flex justify-center items-center"
-              >
-                Read Articles
-              </a>
-            }
-          >
-            <div className="aspect-video mb-4 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
-              <FaBookOpen className="text-white text-5xl opacity-80" />
-            </div>
-            <p className="text-gray-100 mb-4">
-              Explore our collection of articles on Islamic marriage,
-              relationships, and personal development.
-            </p>
-          </ResourceColumn>
+         
         </div>
 
         {/* Call to Action */}
