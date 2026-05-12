@@ -164,10 +164,8 @@ export default function ProfileSetupForm() {
       );
       handleChildId(res?.data);
 
-      // Update local storage and context data with the new child
-      const currentChildren = JSON.parse(localStorage.getItem("children")) || [];
-      const newChildren = [...currentChildren, { id: res?.data, firstName: values.firstName }]; // Minimal data needed
-
+      // Update local storage with the new child (single profile only)
+      const newChildren = [{ id: res?.data, firstName: values.firstName }]; // Minimal data needed
       localStorage.setItem("children", JSON.stringify(newChildren));
       // You might need a way to update the context data here directly if 'setData' is available in context
       // For now, reload or navigation will trigger InitAuth which reads from localStorage
