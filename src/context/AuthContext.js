@@ -44,7 +44,8 @@ export const AuthContextProvider = ({ children }) => {
       maxAge: 3600 * 24 * 1, // 1 day
     });
     localStorage.setItem("user", JSON.stringify(data.user));
-    localStorage.setItem("children", JSON.stringify(data.children)); // 🆕 Persist children
+    const singleChildList = data.children ? data.children.slice(0, 1) : [];
+    localStorage.setItem("children", JSON.stringify(singleChildList)); // 🆕 Persist only the first child profile
     setUser(data.user);
     setData(data);
     setIsLoggedIn(true);

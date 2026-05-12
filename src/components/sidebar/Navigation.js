@@ -8,9 +8,8 @@ import { NavLink, Link, useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 // import AddIcon from '@mui/icons-material/Add';
 import PersonIcon from '@mui/icons-material/Person';
-import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { getChildren, logoutFunc } from '../../services';
+import { logoutFunc } from '../../services';
 import { ThreeDots } from 'react-loader-spinner';
 import Logo from '../../assets/logo/Untitled-1-01.jpg';
 
@@ -19,27 +18,14 @@ const Navigation = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
-  const [children, setChildren] = useState([]);
   const [activePlan, setActivePlan] = useState(null);
-  const { token, logOut, handleChildId } = useAuthContext();
+  const { token, logOut } = useAuthContext();
   const childId = localStorage.getItem('childId');
 
   const goFilter = () => {
     navigate('/filter', { state: { from: '/dashboard' } });
   };
   console.log(activePlan)
-  useEffect(() => {
-    const fetchChildren = async () => {
-      try {
-        const res = await getChildren(token);
-        setChildren(res.data);
-      } catch (error) {
-        throw new Error(error);
-      }
-    };
-
-    fetchChildren();
-  }, [token]);
 
   useEffect(() => {
     async function getChildDetails() {
@@ -69,11 +55,6 @@ const Navigation = () => {
     if (token) fetchActivePlan();
   }, [token]);
 
-  const handleChildLogin = (id) => {
-    handleChildId(id);
-    navigate('/dashboard');
-    setOpenDropdown(false);
-  };
 
   const handleLogout = async () => {
     try {
@@ -154,7 +135,7 @@ const Navigation = () => {
                 className="h-full w-full object-fill rounded-2xl"
               />
             </Link>
-            {children && (
+            {/* {children && (
               <div className="flex flex-col text-[#2D133A] px-3">
                 <p className="text-xs my-6 flex items-center gap-1">
                   Switch Accounts
@@ -172,7 +153,7 @@ const Navigation = () => {
                   ))}
                 </div>
               </div>
-            )}
+            )} */}
 
 
 
