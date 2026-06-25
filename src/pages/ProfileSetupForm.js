@@ -103,7 +103,7 @@ export default function ProfileSetupForm() {
     completed: false,
     loading: false,
   });
-  const { token, handleChildId, user } = useAuthContext();
+  const { token, handleChildId, user, setData } = useAuthContext();
 
   const handleSubmit = async (values) => {
     setState((prevState) => ({ ...prevState, loading: true }));
@@ -167,8 +167,8 @@ export default function ProfileSetupForm() {
       // Update local storage with the new child (single profile only)
       const newChildren = [{ id: res?.data, firstName: values.firstName }]; // Minimal data needed
       localStorage.setItem("children", JSON.stringify(newChildren));
-      // You might need a way to update the context data here directly if 'setData' is available in context
-      // For now, reload or navigation will trigger InitAuth which reads from localStorage
+      // Update context data to allow immediate dashboard access without app reload
+      setData((prev) => ({ ...prev, children: newChildren }));
 
       toast.success(res?.message);
       localStorage.removeItem(LOCAL_STORAGE_KEY);

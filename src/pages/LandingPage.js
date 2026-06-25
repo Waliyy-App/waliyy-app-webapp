@@ -1,5 +1,4 @@
 import React from 'react';
-import AnniversaryNotice from '../components/AnniversaryNotice';
 import Navbar from '../components/landingPage/Navbar';
 import FrequentlyAskedQuestions from '../components/landingPage/FAQ';
 import Header from '../components/landingPage/Header';
@@ -18,7 +17,6 @@ import PricingSection from '../components/landingPage/PrincingSection';
 const LandingPage = () => {
   return (
     <div className="pt-0 bg-white dark:bg-white">
-      <AnniversaryNotice variant="banner" isClosable={false} />
       <Navbar />
 
       {/* Notice banner for Profile Update */}

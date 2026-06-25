@@ -25,6 +25,7 @@ const Register = () => {
     password: "",
     confirmPassword: "",
     acceptTerms: false, // Added for terms acceptance
+    waliPhoneNumber: "",
   };
 
   const phoneRegExp = /^\+[0-9]+$/;
@@ -47,6 +48,15 @@ const Register = () => {
     gender: Yup.string()
       .oneOf(["FEMALE", "MALE"], "Invalid Gender")
       .required("Select Gender"),
+    waliPhoneNumber: Yup.string().when("gender", {
+      is: "FEMALE",
+      then: (schema) => schema
+        .matches(phoneRegExp, "Must start with a valid country code")
+        .min(10, "Too short")
+        .max(15, "Too long")
+        .required("Required"),
+      otherwise: (schema) => schema.optional(),
+    }),
     password: Yup.string()
       .min(8, "Must be 8 characters or more")
       .required("Create a password"),
@@ -92,6 +102,9 @@ const Register = () => {
         });
         localStorage.setItem("temp_gender", values.gender);
         localStorage.setItem("temp_phone", values.phoneNumber);
+        if (values.gender === "FEMALE") {
+          localStorage.setItem("temp_wali_phone", values.waliPhoneNumber);
+        }
         toast.success(data?.message);
         navigate("/verify-email");
       } else {
@@ -168,10 +181,17 @@ const Register = () => {
                 )}
               </div>
               <TextInput
-                label={values.gender === "FEMALE" ? "Wali/Mahram Phone Number*" : "Phone Number*"}
+                label="Phone Number*"
                 name="phoneNumber"
                 type="text"
               />
+              {values.gender === "FEMALE" && (
+                <TextInput
+                  label="Wali/Mahram Phone Number*"
+                  name="waliPhoneNumber"
+                  type="text"
+                />
+              )}
 
               <div className="relative">
                 <TextInput
