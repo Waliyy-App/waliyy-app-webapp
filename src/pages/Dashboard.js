@@ -8,7 +8,6 @@ import { useAuthContext } from "../context/AuthContext.js";
 import { getRecommedations } from "../services";
 import Loader from "../components/Loader.js";
 import Navigation from "../components/sidebar/Navigation.js";
-import AnniversaryNotice from "../components/AnniversaryNotice.js";
 // Icons
 import { FaFrown, FaArrowUp, FaSearch, FaTimes } from "react-icons/fa";
 
@@ -209,7 +208,6 @@ const Dashboard = () => {
           } w-full transition-all duration-300 bg-[#d4c4fb1d] min-h-screen`}
       >
         <Navigation />
-        <AnniversaryNotice variant="modal" />
 
         {/* Loader when no profiles yet */}
         {loading && profiles?.length === 0 ? (

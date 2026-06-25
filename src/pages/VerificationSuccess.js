@@ -7,15 +7,19 @@ const VerificationSuccess = () => {
     const [gender, setGender] = useState("");
     const [waliName, setWaliName] = useState("");
     const [waliEmail, setWaliEmail] = useState("");
+    const [waliPhone, setWaliPhone] = useState("");
 
     useEffect(() => {
         const savedGender = localStorage.getItem("temp_gender");
         setGender(savedGender);
+        if (savedGender === "FEMALE") {
+            setWaliPhone(localStorage.getItem("temp_wali_phone") || "");
+        }
     }, []);
 
     const isFemale = gender === "FEMALE";
     const canProceed =
-        !isFemale || (waliName.trim() !== "" && waliEmail.trim() !== "");
+        !isFemale || (waliName.trim() !== "" && waliEmail.trim() !== "" && waliPhone.trim() !== "");
 
     const handleProceed = () => {
         if (!canProceed) return;
@@ -30,7 +34,7 @@ const VerificationSuccess = () => {
             ? {
                 waliName: waliName,
                 waliEmail: waliEmail,
-                waliPhoneNumber: localStorage.getItem("temp_phone") || "",
+                waliPhoneNumber: waliPhone,
             }
             : {};
 
@@ -98,6 +102,19 @@ const VerificationSuccess = () => {
                                 value={waliEmail}
                                 onChange={(e) => setWaliEmail(e.target.value)}
                                 placeholder="Enter Wali's email"
+                                className="w-full mt-1 p-3 rounded-xl border border-gray-200 focus:border-[#BA9FFE] outline-none transition-all"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="text-xs font-semibold text-[#BA9FFE] uppercase">
+                                Wali Phone Number
+                            </label>
+                            <input
+                                type="text"
+                                value={waliPhone}
+                                onChange={(e) => setWaliPhone(e.target.value)}
+                                placeholder="Enter Wali's phone number"
                                 className="w-full mt-1 p-3 rounded-xl border border-gray-200 focus:border-[#BA9FFE] outline-none transition-all"
                             />
                         </div>
