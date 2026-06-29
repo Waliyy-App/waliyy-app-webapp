@@ -74,8 +74,16 @@ function App() {
   const { activePlan } = useAuthContext();
 
   useEffect(() => {
-    // Log daily visit without token on route change
-    logDailyVisit().catch(() => {});
+    const today = new Date().toISOString().split('T')[0];
+    const lastVisit = localStorage.getItem('last_visit_date');
+
+    if (lastVisit !== today) {
+      logDailyVisit()
+        .then(() => {
+          localStorage.setItem('last_visit_date', today);
+        })
+        .catch(() => {});
+    }
   }, [location.pathname]);
 
   if (MAINTENANCE_MODE) {
