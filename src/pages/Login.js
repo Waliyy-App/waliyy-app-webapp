@@ -136,8 +136,8 @@ const Login = () => {
               onSubmit={(values) => handleVerify2FA(values)}
             >
               <Form className="flex flex-col gap-5">
-                <p className="text-sm text-gray-600 mb-2">
-                  A verification code has been sent to your email. Please enter it below.
+                <p className="text-sm font-semibold text-purple-700 bg-purple-50 border border-purple-100 p-3 rounded-lg mb-2">
+                  You are logging in as an Admin, therefore you need to provide the PIN sent to your email.
                 </p>
                 <TextInput
                   label="Verification Code*"
