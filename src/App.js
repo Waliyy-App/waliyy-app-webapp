@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -44,6 +44,12 @@ import NotionTest from './services/NotionTest.js';
 import ProfileRequired from './pages/ProfileRequired.js';
 import VerificationSuccess from './pages/VerificationSuccess.js';
 import SelectPlanType from './pages/SelectPlanType.js';
+import AdminProtectedRoute from './route/AdminProtectedRoute';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminMatches from './pages/admin/AdminMatches';
+import AdminSubscribers from './pages/admin/AdminSubscribers';
+import { logDailyVisit } from './services/adminService';
 const MAINTENANCE_MODE = false;
 
 export const AppLayout = ({ children }) => {
@@ -65,6 +71,11 @@ function App() {
 
   const navigate = useNavigate();
   const { activePlan } = useAuthContext();
+
+  useEffect(() => {
+    // Log daily visit without token
+    logDailyVisit().catch(() => {});
+  }, []);
 
   if (MAINTENANCE_MODE) {
     return (
@@ -149,6 +160,14 @@ function App() {
                 path="/login-successful"
                 element={<SplashScreen />}
               />
+            </Route>
+
+            {/* Admin Routes — ADMIN role required */}
+            <Route element={<AdminProtectedRoute />}>
+              <Route exact path="/admin" element={<AdminDashboard />} />
+              <Route exact path="/admin/users" element={<AdminUsers />} />
+              <Route exact path="/admin/matches" element={<AdminMatches />} />
+              <Route exact path="/admin/subscriptions" element={<AdminSubscribers />} />
             </Route>
           </Routes>
         </AppLayout>
