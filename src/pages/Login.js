@@ -7,7 +7,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { login, verifyAdmin2FA } from '../services';
+import { login, verifyAdmin2FA, resendAdmin2FA } from '../services';
 import Loader from '../components/Loader';
 import { useAuthContext } from '../context/AuthContext';
 
@@ -16,8 +16,19 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [requires2FA, setRequires2FA] = useState(false);
   const [adminUserId, setAdminUserId] = useState(null);
+  const [cooldown, setCooldown] = useState(0);
   const { storeAuthCookie } = useAuthContext();
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    let timer;
+    if (requires2FA && cooldown > 0) {
+      timer = setInterval(() => {
+        setCooldown((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [requires2FA, cooldown]);
 
   const initialValues = {
     emailAddress: '',
@@ -43,6 +54,7 @@ const Login = () => {
       if (data && data.requires2FA) {
         setRequires2FA(true);
         setAdminUserId(data.userId);
+        setCooldown(60); // 60s cooldown timer
         toast.info(data.message || "Please enter the verification code sent to your email.");
         return;
       }
@@ -52,6 +64,20 @@ const Login = () => {
       navigate('/login-successful');
     } catch (error) {
       toast.error(error?.response?.data?.message || "Login failed");
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResendAdminOTP = async () => {
+    setLoading(true);
+    try {
+      await resendAdmin2FA({ userId: adminUserId });
+      toast.success("Verification PIN resent to your email.");
+      setCooldown(60); // Reset timer
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Failed to resend PIN");
       console.log(error);
     } finally {
       setLoading(false);
@@ -144,6 +170,21 @@ const Login = () => {
                   name="otp"
                   type="text"
                 />
+                <div className="flex justify-between items-center text-sm -mt-2">
+                  {cooldown > 0 ? (
+                    <span className="text-gray-500">
+                      Resend PIN in <strong className="text-[#BA9FFE]">{cooldown}s</strong>
+                    </span>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleResendAdminOTP}
+                      className="text-[#BA9FFE] hover:text-[#a37eff] font-semibold transition-all duration-300"
+                    >
+                      Resend Code
+                    </button>
+                  )}
+                </div>
                 <button
                   type="submit"
                   className="my-11 mb-16 hover:bg-[#a37eff] bg-[#BA9FFE] rounded-lg h-11 text-white font-medium box-shadow-style transition-all duration-300"
