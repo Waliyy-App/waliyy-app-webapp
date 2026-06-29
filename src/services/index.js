@@ -43,6 +43,15 @@ export const verifyAdmin2FA = async (payload) => {
   }
 };
 
+export const resendAdmin2FA = async (payload) => {
+  try {
+    const response = await apiService.post("/auth/admin/resend-2fa", payload);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const forgotPassword = async (payload) => {
   try {
     const response = await apiService.put("/auth/forgot-password", payload);

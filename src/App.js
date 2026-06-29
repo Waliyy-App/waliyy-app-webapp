@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -70,12 +70,13 @@ function App() {
   });
 
   const navigate = useNavigate();
+  const location = useLocation();
   const { activePlan } = useAuthContext();
 
   useEffect(() => {
-    // Log daily visit without token
+    // Log daily visit without token on route change
     logDailyVisit().catch(() => {});
-  }, []);
+  }, [location.pathname]);
 
   if (MAINTENANCE_MODE) {
     return (
