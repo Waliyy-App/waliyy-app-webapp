@@ -29,6 +29,7 @@ const Navigation = () => {
 
   useEffect(() => {
     async function getChildDetails() {
+      if (!childId || childId === "null" || childId === "undefined") return;
       setLoading(true);
       try {
         const res = await getChild(childId, token);

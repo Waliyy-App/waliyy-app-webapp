@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const API_BASE_URL = "https://api.waliyyapp.com/api/v1";
-//"https://api.waliyyapp.com/api/v1"
-//http://localhost:9292/api/v1
+// const API_BASE_URL = "http://localhost:9292/api/v1";
 const apiService = axios.create({
   baseURL: API_BASE_URL,
   responseType: "json",
@@ -35,6 +34,15 @@ export const login = async (payload) => {
   }
 };
 
+export const verifyAdmin2FA = async (payload) => {
+  try {
+    const response = await apiService.post("/auth/admin/verify-2fa", payload);
+    return response.data.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const forgotPassword = async (payload) => {
   try {
     const response = await apiService.put("/auth/forgot-password", payload);
@@ -56,6 +64,15 @@ export const resetPassword = async (payload) => {
 export const verifyOtp = async (payload) => {
   try {
     const response = await apiService.put(`/auth/verify-email`, payload);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const resendVerificationEmail = async (email) => {
+  try {
+    const response = await apiService.post(`/auth/resend-verification`, { email });
     return response.data;
   } catch (error) {
     throw error;

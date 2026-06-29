@@ -46,6 +46,14 @@ export const AuthContextProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(data.user));
     const singleChildList = data.children ? data.children.slice(0, 1) : [];
     localStorage.setItem("children", JSON.stringify(singleChildList)); // 🆕 Persist only the first child profile
+    
+    // Set default childId to the first child's ID if it exists
+    if (singleChildList.length > 0) {
+      const id = singleChildList[0].id || singleChildList[0]._id;
+      localStorage.setItem("childId", id);
+      setChildId(id);
+    }
+    
     setUser(data.user);
     setData(data);
     setIsLoggedIn(true);
@@ -67,6 +75,17 @@ export const AuthContextProvider = ({ children }) => {
         const childrenData = JSON.parse(localStorage.getItem("children")); // 🆕 Retrieve children
         setUser(userData);
         setData((prev) => ({ ...prev, children: childrenData })); // 🆕 Set children in data
+        
+        // Initialize childId from localStorage if not already set
+        const storedChildId = localStorage.getItem("childId");
+        if (storedChildId && storedChildId !== "undefined" && storedChildId !== "null") {
+          setChildId(storedChildId);
+        } else if (childrenData && childrenData.length > 0) {
+          const id = childrenData[0].id || childrenData[0]._id;
+          localStorage.setItem("childId", id);
+          setChildId(id);
+        }
+
         checkTokenExpiration();
       }
       setAuthLoading(false);
