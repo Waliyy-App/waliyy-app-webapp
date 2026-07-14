@@ -50,7 +50,7 @@ import AdminUsers from './pages/admin/AdminUsers';
 import AdminMatches from './pages/admin/AdminMatches';
 import AdminSubscribers from './pages/admin/AdminSubscribers';
 import { logDailyVisit } from './services/adminService';
-const MAINTENANCE_MODE = false;
+const MAINTENANCE_MODE = true;
 
 export const AppLayout = ({ children }) => {
   useResetScrollPosition();
