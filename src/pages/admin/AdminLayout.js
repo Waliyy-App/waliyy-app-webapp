@@ -10,6 +10,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ShieldIcon from "@mui/icons-material/Shield";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import Logo from "../../assets/logo/logo-nobg-cropped.png";
 import LogoIcon from "../../assets/logo/logo-icon.png";
 
@@ -18,6 +19,7 @@ const navItems = [
   { to: "/admin/users", label: "Users", Icon: PeopleIcon },
   { to: "/admin/matches", label: "Matches", Icon: FavoriteIcon },
   { to: "/admin/subscriptions", label: "Subscribers", Icon: ShieldIcon }, // Using ShieldIcon temporarily or VerifiedUserIcon
+  { to: "/admin/promo-subscribers", label: "Sept Promo Subs", Icon: CardGiftcardIcon },
 ];
 
 const AdminLayout = ({ children }) => {

@@ -127,7 +127,7 @@ const AdminDashboard = () => {
           label="Total Revenue"
           value={
             metrics?.totalRevenue != null
-              ? `₦${Number(metrics.totalRevenue).toLocaleString()}`
+              ? `₦${Number(metrics.totalRevenue / 100).toLocaleString()}`
               : null
           }
           Icon={AttachMoneyIcon}

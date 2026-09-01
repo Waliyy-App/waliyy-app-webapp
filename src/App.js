@@ -14,6 +14,7 @@ import LikePage from './pages/LikePage';
 import MatchPage from './pages/MatchPage';
 import SettingsPage from './pages/SettingsPage';
 import PricingPage from './pages/PricingPage';
+import PromoPricingPage from './pages/PromoPricingPage';
 import { Filters } from './pages/Filters';
 import ProfileDetails from './components/profile/ProfileDetails';
 import SuitorProfile from './components/profile/SuitorProfile';
@@ -49,6 +50,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminMatches from './pages/admin/AdminMatches';
 import AdminSubscribers from './pages/admin/AdminSubscribers';
+import AdminPromoSubscribers from './pages/admin/AdminPromoSubscribers';
 import { logDailyVisit } from './services/adminService';
 const MAINTENANCE_MODE = false;
 
@@ -148,6 +150,7 @@ function App() {
               />
               <Route exact path="/settings" element={<SettingsPage />} />
               <Route exact path="/pricing" element={<PricingPage />} />
+              <Route exact path="/promo-pricing" element={<PromoPricingPage />} />
               <Route exact path="/select-plan" element={<SelectPlanType />} />
               <Route
                 exact
@@ -177,6 +180,7 @@ function App() {
               <Route exact path="/admin/users" element={<AdminUsers />} />
               <Route exact path="/admin/matches" element={<AdminMatches />} />
               <Route exact path="/admin/subscriptions" element={<AdminSubscribers />} />
+              <Route exact path="/admin/promo-subscribers" element={<AdminPromoSubscribers />} />
             </Route>
           </Routes>
         </AppLayout>

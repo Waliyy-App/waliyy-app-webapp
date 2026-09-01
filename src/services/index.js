@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const API_BASE_URL = "https://api.waliyyapp.com/api/v1";
-// const API_BASE_URL = "http://localhost:9292/api/v1";
 const apiService = axios.create({
   baseURL: API_BASE_URL,
   responseType: "json",
@@ -365,6 +364,49 @@ export const getAllUsers = async (accessToken, page, limit) => {
 export const getPlans = async () => {
   try {
     const response = await apiService.get("/plans/");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getPromoPlan = async () => {
+  try {
+    const response = await apiService.get("/plans/promo");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const makePromoPayment = async (payload, accessToken) => {
+  try {
+    const response = await apiService.post(
+      `/payment/make-promo-payment`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const verifyPromoPayment = async (reference, accessToken) => {
+  try {
+    const response = await apiService.post(
+      `/payment/verify-promo-payment`,
+      { reference },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     throw error;

@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import SidebarComponent from "../components/sidebar/Sidebar";
 import { usePersistedState, shuffleArray } from "../utils.js";
 import MobileNav from "../components/sidebar/MobileBottomNav.js";
 import ProfileCard from "../components/ProfileCard.js";
 import { useAuthContext } from "../context/AuthContext.js";
-import { getRecommedations } from "../services";
+import { getRecommedations, verifyPromoPayment } from "../services";
 import Loader from "../components/Loader.js";
 import Navigation from "../components/sidebar/Navigation.js";
+import DashboardPromoBanner from "../components/DashboardPromoBanner.js";
 // Icons
 import { FaFrown, FaArrowUp, FaSearch, FaTimes } from "react-icons/fa";
 
@@ -43,6 +45,9 @@ const Dashboard = () => {
 
   // Child ID for API request
   const childId = localStorage?.getItem("childId");
+
+  // URL location (used to detect Paystack callback with a transaction reference)
+  const location = useLocation();
 
   // Ref to track if scroll position is already restored
   const restoredRef = useRef(false);
@@ -104,6 +109,50 @@ const Dashboard = () => {
     fetchRecommendations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Verify a returned Paystack promo payment (fallback in case the webhook
+  // is delayed or cannot reach the server) and activate the subscription.
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const reference = searchParams.get("reference") || searchParams.get("trxref");
+    if (!reference || !token) return;
+
+    let cancelled = false;
+    let shouldReload = false;
+
+    const cleanUrl = () => {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("reference");
+      url.searchParams.delete("trxref");
+      window.history.replaceState({}, "", url.toString());
+    };
+
+    verifyPromoPayment(reference, token)
+      .then((res) => {
+        if (cancelled) return;
+        if (res?.data?.activated || res?.data?.alreadyActive) {
+          shouldReload = true;
+          cleanUrl();
+          toast.success("Payment confirmed! Your account is now active.");
+        }
+      })
+      .catch(() => {
+        if (cancelled) return;
+        toast.error("Payment could not be verified. Your account may still be activated shortly.");
+      })
+      .finally(() => {
+        if (cancelled) return;
+        if (shouldReload) {
+          window.location.reload();
+        } else {
+          cleanUrl();
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [location.search, token]);
 
   // Handle search streaming & pagination
   useEffect(() => {
@@ -208,6 +257,8 @@ const Dashboard = () => {
           } w-full transition-all duration-300 bg-[#d4c4fb1d] min-h-screen`}
       >
         <Navigation />
+
+        <DashboardPromoBanner />
 
         {/* Loader when no profiles yet */}
         {loading && profiles?.length === 0 ? (

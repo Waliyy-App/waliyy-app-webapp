@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import SidebarComponent from '../components/sidebar/Sidebar';
 import { FiCheck } from 'react-icons/fi';
@@ -99,6 +99,20 @@ const PricingPage = () => {
                 You are a step away from finding your future spouse.
               </p>
             </div>
+            <Link
+              to="/promo-pricing"
+              className="mx-auto mb-10 max-w-xl block text-center rounded-2xl bg-gradient-to-r from-[#2D133A] via-[#4A2A63] to-[#2D133A] text-white p-6 shadow-lg border border-[#BA9FFE]/30"
+            >
+              <p className="text-lg font-bold">
+                <span className="text-[#BA9FFE]">September Special:</span> 3 months for ₦5,000
+              </p>
+              <p className="text-sm text-white/80 mt-1">
+                Pay once, enjoy 3 months of full access — instead of paying every month. (€5 / $6.50)
+              </p>
+              <span className="inline-block mt-3 px-5 py-2.5 bg-[#BA9FFE] hover:bg-[#a37eff] font-bold rounded-lg transition-all duration-300">
+                Get the 3-Month Offer
+              </span>
+            </Link>
             <div className="flex flex-wrap items-center justify-center gap-8">
               <div className="w-[400px] bg-[#F9FAFB] rounded-lg p-8">
                 <div className="flex flex-col gap-2 items-center">

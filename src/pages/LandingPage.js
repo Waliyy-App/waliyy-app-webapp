@@ -12,12 +12,16 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2';
 import PricingSection from '../components/landingPage/PrincingSection';
+import SeptemberPromoBanner from '../components/landingPage/SeptemberPromoBanner';
 //import MaintenanceBanner from '../common/MaintananceBanner';
 
 const LandingPage = () => {
   return (
     <div className="pt-0 bg-white dark:bg-white">
       <Navbar />
+
+      {/* September Promo Banner */}
+      <SeptemberPromoBanner />
 
       {/* Notice banner for Profile Update */}
       {/* <MaintenanceBanner/> */}
