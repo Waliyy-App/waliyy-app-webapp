@@ -42,7 +42,7 @@ const Navbar = () => {
           <MenuIcon />
         </button>
         {toggleMobileMenu && (
-          <div className="absolute top-5 right-0 bg-white p-10 shadow-xl flex flex-col gap-6 items-center">
+          <div className="absolute top-5 right-0 bg-white p-10 shadow-xl flex flex-col gap-6 items-center z-[60]">>
             <NavLink
               to="/"
               className={`${location.pathname === '/'

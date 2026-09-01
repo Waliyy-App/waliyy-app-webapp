@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const API_BASE_URL = "https://api.waliyyapp.com/api/v1";
-// const API_BASE_URL = "http://localhost:9292/api/v1";
 const apiService = axios.create({
   baseURL: API_BASE_URL,
   responseType: "json",
@@ -86,6 +85,17 @@ export const getAdminSubscriptions = async (token) => {
 };
 
 /**
+ * Fetch September promo subscribers
+ * Endpoint: GET /admin/promo-subscribers
+ */
+export const getAdminPromoSubscribers = async (token) => {
+  const response = await apiService.get("/admin/promo-subscribers", {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  return response.data;
+};
+
+/**
  * Add manual subscription
  * Endpoint: POST /admin/subscriptions/manual
  */
@@ -95,6 +105,17 @@ export const addManualSubscription = async (token, email, interval) => {
     { email, interval },
     { headers: { Authorization: `Bearer ${token}` } }
   );
+  return response.data;
+};
+
+/**
+ * Delete a subscription (including promo subscribers).
+ * Endpoint: DELETE /admin/subscriptions/:id
+ */
+export const adminDeleteSubscription = async (token, subscriptionId) => {
+  const response = await apiService.delete(`/admin/subscriptions/${subscriptionId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   return response.data;
 };
 

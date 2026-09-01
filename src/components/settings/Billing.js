@@ -52,11 +52,21 @@ useEffect(() => {
         <div className="flex flex-col-reverse sm:flex-row p-6 text-[#2D133A] justify-between w-full sm:w-3/5 shadow rounded-xl my-4 mb-10 gap-6">
           <div className="flex flex-col gap-2 ">
             <p className="font-semibold">
-              {!activePlan ? 'Free Plan' : activePlan?.plan?.planName}
+              {!activePlan ? 'Free Plan' : activePlan?.promoType ? 'September Promo — Active' : activePlan?.plan?.planName}
             </p>
             <p className="text-sm">
-              {!activePlan ? 'Our most popular plan.' : ''}
+              {!activePlan
+                ? 'Our most popular plan.'
+                : activePlan?.promoType
+                  ? '3-Month Access'
+                  : ''}
             </p>
+            {activePlan?.promoType && (
+              <div className="flex flex-col gap-1 text-sm mt-2">
+                <p><strong>3-Month Access</strong></p>
+                <p><strong>Expires:</strong> <span className="text-[#667085]">{new Date(activePlan.expiresAt).toLocaleDateString()}</span></p>
+              </div>
+            )}
             {!activePlan && (
               <Link to="/pricing" className="mt-8 font-semibold text-[#BA9FFE]">
                 Upgrade Plan <ArrowOutwardIcon />
@@ -65,8 +75,8 @@ useEffect(() => {
           </div>
 
           <div className="font-semibold text-4xl">
-            {!activePlan ? '₦0' : toCurrency(activePlan?.plan?.amount)}{' '}
-            <span className="text-sm">per annum</span>
+            {!activePlan ? '₦0' : activePlan?.promoType ? '₦5,000' : toCurrency(activePlan?.plan?.amount)}{' '}
+            <span className="text-sm">{activePlan?.promoType ? 'for 3 months' : 'per annum'}</span>
           </div>
         </div>
 
