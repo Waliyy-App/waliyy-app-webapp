@@ -69,6 +69,13 @@ const Explore = () => {
       const calculatedTotalPages = Math.ceil(total / ITEMS_PER_PAGE);
       setTotalPages(calculatedTotalPages);
 
+      // If the current page is now out of range, reset to page 1
+      const persistedPage = parseInt(sessionStorage.getItem("explorePage")) || 1;
+      if (persistedPage > calculatedTotalPages) {
+        setCurrentPage(1);
+        sessionStorage.setItem("explorePage", "1");
+      }
+
     } catch (error) {
       toast.error(error?.response?.data?.message || "Failed to load users");
     } finally {

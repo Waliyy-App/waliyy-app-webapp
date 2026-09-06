@@ -107,6 +107,11 @@ export const Filters = () => {
       const res = Boolean(childPref)
         ? await updateFilter(newValues, token, childId)
         : await filterSuitors(newValues, token, childId);
+      // Reset persisted pagination/ordering for all paginated pages so they
+      // start from page 1 with the freshly filtered recommendations.
+      ["dashboardPage", "explorePage", "dashboard_recommendations_order", "explore_profiles_order", "scrollPos"].forEach((key) =>
+        sessionStorage.removeItem(key)
+      );
       toast.success(res?.message);
       console.log(newValues)
       navigate("/dashboard");

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import SidebarComponent from "../components/sidebar/Sidebar";
 import { usePersistedState, shuffleArray } from "../utils.js";
@@ -11,7 +11,7 @@ import Loader from "../components/Loader.js";
 import Navigation from "../components/sidebar/Navigation.js";
 import DashboardPromoBanner from "../components/DashboardPromoBanner.js";
 // Icons
-import { FaFrown, FaArrowUp, FaSearch, FaTimes } from "react-icons/fa";
+import { FaFrown, FaArrowUp, FaSearch, FaTimes, FaFilter } from "react-icons/fa";
 
 const Dashboard = () => {
   // Pagination configuration
@@ -30,6 +30,9 @@ const Dashboard = () => {
   const [filteredProfiles, setFilteredProfiles] = useState([]); // Filtered results (search/pagination)
   // Total count of recommendations
   const [totalCount, setTotalCount] = useState(0);
+
+  // Whether the user has not yet set preferences (so we suggest setting them)
+  const [preferencesNotSet, setPreferencesNotSet] = useState(false);
 
   // Search term input
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,6 +70,7 @@ const Dashboard = () => {
       const total = res?.data?.totalCount || data.length;
 
       setTotalCount(total);
+      setPreferencesNotSet(res?.data?.preferencesNotSet === true);
 
       // Check if we have a persisted order for this session
       const savedOrder = sessionStorage.getItem("dashboard_recommendations_order");
@@ -93,6 +97,14 @@ const Dashboard = () => {
       // Calculate total pages for pagination
       const calculatedTotalPages = Math.ceil(total / ITEMS_PER_PAGE);
       setTotalPages(calculatedTotalPages);
+
+      // If the current page is now out of range (e.g. the user changed
+      // preferences and the result set shrank), reset to page 1.
+      const persistedPage = parseInt(sessionStorage.getItem("dashboardPage")) || 1;
+      if (persistedPage > calculatedTotalPages) {
+        setCurrentPage(1);
+        sessionStorage.setItem("dashboardPage", "1");
+      }
 
     } catch (error) {
       toast.error(
@@ -259,6 +271,31 @@ const Dashboard = () => {
         <Navigation />
 
         <DashboardPromoBanner />
+
+        {/* Set preferences prompt banner */}
+        {preferencesNotSet && !loading && (
+          <div className="mx-4 sm:mx-8 my-3 rounded-xl bg-[#BA9FFE]/15 border border-[#BA9FFE]/60 text-[#2D133A] px-4 sm:px-5 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-start sm:items-center gap-3 min-w-0">
+              <div className="h-9 w-9 rounded-lg bg-[#2D133A] text-[#BA9FFE] flex items-center justify-center flex-shrink-0">
+                <FaFilter />
+              </div>
+              <div className="min-w-0">
+                <p className="font-bold text-sm sm:text-base">
+                  Set your preferences to filter profiles to your taste
+                </p>
+                <p className="text-xs sm:text-sm text-[#665e6b] mt-0.5">
+                  You're currently seeing general recommendations. Set your criteria for more tailored matches.
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/filter"
+              className="flex-shrink-0 self-start sm:self-auto px-4 py-2 bg-[#2D133A] hover:bg-[#4A2A63] text-white text-sm font-bold rounded-lg shadow transition-colors"
+            >
+              Set Preferences
+            </Link>
+          </div>
+        )}
 
         {/* Loader when no profiles yet */}
         {loading && profiles?.length === 0 ? (
