@@ -15,6 +15,10 @@ const SelectPlanType = () => {
     };
 
     const handleSelect = (interval) => {
+        if (interval === "monthly") {
+            navigate("/promo-pricing");
+            return;
+        }
         navigate(`/pricing?interval=${interval}`);
     };
 
@@ -41,20 +45,23 @@ const SelectPlanType = () => {
                         {/* Monthly Card */}
                         <div
                             onClick={() => handleSelect("monthly")}
-                            className="group relative bg-white rounded-3xl p-8 shadow-xl cursor-pointer transform transition-all hover:scale-[1.03] hover:shadow-2xl border-2 border-transparent hover:border-[#BA9FFE]"
+                            className="group relative bg-white rounded-3xl p-8 shadow-xl cursor-pointer transform transition-all hover:scale-[1.03] hover:shadow-2xl border-2 border-transparent hover:border-[#FFD700]"
                         >
                             <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#BA9FFE] p-4 rounded-2xl shadow-lg text-white">
                                 <FaCalendarAlt size={32} />
+                            </div>
+                            <div className="absolute top-4 right-4 bg-gradient-to-r from-[#2D133A] to-[#4A2A63] text-[#FFD700] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                September Offer
                             </div>
                             <div className="mt-8 text-center">
                                 <h2 className="text-3xl font-bold text-[#2D133A] mb-4">
                                     Monthly
                                 </h2>
                                 <p className="text-[#665e6b] mb-8">
-                                    Perfect for those who want to explore with flexibility.
+                                    Get 3 months for ₦5,000 with the September promotional offer.
                                 </p>
-                                <div className="py-3 px-6 bg-[#BA9FFE] bg-opacity-10 text-[#BA9FFE] font-bold rounded-xl group-hover:bg-[#BA9FFE] group-hover:text-white transition-colors">
-                                    View Monthly Plans
+                                <div className="py-3 px-6 bg-[#FFD700] bg-opacity-20 text-[#2D133A] font-bold rounded-xl">
+                                    Get 3 Months for ₦5,000
                                 </div>
                             </div>
                         </div>
