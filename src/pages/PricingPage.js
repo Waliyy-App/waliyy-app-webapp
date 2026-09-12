@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import SidebarComponent from '../components/sidebar/Sidebar';
 import { FiCheck } from 'react-icons/fi';
@@ -18,8 +18,15 @@ const PricingPage = () => {
   const [plans, setPlans] = useState([]);
   const { token } = useAuthContext();
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const interval = queryParams.get('interval') || 'annual'; // default to annual if not specified
+
+  useEffect(() => {
+    if (interval === 'monthly') {
+      navigate('/promo-pricing', { replace: true });
+    }
+  }, [interval, navigate]);
 
   console.log(plans)
   const toggleMenu = () => {

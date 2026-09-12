@@ -218,6 +218,7 @@ const AdminSubscribers = () => {
                 >
                   <option value="monthly">Monthly Plan</option>
                   <option value="annual">Annual Plan</option>
+                  <option value="promo">September Promo (3 Months)</option>
                 </select>
               </div>
               
