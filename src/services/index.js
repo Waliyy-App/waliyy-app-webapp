@@ -370,32 +370,6 @@ export const getPlans = async () => {
   }
 };
 
-export const getPromoPlan = async () => {
-  try {
-    const response = await apiService.get("/plans/promo");
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const makePromoPayment = async (payload, accessToken) => {
-  try {
-    const response = await apiService.post(
-      `/payment/make-promo-payment`,
-      payload,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
 export const verifyPromoPayment = async (reference, accessToken) => {
   try {
     const response = await apiService.post(
