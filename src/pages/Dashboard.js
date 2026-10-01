@@ -9,7 +9,6 @@ import { useAuthContext } from "../context/AuthContext.js";
 import { getRecommedations, verifyPromoPayment } from "../services";
 import Loader from "../components/Loader.js";
 import Navigation from "../components/sidebar/Navigation.js";
-import DashboardPromoBanner from "../components/DashboardPromoBanner.js";
 // Icons
 import { FaFrown, FaArrowUp, FaSearch, FaTimes, FaFilter } from "react-icons/fa";
 
@@ -269,8 +268,6 @@ const Dashboard = () => {
           } w-full transition-all duration-300 bg-[#d4c4fb1d] min-h-screen`}
       >
         <Navigation />
-
-        <DashboardPromoBanner />
 
         {/* Set preferences prompt banner */}
         {preferencesNotSet && !loading && (

@@ -14,7 +14,6 @@ import LikePage from './pages/LikePage';
 import MatchPage from './pages/MatchPage';
 import SettingsPage from './pages/SettingsPage';
 import PricingPage from './pages/PricingPage';
-import PromoPricingPage from './pages/PromoPricingPage';
 import { Filters } from './pages/Filters';
 import ProfileDetails from './components/profile/ProfileDetails';
 import SuitorProfile from './components/profile/SuitorProfile';
@@ -150,7 +149,6 @@ function App() {
               />
               <Route exact path="/settings" element={<SettingsPage />} />
               <Route exact path="/pricing" element={<PricingPage />} />
-              <Route exact path="/promo-pricing" element={<PromoPricingPage />} />
               <Route exact path="/select-plan" element={<SelectPlanType />} />
               <Route
                 exact
