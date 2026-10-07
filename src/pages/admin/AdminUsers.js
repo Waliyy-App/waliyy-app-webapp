@@ -2,12 +2,12 @@ import React, { useEffect, useState, useCallback } from "react";
 import AdminLayout from "./AdminLayout";
 import { useAuthContext } from "../../context/AuthContext";
 import { getAdminUsers, toggleBlockUser, adminDeleteUser } from "../../services/adminService";
-import SearchIcon from "@mui/icons-material/Search";
 import BlockIcon from "@mui/icons-material/Block";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
 import PersonIcon from "@mui/icons-material/Person";
+import AdminSearchBar from "../../components/admin/AdminSearchBar";
 import { toast } from "react-toastify";
 
 // ─── Status Badge ─────────────────────────────────────────────────────────────
@@ -107,8 +107,7 @@ const AdminUsers = () => {
 
   // ─── Handlers ──────────────────────────────────────────────────────────────
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
+  const handleSearchSubmit = () => {
     setPage(1);
     setSearch(searchInput.trim());
   };
@@ -180,29 +179,13 @@ const AdminUsers = () => {
       </div>
 
       {/* Search Bar */}
-      <form onSubmit={handleSearchSubmit} className="mb-6 flex gap-3">
-        <div className="relative flex-1 max-w-md">
-          <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fontSize="small" />
-          <input
-            type="text"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            placeholder="Search by name, email or phone..."
-            className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm"
-          />
-          {searchInput && (
-            <button type="button" onClick={handleClearSearch} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-              <CloseIcon fontSize="small" />
-            </button>
-          )}
-        </div>
-        <button
-          type="submit"
-          className="px-5 py-2.5 bg-gradient-to-r from-purple-600 to-violet-500 text-white font-semibold rounded-xl text-sm shadow hover:opacity-90 transition"
-        >
-          Search
-        </button>
-      </form>
+      <AdminSearchBar
+        value={searchInput}
+        onChange={setSearchInput}
+        onSubmit={handleSearchSubmit}
+        onClear={handleClearSearch}
+        placeholder="Search by name, email, phone or ID..."
+      />
 
       {/* Error Banner */}
       {error && (
@@ -218,6 +201,7 @@ const AdminUsers = () => {
             <thead className="bg-[#F7F3FF] text-[#2D133A] font-bold">
               <tr>
                 <th className="text-left px-5 py-4 w-12">#</th>
+                <th className="text-left px-5 py-4 hidden lg:table-cell">ID</th>
                 <th className="text-left px-5 py-4">User</th>
                 <th className="text-left px-5 py-4">Email</th>
                 <th className="text-left px-5 py-4 hidden md:table-cell">Phone</th>
@@ -231,7 +215,7 @@ const AdminUsers = () => {
               {loading ? (
                 Array.from({ length: 8 }).map((_, i) => (
                   <tr key={i} className="animate-pulse">
-                    {Array.from({ length: 7 }).map((_, j) => (
+                    {Array.from({ length: 9 }).map((_, j) => (
                       <td key={j} className="px-5 py-4">
                         <div className="h-4 bg-gray-100 rounded-lg w-3/4" />
                       </td>
@@ -240,7 +224,7 @@ const AdminUsers = () => {
                 ))
               ) : users.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="text-center py-16 text-gray-400">
+                  <td colSpan={9} className="text-center py-16 text-gray-400">
                     <PersonIcon sx={{ fontSize: 48 }} className="mb-2 block mx-auto text-gray-200" />
                     No users found
                   </td>
@@ -250,6 +234,14 @@ const AdminUsers = () => {
                   <tr key={user._id} className="hover:bg-purple-50/40 transition-colors">
                     <td className="px-5 py-4 text-gray-500 font-medium">
                       {(page - 1) * LIMIT + index + 1}
+                    </td>
+                    <td className="px-5 py-4 hidden lg:table-cell">
+                      <span
+                        title={user._id}
+                        className="inline-block max-w-[140px] truncate align-middle font-mono text-xs text-gray-500 bg-gray-50 border border-gray-100 px-2 py-1 rounded-md"
+                      >
+                        {user._id}
+                      </span>
                     </td>
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">

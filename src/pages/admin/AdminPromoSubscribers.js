@@ -13,6 +13,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import PendingIcon from "@mui/icons-material/Pending";
 import LanguageIcon from "@mui/icons-material/Language";
 import { FaGift, FaTrashAlt, FaSyncAlt } from "react-icons/fa";
+import AdminSearchBar from "../../components/admin/AdminSearchBar";
 
 const getInitials = (name = "") =>
   name
@@ -75,6 +76,7 @@ const AdminPromoSubscribers = () => {
   const [data, setData] = useState({ stats: {}, subscribers: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchInput, setSearchInput] = useState("");
 
   const fetchSubscribers = useCallback(async () => {
     try {
@@ -115,6 +117,17 @@ const AdminPromoSubscribers = () => {
   };
 
   const { stats = {}, subscribers = [] } = data;
+
+  // Client-side filter over the fully loaded subscriber list.
+  const q = searchInput.trim().toLowerCase();
+  const filteredSubscribers = q
+    ? subscribers.filter((s) =>
+        [s.user?.name, s.user?.email, s.transactionRef, s.subId]
+          .filter(Boolean)
+          .some((field) => field.toLowerCase().includes(q))
+      )
+    : subscribers;
+
   const revenueTotal = Object.values(stats.revenueByCurrency || {}).reduce(
     (a, b) => a + Number(b || 0),
     0
@@ -158,6 +171,14 @@ const AdminPromoSubscribers = () => {
         </div>
       )}
 
+      {/* Search Bar */}
+      <AdminSearchBar
+        value={searchInput}
+        onChange={setSearchInput}
+        onClear={() => setSearchInput("")}
+        placeholder="Search by name, email or transaction ref..."
+      />
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-6">
         <StatCard label="Total Promo Subs" value={stats.total} Icon={VerifiedUserIcon} gradient="bg-gradient-to-br from-violet-500 to-purple-700" loading={loading} />
         <StatCard label="Successful Payments" value={stats.successfulPayments} Icon={CheckCircleIcon} gradient="bg-gradient-to-br from-emerald-400 to-teal-600" loading={loading} />
@@ -194,17 +215,17 @@ const AdminPromoSubscribers = () => {
         <div className="px-4 sm:px-6 py-4 border-b border-gray-100 bg-gray-50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <h2 className="text-lg font-bold text-[#2D133A]">Promotional Subscribers</h2>
           <span className="w-fit text-sm font-semibold text-purple-600 bg-purple-100 px-3 py-1 rounded-full">
-            {subscribers.length} Records
+            {filteredSubscribers.length}{q ? ` of ${subscribers.length}` : ""} Records
           </span>
         </div>
 
-        {subscribers.length === 0 ? (
+        {filteredSubscribers.length === 0 ? (
           <div className="px-4 py-12 text-center text-gray-400">No promotional subscribers yet.</div>
         ) : (
           <>
             {/* Mobile card list */}
             <div className="md:hidden p-3 sm:p-4 space-y-3">
-              {subscribers.map((s, index) => (
+              {filteredSubscribers.map((s, index) => (
                 <div key={s.subId} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3 min-w-0">
@@ -278,7 +299,7 @@ const AdminPromoSubscribers = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-50">
-                  {subscribers.map((s, index) => (
+                  {filteredSubscribers.map((s, index) => (
                     <tr key={s.subId} className="hover:bg-purple-50/40 transition-colors">
                       <td className="px-5 py-4 text-gray-500 font-medium">{index + 1}</td>
                       <td className="px-5 py-4">
