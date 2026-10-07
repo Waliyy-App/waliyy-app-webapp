@@ -7,6 +7,7 @@ import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import AdminSearchBar from "../../components/admin/AdminSearchBar";
 
 // ─── Match Status Badge ───────────────────────────────────────────────────────
 const MatchBadge = ({ status }) => {
@@ -36,6 +37,8 @@ const AdminMatches = () => {
   const LIMIT = 20;
 
   const [statusFilter, setStatusFilter] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -51,7 +54,7 @@ const AdminMatches = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await getAdminMatches(token, { page, limit: LIMIT, status: statusFilter });
+      const res = await getAdminMatches(token, { page, limit: LIMIT, status: statusFilter, search });
       const d = res?.data ?? res;
       setMatches(d.matches ?? []);
       setTotal(d.total ?? 0);
@@ -62,7 +65,7 @@ const AdminMatches = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, page, statusFilter]);
+  }, [token, page, statusFilter, search]);
 
   useEffect(() => {
     fetchMatches();
@@ -70,6 +73,17 @@ const AdminMatches = () => {
 
   const handleFilterChange = (e) => {
     setStatusFilter(e.target.value);
+    setPage(1);
+  };
+
+  const handleSearchSubmit = () => {
+    setPage(1);
+    setSearch(searchInput.trim());
+  };
+
+  const handleClearSearch = () => {
+    setSearchInput("");
+    setSearch("");
     setPage(1);
   };
 
@@ -111,6 +125,15 @@ const AdminMatches = () => {
           </select>
         </div>
       </div>
+
+      {/* Search Bar */}
+      <AdminSearchBar
+        value={searchInput}
+        onChange={setSearchInput}
+        onSubmit={handleSearchSubmit}
+        onClear={handleClearSearch}
+        placeholder="Search by child name or profile ID..."
+      />
 
       {/* Error Banner */}
       {error && (

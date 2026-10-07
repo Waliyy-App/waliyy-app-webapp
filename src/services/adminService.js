@@ -61,11 +61,11 @@ export const adminDeleteUser = async (token, userId) => {
 
 /**
  * Fetch paginated list of all matches.
- * Endpoint: GET /admin/matches?page=&limit=&status=
+ * Endpoint: GET /admin/matches?page=&limit=&status=&search=
  */
-export const getAdminMatches = async (token, { page = 1, limit = 20, status = "" } = {}) => {
+export const getAdminMatches = async (token, { page = 1, limit = 20, status = "", search = "" } = {}) => {
   const response = await apiService.get(
-    `/admin/matches?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}`,
+    `/admin/matches?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}&search=${encodeURIComponent(search)}`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
   return response.data;

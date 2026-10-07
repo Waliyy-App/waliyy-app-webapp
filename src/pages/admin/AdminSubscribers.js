@@ -7,6 +7,7 @@ import EventIcon from "@mui/icons-material/Event";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import CloseIcon from "@mui/icons-material/Close";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import AdminSearchBar from "../../components/admin/AdminSearchBar";
 import { toast } from "react-toastify";
 
 // ─── Stat Card ────────────────────────────────────────────────────────────────
@@ -36,6 +37,7 @@ const AdminSubscribers = () => {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [searchInput, setSearchInput] = useState("");
   
   // Modal state
   const [modalOpen, setModalOpen] = useState(false);
@@ -58,6 +60,17 @@ const AdminSubscribers = () => {
   useEffect(() => {
     fetchSubscriptions();
   }, [fetchSubscriptions]);
+
+  // Client-side filter over the fully loaded subscription lists.
+  const matchesSearch = (user) => {
+    const q = searchInput.trim().toLowerCase();
+    if (!q) return true;
+    return [user.name, user.email, user.planName, user.subId]
+      .filter(Boolean)
+      .some((field) => field.toLowerCase().includes(q));
+  };
+  const filteredMonthly = data.monthlyUsers.filter(matchesSearch);
+  const filteredAnnual = data.annualUsers.filter(matchesSearch);
 
   // ─── Handlers ──────────────────────────────────────────────────────────────
   const handleAddSubmit = async (e) => {
@@ -151,6 +164,14 @@ const AdminSubscribers = () => {
         </div>
       )}
 
+      {/* Search Bar */}
+      <AdminSearchBar
+        value={searchInput}
+        onChange={setSearchInput}
+        onClear={() => setSearchInput("")}
+        placeholder="Search subscribers by name, email or plan..."
+      />
+
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <StatCard
@@ -180,8 +201,8 @@ const AdminSubscribers = () => {
         <div className="text-center py-20 text-gray-400 animate-pulse">Loading subscriptions...</div>
       ) : (
         <>
-          {renderTable(data.monthlyUsers, "Monthly Subscribers")}
-          {renderTable(data.annualUsers, "Annual Subscribers")}
+          {renderTable(filteredMonthly, "Monthly Subscribers")}
+          {renderTable(filteredAnnual, "Annual Subscribers")}
         </>
       )}
 
