@@ -184,7 +184,7 @@ const AdminUsers = () => {
         onChange={setSearchInput}
         onSubmit={handleSearchSubmit}
         onClear={handleClearSearch}
-        placeholder="Search by name, email, phone or ID..."
+        placeholder="Search by name, email, phone or user ID..."
       />
 
       {/* Error Banner */}
@@ -201,7 +201,7 @@ const AdminUsers = () => {
             <thead className="bg-[#F7F3FF] text-[#2D133A] font-bold">
               <tr>
                 <th className="text-left px-5 py-4 w-12">#</th>
-                <th className="text-left px-5 py-4 hidden lg:table-cell">ID</th>
+                <th className="text-left px-5 py-4 hidden lg:table-cell">User ID</th>
                 <th className="text-left px-5 py-4">User</th>
                 <th className="text-left px-5 py-4">Email</th>
                 <th className="text-left px-5 py-4 hidden md:table-cell">Phone</th>
@@ -236,12 +236,16 @@ const AdminUsers = () => {
                       {(page - 1) * LIMIT + index + 1}
                     </td>
                     <td className="px-5 py-4 hidden lg:table-cell">
-                      <span
-                        title={user._id}
-                        className="inline-block max-w-[140px] truncate align-middle font-mono text-xs text-gray-500 bg-gray-50 border border-gray-100 px-2 py-1 rounded-md"
-                      >
-                        {user._id}
-                      </span>
+                      {user.displayIds?.length ? (
+                        <span
+                          title={user.displayIds.join(", ")}
+                          className="inline-block max-w-[140px] truncate align-middle font-mono text-xs text-gray-500 bg-gray-50 border border-gray-100 px-2 py-1 rounded-md"
+                        >
+                          {user.displayIds.join(", ")}
+                        </span>
+                      ) : (
+                        <span className="text-gray-300">—</span>
+                      )}
                     </td>
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">
