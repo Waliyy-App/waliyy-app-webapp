@@ -18,9 +18,14 @@ const SettingsHeader = ({ childId, child }) => {
 					)}
 				</div>
 
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-1">
 					<p className="text-[#2D133A] text-2xl font-bold">{child.fullName}</p>
-					<p className="text-[#667085]">{userObject.email}</p>
+					{(child?.displayId || child?.displayID) && (
+						<p className="text-sm font-semibold text-[#8B6B9B] select-all">
+							ID: <span className="text-[#2D133A] font-mono font-bold">{child?.displayId || child?.displayID}</span>
+						</p>
+					)}
+					<p className="text-[#667085]">{userObject?.email}</p>
 				</div>
 			</div>
 
