@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -25,6 +25,7 @@ export default function VerifyOtp() {
 	const [resendLoading, setResendLoading] = useState(false);
 	const [resendError, setResendError] = useState("");
 	const [cooldown, setCooldown] = useState(0);
+	const resendButtonRef = useRef(null);
 
 	useEffect(() => {
 		if (cooldown <= 0) return;
@@ -62,7 +63,15 @@ export default function VerifyOtp() {
 				const expiredMessage =
 					"That code has expired. Tap Resend Code below to get a new one.";
 				setResendError(expiredMessage);
+				setCooldown(0); // make sure Resend is immediately available
 				toast.error(expiredMessage);
+				requestAnimationFrame(() => {
+					resendButtonRef.current?.scrollIntoView({
+						behavior: "smooth",
+						block: "center",
+					});
+					resendButtonRef.current?.focus();
+				});
 			} else {
 				toast.error(message || "Invalid OTP. Please check the code and try again.");
 			}
@@ -188,6 +197,7 @@ export default function VerifyOtp() {
 						className="w-full h-11 border-b border-b-[#CDD1D0] focus:outline-none focus:border-b focus:border-b-[#BA9FFE] text-sm px-1"
 					/>
 					<button
+						ref={resendButtonRef}
 						type="button"
 						onClick={handleResend}
 						disabled={resendLoading || cooldown > 0}
@@ -200,9 +210,23 @@ export default function VerifyOtp() {
 							: "Resend Code"}
 					</button>
 					{resendError && (
-						<p className="text-xs text-red-500 text-center leading-relaxed">
-							{resendError}
-						</p>
+						<div className="text-center">
+							<p className="text-xs text-red-500 leading-relaxed">
+								{resendError}
+							</p>
+							<a
+								href={`mailto:waliyyapp@gmail.com?subject=${encodeURIComponent(
+									"Email verification help"
+								)}&body=${encodeURIComponent(
+									`I did not receive a verification code for ${
+										resendEmail || "my account"
+									}. Please help me verify my email.`
+								)}`}
+								className="text-xs text-[#7e26aa] underline"
+							>
+								Email support
+							</a>
+						</div>
 					)}
 				</div>
 				<p className="text-xs text-[#665e6b] text-center mt-4 leading-relaxed">

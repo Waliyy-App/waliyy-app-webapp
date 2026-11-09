@@ -1,7 +1,11 @@
-# Backend auth fixes required
+# Backend auth fixes
+
+Status: **applied** in the API repository at `C:\Users\USER\Walliy-api\api` (branch
+`september-promo`). The sections below are kept as the original requirements/spec; see
+[Applied implementation](#applied-implementation) at the end for the exact files and behaviour.
 
 These changes belong to the API service (`https://api.waliyyapp.com/api/v1`), which is not
-part of this repository. Paths below are suggestions; adapt them to the actual layout.
+part of this repository.
 
 Status legend: **[BLOCKER]** breaks a user flow, **[UX]** improves deliverability/experience,
 **[SECURITY]** must be addressed immediately.
@@ -372,3 +376,75 @@ After applying the above, these should pass against production:
 | `POST /auth/signup` for existing unverified email | `200`, new code sent |
 | `PUT /account/delete` | `200`, account removed, no `htmlContent` error |
 | Any forced 500 | Generic message only, no API keys or upstream headers |
+
+---
+
+## Applied implementation
+
+Branch: `september-promo` in `C:\Users\USER\Walliy-api\api`. `npm run build` (TypeScript) passes.
+
+### 30-minute OTP TTL (all codes)
+
+- `core/configs/index.ts`: added `OTP_EXPIRY_SECONDS = 30 * 60` and `OTP_EXPIRY_MS`.
+  `PASSWORD_RESET_EXPIRY_TIME` now falls back to `1800` when the env var is missing.
+- `core/modules/parent/model.ts`: the email-verification pre-save hook now refreshes
+  `emailVerificationOtpExpires` to 30 minutes whenever a verification OTP is set (signup **and**
+  resend), instead of only on new documents and only for 24 hours.
+- `core/modules/auth/service.ts`: admin 2FA (login and resend) now uses `OTP_EXPIRY_MS` (30 min)
+  instead of 60 seconds. Resend also writes `emailVerificationOtpExpires` explicitly, because
+  `findByIdAndUpdate` bypasses the pre-save hook.
+- `.env.sample`: `PASSWORD_RESET_EXPIRY_TIME=1800`. Local `.env` set to `1800` as well.
+- `core/modules/email/templates/passwords.ts`: reset body says "valid for 30 minutes".
+- `core/modules/email/templates/admin2fa.ts`: says "expire in 30 minutes".
+
+### Resend / verification flow
+
+- `core/modules/parent/type.ts`: `isEmailVerified` is now `boolean` (was incorrectly declared as
+  a function); OTP fields are typed.
+- `core/modules/auth/service.ts`: `resendVerificationEmail` checks `user.isEmailVerified === true`,
+  issues a new OTP, refreshes the expiry, and sends the dedicated verification email.
+- `core/modules/auth/service.ts`: `POST /auth/signup` now detects an existing **unverified**
+  account with the same email and resends a fresh code instead of returning "already exists".
+  Verified accounts still get the conflict error. Email is normalised (`trim().toLowerCase()`)
+  on signup, login, resend, and forgot-password.
+
+### Dedicated verification email + subjects
+
+- `core/modules/email/headers.ts`: added `VERIFICATION_CODE = "Your WaliyyApp verification code"`
+  and `PASSWORD_RESET = "Reset Your Password"`.
+- `core/modules/email/templates/verificationCode.ts` (new): focused OTP email with 30-minute copy.
+- `core/modules/email/service.ts`: `sendVerificationEmail()` used by signup and resend.
+  Password-reset email now uses the `Reset Your Password` subject; the "password changed"
+  notification keeps `Password Changed`.
+- `core/modules/auth/notification.ts`: added `triggerVerificationEmail()`.
+
+### Rate limiting
+
+- `core/middlewares/rateLimiter.ts`: limiters now have distinct Redis prefixes and accurate
+  messages:
+  - global API: 100/min
+  - auth router: 60 per 10 min (relaxed)
+  - login: 10 per 15 min
+  - OTP request (signup/resend/forgot/admin resend): 5 per 10 min
+  - OTP submit (verify email/reset/admin 2FA): 20 per 10 min
+- `core/routes/auth.ts`: the specific limiters are attached per route.
+
+### Account delete / deactivate
+
+- `core/modules/email/templates/account.ts` (new): real deletion and deactivation bodies, so
+  Brevo always receives non-empty `htmlContent`.
+- `core/modules/parent/account.service.ts`: notification email is best-effort; a mail failure is
+  logged and no longer turns a successful deletion/deactivation into a 500.
+
+### Error sanitisation
+
+- `core/modules/email/brevo.service.ts`: upstream/provider errors are logged server-side and
+  replaced with a generic client message (no API key or request headers in the response).
+- `core/middlewares/error-handler.ts` + `core/utils/server-response.ts`: non-custom exceptions
+  return `Something went wrong. Please try again later.` when `NODE_ENV=production`.
+
+### Deployment note
+
+The code and `dist/` are built locally, but the production API still needs to be deployed and
+restarted, and `PASSWORD_RESET_EXPIRY_TIME=1800` must be set in the production environment.
+
