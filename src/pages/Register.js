@@ -114,11 +114,27 @@ const Register = () => {
         toast.error("Invalid email. Please use a standard email.");
       }
     } catch (error) {
-      toast.error(
-        error.response?.data?.message ||
-          error.message ||
-          "Registration failed. Please try again."
-      );
+      const status = error.response?.status;
+      const message = error.response?.data?.message || "";
+
+      if (status === 429) {
+        toast.error(
+          "Too many attempts. Please wait about 5 minutes before trying again."
+        );
+      } else if (message.toLowerCase().includes("already exists")) {
+        // The account may exist but still be unverified. Send the user to the
+        // OTP page with their email prefilled instead of leaving them stuck.
+        localStorage.setItem("temp_email", email);
+        localStorage.setItem("pendingVerificationEmail", email);
+        toast.info(
+          "An account with this email already exists. Enter the code sent to your email, or tap Resend Code."
+        );
+        navigate("/verify-otp", { state: { email } });
+      } else {
+        toast.error(
+          message || error.message || "Registration failed. Please try again."
+        );
+      }
     } finally {
       setLoading(false);
     }

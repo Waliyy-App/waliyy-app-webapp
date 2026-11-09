@@ -46,9 +46,10 @@ const Login = () => {
 
   const handleLogin = async (values) => {
     setLoading(true);
+    const email = values.emailAddress.trim().toLowerCase();
     try {
       const data = await login({
-        email: values.emailAddress,
+        email,
         password: values.password,
       });
       if (data && data.requires2FA) {
@@ -63,7 +64,23 @@ const Login = () => {
       }
       navigate('/login-successful');
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Login failed");
+      const status = error?.response?.status;
+      const message = error?.response?.data?.message || "";
+
+      if (status === 429) {
+        toast.error(
+          "Too many attempts. Please wait about 5 minutes before trying again."
+        );
+      } else if (message.toLowerCase().includes("verify your email")) {
+        localStorage.setItem("temp_email", email);
+        localStorage.setItem("pendingVerificationEmail", email);
+        toast.info(
+          "Please verify your email. Enter the code we sent, or tap Resend Code."
+        );
+        navigate("/verify-otp", { state: { email } });
+      } else {
+        toast.error(message || "Login failed");
+      }
       console.log(error);
     } finally {
       setLoading(false);
@@ -77,7 +94,12 @@ const Login = () => {
       toast.success("Verification PIN resent to your email.");
       setCooldown(60); // Reset timer
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Failed to resend PIN");
+      const status = error?.response?.status;
+      toast.error(
+        status === 429
+          ? "Too many requests. Please wait a few minutes before trying again."
+          : error?.response?.data?.message || "Failed to resend PIN"
+      );
       console.log(error);
     } finally {
       setLoading(false);
@@ -93,7 +115,12 @@ const Login = () => {
       }
       navigate('/admin');
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Invalid verification code");
+      const status = error?.response?.status;
+      toast.error(
+        status === 429
+          ? "Too many attempts. Please wait about 5 minutes before trying again."
+          : error?.response?.data?.message || "Invalid verification code"
+      );
       console.log(error);
     } finally {
       setLoading(false);
