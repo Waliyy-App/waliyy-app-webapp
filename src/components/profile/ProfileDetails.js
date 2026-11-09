@@ -69,6 +69,8 @@ const ProfileDetails = () => {
               profession={child.profession}
               residence={child.countryofResidence}
               gender={child.gender}
+              displayID={child.displayId || child.displayID}
+              isOwnProfile={true}
             />
             <div>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

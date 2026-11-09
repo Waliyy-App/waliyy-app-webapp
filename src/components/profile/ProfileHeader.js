@@ -30,6 +30,7 @@ const ProfileHeader = ({
   showButton,
   isGeneral = false,
   isSubscribed = true,
+  isOwnProfile,
 }) => {
   const blurClass = !isSubscribed ? 'blur-[6px] select-none' : '';
   const [isDisabled, setIsDisabled] = useState(false);
@@ -41,7 +42,7 @@ const ProfileHeader = ({
   const { token } = useAuthContext();
   const childId = localStorage.getItem("childId");
   const { id } = useParams();
-  const isChild = Boolean(childId === id);
+  const isChild = isOwnProfile !== undefined ? isOwnProfile : Boolean(childId === id);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -204,6 +205,13 @@ const ProfileHeader = ({
             <BsFillDiamondFill className="h-2 w-2" />
             <p className={blurClass}>{age}</p>
           </div>
+
+          {displayID && isChild && (
+            <p className="text-sm font-semibold text-[#8B6B9B] mt-0.5 select-all">
+              ID: <span className="text-[#2D133A] font-mono font-bold">{displayID}</span>
+            </p>
+          )}
+
           <p className={`text-lg font-bold capitalize ${blurClass}`}>{profession}</p>
 
           <div className="flex items-center sm:justify-start justify-center gap-1 ">
