@@ -8,6 +8,41 @@ Status legend: **[BLOCKER]** breaks a user flow, **[UX]** improves deliverabilit
 
 ---
 
+## 0. [BLOCKER] Use a 30-minute TTL for every OTP in the app
+
+Production currently expires codes after ~10 minutes (the reset email says "valid for 10 minutes"),
+and the verify-email page surfaces `Invalid or Expired Otp` when a user is slower than that. The
+frontend cannot extend this — the server rejects the code regardless of any on-page timer.
+
+Make 30 minutes the single source of truth for **all** OTPs: signup verification, resend
+verification, password reset, admin 2FA, and any other one-time code.
+
+```js
+// src/config/constants.js
+const OTP_TTL_MINUTES = 30;
+const OTP_TTL_MS = OTP_TTL_MINUTES * 60 * 1000;
+```
+
+```js
+// Use the same TTL everywhere an OTP is issued
+user.emailVerificationOtpExpires = new Date(Date.now() + OTP_TTL_MS);
+user.passwordResetOtpExpires = new Date(Date.now() + OTP_TTL_MS);
+// admin 2FA and any other OTP the same way
+```
+
+Checklist for this change:
+
+- Replace every hard-coded `10 * 60 * 1000` / `600` seconds with `OTP_TTL_MS`.
+- If OTPs live in Redis, set the key TTL to `OTP_TTL_MINUTES * 60` seconds.
+- Update every email template/body from "valid for 10 minutes" to "valid for 30 minutes".
+- Check the OTP schema for an `expires`/TTL index that could delete the record earlier than 30 minutes.
+- Verify the same limit applies to the **signup** email, not just password reset.
+
+The frontend now shows "The code is valid for 30 minutes." and the reset countdown starts at
+`30:00`. Keep those in sync if the backend value ever changes.
+
+---
+
 ## 1. [BLOCKER] `POST /auth/resend-verification` crashes for every real user
 
 Reproduced against production:
@@ -45,7 +80,7 @@ exports.resendVerification = async (req, res, next) => {
 
     const otp = generateOtp(); // 6 digits
     user.emailVerificationOtp = otp;
-    user.emailVerificationOtpExpires = new Date(Date.now() + 10 * 60 * 1000);
+    user.emailVerificationOtpExpires = new Date(Date.now() + OTP_TTL_MS);
     await user.save();
 
     await sendVerificationEmail(user, otp); // see section 2
@@ -83,7 +118,7 @@ const sendVerificationEmail = async (user, otp) => {
       <p>Assalaam Alaykum ${user.firstName},</p>
       <p>Use this code to verify your WaliyyApp account:</p>
       <p style="font-size:32px;font-weight:700;letter-spacing:8px;margin:24px 0">${otp}</p>
-      <p>This code is valid for 10 minutes. If you didn't create an account, you can ignore this email.</p>
+      <p>This code is valid for 30 minutes. If you didn't create an account, you can ignore this email.</p>
       <p style="color:#665e6b;font-size:12px">WaliyyApp · waliyyapp@waliyyapp.com</p>
     </div>`;
 
@@ -93,7 +128,7 @@ const sendVerificationEmail = async (user, otp) => {
     "Use this code to verify your WaliyyApp account:",
     otp,
     "",
-    "This code is valid for 10 minutes.",
+    "This code is valid for 30 minutes.",
   ].join("\n");
 
   return sendTransactionalEmail({
@@ -124,7 +159,7 @@ was already changed and alarms users.
 const subject = "Reset Your Password";
 ```
 
-Keep the body copy and the 10-minute validity. Suggested preheader/opening line:
+Keep the body copy and the 30-minute validity. Suggested preheader/opening line:
 "We received a request to reset your WaliyyApp password. Use the code below to continue."
 
 ---
@@ -208,7 +243,7 @@ if (existing) {
   if (!existing.isEmailVerified) {
     const otp = generateOtp();
     existing.emailVerificationOtp = otp;
-    existing.emailVerificationOtpExpires = new Date(Date.now() + 10 * 60 * 1000);
+    existing.emailVerificationOtpExpires = new Date(Date.now() + OTP_TTL_MS);
     await existing.save();
     await sendVerificationEmail(existing, otp);
 
@@ -325,6 +360,10 @@ After applying the above, these should pass against production:
 
 | Check | Expected |
 | --- | --- |
+| Use a signup OTP 11+ minutes after it was sent | still verifies (code valid until 30 min) |
+| Use a reset OTP 29 minutes after it was sent | still resets the password |
+| Use any OTP 31 minutes after it was sent | `400 Invalid or Expired Otp` |
+| Reset/verification email body | "This code is valid for 30 minutes." |
 | `POST /auth/resend-verification` with an existing unverified email | `200`, new email with subject `Your WaliyyApp verification code` |
 | Same for a verified email | `400 Email is already verified. Please log in.` |
 | Signup email subject | `Your WaliyyApp verification code` |

@@ -8,7 +8,8 @@ import { TextInput } from '../common/form';
 import Loader from '../components/Loader';
 import { resetPassword, forgotPassword } from '../services';
 
-const OTP_VALIDITY_SECONDS = 600; // The reset email says the code is valid for 10 minutes
+// Keep this in sync with the backend OTP TTL (30 minutes for every OTP type).
+const OTP_VALIDITY_SECONDS = 1800;
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);

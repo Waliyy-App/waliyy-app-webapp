@@ -51,13 +51,20 @@ export default function VerifyOtp() {
 			navigate("/verification-success");
 		} catch (err) {
 			const status = err.response?.status;
-			const message = err.response?.data?.message;
+			const message = err.response?.data?.message || "";
+			const expired = message.toLowerCase().includes("expired");
+
 			if (status === 429) {
 				toast.error(
 					"Too many attempts. Please wait a few minutes and try again."
 				);
+			} else if (expired) {
+				const expiredMessage =
+					"That code has expired. Tap Resend Code below to get a new one.";
+				setResendError(expiredMessage);
+				toast.error(expiredMessage);
 			} else {
-				toast.error(message || "Invalid or expired OTP");
+				toast.error(message || "Invalid OTP. Please check the code and try again.");
 			}
 		} finally {
 			setIsDisabled(false);
@@ -116,6 +123,9 @@ export default function VerifyOtp() {
 					{resendEmail
 						? `Enter the 6-digit verification code sent to ${resendEmail}.`
 						: "Enter the verification code sent to your email."}
+				</p>
+				<p className="text-xs text-[#665e6b] text-center mt-2">
+					The code is valid for 30 minutes.
 				</p>
 			</div>
 			<Formik
@@ -196,8 +206,8 @@ export default function VerifyOtp() {
 					)}
 				</div>
 				<p className="text-xs text-[#665e6b] text-center mt-4 leading-relaxed">
-					The code is included in the welcome email from WaliyyApp. If you
-					still don't see it, check your spam/junk folder or email{" "}
+					The code is sent to you by email from WaliyyApp. If you still
+					don't see it, check your spam/junk folder or email{" "}
 					<a
 						href="mailto:waliyyapp@gmail.com"
 						className="text-[#7e26aa] underline"

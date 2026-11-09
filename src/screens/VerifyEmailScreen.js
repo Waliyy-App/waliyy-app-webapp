@@ -34,6 +34,9 @@ const VerifyEmailScreen = () => {
 						<strong>OTP</strong> we sent{email ? ` to ${email}` : ""}. If you
 						don't see it, check your spam/junk folder.
 					</p>
+					<p className="text-xs text-[#665e6b] text-center mt-2">
+						The code is valid for 30 minutes.
+					</p>
 					<Link
 						to="/verify-otp"
 						state={{ email }}
