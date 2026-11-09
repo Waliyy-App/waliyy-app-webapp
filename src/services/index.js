@@ -6,9 +6,15 @@ const apiService = axios.create({
   responseType: "json",
 });
 
+const normalizeEmail = (email) =>
+  typeof email === "string" ? email.trim().toLowerCase() : email;
+
 export const register = async (payload) => {
   try {
-    const response = await apiService.post("/auth/signup", payload);
+    const response = await apiService.post("/auth/signup", {
+      ...payload,
+      ...(payload?.email ? { email: normalizeEmail(payload.email) } : {}),
+    });
     return response.data;
   } catch (error) {
     throw error;
@@ -53,7 +59,10 @@ export const resendAdmin2FA = async (payload) => {
 
 export const forgotPassword = async (payload) => {
   try {
-    const response = await apiService.put("/auth/forgot-password", payload);
+    const response = await apiService.put("/auth/forgot-password", {
+      ...payload,
+      ...(payload?.email ? { email: normalizeEmail(payload.email) } : {}),
+    });
     return response.data;
   } catch (error) {
     throw error;
@@ -62,8 +71,11 @@ export const forgotPassword = async (payload) => {
 
 export const resetPassword = async (payload) => {
   try {
-    const response = await apiService.put(`/auth/reset-password`, payload);
-    return response.data.user;
+    const response = await apiService.put(`/auth/reset-password`, {
+      ...payload,
+      ...(payload?.otp ? { otp: String(payload.otp).trim() } : {}),
+    });
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -71,7 +83,10 @@ export const resetPassword = async (payload) => {
 
 export const verifyOtp = async (payload) => {
   try {
-    const response = await apiService.put(`/auth/verify-email`, payload);
+    const response = await apiService.put(`/auth/verify-email`, {
+      ...payload,
+      ...(payload?.otp ? { otp: String(payload.otp).trim() } : {}),
+    });
     return response.data;
   } catch (error) {
     throw error;
@@ -80,7 +95,9 @@ export const verifyOtp = async (payload) => {
 
 export const resendVerificationEmail = async (email) => {
   try {
-    const response = await apiService.post(`/auth/resend-verification`, { email });
+    const response = await apiService.post(`/auth/resend-verification`, {
+      email: normalizeEmail(email),
+    });
     return response.data;
   } catch (error) {
     throw error;

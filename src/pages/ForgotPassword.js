@@ -23,16 +23,27 @@ const ForgotPassword = () => {
 	});
 
 	const handleForgotPassword = async (values) => {
+		const email = values.email.trim().toLowerCase();
 		try {
 			setLoading(true);
 			const res = await forgotPassword({
-				email: values.email,
+				email,
 			});
-			toast.success(res?.message);
-			localStorage.setItem('resetEmail', values.email);
-			navigate("/reset-password");
+			toast.success(res?.message || "Password reset email sent");
+			localStorage.setItem('resetEmail', email);
+			navigate("/reset-password", { state: { email } });
 		} catch (error) {
-			toast.error(error.response.data.message);
+			const status = error.response?.status;
+			if (status === 429) {
+				toast.error(
+					"Too many requests. Please wait a few minutes before trying again."
+				);
+			} else {
+				toast.error(
+					error.response?.data?.message ||
+						"Failed to send reset email. Please try again."
+				);
+			}
 		} finally {
 			setLoading(false);
 		}

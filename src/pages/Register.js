@@ -88,13 +88,14 @@ const Register = () => {
 
   const handleRegistration = async (values) => {
     setLoading(true);
+    const email = values.emailAddress.trim().toLowerCase();
     try {
-      const invalidEmail = await checkEmail(values.emailAddress);
+      const invalidEmail = await checkEmail(email);
       if (!invalidEmail) {
         const data = await register({
           firstName: values.fname,
           lastName: values.lname,
-          email: values.emailAddress,
+          email,
           phoneNumber: values.phoneNumber,
           gender: values.gender,
           password: values.password,
@@ -102,16 +103,38 @@ const Register = () => {
         });
         localStorage.setItem("temp_gender", values.gender);
         localStorage.setItem("temp_phone", values.phoneNumber);
+        localStorage.setItem("temp_email", email);
+        localStorage.setItem("pendingVerificationEmail", email);
         if (values.gender === "FEMALE") {
           localStorage.setItem("temp_wali_phone", values.waliPhoneNumber);
         }
         toast.success(data?.message);
-        navigate("/verify-email");
+        navigate("/verify-email", { state: { email } });
       } else {
         toast.error("Invalid email. Please use a standard email.");
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      const status = error.response?.status;
+      const message = error.response?.data?.message || "";
+
+      if (status === 429) {
+        toast.error(
+          "Too many attempts. Please wait about 5 minutes before trying again."
+        );
+      } else if (message.toLowerCase().includes("already exists")) {
+        // The account may exist but still be unverified. Send the user to the
+        // OTP page with their email prefilled instead of leaving them stuck.
+        localStorage.setItem("temp_email", email);
+        localStorage.setItem("pendingVerificationEmail", email);
+        toast.info(
+          "An account with this email already exists. Enter the code sent to your email, or tap Resend Code."
+        );
+        navigate("/verify-otp", { state: { email } });
+      } else {
+        toast.error(
+          message || error.message || "Registration failed. Please try again."
+        );
+      }
     } finally {
       setLoading(false);
     }
