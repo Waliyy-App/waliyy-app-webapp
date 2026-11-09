@@ -88,13 +88,14 @@ const Register = () => {
 
   const handleRegistration = async (values) => {
     setLoading(true);
+    const email = values.emailAddress.trim().toLowerCase();
     try {
-      const invalidEmail = await checkEmail(values.emailAddress);
+      const invalidEmail = await checkEmail(email);
       if (!invalidEmail) {
         const data = await register({
           firstName: values.fname,
           lastName: values.lname,
-          email: values.emailAddress,
+          email,
           phoneNumber: values.phoneNumber,
           gender: values.gender,
           password: values.password,
@@ -102,16 +103,22 @@ const Register = () => {
         });
         localStorage.setItem("temp_gender", values.gender);
         localStorage.setItem("temp_phone", values.phoneNumber);
+        localStorage.setItem("temp_email", email);
+        localStorage.setItem("pendingVerificationEmail", email);
         if (values.gender === "FEMALE") {
           localStorage.setItem("temp_wali_phone", values.waliPhoneNumber);
         }
         toast.success(data?.message);
-        navigate("/verify-email");
+        navigate("/verify-email", { state: { email } });
       } else {
         toast.error("Invalid email. Please use a standard email.");
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(
+        error.response?.data?.message ||
+          error.message ||
+          "Registration failed. Please try again."
+      );
     } finally {
       setLoading(false);
     }

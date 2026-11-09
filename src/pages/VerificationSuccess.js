@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { useAuthContext } from "../context/AuthContext";
 
 const VerificationSuccess = () => {
     const navigate = useNavigate();
+    const { isLoggedIn } = useAuthContext();
     const [gender, setGender] = useState("");
     const [waliName, setWaliName] = useState("");
     const [waliEmail, setWaliEmail] = useState("");
@@ -48,7 +51,12 @@ const VerificationSuccess = () => {
             })
         );
 
-        navigate("/get-started");
+        if (isLoggedIn) {
+            navigate("/get-started");
+        } else {
+            toast.success("Email verified. Please log in to continue.");
+            navigate("/login");
+        }
     };
 
     return (
@@ -131,7 +139,9 @@ const VerificationSuccess = () => {
                 >
                     {isFemale && !canProceed
                         ? "Provide Wali Details"
-                        : "Proceed to Profile Setup"}
+                        : isLoggedIn
+                        ? "Proceed to Profile Setup"
+                        : "Continue to Login"}
                 </button>
 
                 <div className="mt-8">

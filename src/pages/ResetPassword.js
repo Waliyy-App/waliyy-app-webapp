@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { FaArrowLeft, FaEye, FaEyeSlash, FaCheckCircle } from 'react-icons/fa';
 import { Formik, Form } from 'formik';
 import { toast } from 'react-toastify';
@@ -8,26 +8,47 @@ import { TextInput } from '../common/form';
 import Loader from '../components/Loader';
 import { resetPassword, forgotPassword } from '../services';
 
+const OTP_VALIDITY_SECONDS = 600; // The reset email says the code is valid for 10 minutes
+
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
+  const [resending, setResending] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [step, setStep] = useState(1); // 1: OTP, 2: Password
-  const [timeLeft, setTimeLeft] = useState(360); // 6 minutes in seconds
+  const [timeLeft, setTimeLeft] = useState(OTP_VALIDITY_SECONDS);
+  const [resendCooldown, setResendCooldown] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const resetEmail = localStorage.getItem('resetEmail');
+  const resetEmail = (
+    location.state?.email ||
+    localStorage.getItem('resetEmail') ||
+    ''
+  )
+    .trim()
+    .toLowerCase();
 
   useEffect(() => {
     if (timeLeft <= 0) return;
 
-    const timer = setInterval(() => {
+    const timer = setTimeout(() => {
       setTimeLeft((prev) => prev - 1);
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => clearTimeout(timer);
   }, [timeLeft]);
+
+  useEffect(() => {
+    if (resendCooldown <= 0) return;
+
+    const timer = setTimeout(() => {
+      setResendCooldown((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [resendCooldown]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -67,8 +88,16 @@ const ResetPassword = () => {
       setIsSuccess(true);
       localStorage.removeItem('resetEmail');
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Invalid OTP or session expired');
-      if (error.response?.status === 400 || error.response?.data?.message?.toLowerCase().includes('otp')) {
+      const status = error.response?.status;
+      const message = error.response?.data?.message || '';
+
+      if (status === 429) {
+        toast.error('Too many attempts. Please wait a few minutes and try again.');
+      } else {
+        toast.error(message || 'Invalid OTP or session expired');
+      }
+
+      if (status === 400 || message.toLowerCase().includes('otp')) {
         setStep(1); // Go back to OTP if it was invalid
       }
     } finally {
@@ -78,20 +107,27 @@ const ResetPassword = () => {
 
   const handleResendOtp = async () => {
     if (!resetEmail) {
-      toast.error('Session expired. Please request a new reset link.');
+      toast.error('We do not have your email address. Please request a new reset code.');
       navigate('/forgot-password');
       return;
     }
+
     try {
-      setLoading(true);
+      setResending(true);
       await forgotPassword({ email: resetEmail });
-      toast.success('New OTP sent to your email');
-      setTimeLeft(360); // Reset timer
+      toast.success('A new reset code has been sent. Check your inbox and spam folder.');
+      setTimeLeft(OTP_VALIDITY_SECONDS); // Reset timer
+      setResendCooldown(60);
       setStep(1); // Reset to Step 1
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to resend OTP');
+      const status = error.response?.status;
+      if (status === 429) {
+        toast.error('Too many requests. Please wait a few minutes before trying again.');
+      } else {
+        toast.error(error.response?.data?.message || 'Failed to resend OTP');
+      }
     } finally {
-      setLoading(false);
+      setResending(false);
     }
   };
 
@@ -126,7 +162,9 @@ const ResetPassword = () => {
               </p>
               <p className="text-sm text-[#665e6b] text-center">
                 {step === 1
-                  ? 'Enter the 6-digit code sent to your email.'
+                  ? resetEmail
+                    ? `Enter the 6-digit code sent to ${resetEmail}.`
+                    : 'Enter the 6-digit code sent to your email.'
                   : 'Enter your new password below.'}
               </p>
             </div>
@@ -160,6 +198,8 @@ const ResetPassword = () => {
                       name="otp"
                       type="text"
                       placeholder="Enter 6-digit code"
+                      inputMode="numeric"
+                      autoComplete="one-time-code"
                       maxLength="6"
                     />
                   )}
@@ -171,6 +211,7 @@ const ResetPassword = () => {
                           label="New Password*"
                           name="password"
                           type={showPassword ? 'text' : 'password'}
+                          autoComplete="new-password"
                         />
                         <div
                           onClick={() => setShowPassword(!showPassword)}
@@ -185,6 +226,7 @@ const ResetPassword = () => {
                           label="Confirm New Password*"
                           name="confirmPassword"
                           type={showConfirmPassword ? 'text' : 'password'}
+                          autoComplete="new-password"
                         />
                         <div
                           onClick={() =>
@@ -222,17 +264,32 @@ const ResetPassword = () => {
               )}
             </Formik>
 
-            {(timeLeft === 0 || timeLeft <= 240) && (
-              <div className="text-center mb-10">
-                <button
-                  type="button"
-                  onClick={handleResendOtp}
-                  className="text-sm font-medium text-[#BA9FFE] hover:text-[#7e26aa] underline"
-                >
-                  Resend OTP
-                </button>
-              </div>
-            )}
+            <div className="text-center mb-10">
+              <p className="text-sm text-[#665e6b] mb-2">
+                Didn't receive the code?
+              </p>
+              <button
+                type="button"
+                onClick={handleResendOtp}
+                disabled={resending || resendCooldown > 0}
+                className="text-sm font-medium text-[#BA9FFE] hover:text-[#7e26aa] underline disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {resending
+                  ? 'Sending...'
+                  : resendCooldown > 0
+                  ? `Resend OTP in ${resendCooldown}s`
+                  : 'Resend OTP'}
+              </button>
+              {!resetEmail && (
+                <p className="text-xs text-red-500 mt-2">
+                  Email address not found.{' '}
+                  <Link to="/forgot-password" className="underline">
+                    Request a new code
+                  </Link>
+                  .
+                </p>
+              )}
+            </div>
 
             <div className="w-full text-center">
               <Link
